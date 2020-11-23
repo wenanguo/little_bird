@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head>
+    <title>系统首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+
+<body>
+<h1>系统首页</h1>
+欢迎你：<h3 th:text="${name}"></h3>
+
+<h5 th:text="${sessionId}"></h5>
+<h5 th:text="${sessionHost}"></h5>
+<h5 th:text="${sessionLastAccessTime}"></h5>
+<h5 th:text="${sessionTimeout}"></h5>
+
+
+
+<shiro:hasPermission name="user:list">
+    <li><a th:href="@{/base/sys-user/list}"  >list用户  </a><!-- 拥有权限 --></li>
+</shiro:hasPermission>
+<shiro:hasPermission name="user:add">
+    <li><a  th:href="@{/base/sys-user/add}"  >add用户   </a><!-- 拥有权限 --></li>
+</shiro:hasPermission>
+<shiro:hasPermission name="user:update">
+<li><a  th:href="@{/base/sys-user/update}" >update用户</a><!-- 拥有权限 --></li>
+</shiro:hasPermission>
+<shiro:hasPermission name="user:delete">
+<li><a  th:href="@{/base/sys-user/delete}" >delete用户</a><!-- 拥有权限 --></li>
+</shiro:hasPermission>
+
+<br>
+
+测试是否有删除权限：
+<li><a  th:href="@{/base/sys-user/delete}" >强行delete用户</a><!-- 拥有权限 --></li>
+<br>
+
+<br>
+<li><a  th:href="@{/swagger-ui.html}" >swagger2 api</a><!-- 拥有权限 --></li>
+
+<a th:href="@{/logout}">退出</a>
+</body>
+
+</html>
