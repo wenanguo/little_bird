@@ -1,5 +1,7 @@
 package com.cmtt.base.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.entity.LbPeriodical;
 import com.cmtt.base.mapper.LbPeriodicalMapper;
 import com.cmtt.base.service.ILbPeriodicalService;
@@ -21,7 +23,8 @@ public class LbPeriodicalServiceImpl extends ServiceImpl<LbPeriodicalMapper, LbP
 
 
 
-    public List<LbPeriodical> getLbPostList(){
-        return this.baseMapper.getLbPostList();
+    public IPage<LbPeriodical> getLbPostList(IPage<LbPeriodical> page){
+
+        return this.baseMapper.getLbPostList(page);
     }
 }

@@ -1,7 +1,11 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.entity.Article;
 import com.cmtt.base.entity.LbPeriodical;
 import com.cmtt.base.entity.R;
@@ -12,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -51,12 +56,24 @@ public class LbPeriodicalController {
     @PostMapping("index_post")
     @ResponseBody
     @ApiOperation("主页文章列表")
-    public R index_post(){
+    public R index_post(@RequestBody @Valid LbPeriodical lbPeriodical){
         //List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100));
 
+        // 构建分页类
+        IPage<LbPeriodical> lbPeriodicalPage = new Page<>(lbPeriodical.getPageNo(), lbPeriodical.getPageSize());
 
-        List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.getLbPostList();
+        // 构造查询及排序方式
+        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>(lbPeriodical);
+        queryWrapper.orderBy(true, lbPeriodical.getIsAsc(), lbPeriodical.getIsSortField());
 
-        return R.ok().setResult(lbPeriodicalList);
+        // 执行查询
+        //lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);
+
+
+
+        lbPeriodicalPage = lbPeriodicalService.getLbPostList(lbPeriodicalPage);
+        R r=R.ok();
+        r.setPageResult(lbPeriodicalPage);
+        return r;
     }
 }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +23,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbPeriodical对象", description="期刊表")
 @Accessors(chain = true)
-public class LbPeriodical implements Serializable {
+public class LbPeriodical extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,7 +51,7 @@ public class LbPeriodical implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-
+    @TableField(exist = false)
     private List<LbPost> lbPostList;
 
 
