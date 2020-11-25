@@ -5,12 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
-import com.cmtt.base.entity.Article;
-import com.cmtt.base.entity.LbPeriodical;
-import com.cmtt.base.entity.R;
-import com.cmtt.base.entity.SysUser;
+import com.cmtt.base.controller.param.PhoneLoginInputParam;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.service.ILbPeriodicalService;
+import com.cmtt.base.service.ILbPostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,15 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/lb_periodical")
-@Api(tags = "期刊相关")
+@Api(tags = "主页相关")
 public class LbPeriodicalController {
 
 
     @Autowired
     private ILbPeriodicalService lbPeriodicalService;
 
+    @Autowired
+    private ILbPostService lbPostService;
 
     /**
      * 当期封面
@@ -47,6 +49,31 @@ public class LbPeriodicalController {
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getRecommend, 1));
 
         return R.ok().setResult(lbPeriodical);
+    }
+
+
+    /**
+     * 当期封面
+     */
+    @PostMapping("getOne")
+    @ResponseBody
+    @ApiOperation("单期期刊数据")
+    public R getOne(@RequestBody @Valid GetOneInputParam params){
+
+        LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, params.getId()));
+
+        if(lbPeriodical!=null){
+            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()));
+            lbPeriodical.setLbPostList(list);
+            return R.ok().setResult(lbPeriodical);
+        }else{
+
+            return R.err().setMessage("找不当当前期刊数据");
+        }
+
+
+
+
     }
 
 

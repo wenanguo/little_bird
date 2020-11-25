@@ -17,6 +17,7 @@
             <result property="periodicalId" column="periodical_id"></result>
             <result property="title" column="ptitle"></result>
             <result property="description" column="description"></result>
+            <result property="postSubjectId" column="post_subject_id"></result>
             <result property="postSubject" column="post_subject"></result>
             <result property="postCatalog" column="post_catalog"></result>
             <result property="showType" column="show_type"></result>

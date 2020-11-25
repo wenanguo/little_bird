@@ -35,6 +35,9 @@ public class LbPost implements Serializable {
     @ApiModelProperty(value = "描述")
     private String description;
 
+    @ApiModelProperty(value = "栏目id")
+    private String postSubjectId;
+
     @ApiModelProperty(value = "栏目")
     private String postSubject;
 
@@ -63,15 +66,12 @@ public class LbPost implements Serializable {
     private LocalDateTime publishedAt;
 
     @ApiModelProperty(value = "点赞数量")
-    @TableField("praiseCount")
     private Integer praiseCount;
 
     @ApiModelProperty(value = "收藏数量")
-    @TableField("recordCount")
     private Integer recordCount;
 
     @ApiModelProperty(value = "阅读数量")
-    @TableField("readCount")
     private Integer readCount;
 
     @ApiModelProperty(value = "是否推荐")
