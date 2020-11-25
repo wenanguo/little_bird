@@ -103,4 +103,34 @@ public class LbPeriodicalController {
         r.setPageResult(lbPeriodicalPage);
         return r;
     }
+
+
+    /**
+     * 书架列表
+     */
+    @PostMapping("bookrack")
+    @ResponseBody
+    @ApiOperation("书架列表")
+    public R bookrack(@RequestBody @Valid PageInputParam params){
+        //List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100));
+
+        // 构建分页类
+        IPage<LbPeriodical> lbPeriodicalPage = new Page<>(params.getPageNo(), params.getPageSize());
+
+        // 构造查询及排序方式
+        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+
+        // 执行查询
+        lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);
+
+
+
+        //lbPeriodicalPage = lbPeriodicalService.getLbPostList(lbPeriodicalPage);
+        R r=R.ok();
+        r.setPageResult(lbPeriodicalPage);
+        return r;
+    }
+
+
 }
