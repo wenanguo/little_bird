@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,6 +41,8 @@ public class CodeGenerator {
     }
 
     public static void main(String[] args) {
+
+
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -158,6 +161,10 @@ public class CodeGenerator {
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
+
+        // 更新数据库设计文档
+        String[] arr={""};
+        DBDocGenerator.main(arr);
     }
 
 }
