@@ -2,10 +2,18 @@ package com.cmtt.base.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.cmtt.base.entity.validated.GroupAdd;
+import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.entity.validated.GroupLogin;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -23,21 +31,38 @@ public class LbReport implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id")
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "手机号")
+    @ApiModelProperty(value = "手机号",example = "15285027249")
+    @NotNull(
+            groups = {GroupAdd.class, GroupEdit.class},
+            message = "手机号不能为空"
+    )
     private String phone;
 
-    @ApiModelProperty(value = "邮箱")
+    @ApiModelProperty(value = "邮箱",example = "wenanguo110@163.com")
+    @NotNull(
+            groups = {GroupAdd.class, GroupEdit.class},
+            message = "邮箱不能为空"
+    )
     private String email;
 
-    @ApiModelProperty(value = "举报地址")
+    @ApiModelProperty(value = "举报地址",example = "https://www.baidu.com")
+    @NotNull(
+            groups = {GroupAdd.class, GroupEdit.class},
+            message = "举报地址不能为空"
+    )
     private String reportLink;
 
-    @ApiModelProperty(value = "原因")
+    @ApiModelProperty(value = "原因",example = "垃圾推广")
+    @NotNull(
+            groups = {GroupAdd.class, GroupEdit.class},
+            message = "原因不能为空"
+    )
     private String reason;
 
-    @ApiModelProperty(value = "状态")
+
     private Integer status;
 
     @ApiModelProperty(value = "修改时间")
