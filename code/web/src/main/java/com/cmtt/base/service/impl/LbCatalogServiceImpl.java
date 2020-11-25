@@ -1,5 +1,6 @@
 package com.cmtt.base.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cmtt.base.entity.LbCatalog;
 import com.cmtt.base.mapper.LbCatalogMapper;
 import com.cmtt.base.service.ILbCatalogService;
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LbCatalogServiceImpl extends ServiceImpl<LbCatalogMapper, LbCatalog> implements ILbCatalogService {
 
+
+    public IPage<LbCatalog> getLbCatalogPostList(IPage<LbCatalog> page){
+        return this.baseMapper.getLbCatalogPostList(page);
+    }
 }

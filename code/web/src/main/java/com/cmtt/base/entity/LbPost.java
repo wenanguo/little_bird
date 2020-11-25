@@ -46,6 +46,9 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "栏目")
     private String postSubject;
 
+    @ApiModelProperty(value = "分类ID")
+    private String postCatalogId;
+
     @ApiModelProperty(value = "分类")
     private String postCatalog;
 
