@@ -38,6 +38,9 @@ public class PageInputParam {
     @ApiModelProperty(value ="排序方式",example = "desc")
     private String sortOrder;
 
+    @ApiModelProperty(value ="搜索关键字",example = "desc")
+    private String keyString;
+
     @JsonIgnore
     public boolean getIsAsc() {
         boolean isAsc = false;

@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbPost对象", description="文章表")
-public class LbPost implements Serializable {
+public class LbPost extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

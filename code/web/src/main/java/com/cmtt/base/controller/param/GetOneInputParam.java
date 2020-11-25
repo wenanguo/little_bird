@@ -19,5 +19,6 @@ public class GetOneInputParam {
 	@NotNull(message = "编号不能为空")
 	private Integer id;
 
+
 }
 
