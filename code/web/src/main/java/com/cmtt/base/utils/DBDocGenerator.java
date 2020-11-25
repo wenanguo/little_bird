@@ -52,6 +52,7 @@ public class DBDocGenerator {
         ArrayList<String> ignoreTableName = new ArrayList<>();
         ignoreTableName.add("test_user");
         ignoreTableName.add("test_group");
+        ignoreTableName.add("article");
         //忽略表前缀
         ArrayList<String> ignorePrefix = new ArrayList<>();
         ignorePrefix.add("test_");
