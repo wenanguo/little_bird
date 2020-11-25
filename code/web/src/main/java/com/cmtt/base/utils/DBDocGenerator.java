@@ -8,7 +8,6 @@ import cn.smallbun.screw.core.execute.DocumentationExecute;
 import cn.smallbun.screw.core.process.ProcessConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import javax.sql.DataSource;
 import java.util.ArrayList;
 
@@ -38,7 +37,7 @@ public class DBDocGenerator {
         //生成配置
         EngineConfig engineConfig = EngineConfig.builder()
                 //生成文件路径
-                .fileOutputDir("/Users/wenanguo/project/common-seed/code/web/src/main/resources/templates/")
+                .fileOutputDir("./web/src/main/resources/templates/")
                 //打开目录
                 .openOutputDir(true)
                 //文件类型
