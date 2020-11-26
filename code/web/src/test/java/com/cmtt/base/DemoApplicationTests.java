@@ -16,16 +16,16 @@ class DemoApplicationTests {
     @Test
     void test1(){
 
-        String username="wenanguo";
-
-        String token = JwtUtils.getJwtToken(username);
-
-        System.out.println(token);
-
-        String verify = JwtUtils.verify(token);
-        System.out.println(verify);
-
-        Assert.assertEquals(verify,username);
+//        String username="wenanguo";
+//
+//        String token = JwtUtils.getJwtToken(username);
+//
+//        System.out.println(token);
+//
+//        String verify = JwtUtils.verify(token);
+//        System.out.println(verify);
+//
+//        Assert.assertEquals(verify,username);
 
     }
 

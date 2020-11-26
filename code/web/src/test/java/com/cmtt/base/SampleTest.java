@@ -18,13 +18,13 @@ public class SampleTest {
     @Autowired
     SysRoleServiceImpl sysRoleService;
 
-    @Test
-    public void testSelect() {
-
-
-        List<SysRole> userRole = sysRoleService.getUserRole(new SysUser().setId(2));
-        userRole.forEach(System.out::println);
-    }
+//    @Test
+//    public void testSelect() {
+//
+//
+//        List<SysRole> userRole = sysRoleService.getUserRole(new SysUser().setId(2));
+//        userRole.forEach(System.out::println);
+//    }
 
 
 }
