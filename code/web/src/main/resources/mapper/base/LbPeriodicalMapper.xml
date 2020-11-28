@@ -19,6 +19,8 @@
             <result property="description" column="description"></result>
             <result property="postSubjectId" column="post_subject_id"></result>
             <result property="postSubject" column="post_subject"></result>
+            <result property="tcolor" column="tcolor"></result>
+            <result property="postCatalogId" column="post_catalog_id"></result>
             <result property="postCatalog" column="post_catalog"></result>
             <result property="showType" column="show_type"></result>
             <result property="imgUrl" column="pimg_url"></result>
@@ -43,7 +45,7 @@
 
 select a.id,a.title,a.tcode,a.img_url,a.recommend,a.status,a.update_time,a.create_time,
 b.id as pid,b.periodical_id ,b.title as ptitle,b.description,b.post_subject_id,b.post_subject,
-b.post_catalog,b.post_catalog_id,b.show_type,b.img_url as pimg_url,b.link_url,b.theme_info,b.author,b.post_order,
+b.post_catalog,b.post_catalog_id,b.tcolor,b.show_type,b.img_url as pimg_url,b.link_url,b.theme_info,b.author,b.post_order,
 b.published_at,b.praise_count,b.record_count,b.read_count,b.recommend as precommend,b.status as pstatus,
 b.update_time as pupdate_time,b.create_time as pcreate_time
 from lb_periodical as a,lb_post as b where a.id = b.periodical_id

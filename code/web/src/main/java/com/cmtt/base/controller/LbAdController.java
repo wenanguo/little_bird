@@ -1,13 +1,14 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.GetAdInputParam;
 import com.cmtt.base.controller.param.GetAuthorPostInputParam;
-import com.cmtt.base.entity.LbAd;
-import com.cmtt.base.entity.LbAuthor;
-import com.cmtt.base.entity.LbPost;
-import com.cmtt.base.entity.R;
+import com.cmtt.base.controller.param.PageInputParam;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.service.ILbAdService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,17 +38,40 @@ public class LbAdController {
     /**
      * 获取启动广告
      */
-    @PostMapping("getAdt")
+    @PostMapping("getStartAd")
     @ResponseBody
-    @ApiOperation("获取广告")
-    public R getAd(@RequestBody @Valid GetAdInputParam params){
+    @ApiOperation("获取启动广告")
+    public R getStartAd(){
 
-        List<LbAd> lbAdList = iLbAdService.list(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,params.getAd_type()));
+        LbAd lbAd = iLbAdService.getOne(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,1));
+
+        return R.ok().setResult(lbAd);
+
+    }
 
 
-        return R.ok().setResult(lbAdList);
+    /**
+     * 获取首页广告
+     */
+    @PostMapping("getIndexAd")
+    @ResponseBody
+    @ApiOperation("获取首页广告")
+    public R getIndexAd(@RequestBody @Valid PageInputParam params){
 
+        // 构建分页类
+        IPage<LbAd> lbAdPage = new Page<>(params.getPageNo(), params.getPageSize());
 
+        // 构造查询及排序方式
+        QueryWrapper<LbAd> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("ad_type",2);
+        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+
+        // 执行查询
+        lbAdPage = iLbAdService.getBaseMapper().selectPage(lbAdPage, queryWrapper);
+
+//        List<LbAd> lbAdList = iLbAdService.list(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,params.getAd_type()));
+
+        return R.ok().setPageResult(lbAdPage);
 
     }
 

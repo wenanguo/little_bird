@@ -49,8 +49,7 @@ public class LbSubjectController {
 
         // 执行查询
         lbSubjectIPage = lbSubjectService.getLbSubjectPostList(lbSubjectIPage);
-        R r=R.ok();
-        r.setPageResult(lbSubjectIPage);
-        return r;
+
+        return R.ok().setPageResult(lbSubjectIPage);
     }
 }

@@ -1,6 +1,8 @@
 package com.cmtt.base.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -31,6 +33,7 @@ public class LbAd implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "标题")
+    @TableField(condition = SqlCondition.LIKE)
     private String name;
 
     @ApiModelProperty(value = "介绍")
@@ -39,8 +42,15 @@ public class LbAd implements Serializable {
     @ApiModelProperty(value = "图片")
     private String imgUrl;
 
-    @ApiModelProperty(value = "广告分类")
+    @ApiModelProperty(value = "广告分类[1启动广告 2首页广告]")
     private String adType;
+
+    @ApiModelProperty(value = "所属期刊")
+    private String lb_periodical_id;
+
+    @ApiModelProperty(value = "所属期刊文章位置")
+    private String lb_periodical_index;
+
 
     @ApiModelProperty(value = "连接地址")
     private String linkUrl;

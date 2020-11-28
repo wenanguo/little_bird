@@ -50,11 +50,14 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "分类ID")
     private String postCatalogId;
 
+    @ApiModelProperty(value = "分类颜色")
+    private String tcolor;
+
     @ApiModelProperty(value = "分类")
     private String postCatalog;
 
-    @ApiModelProperty(value = "显示样式")
-    private String showType;
+    @ApiModelProperty(value = "显示样式[1上下图文，0左右图文，2广告类型，3无图]")
+    private Integer showType;
 
     @ApiModelProperty(value = "图片地址")
     private String imgUrl;
