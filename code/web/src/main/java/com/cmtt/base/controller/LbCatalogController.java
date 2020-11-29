@@ -10,6 +10,7 @@ import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.entity.*;
 import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPostService;
+import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class LbCatalogController {
 
 
         // 执行查询
-        List<LbCatalog> lbCatalogPostList= lbCatalogService.getLbCatalogPostList();
-
+        //List<LbCatalog> lbCatalogPostList= lbCatalogService.getLbCatalogPostList();
+        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getStatus, RC.B_NORMAL));
 
         return R.ok().setResult(lbCatalogPostList);
     }
