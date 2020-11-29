@@ -48,7 +48,7 @@ public class LbPost extends BaseEntity implements Serializable {
     private String postSubject;
 
     @ApiModelProperty(value = "分类ID")
-    private String postCatalogId;
+    private Integer postCatalogId;
 
     @ApiModelProperty(value = "分类颜色")
     private String tcolor;
