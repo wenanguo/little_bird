@@ -61,4 +61,5 @@ public class LbPeriodical extends BaseEntity implements Serializable {
     private List<LbPost> lbPostList;
 
 
+
 }

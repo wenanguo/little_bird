@@ -65,6 +65,7 @@ public class LbPeriodicalController {
         if(lbPeriodical!=null){
             List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()));
             lbPeriodical.setLbPostList(list);
+
             return R.ok().setResult(lbPeriodical);
         }else{
 

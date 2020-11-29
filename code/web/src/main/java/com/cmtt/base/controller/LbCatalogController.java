@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -37,20 +38,19 @@ public class LbCatalogController {
     @PostMapping("list")
     @ResponseBody
     @ApiOperation("分类文章列表")
-    public R list(@RequestBody @Valid PageInputParam params){
+    public R list(){
 
-        // 构建分页类
-        IPage<LbCatalog> lbCatalogPage = new Page<>(params.getPageNo(), params.getPageSize());
-
-        // 构造查询及排序方式
-        QueryWrapper<LbSubject> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+//        // 构建分页类
+//        IPage<LbCatalog> lbCatalogPage = new Page<>(params.getPageNo(), params.getPageSize());
+//
+//        // 构造查询及排序方式
+//        QueryWrapper<LbSubject> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         // 执行查询
-        lbCatalogPage = lbCatalogService.getLbCatalogPostList(lbCatalogPage);
-        R r=R.ok();
-        r.setPageResult(lbCatalogPage);
-        return r;
+        List<LbCatalog> lbCatalogPostList= lbCatalogService.getLbCatalogPostList();
+
+        return R.ok().setResult(lbCatalogPostList);
     }
 
 }

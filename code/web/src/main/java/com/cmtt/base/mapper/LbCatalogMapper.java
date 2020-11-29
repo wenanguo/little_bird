@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cmtt.base.entity.LbCatalog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 分类表 Mapper 接口
@@ -14,5 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface LbCatalogMapper extends BaseMapper<LbCatalog> {
 
-    public IPage<LbCatalog> getLbCatalogPostList(IPage<LbCatalog> page);
+    public List<LbCatalog> getLbCatalogPostList();
 }
