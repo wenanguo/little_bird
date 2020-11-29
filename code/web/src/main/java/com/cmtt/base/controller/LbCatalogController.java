@@ -52,7 +52,7 @@ public class LbCatalogController {
         return R.ok().setResult(lbCatalogPostList);
     }
 
-    @PostMapping("getCatalogPost")
+    @PostMapping("get_catalog_post")
     @ResponseBody
     @ApiOperation("获取当前分类文章列表")
     public R getCatalogPost(@RequestBody @Valid GetCatalogPostInputParam params){

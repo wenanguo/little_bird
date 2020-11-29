@@ -94,7 +94,7 @@ public class LbUserCollectController {
     /**
      * 获取我收藏的文章
      */
-    @PostMapping("/getMyCollect")
+    @PostMapping("/get_mycollect")
     @ResponseBody
     @ApiOperation("获取我收藏的文章")
     public R getMyCollect(@RequestBody @Valid PageInputParam params, @ApiIgnore Principal principal) throws Exception {

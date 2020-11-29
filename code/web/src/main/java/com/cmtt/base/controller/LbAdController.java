@@ -38,7 +38,7 @@ public class LbAdController {
     /**
      * 获取启动广告
      */
-    @PostMapping("getStartAd")
+    @PostMapping("get_start_ad")
     @ResponseBody
     @ApiOperation("获取启动广告")
     public R getStartAd(){
@@ -53,7 +53,7 @@ public class LbAdController {
     /**
      * 获取首页广告
      */
-    @PostMapping("getIndexAd")
+    @PostMapping("get_index_ad")
     @ResponseBody
     @ApiOperation("获取首页广告")
     public R getIndexAd(@RequestBody @Valid PageInputParam params){

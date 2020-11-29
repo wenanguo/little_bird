@@ -55,7 +55,7 @@ public class LbPeriodicalController {
     /**
      * 当期封面
      */
-    @PostMapping("getOne")
+    @PostMapping("get_one")
     @ResponseBody
     @ApiOperation("单期期刊数据")
     public R getOne(@RequestBody @Valid GetOneInputParam params){

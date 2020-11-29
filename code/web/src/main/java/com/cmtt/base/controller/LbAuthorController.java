@@ -40,7 +40,7 @@ public class LbAuthorController {
     /**
      * 获取作者及所属文章
      */
-    @PostMapping("getAuthorPost")
+    @PostMapping("get_author_post")
     @ResponseBody
     @ApiOperation("获取作者及所属文章")
     public R getAuthorPost(@RequestBody @Valid GetAuthorPostInputParam params){
