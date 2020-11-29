@@ -48,7 +48,7 @@ public class LbCatalogController {
 
         // 执行查询
         //List<LbCatalog> lbCatalogPostList= lbCatalogService.getLbCatalogPostList();
-        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getStatus, RC.B_NORMAL));
+        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getStatus, RC.B_NORMAL.code()));
 
         return R.ok().setResult(lbCatalogPostList);
     }
