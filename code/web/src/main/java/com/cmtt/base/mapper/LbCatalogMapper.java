@@ -17,4 +17,6 @@ import java.util.List;
 public interface LbCatalogMapper extends BaseMapper<LbCatalog> {
 
     public List<LbCatalog> getLbCatalogPostList();
+
+    public List<LbCatalog> getLbCatalogPostListByPeriodicalId(Integer periodicalId);
 }

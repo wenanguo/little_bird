@@ -9,6 +9,7 @@ import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.controller.param.PhoneLoginInputParam;
 import com.cmtt.base.entity.*;
+import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPeriodicalService;
 import com.cmtt.base.service.ILbPostService;
 import io.swagger.annotations.Api;
@@ -17,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -37,7 +41,7 @@ public class LbPeriodicalController {
     private ILbPeriodicalService lbPeriodicalService;
 
     @Autowired
-    private ILbPostService lbPostService;
+    private ILbCatalogService lbCatalogService;
 
     /**
      * 当期封面
@@ -63,10 +67,21 @@ public class LbPeriodicalController {
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, params.getId()));
 
         if(lbPeriodical!=null){
-            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()));
-            lbPeriodical.setLbPostList(list);
+//            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()));
+//            lbPeriodical.setLbPostList(list);
 
-            return R.ok().setResult(lbPeriodical);
+            List<LbCatalog> lbCatalogList = lbCatalogService.getLbCatalogPostListByPeriodicalId(lbPeriodical.getId());
+
+            Map<String, Object> map = new HashMap();
+            map.put("id", lbPeriodical.getId());
+            map.put("title", lbPeriodical.getTitle());
+            map.put("tcode", lbPeriodical.getTcode());
+            map.put("imgUrl", lbPeriodical.getImgUrl());
+            map.put("recommend", lbPeriodical.getRecommend());
+            map.put("tyear", lbPeriodical.getTyear());
+            map.put("lbCatalogList", lbCatalogList);
+
+            return R.ok().setResult(map);
         }else{
 
             return R.err().setMessage("找不当当前期刊数据");

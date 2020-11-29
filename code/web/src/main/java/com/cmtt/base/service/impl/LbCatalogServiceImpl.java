@@ -24,4 +24,9 @@ public class LbCatalogServiceImpl extends ServiceImpl<LbCatalogMapper, LbCatalog
     public List<LbCatalog> getLbCatalogPostList(){
         return this.baseMapper.getLbCatalogPostList();
     }
+
+
+    public List<LbCatalog> getLbCatalogPostListByPeriodicalId(Integer periodicalId){
+        return this.baseMapper.getLbCatalogPostListByPeriodicalId(periodicalId);
+    }
 }
