@@ -30,7 +30,7 @@ import java.security.Principal;
  * @since 2020-11-25
  */
 @RestController
-@RequestMapping("/api/lb-user_collect")
+@RequestMapping("/api/lb_user_collect")
 @Api(tags = "主页相关")
 public class LbUserCollectController {
 
