@@ -6,7 +6,7 @@ spring:
     username: springboot
     password: spring
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://586f85cf61241.sh.cdb.myqcloud.com:3759/example?serverTimezone=UTC
+    url: jdbc:mysql://586f85cf61241.sh.cdb.myqcloud.com:3759/example?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     # initialization-mode: ALWAYS
     #   Druid数据源配置
@@ -27,11 +27,11 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
-#    schema:
-#      - classpath:sql/department.sql
-#      - classpath:sql/employee.sql
+  #    schema:
+  #      - classpath:sql/department.sql
+  #      - classpath:sql/employee.sql
 
-#   热部署
+  #   热部署
   devtools:
     restart:
       enabled: true  #设置开启热部署
@@ -42,14 +42,25 @@ spring:
 
   thymeleaf:
     cache: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+    resources:
+      add-mappings: false
 
 
+  servlet:
+    multipart:
+      # 上传文件总的最大值
+      max-request-size: 10MB
+      # 单个文件的最大值
+      max-file-size: 10MB
 
-#redis
+
+  #redis
   # Redis服务器地址
   redis:
     host: 172.81.216.86
-  # Redis服务器连接端口
+    # Redis服务器连接端口
     port: 6379
     # 连接超时时间（毫秒）
     timeout: 0
@@ -76,7 +87,7 @@ mybatis-plus:
   config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置
   mapper-locations: classpath*:mapper/**/*.xml
-    # spring boot集成mybatis的方式打印sql
+  # spring boot集成mybatis的方式打印sql
 
 springfox:
   documentation:
@@ -86,6 +97,11 @@ springfox:
 logging:
   level:
     com.cmtt.base.mapper: debug
+
+common:
+  noauto: /api/auth/login,/api/db_doc,/api/sys_user/phone_login,/api/sys_user/check,/api/sys_user/register,/api/auth/2step-code,/api/account/sms,/druid/**,/upload,/multiUpload
+
+
 
 
 pagehelper:
