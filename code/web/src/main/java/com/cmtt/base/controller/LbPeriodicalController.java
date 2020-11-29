@@ -152,7 +152,18 @@ public class LbPeriodicalController {
         });
 
 
-        return R.ok().setResult(map);
+        List<Map<String, Object>> retList=new ArrayList<>();
+
+        for(String key : map.keySet()){
+
+            Map<String, Object> retMap = new HashMap();
+            retMap.put("year",key);
+            retMap.put("dataList",map.get(key));
+            retList.add(retMap);
+        }
+
+
+        return R.ok().setResult(retList);
 
 //
 //        // 构建分页类
