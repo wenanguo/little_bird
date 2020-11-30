@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Build') {
+        stage('Build java') {
             agent {
                 docker {
                     image 'maven:3-adoptopenjdk-14' 
@@ -12,16 +12,16 @@ pipeline {
                 sh 'cd code/web && mvn -B -DskipTests clean package'
             }
         }
-        // stage('BuildWeb') {
-        //     agent {
-        //         docker {
-        //             image 'node:13'
-        //         }
-        //     }
-        //     steps {                
-        //         sh 'cd code-front && npm install yarn && npm --registry=https://registry.npm.taobao.org install && yarn build'                
-        //     }
-        // }
+        stage('Build vue') {
+            agent {
+                docker {
+                    image 'node:13'
+                }
+            }
+            steps {                
+                sh 'cd vue && npm install yarn && npm --registry=https://registry.npm.taobao.org install && yarn build'                
+            }
+        }
         // stage('Test') {
         //     agent {
         //         docker {
@@ -56,6 +56,7 @@ pipeline {
                 //input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh "echo ok && cd code/web && docker build -t 118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER -f Dockerfile . && docker push 118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER"
                 sh "wget \"http://123.206.104.174:5000/update?images=118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER&project=little_bird_api\""
+                sh "echo ok && cd ../../vue && docker build -t 118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER -f Dockerfile-vue . && docker push 118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER"
                 //sh './jenkins/scripts/publish.sh' 
             }
         }
