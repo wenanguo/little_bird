@@ -99,7 +99,7 @@ logging:
     com.cmtt.base.mapper: debug
 
 common:
-  noauto: /api/auth/login,/api/db_doc,/api/sys_user/phone_login,/api/sys_user/check,/api/sys_user/register,/api/auth/2step-code,/api/account/sms,/druid/**,/upload,/multiUpload
+  noauto: /api/auth/login,/api/db_doc,/api/user/info,/api/sys_user/phone_login,/api/sys_user/check,/api/sys_user/register,/api/auth/2step-code,/api/account/sms,/druid/**,/upload,/multiUpload
 
 
 
