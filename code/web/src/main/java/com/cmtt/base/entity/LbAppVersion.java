@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbAppVersion对象", description="分类表")
-public class LbAppVersion implements Serializable {
+public class LbAppVersion extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

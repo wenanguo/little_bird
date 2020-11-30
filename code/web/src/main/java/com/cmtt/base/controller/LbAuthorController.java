@@ -1,18 +1,27 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.GetAuthorPostInputParam;
 import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.entity.LbAuthor;
 import com.cmtt.base.entity.LbPeriodical;
 import com.cmtt.base.entity.LbPost;
 import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.validated.GroupAdd;
+import com.cmtt.base.entity.validated.GroupDelete;
+import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbAuthorService;
 import com.cmtt.base.service.ILbPostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +39,8 @@ import java.util.List;
 @RequestMapping("/api/lb_author")
 @Api(tags = "主页相关")
 public class LbAuthorController {
+
+    private final Logger logger = LoggerFactory.getLogger(LbAuthorController.class);
 
     @Autowired
     private ILbAuthorService lbAuthorService;
@@ -58,5 +69,122 @@ public class LbAuthorController {
 
 
     }
+
+
+    /**
+     * 分页获取列表
+     */
+    @GetMapping("/list")
+    @ResponseBody
+    public R list(LbAuthor lbAuthor) {
+
+        try {
+
+// 构建分页类
+            IPage<LbAuthor> lbAuthorPage = new Page<>(lbAuthor.getPageNo(), lbAuthor.getPageSize());
+
+            // 构造查询及排序方式
+            QueryWrapper<LbAuthor> queryWrapper = new QueryWrapper<>(lbAuthor);
+            queryWrapper.orderBy(true, lbAuthor.getIsAsc(), lbAuthor.getIsSortField());
+
+            // 执行查询
+            lbAuthorPage = lbAuthorService.getBaseMapper().selectPage(lbAuthorPage, queryWrapper);
+
+            // 设置返回数据
+            return R.ok().setPageResult(lbAuthorPage);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+
+    /**
+     * 新增
+     */
+    @PostMapping("/add")
+    @ResponseBody
+    public R add(@RequestBody @Validated({GroupAdd.class})LbAuthor lbAuthor) {
+
+        try {
+            lbAuthorService.save(lbAuthor);
+
+            return R.ok().setMessage("新增成功");
+
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("新增失败");
+        }
+
+
+    }
+
+
+    /**
+     * 修改
+     */
+    @PutMapping("/edit")
+    @ResponseBody
+    public R edit(@RequestBody  @Validated({GroupEdit.class})LbAuthor lbAuthor) {
+
+
+        try {
+
+            lbAuthorService.updateById(lbAuthor);
+
+            return R.ok().setMessage("修改成功");
+
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("修改失败");
+        }
+    }
+
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public R delete(@RequestBody @Validated({GroupDelete.class})LbAuthor lbAuthor) {
+
+        try {
+
+            lbAuthorService.removeById(lbAuthor.getId());
+
+            return R.ok().setMessage("删除成功");
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("删除失败");
+        }
+    }
+
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/batchDelete")
+    @ResponseBody
+    public R batchDelete(@RequestBody List<Integer> ids) {
+        try {
+
+            lbAuthorService.removeByIds(ids);
+
+            return R.ok().setMessage("批量删除成功");
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("批量删除失败");
+        }
+    }
+
+
 
 }

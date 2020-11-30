@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbAuthor对象", description="作者表")
-public class LbAuthor implements Serializable {
+public class LbAuthor extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = "id", type = IdType.AUTO)

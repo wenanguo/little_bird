@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbCatalog对象", description="分类表")
-public class LbCatalog implements Serializable {
+public class LbCatalog extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -9,12 +9,18 @@ import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.controller.param.PhoneLoginInputParam;
 import com.cmtt.base.entity.*;
+import com.cmtt.base.entity.validated.GroupAdd;
+import com.cmtt.base.entity.validated.GroupDelete;
+import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPeriodicalService;
 import com.cmtt.base.service.ILbPostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,6 +42,7 @@ import java.util.Map;
 @Api(tags = "主页相关")
 public class LbPeriodicalController {
 
+    private final Logger logger = LoggerFactory.getLogger(LbPeriodicalController.class);
 
     @Autowired
     private ILbPeriodicalService lbPeriodicalService;
@@ -182,6 +189,127 @@ public class LbPeriodicalController {
 //        R r=R.ok().setPageResult(lbPeriodicalPage);
 //        return r;
     }
+
+
+
+
+
+
+    /**
+     * 分页获取列表
+     */
+    @GetMapping("/list")
+    @ResponseBody
+    public R list(LbPeriodical lbPeriodical) {
+
+        try {
+
+// 构建分页类
+            IPage<LbPeriodical> lbPeriodicalPage = new Page<>(lbPeriodical.getPageNo(), lbPeriodical.getPageSize());
+
+            // 构造查询及排序方式
+            QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>(lbPeriodical);
+            queryWrapper.orderBy(true, lbPeriodical.getIsAsc(), lbPeriodical.getIsSortField());
+
+            // 执行查询
+            lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);
+
+            // 设置返回数据
+            return R.ok().setPageResult(lbPeriodicalPage);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+
+    /**
+     * 新增
+     */
+    @PostMapping("/add")
+    @ResponseBody
+    public R add(@RequestBody @Validated({GroupAdd.class})LbPeriodical lbPeriodical) {
+
+        try {
+            lbPeriodicalService.save(lbPeriodical);
+
+            return R.ok().setMessage("新增成功");
+
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("新增失败");
+        }
+
+
+    }
+
+
+    /**
+     * 修改
+     */
+    @PutMapping("/edit")
+    @ResponseBody
+    public R edit(@RequestBody  @Validated({GroupEdit.class})LbPeriodical lbPeriodical) {
+
+
+        try {
+
+            lbPeriodicalService.updateById(lbPeriodical);
+
+            return R.ok().setMessage("修改成功");
+
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("修改失败");
+        }
+    }
+
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public R delete(@RequestBody @Validated({GroupDelete.class})LbPeriodical lbPeriodical) {
+
+        try {
+
+            lbPeriodicalService.removeById(lbPeriodical.getId());
+
+            return R.ok().setMessage("删除成功");
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("删除失败");
+        }
+    }
+
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/batchDelete")
+    @ResponseBody
+    public R batchDelete(@RequestBody List<Integer> ids) {
+        try {
+
+            lbPeriodicalService.removeByIds(ids);
+
+            return R.ok().setMessage("批量删除成功");
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("批量删除失败");
+        }
+    }
+
+
 
 
 }

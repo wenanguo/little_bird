@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbAd对象", description="广告表")
-public class LbAd implements Serializable {
+public class LbAd extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

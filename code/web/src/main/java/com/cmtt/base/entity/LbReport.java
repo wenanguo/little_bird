@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="LbReport对象", description="举报表")
-public class LbReport implements Serializable {
+public class LbReport extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

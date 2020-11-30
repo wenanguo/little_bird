@@ -8,13 +8,20 @@ import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.entity.LbPeriodical;
 import com.cmtt.base.entity.LbSubject;
 import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.validated.GroupAdd;
+import com.cmtt.base.entity.validated.GroupDelete;
+import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -28,6 +35,8 @@ import javax.validation.Valid;
 @RequestMapping("/api/lb_subject")
 @Api(tags = "主页相关")
 public class LbSubjectController {
+
+    private final Logger logger = LoggerFactory.getLogger(LbSubjectController.class);
 
     @Autowired
     private ILbSubjectService lbSubjectService;
@@ -52,4 +61,123 @@ public class LbSubjectController {
 
         return R.ok().setPageResult(lbSubjectIPage);
     }
+
+
+
+    /**
+     * 分页获取列表
+     */
+    @GetMapping("/list")
+    @ResponseBody
+    public R list(LbSubject lbSubject) {
+
+        try {
+
+// 构建分页类
+            IPage<LbSubject> lbSubjectPage = new Page<>(lbSubject.getPageNo(), lbSubject.getPageSize());
+
+            // 构造查询及排序方式
+            QueryWrapper<LbSubject> queryWrapper = new QueryWrapper<>(lbSubject);
+            queryWrapper.orderBy(true, lbSubject.getIsAsc(), lbSubject.getIsSortField());
+
+            // 执行查询
+            lbSubjectPage = lbSubjectService.getBaseMapper().selectPage(lbSubjectPage, queryWrapper);
+
+            // 设置返回数据
+            return R.ok().setPageResult(lbSubjectPage);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+
+    /**
+     * 新增
+     */
+    @PostMapping("/add")
+    @ResponseBody
+    public R add(@RequestBody @Validated({GroupAdd.class})LbSubject lbSubject) {
+
+        try {
+            lbSubjectService.save(lbSubject);
+
+            return R.ok().setMessage("新增成功");
+
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("新增失败");
+        }
+
+
+    }
+
+
+    /**
+     * 修改
+     */
+    @PutMapping("/edit")
+    @ResponseBody
+    public R edit(@RequestBody  @Validated({GroupEdit.class})LbSubject lbSubject) {
+
+
+        try {
+
+            lbSubjectService.updateById(lbSubject);
+
+            return R.ok().setMessage("修改成功");
+
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("修改失败");
+        }
+    }
+
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public R delete(@RequestBody @Validated({GroupDelete.class})LbSubject lbSubject) {
+
+        try {
+
+            lbSubjectService.removeById(lbSubject.getId());
+
+            return R.ok().setMessage("删除成功");
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("删除失败");
+        }
+    }
+
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/batchDelete")
+    @ResponseBody
+    public R batchDelete(@RequestBody List<Integer> ids) {
+        try {
+
+            lbSubjectService.removeByIds(ids);
+
+            return R.ok().setMessage("批量删除成功");
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("批量删除失败");
+        }
+    }
+
+
+
 }
