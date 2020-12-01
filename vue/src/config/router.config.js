@@ -345,7 +345,7 @@ export const asyncRouterMap = [
           {
             path: '/other/list',
             component: RouteView,
-            meta: { title: '业务布局', icon: 'layout', permission: [ 'dashboard' ] },
+            meta: { title: '业务布局', icon: 'layout', permission: [ 'support' ] },
             redirect: '/other/list/tree-list',
             children: [
               {
