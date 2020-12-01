@@ -50,6 +50,9 @@ public class LbPeriodicalController {
     @Autowired
     private ILbCatalogService lbCatalogService;
 
+    @Autowired
+    private ILbPostService lbPostService;
+
     /**
      * 当期封面
      */
@@ -58,6 +61,10 @@ public class LbPeriodicalController {
     @ApiOperation("当期封面信息")
     public R current(){
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getRecommend, 1));
+
+        List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()));
+
+        lbPeriodical.setLbPostList(lbPostList);
 
         return R.ok().setResult(lbPeriodical);
     }
