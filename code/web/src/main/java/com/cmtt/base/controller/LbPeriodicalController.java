@@ -137,9 +137,12 @@ public class LbPeriodicalController {
         QueryWrapper<LbPeriodical> qw = new QueryWrapper<>();
         qw.in("id", resultList);
 
-        List<LbPeriodical> list = lbPeriodicalService.getLbPostList(resultList);
+        if(resultList.size()>0){
+            List<LbPeriodical> list = lbPeriodicalService.getLbPostList(resultList);
 
-        lbPeriodicalPage.setRecords(list);
+            lbPeriodicalPage.setRecords(list);
+        }
+
 
         return R.ok().setResult(lbPeriodicalPage);
 
