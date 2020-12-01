@@ -139,7 +139,9 @@ public class LbPeriodicalController {
 
         List<LbPeriodical> list = lbPeriodicalService.getLbPostList(resultList);
 
-        return R.ok().setResult(list);
+        lbPeriodicalPage.setRecords(list);
+
+        return R.ok().setResult(lbPeriodicalPage);
 
         // 执行查询
         //lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);
