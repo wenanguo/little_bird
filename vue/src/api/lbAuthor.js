@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 
 const api = {
-  add: '/base/lb-author/add',
-  edit: '/base/lb-author/edit',
-  list: '/base/lb-author/list',
-  listAll: '/base/lb-author/listAll',
-  batchDel: '/base/lb-author/batchDelete',
-  del: '/base/lb-author/delete'
+  add: '/lb_author/add',
+  edit: '/lb_author/edit',
+  list: '/lb_author/list',
+  listAll: '/lb_author/listAll',
+  batchDel: '/lb_author/batchDelete',
+  del: '/lb_author/delete'
 }
 
 export default api

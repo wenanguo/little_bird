@@ -21,10 +21,12 @@ import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
 
+import vcolorpicker from 'vcolorpicker'
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
 Vue.use(VueAxios)
+Vue.use(vcolorpicker)
 // use pro-layout components
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)

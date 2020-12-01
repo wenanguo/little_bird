@@ -19,6 +19,9 @@
         <a-form-item label="">
           <a-input v-decorator="['tcolor', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
+        <a-form-item label="分割线颜色">
+          <colorPicker v-model="color" />
+        </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
@@ -40,7 +43,7 @@
 
 <script>
     import pick from 'lodash.pick'
-
+    import vcolorpicker from 'vcolorpicker'
     // 表单字段
     const fields = [
         'id',
@@ -52,6 +55,7 @@
     ]
 
     export default {
+        components: { vcolorpicker },
         props: {
             visible: {
                 type: Boolean,
@@ -82,6 +86,7 @@
                 }
             }
             return {
+                color: '#eeeeee',
                 form: this.$form.createForm(this)
             }
         },
