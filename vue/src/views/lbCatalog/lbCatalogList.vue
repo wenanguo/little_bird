@@ -102,7 +102,7 @@
             sorter: true,
             dataIndex: 'title'
         }, {
-            title: '',
+            title: '分割线颜色',
             sorter: true,
             dataIndex: 'tcolor'
         }, {
