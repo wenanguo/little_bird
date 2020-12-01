@@ -35,6 +35,9 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "期刊ID")
     private Integer periodicalId;
 
+    @ApiModelProperty(value = "期刊名称")
+    private String periodicalTitle;
+
     @ApiModelProperty(value = "标题")
     private String title;
 

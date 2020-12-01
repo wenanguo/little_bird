@@ -12,6 +12,7 @@
         <collection property="lbPostList" ofType="com.cmtt.base.entity.LbPost" column="post_catalog_id">
             <id property="id" column="pid"></id>
             <result property="periodicalId" column="periodical_id"></result>
+            <result property="periodicalTitle" column="periodical_title"></result>
             <result property="title" column="ptitle"></result>
             <result property="description" column="description"></result>
             <result property="postSubjectId" column="post_subject_id"></result>
@@ -41,7 +42,7 @@
     <select id="getLbCatalogPostList" resultMap="resultLbCatalogMap" parameterType="int">
 
 select a.id,a.title,a.tcolor,a.status,a.update_time,a.create_time,
-b.id as pid,b.periodical_id ,b.title as ptitle,b.description,b.post_subject_id,b.post_subject,
+b.id as pid,b.periodical_id ,b.periodical_title,b.title as ptitle,b.description,b.post_subject_id,b.post_subject,
 b.post_catalog,b.post_catalog_id,b.tcolor,b.show_type,b.img_url as pimg_url,b.link_url,b.theme_info,b.author,b.post_order,
 b.published_at,b.praise_count,b.record_count,b.read_count,b.recommend as precommend,b.status as pstatus,
 b.update_time as pupdate_time,b.create_time as pcreate_time
@@ -52,7 +53,7 @@ b.update_time as pupdate_time,b.create_time as pcreate_time
     <select id="getLbCatalogPostListByPeriodicalId" resultMap="resultLbCatalogMap" parameterType="int">
 
 select a.id,a.title,a.tcolor,a.status,a.update_time,a.create_time,
-b.id as pid,b.periodical_id ,b.title as ptitle,b.description,b.post_subject_id,b.post_subject,
+b.id as pid,b.periodical_id ,b.periodical_title,b.title as ptitle,b.description,b.post_subject_id,b.post_subject,
 b.post_catalog,b.post_catalog_id,b.tcolor,b.show_type,b.img_url as pimg_url,b.link_url,b.theme_info,b.author,b.post_order,
 b.published_at,b.praise_count,b.record_count,b.read_count,b.recommend as precommend,b.status as pstatus,
 b.update_time as pupdate_time,b.create_time as pcreate_time
