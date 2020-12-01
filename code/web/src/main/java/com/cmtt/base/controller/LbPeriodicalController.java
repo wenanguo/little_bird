@@ -144,7 +144,7 @@ public class LbPeriodicalController {
         }
 
 
-        return R.ok().setResult(lbPeriodicalPage);
+        return R.ok().setPageResult(lbPeriodicalPage);
 
         // 执行查询
         //lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);
