@@ -1,9 +1,11 @@
 package com.cmtt.base.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.entity.LbPeriodical;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +18,5 @@ import java.util.List;
  * @since 2020-11-20
  */
 public interface ILbPeriodicalService extends IService<LbPeriodical> {
-    public IPage<LbPeriodical> getLbPostList(IPage<LbPeriodical> page);
+    public List<LbPeriodical> getLbPostList(List<Integer> ids);
 }

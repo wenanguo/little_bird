@@ -113,25 +113,43 @@ public class LbPeriodicalController {
     @PostMapping("index_post")
     @ResponseBody
     @ApiOperation("主页文章列表")
-    public R index_post(@RequestBody @Valid LbPeriodical lbPeriodical){
-        //List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100));
+    public R index_post(@RequestBody @Valid PageInputParam params){
+
 
         // 构建分页类
-        IPage<LbPeriodical> lbPeriodicalPage = new Page<>(lbPeriodical.getPageNo(), lbPeriodical.getPageSize());
+        IPage<LbPeriodical> lbPeriodicalPage = new Page<>(params.getPageNo(), params.getPageSize());
 
         // 构造查询及排序方式
-        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>(lbPeriodical);
-        queryWrapper.orderBy(true, lbPeriodical.getIsAsc(), lbPeriodical.getIsSortField());
+        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+
+        lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100));
+
+
+
+        //结果集
+        List<Integer> resultList = new ArrayList<>();
+        //遍历集合取值
+        lbPeriodicalPage.getRecords().forEach(item->{
+            resultList.add(item.getId());
+        });
+        //条件构造器in上手使用
+        QueryWrapper<LbPeriodical> qw = new QueryWrapper<>();
+        qw.in("id", resultList);
+
+        List<LbPeriodical> list = lbPeriodicalService.getLbPostList(resultList);
+
+        return R.ok().setResult(list);
 
         // 执行查询
         //lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);
 
 
 
-        lbPeriodicalPage = lbPeriodicalService.getLbPostList(lbPeriodicalPage);
-        R r=R.ok();
-        r.setPageResult(lbPeriodicalPage);
-        return r;
+//        lbPeriodicalPage = lbPeriodicalService.getLbPostList(lbPeriodicalPage);
+//        R r=R.ok();
+//        r.setPageResult(lbPeriodicalPage);
+//        return r;
     }
 
 
