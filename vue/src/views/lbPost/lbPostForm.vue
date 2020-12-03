@@ -1,11 +1,12 @@
 <template>
   <a-modal
     :title="title"
-    :width="640"
+    :width="800"
     :visible="visible"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
     @cancel="() => { $emit('cancel') }"
+    :dialog-style="{ top: '20px'}"
   >
     <a-spin :spinning="loading">
       <a-form :form="form" v-bind="formLayout">
@@ -17,19 +18,21 @@
           <a-input v-decorator="['periodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="标题">
-          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]" />
         </a-form-item>
         <a-form-item label="描述">
-          <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" />
         </a-form-item>
         <a-form-item label="栏目ID">
           <a-input v-decorator="['postSubjectId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="栏目">
-          <a-input v-decorator="['postSubject', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-select v-decorator="['postSubject', {rules: [{required: true, min: 1, message: '请选择栏目！'}]}]">
+          </a-select>
         </a-form-item>
         <a-form-item label="分类">
-          <a-input v-decorator="['postCatalog', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-select v-decorator="['postCatalog', {rules: [{required: true, min: 1, message: '请选择分类！'}]}]">
+          </a-select>
         </a-form-item>
         <a-form-item label="所属分类">
           <a-input v-decorator="['postCatalogId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
@@ -37,8 +40,8 @@
         <a-form-item label="分类颜色">
           <a-input v-decorator="['tcolor', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
-        <a-form-item label="显示样式(1上下图文，0左右图文，2广告类型，3无图)">
-          <a-input v-decorator="['showType', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="显示样式">
+          <a-input v-decorator="['showType', {rules: [{required: true, min: 1, message: '请输入0-3其中一个的样式类型！'}]}]" placeholder="0左右图文，1上下图文，2广告类型，3无图"/>
         </a-form-item>
         <a-form-item label="图片地址">
           <a-input v-decorator="['imgUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
@@ -50,7 +53,17 @@
           <a-input v-decorator="['themeInfo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="作者">
-          <a-input v-decorator="['author', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-select show-search mode="multiple" v-decorator="['author', {rules: [{required: true, min: 1, message: '请选择作者！'}]}]" placeholder="请选择作者">
+            <a-select-option value="jack">
+              Jack
+            </a-select-option>
+            <a-select-option value="lucy">
+              Lucy
+            </a-select-option>
+            <a-select-option value="tom">
+              Tom
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="排序">
           <a-input v-decorator="['postOrder', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
@@ -69,7 +82,14 @@
           <a-input v-decorator="['readCount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="是否推荐">
-          <a-input v-decorator="['recommend', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-radio-group name="radioGroup" :default-value="1">
+            <a-radio :value="1">
+              是
+            </a-radio>
+            <a-radio :value="2">
+              否
+            </a-radio>
+          </a-radio-group>
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
@@ -85,6 +105,16 @@
           <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
           </a-date-picker>
         </a-form-item>
+        <a-form-item label="文章内容">
+          <div class="editBox">
+            <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+          </div>
+        </a-form-item>
+        <div class="phone-view">
+          <div class="ql-container ql-snow">
+            <div class="ql-editor" v-html="this.content"></div>
+          </div>
+        </div>
       </a-form>
     </a-spin>
   </a-modal>
@@ -92,7 +122,9 @@
 
 <script>
     import pick from 'lodash.pick'
-
+    import { quillEditor } from 'vue-quill-editor'
+    import quillConfig from './quill-config.js'
+    import AFormItem from 'ant-design-vue/es/form/FormItem'
     // 表单字段
     const fields = [
         'id',
@@ -121,6 +153,7 @@
     ]
 
     export default {
+        components: { AFormItem, quillEditor },
         props: {
             visible: {
                 type: Boolean,
@@ -151,7 +184,40 @@
                 }
             }
             return {
-                form: this.$form.createForm(this)
+                form: this.$form.createForm(this),
+                content: null,
+                editorOption: {
+                  modules: {
+                    toolbar: {
+                      container: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote', 'code-block'],
+                        [{ 'header': 1 }, { 'header': 2 }],
+                        // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        // [{ 'script': 'sub' }, { 'script': 'super' }],
+                        [{ 'indent': '-1' }, { 'indent': '+1' }],
+                        // [{ 'direction': 'rtl' }],
+                        // [{ 'size': ['small', false, 'large', 'huge'] }],
+                        // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        // [{ 'font': [] }],
+                        [{ 'align': [] }],
+                        // ['clean'],
+                        ['link', 'image', 'video'],
+                        ['sourceEditor', 'money']
+                      ],
+                      handlers: {
+                        shadeBox: null,
+                        sourceEditor: function () {
+                          alert('方法1')
+                        },
+                        money: function () {
+                          alert('方法2')
+                        }
+                      }
+                    }
+                  }
+                }
             }
         },
         created () {
@@ -164,6 +230,61 @@
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
             })
+        },
+        mounted () {
+          quillConfig.initButton()
         }
     }
 </script>
+<style>
+  .editBox .ql-editor{
+    height:30vw;
+  }
+  .phone-view{
+    background: url("../../assets/phone-bg.png") no-repeat;
+    background-size: 100%;
+    width: 20vw;
+    height: 40vw;
+    margin-top: -20vw;
+    padding: 5.5vw 0;
+    position: fixed;
+    top: 50%;
+    right: 20px;
+  }
+  .phone-view .ql-container.ql-snow{
+    border:0;
+  }
+  .phone-view .ql-editor{
+    width:14.5vw;
+    margin: 0 auto;
+    height:25.5vw;
+  }
+  .ql-sourceEditor{
+    background:url("../../assets/image-text.png") no-repeat center !important;
+    background-size: 70% 70% !important;
+  }
+  .ql-money{
+    background:url("../../assets/money.png") no-repeat center !important;
+    background-size: 70% 70% !important;
+  }
+  .ql-editor blockquote{
+    background: rgba(229, 230, 231, 0.2);
+    border: 0!important;
+    margin: 0!important;
+    padding:0 10px 0 10px;
+  }
+  .ql-snow .ql-editor pre.ql-syntax{
+    background:url('../../assets/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
+    background-size: 10%;
+    color: #3F3E4C;
+    border: 0!important;
+    margin: 0!important;
+    padding:10px;
+    border-radius: 0;
+    font-size:1.2em;
+    text-align: right;
+  }
+  /*.ant-modal{*/
+  /*  width: 100% !important;*/
+  /*}*/
+</style>
