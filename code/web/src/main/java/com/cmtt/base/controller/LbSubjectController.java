@@ -3,14 +3,15 @@ package com.cmtt.base.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
-import com.cmtt.base.entity.LbPeriodical;
-import com.cmtt.base.entity.LbSubject;
-import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.service.ILbSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,25 +42,40 @@ public class LbSubjectController {
     @Autowired
     private ILbSubjectService lbSubjectService;
 
+    @Autowired
+    private ILbPostService lbPostService;
+
     /**
      * 主页
      */
-    @PostMapping("list")
+    @PostMapping("/get_one")
     @ResponseBody
-    @ApiOperation("栏目文章列表")
-    public R list(@RequestBody @Valid PageInputParam params){
+    @ApiOperation("获取单个栏目文章列表")
+    public R list(@RequestBody @Valid GetOneInputParam params){
 
-        // 构建分页类
-        IPage<LbSubject> lbSubjectIPage = new Page<>(params.getPageNo(), params.getPageSize());
+//        // 构建分页类
+//        IPage<LbSubject> lbSubjectIPage = new Page<>(params.getPageNo(), params.getPageSize());
+//
+//        // 构造查询及排序方式
+//        QueryWrapper<LbSubject> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+//
+//        // 执行查询
+//        lbSubjectIPage = lbSubjectService.getLbSubjectPostList(lbSubjectIPage);
+//
+//        return R.ok().setPageResult(lbSubjectIPage);
 
-        // 构造查询及排序方式
-        QueryWrapper<LbSubject> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
-        // 执行查询
-        lbSubjectIPage = lbSubjectService.getLbSubjectPostList(lbSubjectIPage);
+        LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId,params.getId()));
 
-        return R.ok().setPageResult(lbSubjectIPage);
+        if(lbSubject!=null){
+            List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostSubjectId, lbSubject.getId()));
+            lbSubject.setLbPostList(lbPosts);
+        }
+
+
+
+        return R.ok().setResult(lbSubject);
     }
 
 
