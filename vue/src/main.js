@@ -10,7 +10,10 @@ import i18n from './locales'
 import { VueAxios } from './utils/request'
 import ProLayout, { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import themePluginConfig from '../config/themePluginConfig'
-
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 // mock
 // WARNING: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.
 import './mock'
@@ -25,7 +28,7 @@ Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
 Vue.use(VueAxios)
-Vue.use(vcolorpicker)
+Vue.use(vcolorpicker, VueQuillEditor)
 // use pro-layout components
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
