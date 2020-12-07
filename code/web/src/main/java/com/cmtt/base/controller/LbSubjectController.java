@@ -11,6 +11,7 @@ import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.service.ILbSubjectService;
 import io.swagger.annotations.Api;
@@ -45,6 +46,9 @@ public class LbSubjectController {
     @Autowired
     private ILbPostService lbPostService;
 
+    @Autowired
+    private ILbCatalogService lbCatalogService;
+
     /**
      * 主页
      */
@@ -69,10 +73,12 @@ public class LbSubjectController {
         LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId,params.getId()));
 
         if(lbSubject!=null){
+            LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getId, lbSubject.getCatalogId()));
+            lbSubject.setLbCatalog(lbCatalog);
+
             List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostSubjectId, lbSubject.getId()));
             lbSubject.setLbPostList(lbPosts);
         }
-
 
 
         return R.ok().setResult(lbSubject);
