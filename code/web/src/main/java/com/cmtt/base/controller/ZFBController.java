@@ -128,6 +128,7 @@ public class ZFBController {
      */
     @PostMapping("alipay_trade_app_pay")
     @ResponseBody
+    @ApiOperation("创建支付宝订单")
     public R alipay_trade_app_pay(AlipayTradeAppPayInputParam params, HttpServletRequest httpRequest){
 
         String outtradeno=String.valueOf(System.currentTimeMillis());
