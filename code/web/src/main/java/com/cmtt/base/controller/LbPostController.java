@@ -3,12 +3,11 @@ package com.cmtt.base.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
-import com.cmtt.base.entity.Article;
-import com.cmtt.base.entity.LbPeriodical;
-import com.cmtt.base.entity.LbPost;
-import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
@@ -67,6 +66,21 @@ public class LbPostController {
         R r=R.ok();
         r.setPageResult(lbPostPage);
         return r;
+    }
+
+
+
+    /**
+     * 文章详情
+     */
+    @PostMapping("detail")
+    @ResponseBody
+    @ApiOperation("文章详情")
+    public R detail(@RequestBody @Valid GetOneInputParam params){
+
+        // 执行查询
+        LbPost one = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+        return R.ok().setResult(one);
     }
 
 
