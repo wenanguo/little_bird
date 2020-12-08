@@ -13,14 +13,19 @@
         <a-form-item v-show="model && model.id > 0" label="编号">
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
-        <a-form-item label="标题">
-          <a-input v-decorator="['name', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="作者名">
+          <a-input v-decorator="['name', {rules: [{required: true, min: 1, message: '请输入作者名！'}]}]" />
         </a-form-item>
         <a-form-item label="介绍">
-          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入作者介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="图片">
-          <a-input v-decorator="['imgUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="上传作者头像">
+          <a-upload
+            name="file"
+            :multiple="true"
+          >
+            <a-button> <a-icon type="upload" />点击选择</a-button>
+          </a-upload>
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['状态', { initialValue: 100 }]">

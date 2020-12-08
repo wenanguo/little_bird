@@ -13,17 +13,25 @@
         <a-form-item v-show="model && model.id > 0" label="编号">
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
-        <a-form-item label="标题">
-          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="期刊号">
+          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入期刊号！'}]}]" />
         </a-form-item>
         <a-form-item label="期刊编号">
-          <a-input v-decorator="['tcode', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['tcode', {rules: [{required: true, min: 1, message: '请输入期刊编号！'}]}]" />
         </a-form-item>
-        <a-form-item label="期刊封面URL">
-          <a-input v-decorator="['imgUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="期刊封面上传">
+          <a-upload
+            name="file"
+            :multiple="true"
+          >
+            <a-button> <a-icon type="upload" />点击选择</a-button>
+          </a-upload>
         </a-form-item>
-        <a-form-item label="推荐期刊【1不推荐，2推荐】">
-          <a-input v-decorator="['recommend', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="期刊推荐">
+          <a-radio-group>
+            <a-radio :value="100">是</a-radio>
+            <a-radio :value="101">否</a-radio>
+          </a-radio-group>
         </a-form-item>
         <a-form-item label="所属年份">
           <a-input v-decorator="['tyear', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
