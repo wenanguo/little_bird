@@ -110,7 +110,7 @@ public class AliPayController {
         boolean flag = AlipaySignature.rsaCheckV1(params, aliPayService.getAlipayPublicKey(), aliPayService.getCharset(), aliPayService.getSignType());
 
 
-        System.out.println("==========支付宝callback1======");
+        System.out.println("==========支付宝callback2======");
         System.out.println(flag);
         System.out.println(params);
         System.out.println("=============================");
