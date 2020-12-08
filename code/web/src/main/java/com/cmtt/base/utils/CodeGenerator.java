@@ -1,6 +1,11 @@
 package com.cmtt.base.utils;
 
-
+import cn.smallbun.screw.core.Configuration;
+import cn.smallbun.screw.core.engine.EngineConfig;
+import cn.smallbun.screw.core.engine.EngineFileType;
+import cn.smallbun.screw.core.engine.EngineTemplateType;
+import cn.smallbun.screw.core.execute.DocumentationExecute;
+import cn.smallbun.screw.core.process.ProcessConfig;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -10,10 +15,15 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import javax.sql.DataSource;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 
@@ -42,6 +52,27 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 
+        /**
+         * 变量定义
+         */
+
+        String driver = null;
+        String url = null;
+        String username = null;
+        String password = null;
+
+
+        Resource resource = new ClassPathResource("application.yml");
+        YamlPropertiesFactoryBean yamlBean = new YamlPropertiesFactoryBean();
+        yamlBean.setResources(resource);
+        Properties properties = yamlBean.getObject();
+        if (properties != null) {
+            driver = properties.getProperty("spring.datasource.driver-class-name");
+            url = properties.getProperty("spring.datasource.url");
+            username = properties.getProperty("spring.datasource.username");
+            password = properties.getProperty("spring.datasource.password");
+        }
+
 
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -57,11 +88,11 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://586f85cf61241.sh.cdb.myqcloud.com:3759/example?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl(url);
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("springboot");
-        dsc.setPassword("spring");
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -98,15 +129,37 @@ public class CodeGenerator {
         });
 
 
-        // 自定义 xxListIndex.html 生成
-//        focList.add(new FileOutConfig("/templatesMybatis/list.html.ftl") {
-//            @Override
-//            public String outputFile(TableInfo tableInfo) {
-//                // 自定义输入文件名称
-//                return projectPath + "/src/main/resources/templates/" +tableInfo.getEntityName()+"/"+ tableInfo.getEntityName() + "ListIndex.html";
-//            }
-//        });
-//        cfg.setFileOutConfigList(focList);
+        // 自定义 vuelist.vue 生成
+        focList.add(new FileOutConfig("/templatesMybatis/vuelist.vue.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输入文件名称
+                return projectPath + "/web/src/main/resources/templates/" +tableInfo.getEntityPath()+"/"+ tableInfo.getEntityPath() + "List.vue";
+            }
+        });
+
+        // 自定义 vueform.vue 生成
+        focList.add(new FileOutConfig("/templatesMybatis/vueform.vue.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输入文件名称
+                return projectPath + "/web/src/main/resources/templates/" +tableInfo.getEntityPath()+"/"+ tableInfo.getEntityPath() + "Form.vue";
+            }
+        });
+
+        // 自定义 vueapi.js 生成
+        focList.add(new FileOutConfig("/templatesMybatis/vueapi.js.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输入文件名称
+                return projectPath + "/web/src/main/resources/templates/" +tableInfo.getEntityPath()+"/"+ tableInfo.getEntityPath() + ".js";
+            }
+        });
+
+
+
+
+        cfg.setFileOutConfigList(focList);
 
 
 
@@ -133,12 +186,12 @@ public class CodeGenerator {
 
         // 配置自定义输出模板
         //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        // templateConfig.setEntity("templates/entity2.java");
+        templateConfig.setEntity("templatesMybatis/entity.java");
         // templateConfig.setService();
-        // templateConfig.setController();
+        templateConfig.setController("templatesMybatis/controller.java");
 
 
-//        templateConfig.setService("/templatesMybatis/service.java");
+        templateConfig.setService("/templatesMybatis/service.java");
 //        templateConfig.setServiceImpl(null);
 
         templateConfig.setXml(null);
@@ -148,9 +201,13 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        //strategy.setSuperEntityClass("你自己的父类实体,没有就不用设置!");
+        strategy.setSuperEntityClass("com.cmtt.base.entity.BaseEntity");
+        strategy.setChainModel(true);
+        strategy.setEntityLombokModel(true);
+        strategy.setEntitySerialVersionUID(true);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
+
         // 公共父类
         //strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
@@ -162,9 +219,95 @@ public class CodeGenerator {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
 
-        // 更新数据库设计文档
-        String[] arr={""};
-        DBDocGenerator.main(arr);
+
+        //生成数据库文档
+        String dbdoc_path=projectPath+"/web/src/main/resources/templates/";
+        String[] ignoreArr={"article"};
+        //generDoc(url,username,password,dbdoc_path,ignoreArr);
     }
 
+
+
+    /**
+     * 数据库文档生成
+     * @param url 数据库连接
+     * @param username 用户名
+     * @param password 密码
+     * @param filePath 生成路径
+     * @param ignoreArr 忽略表名
+     * @return
+     */
+    public static boolean generDoc(String url,String username,String password,String filePath,String[] ignoreArr) {
+
+
+        //数据源
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        hikariConfig.setJdbcUrl(url);
+        hikariConfig.setUsername(username);
+        hikariConfig.setPassword(password);
+        //设置可以获取tables remarks信息
+        hikariConfig.addDataSourceProperty("useInformationSchema", "true");
+        hikariConfig.setMinimumIdle(2);
+        hikariConfig.setMaximumPoolSize(5);
+        DataSource dataSource = new HikariDataSource(hikariConfig);
+        //生成配置
+        EngineConfig engineConfig = EngineConfig.builder()
+                //生成文件路径
+                .fileOutputDir(filePath)
+                //打开目录
+                .openOutputDir(true)
+                //文件类型
+                .fileType(EngineFileType.HTML)
+                //生成模板实现
+                .produceType(EngineTemplateType.freemarker)
+                //自定义文件名称
+                .fileName("db-doc").build();
+
+        //忽略表
+        ArrayList<String> ignoreTableName = new ArrayList<>();
+        ignoreTableName.add("test_user");
+        ignoreTableName.add("test_group");
+
+        for (String tablename:ignoreArr) {
+            ignoreTableName.add(tablename);
+        }
+        //忽略表前缀
+        ArrayList<String> ignorePrefix = new ArrayList<>();
+        ignorePrefix.add("test_");
+        //忽略表后缀
+        ArrayList<String> ignoreSuffix = new ArrayList<>();
+        ignoreSuffix.add("_test");
+        ProcessConfig processConfig = ProcessConfig.builder()
+                //指定生成逻辑、当存在指定表、指定表前缀、指定表后缀时，将生成指定表，其余表不生成、并跳过忽略表配置
+                //根据名称指定表生成
+                .designatedTableName(new ArrayList<>())
+                //根据表前缀生成
+                .designatedTablePrefix(new ArrayList<>())
+                //根据表后缀生成
+                .designatedTableSuffix(new ArrayList<>())
+                //忽略表名
+                .ignoreTableName(ignoreTableName)
+                //忽略表前缀
+                .ignoreTablePrefix(ignorePrefix)
+                //忽略表后缀
+                .ignoreTableSuffix(ignoreSuffix).build();
+        //配置
+        Configuration config = Configuration.builder()
+                //版本
+                .version("1.0.0")
+                //描述
+                .description("数据库设计文档生成")
+                //数据源
+                .dataSource(dataSource)
+                //生成配置
+                .engineConfig(engineConfig)
+                //生成配置
+                .produceConfig(processConfig)
+                .build();
+        //执行生成
+        new DocumentationExecute(config).execute();
+
+        return true;
+    }
 }

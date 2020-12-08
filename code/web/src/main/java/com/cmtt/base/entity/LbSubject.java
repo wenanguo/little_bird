@@ -58,5 +58,7 @@ public class LbSubject extends BaseEntity implements Serializable {
     @TableField(exist = false)
     private List<LbPost> lbPostList;
 
+    @TableField(exist = false)
+    private LbCatalog lbCatalog;
 
 }
