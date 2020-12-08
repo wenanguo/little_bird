@@ -53,8 +53,16 @@ const constantRouterComponents = {
   'NotificationSettings': () => import('@/views/account/settings/Notification'),
 
   // 'TestWork': () => import(/* webpackChunkName: "TestWork" */ '@/views/dashboard/TestWork')
-
-  'ArticleList': () => import('@/views/article/ArticleList')
+  'ArticleList': () => import('@/views/article/ArticleList'),
+  'LbAdList': () => import('@/views/lbAd/lbAdList'),
+  'LbAppVersionList': () => import('@/views/lbAppVersion/lbAppVersionList'),
+  'LbAuthorList': () => import('@/views/lbAuthor/lbAuthorList'),
+  'LbCatalogList': () => import('@/views/lbCatalog/lbCatalogList'),
+  'LbSubjectList': () => import('@/views/lbSubject/lbSubjectList'),
+  'LbPeriodicalList': () => import('@/views/lbPeriodical/lbPeriodicalList'),
+  'LbPostList': () => import('@/views/lbPost/lbPostList'),
+  'LbReportList': () => import('@/views/lbReport/lbReportList'),
+  'LbUserCollectList': () => import('@/views/lbUserCollect/lbUserCollectList')
 }
 
 // 前端未找到页面路由（固定不用改）
