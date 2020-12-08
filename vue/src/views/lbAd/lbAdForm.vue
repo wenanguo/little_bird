@@ -27,9 +27,9 @@
             <a-button> <a-icon type="upload" />点击选择</a-button>
           </a-upload>
         </a-form-item>
-<!--        <a-form-item label="所属期刊Id">-->
-<!--          <a-input v-decorator="['lbPeriodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />-->
-<!--        </a-form-item>-->
+        <!--        <a-form-item label="所属期刊Id">-->
+        <!--          <a-input v-decorator="['lbPeriodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />-->
+        <!--        </a-form-item>-->
         <a-form-item label="所属期刊">
           <a-input />
         </a-form-item>

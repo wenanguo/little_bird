@@ -1,63 +1,63 @@
 <template>
-    <page-header-wrapper>
-        <a-card :bordered="false">
-            <div class="table-page-search-wrapper">
-                <a-form layout="inline">
-                    <a-row :gutter="48">
-                        <a-col :md="8" :sm="24">
-                            <a-form-item label="名称">
-                                <a-input v-model="queryParam.title" placeholder=""/>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="8" :sm="24">
-                            <a-form-item label="使用状态">
-                                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                                    <a-select-option value="0">全部</a-select-option>
-                                    <a-select-option value="100">正常</a-select-option>
-                                    <a-select-option value="101">禁用</a-select-option>
-                                </a-select>
-                            </a-form-item>
-                        </a-col>
-                        <template v-if="advanced">
-                        </template>
-                        <a-col :md="!advanced && 8 || 24" :sm="24">
+  <page-header-wrapper>
+    <a-card :bordered="false">
+      <div class="table-page-search-wrapper">
+        <a-form layout="inline">
+          <a-row :gutter="48">
+            <a-col :md="8" :sm="24">
+              <a-form-item label="名称">
+                <a-input v-model="queryParam.title" placeholder=""/>
+              </a-form-item>
+            </a-col>
+            <a-col :md="8" :sm="24">
+              <a-form-item label="使用状态">
+                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                  <a-select-option value="0">全部</a-select-option>
+                  <a-select-option value="100">正常</a-select-option>
+                  <a-select-option value="101">禁用</a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <template v-if="advanced">
+            </template>
+            <a-col :md="!advanced && 8 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
                 <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
               </span>
-                        </a-col>
-                    </a-row>
-                </a-form>
-            </div>
+            </a-col>
+          </a-row>
+        </a-form>
+      </div>
 
-            <div class="table-operator">
-                <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-                <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-                    <a-menu slot="overlay">
-                        <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
-                        <!-- lock | unlock -->
-                        <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
-                    </a-menu>
-                    <a-button style="margin-left: 8px">
-                        批量操作 <a-icon type="down" />
-                    </a-button>
-                </a-dropdown>
-            </div>
+      <div class="table-operator">
+        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+          <a-menu slot="overlay">
+            <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
+            <!-- lock | unlock -->
+            <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
+          </a-menu>
+          <a-button style="margin-left: 8px">
+            批量操作 <a-icon type="down" />
+          </a-button>
+        </a-dropdown>
+      </div>
 
-            <s-table
-                    ref="table"
-                    size="default"
-                    rowKey="id"
-                    :columns="columns"
-                    :data="loadData"
-                    :alert="true"
-                    :rowSelection="rowSelection"
-                    showPagination="auto"
-            >
+      <s-table
+        ref="table"
+        size="default"
+        rowKey="id"
+        :columns="columns"
+        :data="loadData"
+        :alert="true"
+        :rowSelection="rowSelection"
+        showPagination="auto"
+      >
         <span slot="serial" slot-scope="text, record, index">
           {{ index + 1 }}
         </span>
-                <span slot="status" slot-scope="text">
+        <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
         <span slot="action" slot-scope="text, record">
@@ -69,19 +69,19 @@
             </a-popconfirm>
           </template>
         </span>
-            </s-table>
+      </s-table>
 
-            <edit-form
-                    ref="editForm"
-                    :title="title"
-                    :visible="visible"
-                    :loading="confirmLoading"
-                    :model="mdl"
-                    @cancel="handleCancel"
-                    @ok="handleOk"
-            />
-        </a-card>
-    </page-header-wrapper>
+      <edit-form
+        ref="editForm"
+        :title="title"
+        :visible="visible"
+        :loading="confirmLoading"
+        :model="mdl"
+        @cancel="handleCancel"
+        @ok="handleOk"
+      />
+    </a-card>
+  </page-header-wrapper>
 </template>
 
 <script>
@@ -97,45 +97,136 @@
             sorter: true,
             width: '80px',
             dataIndex: 'id'
-        },        {
+        }, {
             title: '商品标题',
             sorter: true,
             dataIndex: 'subject'
-        },        {
+        }, {
             title: '商品描述',
             sorter: true,
             dataIndex: 'body'
-        },        {
+        }, {
             title: '金额',
             sorter: true,
             dataIndex: 'totalAmount'
-        },        {
+        },
+        // {
+        //     title: '创建订单相应',
+        //     sorter: true,
+        //     dataIndex: 'tradeAppPayResponse'
+        // },
+        {
             title: '支付宝交易号',
             sorter: true,
             dataIndex: 'tradeNo'
-        },        {
+        }, {
             title: '商户订单号',
             sorter: true,
             dataIndex: 'outTradeNo'
-        },        {
+        }, {
             title: '状态',
             sorter: true,
             width: '100px',
             scopedSlots: { customRender: 'status' },
             dataIndex: 'status'
-        },        {
+        }, {
             title: '创建时间',
             sorter: true,
             width: '150px',
             customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
             dataIndex: 'createTime'
-        },        {
+        }, {
             title: '更新时间',
             sorter: true,
             width: '150px',
             customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
             dataIndex: 'updateTime'
+        }, {
+            title: '收款支付宝账号对应的支付宝唯一用户号',
+            sorter: true,
+            dataIndex: 'sellerId'
+        }, {
+            title: '收款支付宝账号',
+            sorter: true,
+            dataIndex: 'sellerEmail'
+        }, {
+            title: '商户原始订单号',
+            sorter: true,
+            dataIndex: 'merchantOrderNo'
+        }, {
+            title: '买家支付宝用户号',
+            sorter: true,
+            dataIndex: 'buyerId'
+        }, {
+            title: '买家支付宝账号',
+            sorter: true,
+            dataIndex: 'buyerLogonId'
+        }, {
+            title: '交易状态',
+            sorter: true,
+            dataIndex: 'tradeStatus'
+        }, {
+            title: '实收金额',
+            sorter: true,
+            dataIndex: 'receiptAmount'
+        }, {
+            title: '开票金额',
+            sorter: true,
+            dataIndex: 'invoiceAmount'
+        }, {
+            title: '付款金额',
+            sorter: true,
+            dataIndex: 'buyerPayAmount'
+        }, {
+            title: '集分宝金额',
+            sorter: true,
+            dataIndex: 'pointAmount'
+        }, {
+            title: '总退款金额',
+            sorter: true,
+            dataIndex: 'refundFee'
+        }, {
+            title: '交易创建时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtCreate'
+        }, {
+            title: '交易付款时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtPayment'
+        }, {
+            title: '交易退款时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtRefund'
+        }, {
+            title: '交易结束时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtClose'
+        }, {
+            title: '支付金额信息',
+            sorter: true,
+            dataIndex: 'fundBillList'
+        }, {
+            title: '回传参数',
+            sorter: true,
+            dataIndex: 'passbackParams'
+        }, {
+            title: '优惠券信息',
+            sorter: true,
+            dataIndex: 'voucherDetailList'
         },
+        // {
+        //     title: '异步通知相应',
+        //     sorter: true,
+        //     dataIndex: 'notifyResponse'
+        // },
         {
             title: '操作',
             dataIndex: 'action',
@@ -143,8 +234,6 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
-
-
 
     export default {
         name: 'TableList',
