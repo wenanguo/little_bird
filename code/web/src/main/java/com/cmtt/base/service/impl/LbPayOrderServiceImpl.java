@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Andrew.Wen
- * @since 2020-12-07
+ * @since 2020-12-08
  */
 @Service
 public class LbPayOrderServiceImpl extends ServiceImpl<LbPayOrderMapper, LbPayOrder> implements ILbPayOrderService {

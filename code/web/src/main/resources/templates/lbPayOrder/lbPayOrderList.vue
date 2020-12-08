@@ -110,6 +110,10 @@
             sorter: true,
             dataIndex: 'totalAmount'
         },        {
+            title: '创建订单相应',
+            sorter: true,
+            dataIndex: 'tradeAppPayResponse'
+        },        {
             title: '支付宝交易号',
             sorter: true,
             dataIndex: 'tradeNo'
@@ -135,6 +139,90 @@
             width: '150px',
             customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
             dataIndex: 'updateTime'
+        },        {
+            title: '收款支付宝账号对应的支付宝唯一用户号',
+            sorter: true,
+            dataIndex: 'sellerId'
+        },        {
+            title: '收款支付宝账号',
+            sorter: true,
+            dataIndex: 'sellerEmail'
+        },        {
+            title: '商户原始订单号',
+            sorter: true,
+            dataIndex: 'merchantOrderNo'
+        },        {
+            title: '买家支付宝用户号',
+            sorter: true,
+            dataIndex: 'buyerId'
+        },        {
+            title: '买家支付宝账号',
+            sorter: true,
+            dataIndex: 'buyerLogonId'
+        },        {
+            title: '交易状态',
+            sorter: true,
+            dataIndex: 'tradeStatus'
+        },        {
+            title: '实收金额',
+            sorter: true,
+            dataIndex: 'receiptAmount'
+        },        {
+            title: '开票金额',
+            sorter: true,
+            dataIndex: 'invoiceAmount'
+        },        {
+            title: '付款金额',
+            sorter: true,
+            dataIndex: 'buyerPayAmount'
+        },        {
+            title: '集分宝金额',
+            sorter: true,
+            dataIndex: 'pointAmount'
+        },        {
+            title: '总退款金额',
+            sorter: true,
+            dataIndex: 'refundFee'
+        },        {
+            title: '交易创建时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtCreate'
+        },        {
+            title: '交易付款时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtPayment'
+        },        {
+            title: '交易退款时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtRefund'
+        },        {
+            title: '交易结束时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            dataIndex: 'gmtClose'
+        },        {
+            title: '支付金额信息',
+            sorter: true,
+            dataIndex: 'fundBillList'
+        },        {
+            title: '回传参数',
+            sorter: true,
+            dataIndex: 'passbackParams'
+        },        {
+            title: '优惠券信息',
+            sorter: true,
+            dataIndex: 'voucherDetailList'
+        },        {
+            title: '异步通知相应',
+            sorter: true,
+            dataIndex: 'notifyResponse'
         },
         {
             title: '操作',

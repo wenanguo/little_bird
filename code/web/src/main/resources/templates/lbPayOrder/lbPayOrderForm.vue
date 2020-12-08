@@ -22,6 +22,9 @@
                     <a-form-item label="金额">
                         <a-input v-decorator="['totalAmount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
                     </a-form-item>
+                    <a-form-item label="创建订单相应">
+                        <a-input v-decorator="['tradeAppPayResponse', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
                     <a-form-item label="支付宝交易号">
                         <a-input v-decorator="['tradeNo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
                     </a-form-item>
@@ -42,6 +45,67 @@
                         <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
                         </a-date-picker>
                     </a-form-item>
+                    <a-form-item label="收款支付宝账号对应的支付宝唯一用户号">
+                        <a-input v-decorator="['sellerId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="收款支付宝账号">
+                        <a-input v-decorator="['sellerEmail', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="商户原始订单号">
+                        <a-input v-decorator="['merchantOrderNo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="买家支付宝用户号">
+                        <a-input v-decorator="['buyerId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="买家支付宝账号">
+                        <a-input v-decorator="['buyerLogonId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="交易状态">
+                        <a-input v-decorator="['tradeStatus', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="实收金额">
+                        <a-input v-decorator="['receiptAmount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="开票金额">
+                        <a-input v-decorator="['invoiceAmount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="付款金额">
+                        <a-input v-decorator="['buyerPayAmount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="集分宝金额">
+                        <a-input v-decorator="['pointAmount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="总退款金额">
+                        <a-input v-decorator="['refundFee', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="交易创建时间">
+                        <a-date-picker style="width: 100%" show-time v-decorator="['gmtCreate', {rules: [{required: true}]}]" >
+                        </a-date-picker>
+                    </a-form-item>
+                    <a-form-item label="交易付款时间">
+                        <a-date-picker style="width: 100%" show-time v-decorator="['gmtPayment', {rules: [{required: true}]}]" >
+                        </a-date-picker>
+                    </a-form-item>
+                    <a-form-item label="交易退款时间">
+                        <a-date-picker style="width: 100%" show-time v-decorator="['gmtRefund', {rules: [{required: true}]}]" >
+                        </a-date-picker>
+                    </a-form-item>
+                    <a-form-item label="交易结束时间">
+                        <a-date-picker style="width: 100%" show-time v-decorator="['gmtClose', {rules: [{required: true}]}]" >
+                        </a-date-picker>
+                    </a-form-item>
+                    <a-form-item label="支付金额信息">
+                        <a-input v-decorator="['fundBillList', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="回传参数">
+                        <a-input v-decorator="['passbackParams', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="优惠券信息">
+                        <a-input v-decorator="['voucherDetailList', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                    <a-form-item label="异步通知相应">
+                        <a-input v-decorator="['notifyResponse', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -56,11 +120,31 @@
         'subject',
         'body',
         'totalAmount',
+        'tradeAppPayResponse',
         'tradeNo',
         'outTradeNo',
         'status',
         'createTime',
-        'updateTime'
+        'updateTime',
+        'sellerId',
+        'sellerEmail',
+        'merchantOrderNo',
+        'buyerId',
+        'buyerLogonId',
+        'tradeStatus',
+        'receiptAmount',
+        'invoiceAmount',
+        'buyerPayAmount',
+        'pointAmount',
+        'refundFee',
+        'gmtCreate',
+        'gmtPayment',
+        'gmtRefund',
+        'gmtClose',
+        'fundBillList',
+        'passbackParams',
+        'voucherDetailList',
+        'notifyResponse'
     ]
 
     export default {

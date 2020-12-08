@@ -28,7 +28,7 @@ public class AlipayTradeAppPayInputParam {
 	private String subject;
 
     @ApiModelProperty(value ="对交易或商品的描述",example = "Iphone6 16G")
-    @NotNull(message = "商品标题不能为空")
+    @NotNull(message = "商品描述不能为空")
     private String body;
 
 

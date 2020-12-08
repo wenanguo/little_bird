@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Andrew.Wen
- * @since 2020-12-07
+ * @since 2020-12-08
  */
 public interface ILbPayOrderService extends IService<LbPayOrder> {
 
