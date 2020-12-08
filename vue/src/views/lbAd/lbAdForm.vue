@@ -14,25 +14,30 @@
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
         <a-form-item label="标题">
-          <a-input v-decorator="['name', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['name', {rules: [{required: true, min: 1, message: '请输入标题！'}]}]" />
         </a-form-item>
         <a-form-item label="介绍">
-          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入广告介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="图片">
-          <a-input v-decorator="['imgUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="图片上传">
+          <a-upload
+            name="file"
+            :multiple="true"
+          >
+            <a-button> <a-icon type="upload" />点击选择</a-button>
+          </a-upload>
         </a-form-item>
-        <a-form-item label="所属期刊Id">
-          <a-input v-decorator="['lbPeriodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+<!--        <a-form-item label="所属期刊Id">-->
+<!--          <a-input v-decorator="['lbPeriodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />-->
+<!--        </a-form-item>-->
+        <a-form-item label="所属期刊">
+          <a-input />
         </a-form-item>
-        <a-form-item label="期刊位置">
-          <a-input v-decorator="['lbPeriodicalIndex', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="广告分类">
+          <a-input v-decorator="['adType', {rules: [{required: true, min: 1, message: '请输入1或2的类别序号！'}]}]" placeholder="(1)启动广告 (2)首页广告" />
         </a-form-item>
-        <a-form-item label="广告分类[1启动广告 2首页广告]">
-          <a-input v-decorator="['adType', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-        </a-form-item>
-        <a-form-item label="连接地址">
-          <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        <a-form-item label="链接地址">
+          <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入链接地址！'}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
