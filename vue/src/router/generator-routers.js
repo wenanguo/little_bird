@@ -62,7 +62,9 @@ const constantRouterComponents = {
   'LbPeriodicalList': () => import('@/views/lbPeriodical/lbPeriodicalList'),
   'LbPostList': () => import('@/views/lbPost/lbPostList'),
   'LbReportList': () => import('@/views/lbReport/lbReportList'),
-  'LbUserCollectList': () => import('@/views/lbUserCollect/lbUserCollectList')
+  'LbUserCollectList': () => import('@/views/lbUserCollect/lbUserCollectList'),
+  // 支付
+  'LbPayOrderList': () => import('@/views/lbPayOrder/lbPayOrderList')
 }
 
 // 前端未找到页面路由（固定不用改）

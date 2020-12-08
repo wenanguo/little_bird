@@ -59,34 +59,34 @@ public class AliPayController {
     public R zfbCallback(HttpServletRequest request) throws AlipayApiException {
 
 
-        try {
-
-            int contentLength = request.getContentLength();
-            if (contentLength < 0) {
-                return null;
-            }
-            byte buffer[] = new byte[contentLength];
-            for (int i = 0; i < contentLength; ) {
-
-                int readlen = request.getInputStream().read(buffer, i, contentLength - i);
-                if (readlen == -1) {
-                    break;
-                }
-                i += readlen;
-            }
-
-            String charEncoding = request.getCharacterEncoding();
-            if (charEncoding == null) {
-                charEncoding = "UTF-8";
-            }
-            String jsonbody = new String(buffer, charEncoding);
-            System.out.println("==========支付宝callback======");
-            System.out.println("callback：" + jsonbody);
-            System.out.println("=============================");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//
+//            int contentLength = request.getContentLength();
+//            if (contentLength < 0) {
+//                return null;
+//            }
+//            byte buffer[] = new byte[contentLength];
+//            for (int i = 0; i < contentLength; ) {
+//
+//                int readlen = request.getInputStream().read(buffer, i, contentLength - i);
+//                if (readlen == -1) {
+//                    break;
+//                }
+//                i += readlen;
+//            }
+//
+//            String charEncoding = request.getCharacterEncoding();
+//            if (charEncoding == null) {
+//                charEncoding = "UTF-8";
+//            }
+//            String jsonbody = new String(buffer, charEncoding);
+//            System.out.println("==========支付宝callback======");
+//            System.out.println("callback：" + jsonbody);
+//            System.out.println("=============================");
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
         //获取支付宝POST过来反馈信息
@@ -109,8 +109,12 @@ public class AliPayController {
         //boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
         boolean flag = AlipaySignature.rsaCheckV1(params, aliPayService.getAlipayPublicKey(), aliPayService.getCharset(), aliPayService.getSignType());
 
+
+        System.out.println("==========支付宝callback1======");
         System.out.println(flag);
         System.out.println(params);
+        System.out.println("=============================");
+
 
         return R.ok();
 
