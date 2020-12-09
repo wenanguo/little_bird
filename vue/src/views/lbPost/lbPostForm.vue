@@ -34,7 +34,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="栏目ID">
-              <a-input v-decorator="['postSubjectId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+              <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
