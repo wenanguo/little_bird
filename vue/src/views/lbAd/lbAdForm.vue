@@ -22,12 +22,16 @@
         <a-form-item label="图片上传1">
           <a-upload
             name="file"
-            :multiple="true"
+            :multiple="false"
             list-type="picture"
+            :file-list="fileList"
+            @change="handleChange"
             action="/api/tencent/upload"
           >
             <a-button> <a-icon type="upload" />点击选择</a-button>
+
           </a-upload>
+          <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
         <!--        <a-form-item label="所属期刊Id">-->
         <!--          <a-input v-decorator="['lbPeriodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />-->
@@ -36,7 +40,10 @@
           <a-input />
         </a-form-item>
         <a-form-item label="广告分类">
-          <a-input v-decorator="['adType', {rules: [{required: true, min: 1, message: '请输入1或2的类别序号！'}]}]" placeholder="(1)启动广告 (2)首页广告" />
+          <a-radio-group v-decorator="['adType', { initialValue: 2 }]">
+            <a-radio :value="1">启动广告</a-radio>
+            <a-radio :value="2">首页广告</a-radio>
+          </a-radio-group>
         </a-form-item>
         <a-form-item label="链接地址">
           <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入链接地址！'}]}]" />
@@ -46,14 +53,6 @@
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="修改时间">
-          <a-date-picker style="width: 100%" :format="dateFormat" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
-        </a-form-item>
-        <a-form-item label="创建时间">
-          <a-date-picker style="width: 100%" :format="dateFormat" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -110,7 +109,8 @@
             }
             return {
                 form: this.$form.createForm(this),
-                dateFormat: 'YYYY-MM-DD HH:mm:ss'
+                dateFormat: 'YYYY-MM-DD HH:mm:ss',
+                fileList: []
             }
         },
         created () {
@@ -122,7 +122,47 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
+
+                if (this.model) {
+                  this.fileList = [{
+                                    uid: '-1',
+                                    name: this.model.imgUrl,
+                                    status: 'done',
+                                    url: this.model.imgUrl
+                                  }]
+                } else {
+                  this.fileList = []
+                }
             })
+        },
+        methods: {
+          handleChange (info) {
+            let fileList = [...info.fileList]
+
+            // 1. Limit the number of uploaded files
+            //    Only to show two recent uploaded files, and old ones will be replaced by the new
+            fileList = fileList.slice(-1)
+
+            // 2. read from response and show file link
+            fileList = fileList.map(file => {
+              if (file.response) {
+                // Component will show file.url as link
+                file.url = file.response.result.url
+              }
+              return file
+            })
+
+            this.fileList = fileList
+
+            if (info.file.status === 'uploading') {
+              return
+            }
+            if (info.file.status === 'done') {
+              // Get this url from response in real world.
+              console.log(info.file.response.result.url)
+              this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
+            }
+          }
         }
     }
 </script>

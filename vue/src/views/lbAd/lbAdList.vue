@@ -59,6 +59,10 @@
         </span>
         <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
+
+        </span>
+        <span slot="imgslot" slot-scope="text">
+          <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
@@ -70,6 +74,10 @@
           </template>
         </span>
       </s-table>
+
+      <a-modal :visible="previewVisible" :footer="null" @cancel="handlePreviewCancel">
+        <img alt="example" style="width: 100%" :src="previewImage" />
+      </a-modal>
 
       <edit-form
         ref="editForm"
@@ -108,6 +116,7 @@
         }, {
             title: '图片',
             sorter: true,
+            scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
         }, {
             title: '所属期刊Id',
@@ -118,7 +127,7 @@
             sorter: true,
             dataIndex: 'lbPeriodicalIndex'
         }, {
-            title: '广告分类[1启动广告 2首页广告]',
+            title: '广告分类',
             sorter: true,
             dataIndex: 'adType'
         }, {
@@ -166,6 +175,8 @@
                 visible: false,
                 title: '新增',
                 confirmLoading: false,
+                previewVisible: false,
+                previewImage: '',
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
@@ -207,6 +218,13 @@
             }
         },
         methods: {
+            async handlePreview (url) {
+                this.previewImage = url
+                this.previewVisible = true
+            },
+            handlePreviewCancel () {
+                this.previewVisible = false
+            },
             handleAdd () {
                 this.mdl = null
                 this.title = '新增'
