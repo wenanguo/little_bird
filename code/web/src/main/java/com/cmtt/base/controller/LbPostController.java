@@ -11,7 +11,10 @@ import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.service.ILbCatalogService;
+import com.cmtt.base.service.ILbPeriodicalService;
 import com.cmtt.base.service.ILbPostService;
+import com.cmtt.base.service.ILbSubjectService;
 import com.cmtt.base.service.impl.LbPostServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +45,15 @@ public class LbPostController {
 
     @Autowired
     private ILbPostService lbPostService;
+
+    @Autowired
+    private ILbCatalogService lbCatalogService;
+
+    @Autowired
+    private ILbSubjectService lbSubjectService;
+
+    @Autowired
+    private ILbPeriodicalService lbPeriodicalService;
 
     /**
      * 主页
@@ -148,6 +160,16 @@ public class LbPostController {
 
 
         try {
+
+            LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getId, lbPost.getPostCatalogId()));
+            lbPost.setPostCatalog(lbCatalog.getTitle());
+            lbPost.setTcolor(lbCatalog.getTcolor());
+
+            LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbPost.getPostSubjectId()));
+            lbPost.setPostSubject(lbSubject.getTitle());
+
+            LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbPost.getPeriodicalId()));
+            lbPost.setPeriodicalTitle(lbPeriodical.getTitle());
 
             lbPostService.updateById(lbPost);
 

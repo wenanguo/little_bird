@@ -213,6 +213,13 @@
             }
         },
         methods: {
+            async handlePreview (url) {
+                this.previewImage = url
+                this.previewVisible = true
+            },
+            handlePreviewCancel () {
+                this.previewVisible = false
+            },
             handleAdd () {
                 this.mdl = null
                 this.title = '新增'

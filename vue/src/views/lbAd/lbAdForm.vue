@@ -29,7 +29,6 @@
             action="/api/tencent/upload"
           >
             <a-button> <a-icon type="upload" />上传图片</a-button>
-
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>

@@ -61,6 +61,9 @@
         <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
+        <span slot="imgslot" slot-scope="text">
+          <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">修改</a>
@@ -72,13 +75,19 @@
         </span>
       </s-table>
 
+      <a-modal :visible="previewVisible" :footer="null" @cancel="handlePreviewCancel">
+        <img alt="example" style="width: 100%" :src="previewImage" />
+      </a-modal>
+
       <edit-form
         ref="editForm"
         :title="title"
         :visible="visible"
         :loading="confirmLoading"
         :model="mdl"
-
+        :lbCatalogList="lbCatalogList"
+        :lbSubjectList="lbSubjectList"
+        :lbPeriodicalList="lbPeriodicalList"
         @cancel="handleCancel"
         @ok="handleOk"
       />
@@ -91,36 +100,34 @@
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
     import { getLbPostList, saveLbPost, delLbPost, batchDelLbPost } from '@/api/lbPost'
+    import { getLbCatalogListAll } from '@/api/lbCatalog'
+    import { getLbSubjectListAll } from '@/api/lbSubject'
+    import { getLbPeriodicalListAll } from '@/api/lbPeriodical'
     import EditForm from './lbPostForm'
 
     const columns = [
         {
             title: 'id',
             sorter: true,
-            width: '80px',
             fixed: 'left',
+            width: '80px',
             dataIndex: 'id'
         }, {
             title: '标题',
             sorter: true,
-            width: '150px',
             fixed: 'left',
+            width: '150px',
             dataIndex: 'title'
         }, {
             title: '期刊',
             sorter: true,
             width: '150px',
-            dataIndex: 'periodicalId'
+            dataIndex: 'periodicalTitle'
         }, {
             title: '描述',
             sorter: true,
             width: '100px',
             dataIndex: 'description'
-        }, {
-            title: '栏目ID',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'postSubjectId'
         }, {
             title: '栏目',
             sorter: true,
@@ -132,11 +139,6 @@
             width: '100px',
             dataIndex: 'postCatalog'
         }, {
-            title: '所属分类',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'postCatalogId'
-        }, {
             title: '分类颜色',
             sorter: true,
             width: '100px',
@@ -147,9 +149,10 @@
             width: '100px',
             dataIndex: 'showType'
         }, {
-            title: '图片地址',
+            title: '图片',
             sorter: true,
             width: '100px',
+            scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
         }, {
             title: '广告链接地址',
@@ -239,6 +242,11 @@
                 visible: false,
                 title: '新增',
                 confirmLoading: false,
+                previewVisible: false,
+                previewImage: '',
+                lbCatalogList: [],
+                lbSubjectList: [],
+                lbPeriodicalList: [],
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
@@ -279,7 +287,29 @@
                 }
             }
         },
+        created () {
+            // 初始化数据
+            getLbCatalogListAll()
+                        .then(res => {
+                            this.lbCatalogList = res.result
+                        })
+            getLbSubjectListAll()
+                        .then(res => {
+                            this.lbSubjectList = res.result
+                        })
+            getLbPeriodicalListAll()
+                        .then(res => {
+                            this.lbPeriodicalList = res.result
+                        })
+        },
         methods: {
+            async handlePreview (url) {
+                this.previewImage = url
+                this.previewVisible = true
+            },
+            handlePreviewCancel () {
+                this.previewVisible = false
+            },
             handleAdd () {
                 this.mdl = null
                 this.title = '新增'
@@ -359,7 +389,6 @@
                     })
                 }
             },
-
             handleCancel () {
                 this.visible = false
 

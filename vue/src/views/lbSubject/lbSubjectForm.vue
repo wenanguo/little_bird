@@ -77,7 +77,7 @@
                 default: () => null
             },
             lbCatalogList: {
-                type: Object,
+                type: Array,
                 default: () => null
             }
         },

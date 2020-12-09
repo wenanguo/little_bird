@@ -13,7 +13,7 @@
       <a-form :form="form" v-bind="formLayout">
 
         <a-row :span="24" :gutter="24">
-          <a-tabs default-active-key="1" @change="callback">
+          <a-tabs default-active-key="1" >
             <a-tab-pane key="1" tab="属性">
               <a-col :span="0">
                 <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
@@ -23,7 +23,12 @@
               </a-col>
               <a-col :span="12">
                 <a-form-item label="期刊id">
-                  <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <!-- <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
+                  <a-select v-decorator="['periodicalId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
+            <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
+              {{ lbPeriodical.title }}
+            </a-select-option>
+          </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -38,12 +43,22 @@
               </a-col>
               <a-col :span="12">
                 <a-form-item label="栏目">
-                  <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
+                  <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
+            <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id">
+              {{ lbSubject.title }}
+            </a-select-option>
+          </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="所属分类">
-                  <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
+                  <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
+            <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
+              {{ lbCatalog.title }}
+            </a-select-option>
+          </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -59,11 +74,6 @@
                     <a-select-option value="2">广告类型</a-select-option>
                     <a-select-option value="3">无图</a-select-option>
                   </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="图片地址">
-                  <a-input v-decorator="['imgUrl', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -121,6 +131,21 @@
                     <a-radio :value="100">正常</a-radio>
                     <a-radio :value="101">禁用</a-radio>
                   </a-radio-group>
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="图片上传">
+                  <a-upload
+                      name="file"
+                      :multiple="false"
+                      list-type="picture"
+                      :file-list="fileList"
+                      @change="handleChange"
+                      action="/api/tencent/upload"
+                    >
+                      <a-button> <a-icon type="upload" />上传图片</a-button>
+                    </a-upload>
+          <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
                 </a-form-item>
               </a-col>
             </a-tab-pane>
@@ -195,6 +220,18 @@
             model: {
                 type: Object,
                 default: () => null
+            },
+            lbCatalogList: {
+                type: Array,
+                default: () => null
+            },
+            lbSubjectList: {
+                type: Array,
+                default: () => null
+            },
+            lbPeriodicalList: {
+                type: Array,
+                default: () => null
             }
         },
         data () {
@@ -211,6 +248,7 @@
             return {
                 form: this.$form.createForm(this),
                 content: null,
+                fileList: [],
                 editorOption: {
                   modules: {
                     toolbar: {
@@ -255,10 +293,38 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
+
+                 // 初始化图片上传
+                if (this.model) {
+                  this.fileList = [{
+                                    uid: '-1',
+                                    name: this.model.imgUrl,
+                                    status: 'done',
+                                    url: this.model.imgUrl
+                                  }]
+                } else {
+                  this.fileList = []
+                }
             })
         },
         mounted () {
           quillConfig.initButton()
+        },
+        methods: {
+          handleChange (info) {
+            const fileListt = [...info.fileList]
+
+            this.fileList = fileListt.slice(-1)
+
+            if (info.file.status === 'uploading') {
+              return
+            }
+            if (info.file.status === 'done') {
+              // Get this url from response in real world.
+              console.log(info.file.response.result.url)
+              this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
+            }
+          }
         }
     }
 </script>
