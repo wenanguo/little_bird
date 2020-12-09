@@ -74,7 +74,7 @@
         </span>
       </s-table>
 
-<a-modal :visible="previewVisible" :footer="null" @cancel="handlePreviewCancel">
+      <a-modal :visible="previewVisible" :footer="null" @cancel="handlePreviewCancel">
         <img alt="example" style="width: 100%" :src="previewImage" />
       </a-modal>
 

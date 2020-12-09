@@ -8,150 +8,131 @@
     @cancel="() => { $emit('cancel') }"
     :dialog-style="{ top: '20px'}"
   >
+
     <a-spin :spinning="loading">
       <a-form :form="form" v-bind="formLayout">
+
         <a-row :span="24" :gutter="24">
-          <a-col :span="0">
-            <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
-            <a-form-item v-show="model && model.id > 0" label="编号">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="期刊id">
-              <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="标题">
-              <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="描述">
-              <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="栏目ID">
-              <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="栏目">
-              <a-select v-decorator="['postSubject', {rules: [{required: true, min: 1, message: '请选择栏目！'}]}]">
-                <a-select-option value="1">栏目1</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="分类">
-              <a-select v-decorator="['postCatalog', {rules: [{required: true, min: 1, message: '请选择分类！'}]}]">
-                <a-select-option value="1">分类1</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="所属分类">
-              <a-input v-decorator="['postCatalogId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="分类颜色">
-              <a-input v-decorator="['tcolor', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="显示样式">
-              <a-select v-decorator="['showType', {rules: [{required: true, min: 1, message: '请选择分类！'}]}]">
-                <a-select-option value="0">左右图文</a-select-option>
-                <a-select-option value="1">上下图文</a-select-option>
-                <a-select-option value="2">广告类型</a-select-option>
-                <a-select-option value="3">无图</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="图片地址">
-              <a-input v-decorator="['imgUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="广告链接地址">
-              <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="主题信息">
-              <a-input v-decorator="['themeInfo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="作者">
-              <a-select show-search mode="multiple" v-decorator="['author', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
-                <a-select-option value="jack">
-                  Jack
-                </a-select-option>
-                <a-select-option value="lucy">
-                  Lucy
-                </a-select-option>
-                <a-select-option value="tom">
-                  Tom
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="排序">
-              <a-input v-decorator="['postOrder', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="发布时间">
-              <a-date-picker style="width: 100%" show-time v-decorator="['publishedAt', {rules: [{required: true}]}]" >
-              </a-date-picker>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="点赞数量">
-              <a-input v-decorator="['praiseCount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="收藏数量">
-              <a-input v-decorator="['recordCount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="阅读数量">
-              <a-input v-decorator="['readCount', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="是否推荐">
-              <a-radio-group name="radioGroup" :default-value="1">
-                <a-radio :value="1">
-                  是
-                </a-radio>
-                <a-radio :value="2">
-                  否
-                </a-radio>
-              </a-radio-group>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="状态">
-              <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
-                <a-radio :value="100">正常</a-radio>
-                <a-radio :value="101">禁用</a-radio>
-              </a-radio-group>
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <div class="editBox">
-              <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
-            </div>
-          </a-col>
+          <a-tabs default-active-key="1" @change="callback">
+            <a-tab-pane key="1" tab="属性">
+              <a-col :span="0">
+                <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
+                <a-form-item v-show="model && model.id > 0" label="编号">
+                  <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="期刊id">
+                  <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="标题">
+                  <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="描述">
+                  <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="栏目">
+                  <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="所属分类">
+                  <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="分类颜色">
+                  <a-input v-decorator="['tcolor', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="显示样式">
+                  <a-select v-decorator="['showType', {rules: [{required: true,  message: '请选择分类！'}]}]">
+                    <a-select-option value="0">左右图文</a-select-option>
+                    <a-select-option value="1">上下图文</a-select-option>
+                    <a-select-option value="2">广告类型</a-select-option>
+                    <a-select-option value="3">无图</a-select-option>
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="图片地址">
+                  <a-input v-decorator="['imgUrl', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="广告链接地址">
+                  <a-input v-decorator="['linkUrl', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="主题信息">
+                  <a-input v-decorator="['themeInfo', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="作者">
+                  <!-- <a-select show-search mode="multiple" v-decorator="['author', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+                    <a-select-option value="jack">
+                      Jack
+                    </a-select-option>
+                    <a-select-option value="lucy">
+                      Lucy
+                    </a-select-option>
+                    <a-select-option value="tom">
+                      Tom
+                    </a-select-option>
+                  </a-select> -->
+                  <a-input v-decorator="['author', {rules: [{required: true,  message: '请输入作者名称！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="排序">
+                  <a-input-number v-decorator="['postOrder', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="发布时间">
+                  <a-date-picker style="width: 100%" show-time v-decorator="['publishedAt', {rules: [{required: true}]}]" >
+                  </a-date-picker>
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="是否推荐">
+                  <a-radio-group name="radioGroup" :default-value="1">
+                    <a-radio :value="1">
+                      是
+                    </a-radio>
+                    <a-radio :value="2">
+                      否
+                    </a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="状态">
+                  <a-radio-group v-decorator="['status', { initialValue: 100 }]">
+                    <a-radio :value="100">正常</a-radio>
+                    <a-radio :value="101">禁用</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </a-col>
+            </a-tab-pane>
+            <a-tab-pane key="2" tab="内容" force-render>
+              <a-col :span="24">
+                <div class="editBox">
+                  <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                </div>
+              </a-col>
+            </a-tab-pane>
+          </a-tabs>
+
         </a-row>
         <div class="phone-view">
           <div class="ql-container ql-snow">

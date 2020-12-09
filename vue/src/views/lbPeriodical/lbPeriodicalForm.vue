@@ -42,7 +42,7 @@
           <a-input v-decorator="['tyear', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="排序">
-          <a-input-number v-decorator="['torder', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">

@@ -51,6 +51,7 @@
         :columns="columns"
         :data="loadData"
         :alert="true"
+        :scroll="{ x: 3200}"
         :rowSelection="rowSelection"
         showPagination="auto"
       >
@@ -77,6 +78,7 @@
         :visible="visible"
         :loading="confirmLoading"
         :model="mdl"
+
         @cancel="handleCancel"
         @ok="handleOk"
       />
@@ -96,84 +98,104 @@
             title: 'id',
             sorter: true,
             width: '80px',
+            fixed: 'left',
             dataIndex: 'id'
-        }, {
-            title: '期刊id',
-            sorter: true,
-            dataIndex: 'periodicalId'
         }, {
             title: '标题',
             sorter: true,
+            width: '150px',
+            fixed: 'left',
             dataIndex: 'title'
+        }, {
+            title: '期刊',
+            sorter: true,
+            width: '150px',
+            dataIndex: 'periodicalId'
         }, {
             title: '描述',
             sorter: true,
+            width: '100px',
             dataIndex: 'description'
         }, {
             title: '栏目ID',
             sorter: true,
+            width: '100px',
             dataIndex: 'postSubjectId'
         }, {
             title: '栏目',
             sorter: true,
+            width: '100px',
             dataIndex: 'postSubject'
         }, {
             title: '分类',
             sorter: true,
+            width: '100px',
             dataIndex: 'postCatalog'
         }, {
             title: '所属分类',
             sorter: true,
+            width: '100px',
             dataIndex: 'postCatalogId'
         }, {
             title: '分类颜色',
             sorter: true,
+            width: '100px',
             dataIndex: 'tcolor'
         }, {
             title: '显示样式',
             sorter: true,
+            width: '100px',
             dataIndex: 'showType'
         }, {
             title: '图片地址',
             sorter: true,
+            width: '100px',
             dataIndex: 'imgUrl'
         }, {
             title: '广告链接地址',
             sorter: true,
+            width: '100px',
             dataIndex: 'linkUrl'
         }, {
             title: '主题信息',
             sorter: true,
+            width: '100px',
             dataIndex: 'themeInfo'
         }, {
             title: '作者',
             sorter: true,
+            width: '100px',
             dataIndex: 'author'
         }, {
             title: '排序',
             sorter: true,
+            width: '100px',
             dataIndex: 'postOrder'
         }, {
             title: '发布时间',
             sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            width: '100px',
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'publishedAt'
         }, {
             title: '点赞数量',
             sorter: true,
+            width: '100px',
             dataIndex: 'praiseCount'
         }, {
             title: '收藏数量',
             sorter: true,
+            width: '100px',
             dataIndex: 'recordCount'
         }, {
             title: '阅读数量',
             sorter: true,
+            width: '100px',
             dataIndex: 'readCount'
         }, {
             title: '是否推荐',
             sorter: true,
+            width: '100px',
             dataIndex: 'recommend'
         }, {
             title: '状态',
@@ -185,19 +207,20 @@
             title: '修改时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'updateTime'
         }, {
             title: '创建时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'createTime'
         },
         {
             title: '操作',
             dataIndex: 'action',
             width: '150px',
+            fixed: 'right',
             scopedSlots: { customRender: 'action' }
         }
     ]
@@ -273,6 +296,10 @@
                 form.validateFields((errors, values) => {
                     if (!errors) {
                         console.log('values', values)
+
+                            // 日期格式化
+                            values.publishedAt = moment(values.publishedAt).format('YYYY-MM-DD HH:mm:ss')
+
                         if (values.id > 0) {
                             // 修改 e.g.
 
