@@ -25,10 +25,10 @@
                 <a-form-item label="期刊id">
                   <!-- <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                   <a-select v-decorator="['periodicalId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
-            <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
-              {{ lbPeriodical.title }}
-            </a-select-option>
-          </a-select>
+                    <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
+                      {{ lbPeriodical.title }}
+                    </a-select-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -45,30 +45,30 @@
                 <a-form-item label="栏目">
                   <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                   <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
-            <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id">
-              {{ lbSubject.title }}
-            </a-select-option>
-          </a-select>
+                    <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id">
+                      {{ lbSubject.title }}
+                    </a-select-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="所属分类">
                   <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                   <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
-            <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
-              {{ lbCatalog.title }}
-            </a-select-option>
-          </a-select>
+                    <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
+                      {{ lbCatalog.title }}
+                    </a-select-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="分类颜色">
-                  <a-input v-decorator="['tcolor', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <a-input v-decorator="['tcolor', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="显示样式">
-                  <a-select v-decorator="['showType', {rules: [{required: true,  message: '请选择分类！'}]}]">
+                  <a-select v-decorator="['showType', {rules: [{required: true, message: '请选择分类！'}]}]">
                     <a-select-option value="0">左右图文</a-select-option>
                     <a-select-option value="1">上下图文</a-select-option>
                     <a-select-option value="2">广告类型</a-select-option>
@@ -78,12 +78,12 @@
               </a-col>
               <a-col :span="12">
                 <a-form-item label="广告链接地址">
-                  <a-input v-decorator="['linkUrl', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <a-input v-decorator="['linkUrl', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="主题信息">
-                  <a-input v-decorator="['themeInfo', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <a-input v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -99,12 +99,12 @@
                       Tom
                     </a-select-option>
                   </a-select> -->
-                  <a-input v-decorator="['author', {rules: [{required: true,  message: '请输入作者名称！'}]}]" />
+                  <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
                 <a-form-item label="排序">
-                  <a-input-number v-decorator="['postOrder', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <a-input-number v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -136,16 +136,16 @@
               <a-col :span="12">
                 <a-form-item label="图片上传">
                   <a-upload
-                      name="file"
-                      :multiple="false"
-                      list-type="picture"
-                      :file-list="fileList"
-                      @change="handleChange"
-                      action="/api/tencent/upload"
-                    >
-                      <a-button> <a-icon type="upload" />上传图片</a-button>
-                    </a-upload>
-          <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
+                    name="file"
+                    :multiple="false"
+                    list-type="picture"
+                    :file-list="fileList"
+                    @change="handleChange"
+                    action="/api/tencent/upload"
+                  >
+                    <a-button> <a-icon type="upload" />上传图片</a-button>
+                  </a-upload>
+                  <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
                 </a-form-item>
               </a-col>
             </a-tab-pane>

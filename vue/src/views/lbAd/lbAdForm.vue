@@ -100,7 +100,7 @@
                 default: () => null
             },
             lbPeriodicalList: {
-                type: Object,
+                type: Array,
                 default: () => null
             }
         },

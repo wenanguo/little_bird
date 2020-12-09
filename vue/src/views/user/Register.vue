@@ -39,7 +39,7 @@
             size="large"
             @click="handlePasswordInputClick"
             placeholder="至少6位密码，区分大小写"
-            v-decorator="['password', {rules: [{ required: true, message: '至少6位密码，区分大小写'}, { validator: this.handlePasswordLevel }], initialValue: 'wenanguo870623', validateTrigger: ['change', 'blur']}]"
+            v-decorator="['password', {rules: [{ required: true, message: '至少6位密码，区分大小写'}, { validator: this.handlePasswordLevel }], initialValue: 'admin123', validateTrigger: ['change', 'blur']}]"
           ></a-input-password>
         </a-form-item>
       </a-popover>
@@ -48,12 +48,12 @@
         <a-input-password
           size="large"
           placeholder="确认密码"
-          v-decorator="['password2', {rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }], initialValue: 'wenanguo870623', validateTrigger: ['change', 'blur']}]"
+          v-decorator="['password2', {rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }], initialValue: 'admin123', validateTrigger: ['change', 'blur']}]"
         ></a-input-password>
       </a-form-item>
 
       <a-form-item>
-        <a-input size="large" placeholder="11 位手机号" v-decorator="['phone', {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], initialValue: '15285027249', validateTrigger: ['change', 'blur'] }]">
+        <a-input size="large" placeholder="11 位手机号" v-decorator="['phone', {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], initialValue: '15288888888', validateTrigger: ['change', 'blur'] }]">
           <a-select slot="addonBefore" size="large" defaultValue="+86">
             <a-select-option value="+86">+86</a-select-option>
             <a-select-option value="+87">+87</a-select-option>
