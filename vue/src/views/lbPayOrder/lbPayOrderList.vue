@@ -30,20 +30,6 @@
         </a-form>
       </div>
 
-      <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-          <a-menu slot="overlay">
-            <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
-            <!-- lock | unlock -->
-            <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
-          </a-menu>
-          <a-button style="margin-left: 8px">
-            批量操作 <a-icon type="down" />
-          </a-button>
-        </a-dropdown>
-      </div>
-
       <s-table
         ref="table"
         size="default"
@@ -51,6 +37,7 @@
         :columns="columns"
         :data="loadData"
         :alert="true"
+        :scroll="{ x: 2500}"
         :rowSelection="rowSelection"
         showPagination="auto"
       >
@@ -62,11 +49,9 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">修改</a>
+            <a @click="handleEdit(record)">退款</a>
             <a-divider type="vertical" />
-            <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
-              <a>删除</a>
-            </a-popconfirm>
+            <a @click="handleEdit(record)">详情</a>
           </template>
         </span>
       </s-table>
@@ -96,18 +81,23 @@
             title: 'id',
             sorter: true,
             width: '80px',
+            fixed: 'left',
             dataIndex: 'id'
         }, {
             title: '商品标题',
             sorter: true,
+            fixed: 'left',
+            width: '150px',
             dataIndex: 'subject'
         }, {
             title: '商品描述',
             sorter: true,
+            width: '150px',
             dataIndex: 'body'
         }, {
             title: '金额',
             sorter: true,
+            width: '100px',
             dataIndex: 'totalAmount'
         },
         // {
@@ -118,119 +108,113 @@
         {
             title: '支付宝交易号',
             sorter: true,
+            width: '150px',
             dataIndex: 'tradeNo'
         }, {
             title: '商户订单号',
             sorter: true,
+            width: '150px',
             dataIndex: 'outTradeNo'
         }, {
-            title: '状态',
-            sorter: true,
-            width: '100px',
-            scopedSlots: { customRender: 'status' },
-            dataIndex: 'status'
-        }, {
-            title: '创建时间',
+            title: '收款支付宝用户号',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
-            dataIndex: 'createTime'
-        }, {
-            title: '更新时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
-            dataIndex: 'updateTime'
-        }, {
-            title: '收款支付宝账号对应的支付宝唯一用户号',
-            sorter: true,
             dataIndex: 'sellerId'
         }, {
             title: '收款支付宝账号',
             sorter: true,
+            width: '150px',
             dataIndex: 'sellerEmail'
         }, {
             title: '商户原始订单号',
             sorter: true,
+            width: '150px',
             dataIndex: 'merchantOrderNo'
         }, {
             title: '买家支付宝用户号',
             sorter: true,
+            width: '150px',
             dataIndex: 'buyerId'
         }, {
             title: '买家支付宝账号',
             sorter: true,
+            width: '150px',
             dataIndex: 'buyerLogonId'
         }, {
             title: '交易状态',
             sorter: true,
+            width: '150px',
             dataIndex: 'tradeStatus'
         }, {
             title: '实收金额',
             sorter: true,
+            width: '100px',
             dataIndex: 'receiptAmount'
         }, {
             title: '开票金额',
             sorter: true,
+            width: '100px',
             dataIndex: 'invoiceAmount'
         }, {
             title: '付款金额',
             sorter: true,
+            width: '100px',
             dataIndex: 'buyerPayAmount'
         }, {
             title: '集分宝金额',
             sorter: true,
+            width: '100px',
             dataIndex: 'pointAmount'
         }, {
             title: '总退款金额',
             sorter: true,
+            width: '100px',
             dataIndex: 'refundFee'
         }, {
             title: '交易创建时间',
             sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            width: '100px',
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'gmtCreate'
         }, {
             title: '交易付款时间',
             sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            width: '100px',
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'gmtPayment'
         }, {
             title: '交易退款时间',
             sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            width: '100px',
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'gmtRefund'
         }, {
             title: '交易结束时间',
             sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            width: '100px',
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'gmtClose'
         }, {
             title: '支付金额信息',
             sorter: true,
+            width: '100px',
             dataIndex: 'fundBillList'
         }, {
             title: '回传参数',
             sorter: true,
+            width: '100px',
             dataIndex: 'passbackParams'
         }, {
             title: '优惠券信息',
             sorter: true,
+            width: '100px',
             dataIndex: 'voucherDetailList'
         },
-        // {
-        //     title: '异步通知相应',
-        //     sorter: true,
-        //     dataIndex: 'notifyResponse'
-        // },
         {
             title: '操作',
             dataIndex: 'action',
             width: '150px',
+            fixed: 'right',
             scopedSlots: { customRender: 'action' }
         }
     ]

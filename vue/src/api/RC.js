@@ -14,6 +14,14 @@ const statusMap = {
   101: {
       status: 'error',
       text: '禁用'
+  },
+  201: {
+      status: 'success',
+      text: '未支付'
+  },
+  202: {
+      status: 'success',
+      text: '已支付'
   }
 }
 

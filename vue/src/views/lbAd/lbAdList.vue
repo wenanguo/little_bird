@@ -223,6 +223,11 @@
                 form.validateFields((errors, values) => {
                     if (!errors) {
                         console.log('values', values)
+
+                        // 日期格式化
+                            values.updateTime = moment(values.updateTime).format('YYYY-MM-DD HH:mm:ss')
+                            values.createTime = moment(values.createTime).format('YYYY-MM-DD HH:mm:ss')
+
                         if (values.id > 0) {
                             // 修改 e.g.
 

@@ -19,10 +19,12 @@
         <a-form-item label="介绍">
           <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入广告介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="图片上传">
+        <a-form-item label="图片上传1">
           <a-upload
             name="file"
             :multiple="true"
+            list-type="picture"
+            action="/api/tencent/upload"
           >
             <a-button> <a-icon type="upload" />点击选择</a-button>
           </a-upload>
@@ -40,17 +42,17 @@
           <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入链接地址！'}]}]" />
         </a-form-item>
         <a-form-item label="状态">
-          <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
+          <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="修改时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
+          <a-date-picker style="width: 100%" :format="dateFormat" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
           </a-date-picker>
         </a-form-item>
         <a-form-item label="创建时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
+          <a-date-picker style="width: 100%" :format="dateFormat" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
           </a-date-picker>
         </a-form-item>
       </a-form>
@@ -107,7 +109,8 @@
                 }
             }
             return {
-                form: this.$form.createForm(this)
+                form: this.$form.createForm(this),
+                dateFormat: 'YYYY-MM-DD HH:mm:ss'
             }
         },
         created () {
