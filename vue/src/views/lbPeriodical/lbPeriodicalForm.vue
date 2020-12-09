@@ -29,8 +29,8 @@
         </a-form-item>
         <a-form-item label="期刊推荐">
           <a-radio-group>
-            <a-radio :value="100">是</a-radio>
-            <a-radio :value="101">否</a-radio>
+            <a-radio :value="1">是</a-radio>
+            <a-radio :value="2">否</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="所属年份">
@@ -44,14 +44,6 @@
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="修改时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
-        </a-form-item>
-        <a-form-item label="创建时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
         </a-form-item>
       </a-form>
     </a-spin>

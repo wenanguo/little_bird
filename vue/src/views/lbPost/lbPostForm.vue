@@ -19,7 +19,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="期刊id">
-              <a-input v-decorator="['periodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+              <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -34,18 +34,20 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="栏目ID">
-              <a-input v-decorator="['postSubjectId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+              <a-input v-decorator="['postSubjectId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="栏目">
               <a-select v-decorator="['postSubject', {rules: [{required: true, min: 1, message: '请选择栏目！'}]}]">
+                <a-select-option value="1">栏目1</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="分类">
               <a-select v-decorator="['postCatalog', {rules: [{required: true, min: 1, message: '请选择分类！'}]}]">
+                <a-select-option value="1">分类1</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -61,7 +63,12 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="显示样式">
-              <a-input v-decorator="['showType', {rules: [{required: true, min: 1, message: '请输入0-3其中一个的样式类型！'}]}]" placeholder="0左右图文，1上下图文，2广告类型，3无图"/>
+              <a-select v-decorator="['showType', {rules: [{required: true, min: 1, message: '请选择分类！'}]}]">
+                <a-select-option value="0">左右图文</a-select-option>
+                <a-select-option value="1">上下图文</a-select-option>
+                <a-select-option value="2">广告类型</a-select-option>
+                <a-select-option value="3">无图</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -81,7 +88,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="作者">
-              <a-select show-search mode="multiple" v-decorator="['author', {rules: [{required: true, min: 1, message: '请选择作者！'}]}]" placeholder="请选择作者">
+              <a-select show-search mode="multiple" v-decorator="['author', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
                 <a-select-option value="jack">
                   Jack
                 </a-select-option>
@@ -138,18 +145,6 @@
                 <a-radio :value="100">正常</a-radio>
                 <a-radio :value="101">禁用</a-radio>
               </a-radio-group>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="修改时间">
-              <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
-              </a-date-picker>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="创建时间">
-              <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
-              </a-date-picker>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -261,7 +256,8 @@
                           alert('方法1')
                         },
                         money: function () {
-                          alert('方法2')
+                          console.log('方法2')
+                          this.content = this.content + 'abcde'
                         }
                       }
                     }

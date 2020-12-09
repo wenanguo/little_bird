@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const api = {
   add: '/lb_post/add',
-  edit: '/lb_postt/edit',
+  edit: '/lb_post/edit',
   list: '/lb_post/list',
   listAll: '/lb_post/listAll',
   batchDel: '/lb_post/batchDelete',

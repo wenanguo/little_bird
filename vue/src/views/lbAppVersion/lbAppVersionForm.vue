@@ -15,8 +15,8 @@
         </a-form-item>
         <a-form-item label="是否强制更新">
           <a-radio-group>
-            <a-radio :value="100">是</a-radio>
-            <a-radio :value="101">否</a-radio>
+            <a-radio :value="1">是</a-radio>
+            <a-radio :value="2">否</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="上传APP安装包">
@@ -31,7 +31,10 @@
           <a-input v-decorator="['info', {rules: [{required: true, min: 1, message: '请输入更新说明！'}]}]" />
         </a-form-item>
         <a-form-item label="app类型">
-          <a-input v-decorator="['appType', {rules: [{required: true, min: 1, message: '请选择app类型！'}]}]" />
+          <a-select v-decorator="['appType', {rules: [{required: true,  message: '请选择APP类型！'}]}]">
+                <a-select-option value="Android">Android</a-select-option>
+                <a-select-option value="IOS">IOS</a-select-option>
+              </a-select>
         </a-form-item>
         <a-form-item label="内部版本号">
           <a-input v-decorator="['innerVersion', {rules: [{required: true, min: 1, message: '请输入内部版本号！'}]}]" />
@@ -44,14 +47,6 @@
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="修改时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
-        </a-form-item>
-        <a-form-item label="创建时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
         </a-form-item>
       </a-form>
     </a-spin>
