@@ -4,7 +4,7 @@ const api = {
   add: '/lb_catalog/add',
   edit: '/lb_catalog/edit',
   list: '/lb_catalog/list',
-  listAll: '/lb_catalog/listAll',
+  listAll: '/lb_catalog/list_all',
   batchDel: '/lb_catalog/batchDelete',
   del: '/lb_catalog/delete'
 }
@@ -14,6 +14,14 @@ export default api
 export function getLbCatalogList (parameter) {
   return request({
     url: api.list,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getLbCatalogListAll (parameter) {
+  return request({
+    url: api.listAll,
     method: 'get',
     params: parameter
   })

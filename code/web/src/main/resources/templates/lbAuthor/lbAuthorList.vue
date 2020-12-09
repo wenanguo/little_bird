@@ -1,67 +1,64 @@
 <template>
-  <page-header-wrapper>
-    <a-card :bordered="false">
-      <div class="table-page-search-wrapper">
-        <a-form layout="inline">
-          <a-row :gutter="48">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="使用状态">
-                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="100">正常</a-select-option>
-                  <a-select-option value="101">禁用</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <template v-if="advanced">
-            </template>
-            <a-col :md="!advanced && 8 || 24" :sm="24">
+    <page-header-wrapper>
+        <a-card :bordered="false">
+            <div class="table-page-search-wrapper">
+                <a-form layout="inline">
+                    <a-row :gutter="48">
+                        <a-col :md="8" :sm="24">
+                            <a-form-item label="名称">
+                                <a-input v-model="queryParam.title" placeholder=""/>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="8" :sm="24">
+                            <a-form-item label="使用状态">
+                                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                                    <a-select-option value="0">全部</a-select-option>
+                                    <a-select-option value="100">正常</a-select-option>
+                                    <a-select-option value="101">禁用</a-select-option>
+                                </a-select>
+                            </a-form-item>
+                        </a-col>
+                        <template v-if="advanced">
+                        </template>
+                        <a-col :md="!advanced && 8 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
                 <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
               </span>
-            </a-col>
-          </a-row>
-        </a-form>
-      </div>
+                        </a-col>
+                    </a-row>
+                </a-form>
+            </div>
 
-      <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-          <a-menu slot="overlay">
-            <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
-            <!-- lock | unlock -->
-            <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
-          </a-menu>
-          <a-button style="margin-left: 8px">
-            批量操作 <a-icon type="down" />
-          </a-button>
-        </a-dropdown>
-      </div>
+            <div class="table-operator">
+                <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+                <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+                    <a-menu slot="overlay">
+                        <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
+                        <!-- lock | unlock -->
+                        <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
+                    </a-menu>
+                    <a-button style="margin-left: 8px">
+                        批量操作 <a-icon type="down" />
+                    </a-button>
+                </a-dropdown>
+            </div>
 
-      <s-table
-        ref="table"
-        size="default"
-        rowKey="id"
-        :columns="columns"
-        :data="loadData"
-        :alert="true"
-        :rowSelection="rowSelection"
-        showPagination="auto"
-      >
+            <s-table
+                    ref="table"
+                    size="default"
+                    rowKey="id"
+                    :columns="columns"
+                    :data="loadData"
+                    :alert="true"
+                    :rowSelection="rowSelection"
+                    showPagination="auto"
+            >
         <span slot="serial" slot-scope="text, record, index">
           {{ index + 1 }}
         </span>
-        <span slot="status" slot-scope="text">
+                <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
-        </span>
-        <span slot="imgslot" slot-scope="text">
-          <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
@@ -72,31 +69,27 @@
             </a-popconfirm>
           </template>
         </span>
-      </s-table>
+            </s-table>
 
-<a-modal :visible="previewVisible" :footer="null" @cancel="handlePreviewCancel">
-        <img alt="example" style="width: 100%" :src="previewImage" />
-      </a-modal>
-
-      <edit-form
-        ref="editForm"
-        :title="title"
-        :visible="visible"
-        :loading="confirmLoading"
-        :model="mdl"
-        @cancel="handleCancel"
-        @ok="handleOk"
-      />
-    </a-card>
-  </page-header-wrapper>
+            <edit-form
+                    ref="editForm"
+                    :title="title"
+                    :visible="visible"
+                    :loading="confirmLoading"
+                    :model="mdl"
+                    @cancel="handleCancel"
+                    @ok="handleOk"
+            />
+        </a-card>
+    </page-header-wrapper>
 </template>
 
 <script>
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
-    import { getLbPeriodicalList, saveLbPeriodical, delLbPeriodical, batchDelLbPeriodical } from '@/api/lbPeriodical'
-    import EditForm from './lbPeriodicalForm'
+    import { getLbAuthorList, saveLbAuthor, delLbAuthor, batchDelLbAuthor } from '@/api/lbAuthor'
+    import EditForm from './lbAuthorForm'
 
     const columns = [
         {
@@ -104,48 +97,35 @@
             sorter: true,
             width: '80px',
             dataIndex: 'id'
-        }, {
+        },        {
             title: '标题',
             sorter: true,
-            dataIndex: 'title'
-        }, {
-            title: '期刊编号',
+            dataIndex: 'name'
+        },        {
+            title: '介绍',
             sorter: true,
-            dataIndex: 'tcode'
-        }, {
-            title: '期刊封面',
+            dataIndex: 'introduction'
+        },        {
+            title: '图片',
             sorter: true,
-            scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
-        }, {
-            title: '推荐期刊',
-            sorter: true,
-            dataIndex: 'recommend'
-        }, {
-            title: '所属年份',
-            sorter: true,
-            dataIndex: 'tyear'
-        }, {
-            title: '排序',
-            sorter: true,
-            dataIndex: 'torder'
-        }, {
+        },        {
             title: '状态',
             sorter: true,
             width: '100px',
             scopedSlots: { customRender: 'status' },
             dataIndex: 'status'
-        }, {
+        },        {
             title: '修改时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'updateTime'
-        }, {
+        },        {
             title: '创建时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'createTime'
         },
         {
@@ -155,6 +135,8 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+
+
 
     export default {
         name: 'TableList',
@@ -171,8 +153,6 @@
                 title: '新增',
                 confirmLoading: false,
                 mdl: null,
-                previewVisible: false,
-                previewImage: '',
                 // 高级搜索 展开/关闭
                 advanced: false,
                 // 查询参数
@@ -187,7 +167,7 @@
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
                     console.log('loadData request parameters:', requestParameters)
-                    return getLbPeriodicalList(requestParameters)
+                    return getLbAuthorList(requestParameters)
                         .then(res => {
                             return res.result
                         })
@@ -229,10 +209,16 @@
                 form.validateFields((errors, values) => {
                     if (!errors) {
                         console.log('values', values)
+
+                         // 日期格式化
+                            values.updateTime = moment(values.updateTime).format('YYYY-MM-DD HH:mm:ss')
+                            values.createTime = moment(values.createTime).format('YYYY-MM-DD HH:mm:ss')
+
+
                         if (values.id > 0) {
                             // 修改 e.g.
 
-                            saveLbPeriodical(values).then(res => {
+                            saveLbAuthor(values).then(res => {
                                 this.visible = false
                                 this.confirmLoading = false
                                 // 重置表单数据
@@ -244,7 +230,7 @@
                             })
                         } else {
                             // 新增
-                            saveLbPeriodical(values).then(res => {
+                            saveLbAuthor(values).then(res => {
                                 this.visible = false
                                 this.confirmLoading = false
                                 // 重置表单数据
@@ -268,7 +254,7 @@
                 })
             },
             handleBatchDel () {
-                batchDelLbPeriodical(this.selectedRowKeys).then(res => {
+                batchDelLbAuthor(this.selectedRowKeys).then(res => {
                     this.confirmLoading = false
                     // 刷新表格
                     this.$refs.table.refresh()
@@ -279,7 +265,7 @@
             handleDel (record) {
                 if (record.id > 0) {
                     // 修改 e.g.
-                    delLbPeriodical(record).then(res => {
+                    delLbAuthor(record).then(res => {
                         this.confirmLoading = false
                         // 刷新表格
                         this.$refs.table.refresh()

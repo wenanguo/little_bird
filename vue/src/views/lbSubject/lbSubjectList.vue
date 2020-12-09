@@ -77,6 +77,7 @@
         :visible="visible"
         :loading="confirmLoading"
         :model="mdl"
+        :lbCatalogList="lbCatalogList"
         @cancel="handleCancel"
         @ok="handleOk"
       />
@@ -89,6 +90,7 @@
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
     import { getLbSubjectList, saveLbSubject, delLbSubject, batchDelLbSubject } from '@/api/lbSubject'
+    import { getLbCatalogListAll } from '@/api/lbCatalog'
     import EditForm from './lbSubjectForm'
 
     const columns = [
@@ -157,6 +159,7 @@
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
+                lbCatalogList: [],
                 // 查询参数
                 queryParam: {},
                 // 加载数据方法 必须为 Promise 对象
@@ -193,6 +196,13 @@
                     onChange: this.onSelectChange
                 }
             }
+        },
+        created () {
+            // 初始化数据
+            getLbCatalogListAll()
+                        .then(res => {
+                            this.lbCatalogList = res.result
+                        })
         },
         methods: {
             handleAdd () {

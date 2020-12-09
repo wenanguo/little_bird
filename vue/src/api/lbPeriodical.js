@@ -4,7 +4,7 @@ const api = {
   add: '/lb_periodical/add',
   edit: '/lb_periodical/edit',
   list: '/lb_periodical/list',
-  listAll: '/lb_periodical/listAll',
+  listAll: '/lb_periodical/list_all',
   batchDel: '/lb_periodical/batchDelete',
   del: '/lb_periodical/delete'
 }
@@ -14,6 +14,14 @@ export default api
 export function getLbPeriodicalList (parameter) {
   return request({
     url: api.list,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getLbPeriodicalListAll (parameter) {
+  return request({
+    url: api.listAll,
     method: 'get',
     params: parameter
   })

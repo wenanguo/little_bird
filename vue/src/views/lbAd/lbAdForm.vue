@@ -28,7 +28,7 @@
             @change="handleChange"
             action="/api/tencent/upload"
           >
-            <a-button> <a-icon type="upload" />点击选择</a-button>
+            <a-button> <a-icon type="upload" />上传图片</a-button>
 
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />

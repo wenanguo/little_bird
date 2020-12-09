@@ -49,6 +49,9 @@ public class LbPeriodical extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "所属年份")
     private String tyear;
 
+    @ApiModelProperty(value = "排序")
+    private String torder;
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 

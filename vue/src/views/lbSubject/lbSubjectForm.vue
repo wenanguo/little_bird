@@ -20,7 +20,11 @@
           <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入分类介绍！'}]}]" />
         </a-form-item>
         <a-form-item label="所属分类ID">
-          <a-input v-decorator="['catalogId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-select v-decorator="['catalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
+            <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
+              {{ lbCatalog.title }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="推荐">
           <a-radio-group>
@@ -69,6 +73,10 @@
                 default: () => false
             },
             model: {
+                type: Object,
+                default: () => null
+            },
+            lbCatalogList: {
                 type: Object,
                 default: () => null
             }
