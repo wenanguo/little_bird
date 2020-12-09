@@ -85,6 +85,7 @@
         :visible="visible"
         :loading="confirmLoading"
         :model="mdl"
+        :lbPeriodicalList="lbPeriodicalList"
         @cancel="handleCancel"
         @ok="handleOk"
       />
@@ -97,6 +98,7 @@
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
     import { getLbAdList, saveLbAd, delLbAd, batchDelLbAd } from '@/api/lbAd'
+    import { getLbPeriodicalListAll } from '@/api/lbPeriodical'
     import EditForm from './lbAdForm'
 
     const columns = [
@@ -177,6 +179,10 @@
                 confirmLoading: false,
                 previewVisible: false,
                 previewImage: '',
+                lbPeriodicalList: [{
+                  id: 1,
+                  title: '期刊1'
+                }],
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
@@ -216,6 +222,13 @@
                     onChange: this.onSelectChange
                 }
             }
+        },
+        created () {
+            // 初始化数据
+            getLbPeriodicalListAll()
+                        .then(res => {
+                            this.lbPeriodicalList = res.result
+                        })
         },
         methods: {
             async handlePreview (url) {

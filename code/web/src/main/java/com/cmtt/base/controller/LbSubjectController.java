@@ -14,6 +14,7 @@ import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.service.ILbSubjectService;
+import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -107,6 +108,31 @@ public class LbSubjectController {
 
             // 设置返回数据
             return R.ok().setPageResult(lbSubjectPage);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+
+    /**
+     * 获取所有列表
+     */
+    @GetMapping("/list_all")
+    @ResponseBody
+    public R listAll() {
+
+        try {
+
+            // 执行查询
+            List<LbSubject> list = lbSubjectService.list(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getStatus, RC.B_NORMAL.code()));
+
+            // 设置返回数据
+            return R.ok().setResult(list);
 
 
         } catch (Exception e) {

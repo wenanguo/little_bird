@@ -33,14 +33,19 @@
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
-        <!--        <a-form-item label="所属期刊Id">-->
-        <!--          <a-input v-decorator="['lbPeriodicalId', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />-->
-        <!--        </a-form-item>-->
-        <a-form-item label="所属期刊">
-          <a-input />
+        <a-form-item label="所属期刊Id">
+          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择所属期刊！'}]}]">
+            <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
+              {{ lbPeriodical.title }}
+            </a-select-option>
+          </a-select>
+
         </a-form-item>
+        <!-- <a-form-item label="所属期刊">
+          <a-input />
+        </a-form-item> -->
         <a-form-item label="广告分类">
-          <a-radio-group v-decorator="['adType', { initialValue: 2 }]">
+          <a-radio-group v-decorator="['adType', { initialValue: '2' }]">
             <a-radio :value="1">启动广告</a-radio>
             <a-radio :value="2">首页广告</a-radio>
           </a-radio-group>
@@ -94,6 +99,10 @@
             model: {
                 type: Object,
                 default: () => null
+            },
+            lbPeriodicalList: {
+                type: Object,
+                default: () => null
             }
         },
         data () {
@@ -123,6 +132,7 @@
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
 
+                // 初始化图片上传
                 if (this.model) {
                   this.fileList = [{
                                     uid: '-1',
@@ -137,22 +147,9 @@
         },
         methods: {
           handleChange (info) {
-            let fileList = [...info.fileList]
+            const fileListt = [...info.fileList]
 
-            // 1. Limit the number of uploaded files
-
-            fileList = fileList.slice(-1)
-
-            // // 2. read from response and show file link
-            // fileList = fileList.map(file => {
-            //   if (file.response) {
-            //     // Component will show file.url as link
-            //     file.url = file.response.result.url
-            //   }
-            //   return file
-            // })
-
-            this.fileList = fileList
+            this.fileList = fileListt.slice(-1)
 
             if (info.file.status === 'uploading') {
               return

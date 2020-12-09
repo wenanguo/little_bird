@@ -46,10 +46,10 @@ public class LbAd extends BaseEntity implements Serializable {
     private String adType;
 
     @ApiModelProperty(value = "所属期刊")
-    private String lb_periodical_id;
+    private String lbPeriodicalId;
 
     @ApiModelProperty(value = "所属期刊文章位置")
-    private String lb_periodical_index;
+    private String lbPeriodicalIndex;
 
 
     @ApiModelProperty(value = "连接地址")
