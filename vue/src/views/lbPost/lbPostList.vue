@@ -62,7 +62,7 @@
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
         <span slot="imgslot" slot-scope="text">
-          <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
+          <img alt="example" style="width: 50px" @click="handlePreview(text)" :src="text" />
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
