@@ -63,6 +63,9 @@
         <span slot="imgslot" slot-scope="text">
           <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
         </span>
+        <span slot="pdfslot" slot-scope="text">
+          <a :href="text" target="_blank">下载</a>
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">修改</a>
@@ -117,6 +120,11 @@
             sorter: true,
             scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
+        }, {
+            title: 'PDF',
+            sorter: true,
+            scopedSlots: { customRender: 'pdfslot' },
+            dataIndex: 'tpdf'
         }, {
             title: '推荐期刊',
             sorter: true,

@@ -19,7 +19,7 @@
         <a-form-item label="介绍">
           <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入广告介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="图片上传1">
+        <a-form-item label="图片上传">
           <a-upload
             name="file"
             :multiple="false"

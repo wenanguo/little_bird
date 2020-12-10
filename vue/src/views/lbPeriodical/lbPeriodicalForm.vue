@@ -44,6 +44,19 @@
         <a-form-item label="排序">
           <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
+        <a-form-item label="PDF上传">
+          <a-upload
+            name="file"
+            :multiple="false"
+            list-type="picture"
+            :file-list="pdffileList"
+            @change="pdfhandleChange"
+            action="/api/tencent/upload"
+          >
+            <a-button> <a-icon type="upload" />上传PDF</a-button>
+          </a-upload>
+          <a-input v-decorator="['tpdf', {initialValue: ''}]" type="hidden" />
+        </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
@@ -104,7 +117,8 @@
             }
             return {
                 form: this.$form.createForm(this),
-                fileList: []
+                fileList: [],
+                pdffileList: []
             }
         },
         created () {
@@ -144,7 +158,22 @@
               console.log(info.file.response.result.url)
               this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
             }
+          },
+          pdfhandleChange (info) {
+            const fileListt = [...info.fileList]
+
+            this.pdffileList = fileListt.slice(-1)
+
+            if (info.file.status === 'uploading') {
+              return
+            }
+            if (info.file.status === 'done') {
+              // Get this url from response in real world.
+              console.log(info.file.response.result.url)
+              this.form.setFieldsValue({ tpdf: info.file.response.result.url })
+            }
           }
         }
+
     }
 </script>

@@ -19,13 +19,18 @@
             <a-radio :value="2">否</a-radio>
           </a-radio-group>
         </a-form-item>
-        <a-form-item label="上传APP安装包">
+        <a-form-item label="安装包上传">
           <a-upload
             name="file"
-            :multiple="true"
+            :multiple="false"
+            list-type="picture"
+            :file-list="fileList"
+            @change="handleChange"
+            action="/api/tencent/upload"
           >
-            <a-button> <a-icon type="upload" />点击选择</a-button>
+            <a-button> <a-icon type="upload" />上传APK</a-button>
           </a-upload>
+          <a-input v-decorator="['linkUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
         <a-form-item label="更新说明">
           <a-input v-decorator="['info', {rules: [{required: true, min: 1, message: '请输入更新说明！'}]}]" />
@@ -101,7 +106,8 @@
                 }
             }
             return {
-                form: this.$form.createForm(this)
+                form: this.$form.createForm(this),
+                fileList: []
             }
         },
         created () {
@@ -113,7 +119,35 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
+
+                // 初始化图片上传
+                if (this.model) {
+                  this.fileList = [{
+                                    uid: '-1',
+                                    name: this.model.linkUrl,
+                                    status: 'done',
+                                    url: this.model.linkUrl
+                                  }]
+                } else {
+                  this.fileList = []
+                }
             })
+        },
+        methods: {
+          handleChange (info) {
+            const fileListt = [...info.fileList]
+
+            this.fileList = fileListt.slice(-1)
+
+            if (info.file.status === 'uploading') {
+              return
+            }
+            if (info.file.status === 'done') {
+              // Get this url from response in real world.
+              console.log(info.file.response.result.url)
+              this.form.setFieldsValue({ linkUrl: info.file.response.result.url })
+            }
+          }
         }
     }
 </script>

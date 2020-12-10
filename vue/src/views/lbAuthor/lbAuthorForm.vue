@@ -19,13 +19,18 @@
         <a-form-item label="介绍">
           <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入作者介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="上传作者头像">
+        <a-form-item label="头像上传">
           <a-upload
             name="file"
-            :multiple="true"
+            :multiple="false"
+            list-type="picture"
+            :file-list="fileList"
+            @change="handleChange"
+            action="/api/tencent/upload"
           >
-            <a-button> <a-icon type="upload" />点击选择</a-button>
+            <a-button> <a-icon type="upload" />上传图片</a-button>
           </a-upload>
+          <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
@@ -91,7 +96,8 @@
                 }
             }
             return {
-                form: this.$form.createForm(this)
+                form: this.$form.createForm(this),
+                fileList: []
             }
         },
         created () {
@@ -103,7 +109,35 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
+
+                // 初始化图片上传
+                if (this.model) {
+                  this.fileList = [{
+                                    uid: '-1',
+                                    name: this.model.imgUrl,
+                                    status: 'done',
+                                    url: this.model.imgUrl
+                                  }]
+                } else {
+                  this.fileList = []
+                }
             })
+        },
+        methods: {
+          handleChange (info) {
+            const fileListt = [...info.fileList]
+
+            this.fileList = fileListt.slice(-1)
+
+            if (info.file.status === 'uploading') {
+              return
+            }
+            if (info.file.status === 'done') {
+              // Get this url from response in real world.
+              console.log(info.file.response.result.url)
+              this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
+            }
+          }
         }
     }
 </script>

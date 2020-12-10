@@ -60,6 +60,9 @@
         <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
+        <span slot="apkslot" slot-scope="text">
+          <a :href="text" target="_blank">下载</a>
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">修改</a>
@@ -104,6 +107,7 @@
         }, {
             title: '下载地址',
             sorter: true,
+            scopedSlots: { customRender: 'apkslot' },
             dataIndex: 'linkUrl'
         }, {
             title: '更新版本',
