@@ -16,17 +16,24 @@ import com.cmtt.base.service.ILbPeriodicalService;
 import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.service.ILbSubjectService;
 import com.cmtt.base.service.impl.LbPostServiceImpl;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -54,6 +61,9 @@ public class LbPostController {
 
     @Autowired
     private ILbPeriodicalService lbPeriodicalService;
+
+    @Autowired
+    private FreeMarkerConfigurer configurer;
 
     /**
      * 主页
@@ -88,11 +98,21 @@ public class LbPostController {
     @PostMapping("detail")
     @ResponseBody
     @ApiOperation("文章详情")
-    public R detail(@RequestBody @Valid GetOneInputParam params){
+    public R detail(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
 
         // 执行查询
-        LbPost one = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
-        return R.ok().setResult(one);
+        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+
+
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("lbPost",lbPost);
+        Template template = configurer.getConfiguration().getTemplate("articleDetails.html");
+        String resStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+
+        lbPost.setContent(resStr);
+
+        return R.ok().setResult(lbPost);
     }
 
 
