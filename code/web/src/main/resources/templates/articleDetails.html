@@ -85,6 +85,30 @@
                 savePage();
                 window.location.href=$(this).attr('data-link');
             });
+			$('.pay_499').on('click',function(event) { //支付跳转499
+                
+                window.location.href="aves://pay?usertype=2";
+            });
+			$('.pay_4_99').on('click',function(event) { //支付跳转4.99
+                ;
+                window.location.href="aves://pay?usertype=1";
+            });
+			$('.post_subject').on('click',function(event) { //栏目跳转
+             
+                window.location.href="aves://category?id=1";
+            });
+			$('.link').on('click',function(event) { //分享
+             
+                window.location.href="aves://share";
+            });
+			$('.authorPhoto').on('click',function(event) { //作者
+             
+                window.location.href="aves://author?id=1";
+            });
+			$('.return').on('click',function(event) { //关闭页面
+             
+                window.location.href="aves://finish";
+            });
             function savePage(){  //操作浏览器的历史记录
                 history.replaceState('', document.title, location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
             }
@@ -107,7 +131,7 @@
         ${lbPost.title}
     </div>
     <div class="authorName">
-        <span>${lbPost.author}</span> | <span>${lbPost.postSubject}</span>
+        <span>${lbPost.author}</span> | <span class="post_subject">${lbPost.postSubject}</span>
     </div>
     <div class="date">9月28日</div>
     <div class="summary">
@@ -150,7 +174,7 @@
         </div>
         <div class="subscribeContent">
             <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
-            <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span>￥499</span>，试读三篇价格<span>￥4.99</span></div>
+            <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span class="pay_499">￥499</span>，试读三篇价格<span class="pay_4_99">￥4.99</span></div>
             <div class="subscribeText">
                 *我们一年大概更新300篇文章<br>
                 **别算了，我们这俩价格其实是一样的，没啥折扣
