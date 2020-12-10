@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <title>文章详情</title>
+    <title>${lbPost.title}</title>
     <link rel="stylesheet" type="text/css" href="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/css/style.css">
     <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
     <style>
@@ -101,17 +101,17 @@
 </div>
 <div class="articleHead">
     <div class="articleClass">
-        <span style="border-bottom-color: #CE404E">非虚构</span>
+        <span style="border-bottom-color: #CE404E">${lbPost.postCatalog}</span>
     </div>
     <div class="articleTitle">
-        地三鲜与红绿灯与涩谷锅塌豆腐
+        ${lbPost.title}
     </div>
     <div class="authorName">
-        <span>吉井忍</span> | <span>东京四季</span>
+        <span>${lbPost.author}</span> | <span>${lbPost.postSubject}</span>
     </div>
     <div class="date">9月28日</div>
     <div class="summary">
-        三毛姑娘死了，和老黑又合不来，我不免有些寂寞，幸而在人类中交上了知己，倒也不觉得多么无聊。前不久有人致函主人，请求将我的照片寄给他一张。
+        ${lbPost.description}
     </div>
 </div>
 <div class="articleContent">
