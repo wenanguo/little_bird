@@ -6,7 +6,6 @@
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
     @cancel="() => { $emit('cancel') }"
-    :dialog-style="{ top: '20px'}"
   >
 
     <a-spin :spinning="loading">
@@ -266,19 +265,8 @@
                         // [{ 'font': [] }],
                         [{ 'align': [] }],
                         // ['clean'],
-                        ['link', 'image', 'video'],
-                        ['sourceEditor', 'money']
-                      ],
-                      handlers: {
-                        shadeBox: null,
-                        sourceEditor: function () {
-                          alert('方法1')
-                        },
-                        money: function () {
-                          console.log('方法2')
-                          this.content = this.content + 'abcde'
-                        }
-                      }
+                        ['link', 'image', 'video']
+                      ]
                     }
                   }
                 }
@@ -351,12 +339,15 @@
     margin: 0 auto;
     height:25.5vw;
   }
-  .ql-sourceEditor{
+  .ql-blockquote{
     background:url("../../assets/image-text.png") no-repeat center !important;
     background-size: 70% 70% !important;
   }
-  .ql-money{
-    background:url("../../assets/money.png") no-repeat center !important;
+  .ql-blockquote svg,.ql-code-block svg{
+    display: none;
+  }
+  .ql-code-block{
+    background:url("../../assets/summary_icon.png") no-repeat center !important;
     background-size: 70% 70% !important;
   }
   .ql-editor blockquote{
@@ -371,7 +362,7 @@
     color: #3F3E4C;
     border: 0!important;
     margin: 0!important;
-    padding:10px;
+    padding:10px 10px 10px 15%;
     border-radius: 0;
     font-size:1.2em;
     text-align: right;
@@ -379,4 +370,8 @@
   /*.ant-modal{*/
   /*  width: 100% !important;*/
   /*}*/
+  .ql-editing{
+    left: 50% !important;
+    top: 0!important;
+  }
 </style>
