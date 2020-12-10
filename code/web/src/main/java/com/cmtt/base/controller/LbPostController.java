@@ -106,7 +106,7 @@ public class LbPostController {
 
 
         Map<String,Object> map = new HashMap<>();
-        map.put("LbPost",lbPost);
+        map.put("lbPost",lbPost);
         Template template = configurer.getConfiguration().getTemplate("articleDetails.html");
         String resStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
 
