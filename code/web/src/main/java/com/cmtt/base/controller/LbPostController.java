@@ -27,6 +27,8 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -64,6 +66,9 @@ public class LbPostController {
 
     @Autowired
     private FreeMarkerConfigurer configurer;
+
+    @Autowired
+    private TemplateEngine templateEngine;
 
     /**
      * 主页
@@ -105,12 +110,26 @@ public class LbPostController {
 
 
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("lbPost",lbPost);
-        Template template = configurer.getConfiguration().getTemplate("articleDetails.html");
-        String resStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("lbPost",lbPost);
+//        Template template = configurer.getConfiguration().getTemplate("articleDetails.html");
+//        String resStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+//
+//        lbPost.setContent(resStr);
 
-        lbPost.setContent(resStr);
+
+
+
+
+        // 改用thymeleaf
+
+        Context context=new Context();
+        context.setVariable("lbPost",lbPost);
+        String result=templateEngine.process("articleDetails",context);
+        //System.out.println(result);
+        lbPost.setContent(result);
+
+
 
         return R.ok().setResult(lbPost);
     }
