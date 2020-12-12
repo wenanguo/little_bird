@@ -107,10 +107,14 @@
             });
 			$('.return').on('click',function(event) { //关闭页面
              
-                window.location.href="aves://finish";
+                //window.location.href="aves://finish";
+                window.location.href="aves://getUserToken";
             });
             function savePage(){  //操作浏览器的历史记录
                 history.replaceState('', document.title, location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
+            }
+            function userTokenFromClient(value){
+                console.log(value);
             }
             //跳转后的判断
             if ($('wrap').height() > nowTop) {
