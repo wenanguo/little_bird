@@ -49,6 +49,9 @@
         }
     </style>
     <script>
+        function paySuccess(value){
+                console.log(value);
+        }
         function userTokenFromClient(value){
                 console.log(value);
         }
@@ -109,7 +112,7 @@
                 window.location.href="aves://author?id=1";
             });
 			$('.return').on('click',function(event) { //关闭页面
-          
+
                 window.location.href="aves://finish";
                 //window.location.href="aves://getUserToken";
             });
