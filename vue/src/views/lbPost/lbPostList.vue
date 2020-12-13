@@ -83,7 +83,7 @@
         ref="editForm"
         :title="title"
         :visible="visible"
-        :loading="confirmLoading"
+        :loading.sync="confirmLoading"
         :model="mdl"
         :lbCatalogList="lbCatalogList"
         :lbSubjectList="lbSubjectList"

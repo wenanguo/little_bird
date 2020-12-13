@@ -19,8 +19,14 @@
         <a-form-item label="分割线颜色">
           <colorPicker v-model="color" />
         </a-form-item>
+        <a-form-item label="分类">
+          <a-radio-group v-decorator="['ttype', { initialValue: '1' }]">
+            <a-radio :value="1">半屏</a-radio>
+            <a-radio :value="2">全屏</a-radio>
+          </a-radio-group>
+        </a-form-item>
         <a-form-item label="状态">
-          <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
+          <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>

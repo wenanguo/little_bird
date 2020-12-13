@@ -85,7 +85,7 @@
         ref="editForm"
         :title="title"
         :visible="visible"
-        :loading="confirmLoading"
+        :loading.sync="confirmLoading"
         :model="mdl"
         @cancel="handleCancel"
         @ok="handleOk"

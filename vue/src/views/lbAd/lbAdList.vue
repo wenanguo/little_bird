@@ -6,7 +6,7 @@
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
               <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
+                <a-input v-model="queryParam.name" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -83,7 +83,7 @@
         ref="editForm"
         :title="title"
         :visible="visible"
-        :loading="confirmLoading"
+        :loading.sync="confirmLoading"
         :model="mdl"
         :lbPeriodicalList="lbPeriodicalList"
         @cancel="handleCancel"

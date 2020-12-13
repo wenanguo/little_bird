@@ -140,11 +140,13 @@
             this.fileList = fileListt.slice(-1)
 
             if (info.file.status === 'uploading') {
+              this.$emit('update:loading', true)
               return
             }
             if (info.file.status === 'done') {
               // Get this url from response in real world.
               console.log(info.file.response.result.url)
+              this.$emit('update:loading', false)
               this.form.setFieldsValue({ linkUrl: info.file.response.result.url })
             }
           }

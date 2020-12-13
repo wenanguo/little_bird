@@ -106,6 +106,10 @@
             sorter: true,
             dataIndex: 'tcolor'
         }, {
+            title: '分类',
+            sorter: true,
+            dataIndex: 'ttype'
+        }, {
             title: '状态',
             sorter: true,
             width: '100px',

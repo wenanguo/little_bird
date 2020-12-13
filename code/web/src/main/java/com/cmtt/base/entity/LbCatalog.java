@@ -37,6 +37,9 @@ public class LbCatalog extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "颜色")
     private String tcolor;
 
+    @ApiModelProperty(value = "分类")
+    private String ttype;
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 

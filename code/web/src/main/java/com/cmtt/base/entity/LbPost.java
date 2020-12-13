@@ -44,6 +44,12 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "分享标题")
+    private String shareTitle;
+
+    @ApiModelProperty(value = "分享内容")
+    private String shareContent;
+
     @ApiModelProperty(value = "描述")
     private String description;
 

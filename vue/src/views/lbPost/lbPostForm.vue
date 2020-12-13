@@ -21,7 +21,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item label="期刊id">
+                <a-form-item label="所属期刊">
                   <!-- <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                   <a-select v-decorator="['periodicalId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
                     <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
@@ -38,6 +38,16 @@
               <a-col :span="12">
                 <a-form-item label="描述">
                   <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="分享标题">
+                  <a-input v-decorator="['shareTitle', {rules: [{required: false}]}]" />
+                </a-form-item>
+              </a-col>
+              <a-col :span="12">
+                <a-form-item label="分享内容">
+                  <a-input v-decorator="['shareContent', {rules: [{required: false}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -305,11 +315,11 @@
             this.fileList = fileListt.slice(-1)
 
             if (info.file.status === 'uploading') {
+              this.$emit('update:loading', true)
               return
             }
             if (info.file.status === 'done') {
-              // Get this url from response in real world.
-              console.log(info.file.response.result.url)
+              this.$emit('update:loading', false)
               this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
             }
           }

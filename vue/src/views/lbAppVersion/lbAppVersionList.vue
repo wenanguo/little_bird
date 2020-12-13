@@ -6,7 +6,7 @@
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
               <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
+                <a-input v-model="queryParam.info" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -78,7 +78,7 @@
         ref="editForm"
         :title="title"
         :visible="visible"
-        :loading="confirmLoading"
+        :loading.sync="confirmLoading"
         :model="mdl"
         @cancel="handleCancel"
         @ok="handleOk"
@@ -216,6 +216,10 @@
                 this.title = '修改'
                 this.visible = true
                 this.mdl = { ...record }
+            },
+            addcounter () {
+                console.log('载入中')
+                this.confirmLoading = false
             },
             handleOk () {
                 const form = this.$refs.editForm.form
