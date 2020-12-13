@@ -17,7 +17,7 @@
           <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="分割线颜色">
-          <colorPicker  v-decorator="['tcolor', { initialValue: '#777777' }]"/>
+          <colorPicker v-decorator="['tcolor', { initialValue: '#777777' }]"/>
         </a-form-item>
         <a-form-item label="分类">
           <a-radio-group v-decorator="['ttype', { initialValue: 1 }]">

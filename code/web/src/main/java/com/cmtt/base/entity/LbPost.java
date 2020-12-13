@@ -41,8 +41,11 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "标题")
     private String title;
 
-    @ApiModelProperty(value = "内容")
+    @ApiModelProperty(value = "免费内容")
     private String content;
+
+    @ApiModelProperty(value = "收费内容")
+    private String feeContent;
 
     @ApiModelProperty(value = "分享标题")
     private String shareTitle;
@@ -54,7 +57,7 @@ public class LbPost extends BaseEntity implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "栏目id")
-    private String postSubjectId;
+    private Integer postSubjectId;
 
     @ApiModelProperty(value = "栏目")
     private String postSubject;

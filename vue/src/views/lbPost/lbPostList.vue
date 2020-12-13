@@ -98,7 +98,7 @@
 <script>
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
-    import { statusMap } from '@/api/RC'
+    import { statusMap, recommendMap } from '@/api/RC'
     import { getLbPostList, saveLbPost, delLbPost, batchDelLbPost } from '@/api/lbPost'
     import { getLbCatalogListAll } from '@/api/lbCatalog'
     import { getLbSubjectListAll } from '@/api/lbSubject'
@@ -118,6 +118,16 @@
             fixed: 'left',
             width: '150px',
             dataIndex: 'title'
+        }, {
+            title: '分享标题',
+            sorter: true,
+            width: '150px',
+            dataIndex: 'shareTitle'
+        }, {
+            title: '分享内容',
+            sorter: true,
+            width: '150px',
+            dataIndex: 'shareContent'
         }, {
             title: '期刊',
             sorter: true,
@@ -147,6 +157,7 @@
             title: '显示样式',
             sorter: true,
             width: '100px',
+            customRender: (value) => showTypeMap[value].text,
             dataIndex: 'showType'
         }, {
             title: '图片',
@@ -180,24 +191,27 @@
             width: '100px',
             customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'publishedAt'
-        }, {
-            title: '点赞数量',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'praiseCount'
-        }, {
-            title: '收藏数量',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'recordCount'
-        }, {
-            title: '阅读数量',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'readCount'
-        }, {
+        },
+        // {
+        //     title: '点赞数量',
+        //     sorter: true,
+        //     width: '100px',
+        //     dataIndex: 'praiseCount'
+        // }, {
+        //     title: '收藏数量',
+        //     sorter: true,
+        //     width: '100px',
+        //     dataIndex: 'recordCount'
+        // }, {
+        //     title: '阅读数量',
+        //     sorter: true,
+        //     width: '100px',
+        //     dataIndex: 'readCount'
+        // },
+        {
             title: '是否推荐',
             sorter: true,
+            customRender: (value) => recommendMap[value].text,
             width: '100px',
             dataIndex: 'recommend'
         }, {
@@ -227,6 +241,25 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+
+    const showTypeMap = {
+    1: {
+        status: 'default',
+        text: '左右图文'
+    },
+    2: {
+        status: 'processing',
+        text: '上下图文'
+    },
+    3: {
+        status: 'processing',
+        text: '广告类型'
+    },
+    4: {
+        status: 'processing',
+        text: '无图'
+    }
+  }
 
     export default {
         name: 'TableList',

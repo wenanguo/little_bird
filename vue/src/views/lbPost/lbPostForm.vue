@@ -78,10 +78,10 @@
               <a-col :span="12">
                 <a-form-item label="显示样式">
                   <a-select v-decorator="['showType', {rules: [{required: true, message: '请选择分类！'}]}]">
-                    <a-select-option value="0">左右图文</a-select-option>
-                    <a-select-option value="1">上下图文</a-select-option>
-                    <a-select-option value="2">广告类型</a-select-option>
-                    <a-select-option value="3">无图</a-select-option>
+                    <a-select-option :value="1">左右图文</a-select-option>
+                    <a-select-option :value="2">上下图文</a-select-option>
+                    <a-select-option :value="3">广告类型</a-select-option>
+                    <a-select-option :value="4">无图</a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
@@ -159,11 +159,14 @@
               </a-col>
             </a-tab-pane>
             <a-tab-pane key="2" tab="内容" force-render>
-              <a-col :span="24">
-                <div class="editBox">
-                  <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
-                </div>
-              </a-col>
+              <a-form-item :span="24">
+                <a-col :span="24">
+                    <div class="editBox">
+                      <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                    </div>
+                    <a-input v-decorator="['content', {initialValue: '123'}]" type="hidden" />
+                </a-col>
+              </a-form-item>
             </a-tab-pane>
           </a-tabs>
 
@@ -189,6 +192,8 @@
         'id',
         'periodicalId',
         'title',
+        'shareTitle',
+        'shareContent',
         'description',
         'postSubjectId',
         'postSubject',
@@ -256,7 +261,7 @@
             }
             return {
                 form: this.$form.createForm(this),
-                content: null,
+                content: '',
                 fileList: [],
                 editorOption: {
                   modules: {
@@ -289,9 +294,14 @@
             fields.forEach(v => this.form.getFieldDecorator(v))
 
             // 当 model 发生改变时，为表单设置值
+            this.$watch('content', () => {
+                this.content && this.form.setFieldsValue({ content: this.content })
+            })
+
+            // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
-
+                this.content = this.model.content
                  // 初始化图片上传
                 if (this.model) {
                   this.fileList = [{

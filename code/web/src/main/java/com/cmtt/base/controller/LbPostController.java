@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -132,6 +133,28 @@ public class LbPostController {
 
 
         return R.ok().setResult(lbPost);
+    }
+
+
+    /**
+     * 文章详情
+     */
+    @GetMapping("share")
+    @ApiOperation("文章详情分享")
+    public ModelAndView share(@Valid GetOneInputParam params)  {
+
+        // 执行查询
+        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+
+
+        // 改用thymeleaf
+
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("lbPost", lbPost);
+        mv.setViewName("articleDetails");
+        return mv;
+
     }
 
 
