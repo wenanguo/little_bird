@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -147,7 +147,10 @@
     </div>
 </div>
 <div class="articleContent">
-    [[${lbPost.content}]]
+
+
+    <p th:utext="${lbPost.content}"></p>
+
     <div class="subscribeBox">
         <div class="subscribeBorderTop"></div>
         <div class="subscribeTitle">
