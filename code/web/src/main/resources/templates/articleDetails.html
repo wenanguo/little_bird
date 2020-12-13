@@ -141,7 +141,7 @@
     <div class="authorName">
         <span>[[${lbPost.author}]]</span> | <span class="post_subject">[[${lbPost.postSubject}]]</span>
     </div>
-    <div class="date">9月28日</div>
+    <div class="date"><span th:text="${#temporals.format(lbPost.publishedAt,'MM-dd')}"></span></div>
     <div class="summary">
         [[${lbPost.description}]]
     </div>
@@ -149,25 +149,35 @@
 <div class="articleContent">
 
 
-    <p th:utext="${lbPost.content}"></p>
 
-    <div class="subscribeBox">
-        <div class="subscribeBorderTop"></div>
-        <div class="subscribeTitle">
-            <div>
-                <h1>付费后，可阅读余下内容</h1>
-                <h2>你目前剩余 3 篇文章的兑换资格</h2>
-                <a href="javascript:;">兑换本文</a>
+
+    <div class="freeArticleContent">
+
+        <p th:utext="${lbPost.content}"></p>
+
+        <div class="subscribeBox">
+            <div class="subscribeBorderTop"></div>
+            <div class="subscribeTitle">
+                <div>
+                    <h1>付费后，可阅读余下内容</h1>
+                    <h2>你目前剩余 3 篇文章的兑换资格</h2>
+                    <a href="javascript:;">兑换本文</a>
+                </div>
+            </div>
+            <div class="subscribeContent">
+                <div class="showInfo">
+                    <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
+                </div>
+                <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span>￥499</span>，试读三篇价格<span>￥4.99</span></div>
+                <div class="subscribeText">
+                    *我们一年大概更新300篇文章<br>
+                    **别算了，我们这俩价格其实是一样的，没啥折扣
+                </div>
             </div>
         </div>
-        <div class="subscribeContent">
-            <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
-            <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span class="pay_499">￥499</span>，试读三篇价格<span class="pay_4_99">￥4.99</span></div>
-            <div class="subscribeText">
-                *我们一年大概更新300篇文章<br>
-                **别算了，我们这俩价格其实是一样的，没啥折扣
-            </div>
-        </div>
+    </div>
+    <div class="articleContent">
+        <p th:utext="${lbPost.feeContent}"></p>
     </div>
 </div>
 <div class="authorBoxList">

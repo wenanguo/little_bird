@@ -99,7 +99,7 @@ logging:
     com.cmtt.base.mapper: debug
 
 common:
-  noauto: /api/auth/login,/api/db_doc,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_catalog/get_catalog_post,/api/lb_catalog/list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_report/add,/api/lb_post/share
+  noauto: /api/auth/login,/api/db_doc,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_catalog/get_catalog_post,/api/lb_catalog/list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_report/add,/api/lb_post/share,/api/lb_post/preview
 
 
 

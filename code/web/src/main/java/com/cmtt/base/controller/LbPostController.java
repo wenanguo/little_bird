@@ -110,6 +110,14 @@ public class LbPostController {
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
 
 
+        // 判断用户是否已经付费，包年，或者单篇购买
+        boolean isPay=false;
+
+        if(!isPay){
+            // 未付费，隐藏付费内容
+            lbPost.setFeeContent("");
+        }
+
 
 //        Map<String,Object> map = new HashMap<>();
 //        map.put("lbPost",lbPost);
@@ -136,6 +144,26 @@ public class LbPostController {
     }
 
 
+
+
+    /**
+     * 文章详情
+     */
+    @PostMapping("get_fee_content")
+    @ResponseBody
+    @ApiOperation("获取付费内容")
+    public R get_fee_content(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
+
+        // 判断用户是否已经付费，包年，或者单篇购买
+
+
+        // 执行查询
+        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+
+        return R.ok().setResult(lbPost);
+    }
+
+
     /**
      * 文章详情
      */
@@ -146,8 +174,32 @@ public class LbPostController {
         // 执行查询
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
 
+        // 分享内容，隐藏付费内容
+        lbPost.setFeeContent("");
 
-        // 改用thymeleaf
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("lbPost", lbPost);
+        mv.setViewName("shareAreicle");
+        return mv;
+
+    }
+
+
+    /**
+     * 文章详情
+     */
+    @GetMapping("preview")
+    @ApiOperation("文章详情预览")
+    public ModelAndView preview(@Valid GetOneInputParam params)  {
+
+        // 执行查询
+        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+
+        // 分享内容，隐藏付费内容
+        lbPost.setFeeContent("");
+
+
 
 
         ModelAndView mv = new ModelAndView();
@@ -156,7 +208,6 @@ public class LbPostController {
         return mv;
 
     }
-
 
 
     /**
