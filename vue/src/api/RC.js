@@ -25,4 +25,15 @@ const statusMap = {
   }
 }
 
-export { statusMap }
+const recommendMap = {
+    1: {
+        status: 'default',
+        text: '推荐'
+    },
+    2: {
+        status: 'processing',
+        text: '不推荐'
+    }
+  }
+
+export { statusMap, recommendMap }

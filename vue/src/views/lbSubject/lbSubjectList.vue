@@ -112,10 +112,6 @@
             sorter: true,
             dataIndex: 'catalogId'
         }, {
-            title: '推荐',
-            sorter: true,
-            dataIndex: 'recommend'
-        }, {
             title: '状态',
             sorter: true,
             width: '100px',

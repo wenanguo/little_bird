@@ -87,7 +87,7 @@
 <script>
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
-    import { statusMap } from '@/api/RC'
+    import { statusMap, recommendMap } from '@/api/RC'
     import { getLbCatalogList, saveLbCatalog, delLbCatalog, batchDelLbCatalog } from '@/api/lbCatalog'
     import EditForm from './lbCatalogForm'
 
@@ -106,8 +106,14 @@
             sorter: true,
             dataIndex: 'tcolor'
         }, {
+            title: '推荐',
+            sorter: true,
+            customRender: (value) => recommendMap[value].text,
+            dataIndex: 'recommend'
+        }, {
             title: '分类',
             sorter: true,
+            customRender: (value) => ttypeMap[value].text,
             dataIndex: 'ttype'
         }, {
             title: '状态',
@@ -135,6 +141,17 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+
+    const ttypeMap = {
+    1: {
+        status: 'default',
+        text: '半屏'
+    },
+    2: {
+        status: 'processing',
+        text: '全屏'
+    }
+  }
 
     export default {
         name: 'TableList',

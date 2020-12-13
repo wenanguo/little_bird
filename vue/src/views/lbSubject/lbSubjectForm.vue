@@ -26,14 +26,8 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="推荐">
-          <a-radio-group>
-            <a-radio :value="100">是</a-radio>
-            <a-radio :value="101">否</a-radio>
-          </a-radio-group>
-        </a-form-item>
         <a-form-item label="状态">
-          <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
+          <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>

@@ -103,6 +103,7 @@
         }, {
             title: '是否强制更新',
             sorter: true,
+            customRender: (value) => isForceMap[value].text,
             dataIndex: 'isForce'
         }, {
             title: '下载地址',
@@ -113,11 +114,13 @@
             title: '更新版本',
             sorter: true,
             dataIndex: 'info'
-        }, {
-            title: 'app类型',
-            sorter: true,
-            dataIndex: 'appType'
-        }, {
+        },
+        // {
+        //     title: 'app类型',
+        //     sorter: true,
+        //     dataIndex: 'appType'
+        // },
+        {
             title: '内部版本号',
             sorter: true,
             dataIndex: 'innerVersion'
@@ -151,6 +154,17 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+
+    const isForceMap = {
+    1: {
+        status: 'default',
+        text: '是'
+    },
+    2: {
+        status: 'processing',
+        text: '否'
+    }
+  }
 
     export default {
         name: 'TableList',

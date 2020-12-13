@@ -6,7 +6,7 @@
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
               <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
+                <a-input v-model="queryParam.name" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -122,18 +122,6 @@
             width: '100px',
             scopedSlots: { customRender: 'status' },
             dataIndex: 'status'
-        }, {
-            title: '修改时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
-            dataIndex: 'updateTime'
-        }, {
-            title: '创建时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
-            dataIndex: 'createTime'
         },
         {
             title: '操作',

@@ -17,12 +17,18 @@
           <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="分割线颜色">
-          <colorPicker v-model="color" />
+          <colorPicker  v-decorator="['tcolor', { initialValue: '#777777' }]"/>
         </a-form-item>
         <a-form-item label="分类">
-          <a-radio-group v-decorator="['ttype', { initialValue: '1' }]">
+          <a-radio-group v-decorator="['ttype', { initialValue: 1 }]">
             <a-radio :value="1">半屏</a-radio>
             <a-radio :value="2">全屏</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item label="推荐">
+          <a-radio-group v-decorator="['recommend', { initialValue: 1 }]">
+            <a-radio :value="1">推荐</a-radio>
+            <a-radio :value="2">不推荐</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="状态">
@@ -45,6 +51,8 @@
         'title',
         'tcolor',
         'status',
+        'ttype',
+        'recommend',
         'updateTime',
         'createTime'
     ]
@@ -93,7 +101,8 @@
 
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
-                this.model && this.form.setFieldsValue(pick(this.model, fields))
+                var json = pick(this.model, fields)
+                this.model && this.form.setFieldsValue(json)
             })
         }
     }

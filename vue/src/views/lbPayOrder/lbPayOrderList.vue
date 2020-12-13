@@ -6,7 +6,7 @@
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
               <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
+                <a-input v-model="queryParam.subject" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">

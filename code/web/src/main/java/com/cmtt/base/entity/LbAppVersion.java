@@ -31,7 +31,7 @@ public class LbAppVersion extends BaseEntity implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "是否强制更新")
-    private String isForce;
+    private Integer isForce;
 
     @ApiModelProperty(value = "下载地址")
     private String linkUrl;

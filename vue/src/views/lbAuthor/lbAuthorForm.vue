@@ -33,18 +33,10 @@
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
         <a-form-item label="状态">
-          <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
+          <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="修改时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
-        </a-form-item>
-        <a-form-item label="创建时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
         </a-form-item>
       </a-form>
     </a-spin>
