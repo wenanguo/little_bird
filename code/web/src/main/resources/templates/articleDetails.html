@@ -49,6 +49,12 @@
         }
     </style>
     <script>
+        function paySuccess(value){
+                console.log(value);
+        }
+        function userTokenFromClient(value){
+                console.log(value);
+        }
         $(document).ready(function () {
             $('.authorBoxList').children('.authorBox:even').addClass('left');
             $('.authorBoxList').children('.authorBox:odd').addClass('right');
@@ -106,12 +112,14 @@
                 window.location.href="aves://author?id=1";
             });
 			$('.return').on('click',function(event) { //关闭页面
-             
+
                 window.location.href="aves://finish";
+                //window.location.href="aves://getUserToken";
             });
             function savePage(){  //操作浏览器的历史记录
                 history.replaceState('', document.title, location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
             }
+
             //跳转后的判断
             if ($('wrap').height() > nowTop) {
                 scrollTo(0, nowTop);
