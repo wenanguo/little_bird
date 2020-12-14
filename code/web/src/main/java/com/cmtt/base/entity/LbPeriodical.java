@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -35,6 +36,7 @@ public class LbPeriodical extends BaseEntity implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "标题")
+    @TableField(condition = SqlCondition.LIKE)
     private String title;
 
     @ApiModelProperty(value = "期刊编号")

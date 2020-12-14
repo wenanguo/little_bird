@@ -70,11 +70,11 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="12">
+              <!-- <a-col :span="12">
                 <a-form-item label="分类颜色">
                   <a-input v-decorator="['tcolor', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
-              </a-col>
+              </a-col> -->
               <a-col :span="12">
                 <a-form-item label="显示样式">
                   <a-select v-decorator="['showType', {rules: [{required: true, message: '请选择分类！'}]}]">
@@ -85,14 +85,14 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="12">
+              <!-- <a-col :span="12">
                 <a-form-item label="广告链接地址">
                   <a-input v-decorator="['linkUrl', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                 </a-form-item>
-              </a-col>
+              </a-col> -->
               <a-col :span="12">
                 <a-form-item label="主题信息">
-                  <a-input v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                  <a-input v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的主题信息！'}]}]" />
                 </a-form-item>
               </a-col>
               <a-col :span="12">

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupEdit;
@@ -40,6 +42,7 @@ public class LbReport extends BaseEntity implements Serializable {
             groups = {GroupAdd.class, GroupEdit.class},
             message = "手机号不能为空"
     )
+    @TableField(condition = SqlCondition.LIKE)
     private String phone;
 
     @ApiModelProperty(value = "邮箱",example = "wenanguo110@163.com")

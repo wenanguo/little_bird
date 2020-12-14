@@ -121,7 +121,7 @@
             scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
         }, {
-            title: '所属期刊Id',
+            title: '所属期刊',
             sorter: true,
             dataIndex: 'lbPeriodicalId'
         }, {

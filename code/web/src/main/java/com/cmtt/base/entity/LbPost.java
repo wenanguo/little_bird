@@ -3,6 +3,7 @@ package com.cmtt.base.entity;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -39,6 +40,7 @@ public class LbPost extends BaseEntity implements Serializable {
     private String periodicalTitle;
 
     @ApiModelProperty(value = "标题")
+    @TableField(condition = SqlCondition.LIKE)
     private String title;
 
     @ApiModelProperty(value = "免费内容")

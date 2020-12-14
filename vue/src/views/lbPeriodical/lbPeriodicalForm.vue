@@ -139,8 +139,15 @@
                                     status: 'done',
                                     url: this.model.imgUrl
                                   }]
+                  this.pdffileList = [{
+                                    uid: '-1',
+                                    name: this.model.tpdf,
+                                    status: 'done',
+                                    url: this.model.tpdf
+                                  }]
                 } else {
                   this.fileList = []
+                  this.pdffileList = []
                 }
             })
         },

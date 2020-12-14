@@ -1,6 +1,8 @@
 package com.cmtt.base.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -37,6 +39,7 @@ public class LbAppVersion extends BaseEntity implements Serializable {
     private String linkUrl;
 
     @ApiModelProperty(value = "更新版本")
+    @TableField(condition = SqlCondition.LIKE)
     private String info;
 
     @ApiModelProperty(value = "app类型")

@@ -2,6 +2,8 @@ package com.cmtt.base.entity;
 
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.cmtt.base.entity.BaseEntity;
@@ -33,6 +35,7 @@ public class LbPayOrder extends BaseEntity implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "商品标题")
+    @TableField(condition = SqlCondition.LIKE)
     private String subject;
 
     @ApiModelProperty(value = "商品描述")

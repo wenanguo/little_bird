@@ -32,17 +32,17 @@
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
-        <a-form-item label="所属期刊Id">
-          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择所属期刊！'}]}]">
+        <a-form-item label="所属期刊">
+          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: false}]}]">
             <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
               {{ lbPeriodical.title }}
             </a-select-option>
           </a-select>
 
         </a-form-item>
-        <!-- <a-form-item label="所属期刊">
-          <a-input />
-        </a-form-item> -->
+        <a-form-item label="期刊位置">
+          <a-input-number v-decorator="['lbPeriodicalIndex', {rules: [{required: false}]}]" />
+        </a-form-item>
         <a-form-item label="广告分类">
           <a-radio-group v-decorator="['adType', { initialValue: '2' }]">
             <a-radio :value="1">启动广告</a-radio>

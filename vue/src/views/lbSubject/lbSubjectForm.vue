@@ -13,13 +13,13 @@
         <a-form-item v-show="model && model.id > 0" label="编号">
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
-        <a-form-item label="分类名称">
-          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入分类名称！'}]}]" />
+        <a-form-item label="名称">
+          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名称！'}]}]" />
         </a-form-item>
-        <a-form-item label="分类介绍">
-          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入分类介绍！'}]}]" />
+        <a-form-item label="介绍">
+          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="所属分类ID">
+        <a-form-item label="所属分类">
           <a-select v-decorator="['catalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
             <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
               {{ lbCatalog.title }}

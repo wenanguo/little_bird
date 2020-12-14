@@ -259,6 +259,7 @@
                 })
             },
             handleDel (record) {
+                delete record['lbPostList']
                 if (record.id > 0) {
                     // 修改 e.g.
                     delLbAuthor(record).then(res => {
