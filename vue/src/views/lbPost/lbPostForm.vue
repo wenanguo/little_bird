@@ -158,22 +158,25 @@
                 </a-form-item>
               </a-col>
             </a-tab-pane>
-            <a-tab-pane key="2" tab="内容" force-render>
-              <a-form-item :span="24">
-                <a-col :span="24">
-                  <div class="editBox">
-                    <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
-                  </div>
-                  <a-input v-decorator="['content', {initialValue: '123'}]" type="hidden" />
-                </a-col>
-              </a-form-item>
+            <a-tab-pane key="2" tab="免费内容" force-render>
+              <div class="editBox">
+                <quill-editor v-model="freeContent" ref="myQuillEditor" :options="editorOption"></quill-editor>
+              </div>
+            </a-tab-pane>
+            <a-tab-pane key="3" tab="收费内容" force-render>
+              <div class="editBox">
+                <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+              </div>
+              <a-input v-decorator="['content', {initialValue: '123'}]" type="hidden" />
             </a-tab-pane>
           </a-tabs>
-
         </a-row>
         <div class="phone-view">
           <div class="ql-container ql-snow">
-            <div class="ql-editor" v-html="this.content"></div>
+            <div class="ql-editor">
+              <div v-html="this.freeContent"></div>
+              <div v-html="this.content"></div>
+            </div>
           </div>
         </div>
       </a-form>
@@ -182,159 +185,157 @@
 </template>
 
 <script>
-    import pick from 'lodash.pick'
-    import { quillEditor } from 'vue-quill-editor'
-    import quillConfig from './quill-config.js'
-    import AFormItem from 'ant-design-vue/es/form/FormItem'
-    import ACol from 'ant-design-vue/es/grid/Col'
-    // 表单字段
-    const fields = [
-        'id',
-        'periodicalId',
-        'title',
-        'shareTitle',
-        'shareContent',
-        'description',
-        'postSubjectId',
-        'postSubject',
-        'postCatalog',
-        'postCatalogId',
-        'tcolor',
-        'showType',
-        'imgUrl',
-        'linkUrl',
-        'themeInfo',
-        'author',
-        'postOrder',
-        'publishedAt',
-        'praiseCount',
-        'recordCount',
-        'readCount',
-        'recommend',
-        'status',
-        'updateTime',
-        'createTime'
-    ]
+  import pick from 'lodash.pick'
+  import { quillEditor } from 'vue-quill-editor'
+  import AFormItem from 'ant-design-vue/es/form/FormItem'
+  import ACol from 'ant-design-vue/es/grid/Col'
+  // 表单字段
+  const fields = [
+    'id',
+    'periodicalId',
+    'title',
+    'shareTitle',
+    'shareContent',
+    'description',
+    'postSubjectId',
+    'postSubject',
+    'postCatalog',
+    'postCatalogId',
+    'tcolor',
+    'showType',
+    'imgUrl',
+    'linkUrl',
+    'themeInfo',
+    'author',
+    'postOrder',
+    'publishedAt',
+    'praiseCount',
+    'recordCount',
+    'readCount',
+    'recommend',
+    'status',
+    'updateTime',
+    'createTime'
+  ]
 
-    export default {
-        components: { ACol, AFormItem, quillEditor },
-        props: {
-            visible: {
-                type: Boolean,
-                required: true
-            },
-            title: {
-                type: String,
-                required: true
-            },
-            loading: {
-                type: Boolean,
-                default: () => false
-            },
-            model: {
-                type: Object,
-                default: () => null
-            },
-            lbCatalogList: {
-                type: Array,
-                default: () => null
-            },
-            lbSubjectList: {
-                type: Array,
-                default: () => null
-            },
-            lbPeriodicalList: {
-                type: Array,
-                default: () => null
-            }
+  export default {
+    components: { ACol, AFormItem, quillEditor },
+    props: {
+      visible: {
+        type: Boolean,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      loading: {
+        type: Boolean,
+        default: () => false
+      },
+      model: {
+        type: Object,
+        default: () => null
+      },
+      lbCatalogList: {
+        type: Array,
+        default: () => null
+      },
+      lbSubjectList: {
+        type: Array,
+        default: () => null
+      },
+      lbPeriodicalList: {
+        type: Array,
+        default: () => null
+      }
+    },
+    data () {
+      this.formLayout = {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 7 }
         },
-        data () {
-            this.formLayout = {
-                labelCol: {
-                    xs: { span: 24 },
-                    sm: { span: 7 }
-                },
-                wrapperCol: {
-                    xs: { span: 24 },
-                    sm: { span: 13 }
-                }
-            }
-            return {
-                form: this.$form.createForm(this),
-                content: '',
-                fileList: [],
-                editorOption: {
-                  modules: {
-                    toolbar: {
-                      container: [
-                        ['bold', 'italic', 'underline', 'strike'],
-                        ['blockquote', 'code-block'],
-                        [{ 'header': 1 }, { 'header': 2 }],
-                        // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                        // [{ 'script': 'sub' }, { 'script': 'super' }],
-                        [{ 'indent': '-1' }, { 'indent': '+1' }],
-                        // [{ 'direction': 'rtl' }],
-                        // [{ 'size': ['small', false, 'large', 'huge'] }],
-                        // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        // [{ 'font': [] }],
-                        [{ 'align': [] }],
-                        // ['clean'],
-                        ['link', 'image', 'video']
-                      ]
-                    }
-                  }
-                }
-            }
-        },
-        created () {
-            console.log('custom modal created')
-
-            // 防止表单未注册
-            fields.forEach(v => this.form.getFieldDecorator(v))
-
-            // 当 model 发生改变时，为表单设置值
-            this.$watch('content', () => {
-                this.content && this.form.setFieldsValue({ content: this.content })
-            })
-
-            // 当 model 发生改变时，为表单设置值
-            this.$watch('model', () => {
-                this.model && this.form.setFieldsValue(pick(this.model, fields))
-                this.content = this.model.content
-                 // 初始化图片上传
-                if (this.model) {
-                  this.fileList = [{
-                                    uid: '-1',
-                                    name: this.model.imgUrl,
-                                    status: 'done',
-                                    url: this.model.imgUrl
-                                  }]
-                } else {
-                  this.fileList = []
-                }
-            })
-        },
-        mounted () {
-          quillConfig.initButton()
-        },
-        methods: {
-          handleChange (info) {
-            const fileListt = [...info.fileList]
-
-            this.fileList = fileListt.slice(-1)
-
-            if (info.file.status === 'uploading') {
-              this.$emit('update:loading', true)
-              return
-            }
-            if (info.file.status === 'done') {
-              this.$emit('update:loading', false)
-              this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 13 }
+        }
+      }
+      return {
+        form: this.$form.createForm(this),
+        content: '',
+        freeContent: '',
+        fileList: [],
+        editorOption: {
+          placeholder: '输入文章收费内容',
+          modules: {
+            toolbar: {
+              container: [
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote', 'code-block'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                // [{ 'script': 'sub' }, { 'script': 'super' }],
+                [{ 'indent': '-1' }, { 'indent': '+1' }],
+                // [{ 'direction': 'rtl' }],
+                // [{ 'size': ['small', false, 'large', 'huge'] }],
+                // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                [{ 'color': [] }, { 'background': [] }],
+                // [{ 'font': [] }],
+                [{ 'align': [] }],
+                // ['clean'],
+                ['link', 'image', 'video']
+              ]
             }
           }
         }
+      }
+    },
+    created () {
+      console.log('custom modal created')
+
+      // 防止表单未注册
+      fields.forEach(v => this.form.getFieldDecorator(v))
+
+      // 当 model 发生改变时，为表单设置值
+      this.$watch('content', () => {
+        this.content && this.form.setFieldsValue({ content: this.content })
+      })
+
+      // 当 model 发生改变时，为表单设置值
+      this.$watch('model', () => {
+        this.model && this.form.setFieldsValue(pick(this.model, fields))
+        this.content = this.model.content
+        // 初始化图片上传
+        if (this.model) {
+          this.fileList = [{
+            uid: '-1',
+            name: this.model.imgUrl,
+            status: 'done',
+            url: this.model.imgUrl
+          }]
+        } else {
+          this.fileList = []
+        }
+      })
+    },
+    methods: {
+      handleChange (info) {
+        const fileListt = [...info.fileList]
+
+        this.fileList = fileListt.slice(-1)
+
+        if (info.file.status === 'uploading') {
+          this.$emit('update:loading', true)
+          return
+        }
+        if (info.file.status === 'done') {
+          this.$emit('update:loading', false)
+          this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
+        }
+      }
     }
+  }
 </script>
 <style>
   .editBox .ql-editor{
