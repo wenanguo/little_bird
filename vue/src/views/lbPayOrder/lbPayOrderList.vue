@@ -174,25 +174,25 @@
             title: '交易创建时间',
             sorter: true,
             width: '100px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'gmtCreate'
         }, {
             title: '交易付款时间',
             sorter: true,
             width: '100px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'gmtPayment'
         }, {
             title: '交易退款时间',
             sorter: true,
             width: '100px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'gmtRefund'
         }, {
             title: '交易结束时间',
             sorter: true,
             width: '100px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'gmtClose'
         }, {
             title: '支付金额信息',

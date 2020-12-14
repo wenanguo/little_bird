@@ -118,7 +118,7 @@
               </a-col>
               <a-col :span="12">
                 <a-form-item label="发布时间">
-                  <a-date-picker style="width: 100%" show-time v-decorator="['publishedAt', {rules: [{required: true}]}]" >
+                  <a-date-picker style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]" >
                   </a-date-picker>
                 </a-form-item>
               </a-col>

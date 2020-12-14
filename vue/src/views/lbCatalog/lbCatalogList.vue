@@ -125,13 +125,13 @@
             title: '修改时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'updateTime'
         }, {
             title: '创建时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => moment(text).format('YYYY-DD-MM HH:mm'),
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'createTime'
         },
         {

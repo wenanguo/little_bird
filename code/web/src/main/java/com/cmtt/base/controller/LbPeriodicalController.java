@@ -25,10 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -169,11 +166,11 @@ public class LbPeriodicalController {
 
 
 
-        List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100));
+        List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100).orderByDesc(LbPeriodical::getId));
 
 
 
-        Map<String, List<LbPeriodical>> map = new HashMap();
+        Map<String, List<LbPeriodical>> map = new LinkedHashMap();
 
 
 
@@ -194,7 +191,7 @@ public class LbPeriodicalController {
 
         for(String key : map.keySet()){
 
-            Map<String, Object> retMap = new HashMap();
+            Map<String, Object> retMap = new LinkedHashMap();
             retMap.put("year",key);
             retMap.put("dataList",map.get(key));
             retList.add(retMap);

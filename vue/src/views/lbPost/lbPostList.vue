@@ -189,7 +189,7 @@
             title: '发布时间',
             sorter: true,
             width: '100px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'publishedAt'
         },
         // {
