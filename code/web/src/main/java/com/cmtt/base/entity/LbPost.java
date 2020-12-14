@@ -2,10 +2,15 @@ package com.cmtt.base.entity;
 
 import java.time.LocalDateTime;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -118,5 +123,52 @@ public class LbPost extends BaseEntity implements Serializable {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
+    public List<LbAuthorVo> getLbAuthorList() {
+
+        if(this.author.length()>0) {
+            try{
+                List<LbAuthorVo> list = JSON.parseObject(this.author, new ArrayList<LbAuthorVo>().getClass());
+                return list;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }
+
+        return null;
+
+    }
+
+    public void setLbAuthorList(List<LbAuthorVo> lbAuthorList) {
+        this.lbAuthorList = lbAuthorList;
+    }
+
+    @TableField(exist = false)
+    private List<LbAuthorVo> lbAuthorList;
+
+
+    public List<Integer> getLbAuthorIdsList() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        if(this.author.length()>0) {
+            try{
+                List<JSONObject> list = JSON.parseObject(this.author, new ArrayList<LbAuthorVo>().getClass());
+                list.forEach((s) -> integerArrayList.add(Integer.valueOf(s.get("id").toString())));
+                return integerArrayList;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }
+        return lbAuthorIdsList;
+    }
+
+    public void setLbAuthorIdsList(List<Integer> lbAuthorIdsList) {
+        this.lbAuthorIdsList = lbAuthorIdsList;
+    }
+
+    @TableField(exist = false)
+    private List<Integer> lbAuthorIdsList;
 
 }

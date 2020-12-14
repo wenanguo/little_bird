@@ -97,18 +97,18 @@
               </a-col>
               <a-col :span="12">
                 <a-form-item label="作者">
-                  <!-- <a-select show-search mode="multiple" v-decorator="['author', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
-                    <a-select-option value="jack">
-                      Jack
+                  <a-select show-search mode="multiple" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+                    <a-select-option :value="1">
+                      王四五
                     </a-select-option>
-                    <a-select-option value="lucy">
-                      Lucy
+                    <a-select-option :value="2">
+                      石飞刻
                     </a-select-option>
-                    <a-select-option value="tom">
-                      Tom
+                    <a-select-option :value="3">
+                      吉井忍
                     </a-select-option>
-                  </a-select> -->
-                  <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" />
+                  </a-select>
+                  <!-- <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" /> -->
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -215,6 +215,7 @@
     'recordCount',
     'readCount',
     'recommend',
+    'lbAuthorIdsList',
     'status',
     'updateTime',
     'createTime'
@@ -314,6 +315,8 @@
         this.model && this.form.setFieldsValue(pick(this.model, fields))
         this.content = this.model.content
         this.feeContent = this.model.feeContent
+
+        // this.form.setFieldsValue({ lbAuthorIdsList: [2, 3] })
         // 初始化图片上传
         if (this.model) {
           this.fileList = [{

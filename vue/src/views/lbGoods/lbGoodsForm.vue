@@ -33,7 +33,7 @@
         </a-form-item>
         <a-form-item label="价格">
           <a-input-number
-             style="width: 100%"
+            style="width: 100%"
             :formatter="value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
             :parser="value => value.replace(/\￥\s?|(,*)/g, '')"
             addon-after="元"
@@ -41,10 +41,10 @@
         </a-form-item>
         <a-form-item label="折扣">
           <a-input-number
-             style="width: 100%"
-             :formatter="value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+            style="width: 100%"
+            :formatter="value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
             :parser="value => value.replace(/\￥\s?|(,*)/g, '')"
-             v-decorator="['discount', {rules: [{required: false}]}]" />
+            v-decorator="['discount', {rules: [{required: false}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">

@@ -108,7 +108,12 @@
         [[${lbPost.title}]]
     </div>
     <div class="authorName">
-        <span>[[${lbPost.author}]]</span> | <span class="post_subject">[[${lbPost.postSubject}]]</span>
+        <span>
+        <span th:each="c, State : ${lbPost.lbAuthorList}" th:remove="tag">
+            <div th:text="${c.name}" th:remove="tag"></div>
+        </span>
+        </span>
+         | <span class="post_subject">[[${lbPost.postSubject}]]</span>
     </div>
     <div class="date"><span th:text="${#temporals.format(lbPost.publishedAt,'MM-dd')}"></span></div>
     <div class="summary">

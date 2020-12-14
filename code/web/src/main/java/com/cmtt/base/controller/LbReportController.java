@@ -54,6 +54,8 @@ public class LbReportController {
             LbReport lbReport=new LbReport();
             BeanUtils.copyProperties(params,lbReport);
 
+
+
             lbReportService.save(lbReport);
 
             return R.ok().setMessage("提交成功");

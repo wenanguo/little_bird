@@ -1,20 +1,19 @@
 package com.cmtt.base.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.GetOneInputParam;
+import com.cmtt.base.controller.param.LbPostInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
-import com.cmtt.base.service.ILbCatalogService;
-import com.cmtt.base.service.ILbPeriodicalService;
-import com.cmtt.base.service.ILbPostService;
-import com.cmtt.base.service.ILbSubjectService;
+import com.cmtt.base.service.*;
 import com.cmtt.base.service.impl.LbPostServiceImpl;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,6 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +34,7 @@ import org.thymeleaf.context.Context;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,9 @@ public class LbPostController {
 
     @Autowired
     private ILbPeriodicalService lbPeriodicalService;
+
+    @Autowired
+    private ILbAuthorService lbAuthorService;
 
     @Autowired
     private FreeMarkerConfigurer configurer;
@@ -137,7 +141,7 @@ public class LbPostController {
         String result=templateEngine.process("articleDetails",context);
         //System.out.println(result);
         lbPost.setContent(result);
-
+        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
 
 
         return R.ok().setResult(lbPost);
@@ -177,6 +181,7 @@ public class LbPostController {
         // 分享内容，隐藏付费内容
         lbPost.setFeeContent("");
 
+        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("lbPost", lbPost);
@@ -198,7 +203,7 @@ public class LbPostController {
 
         // 分享内容，隐藏付费内容
         lbPost.setFeeContent("");
-
+        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
 
 
 
@@ -247,9 +252,25 @@ public class LbPostController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public R add(@RequestBody @Validated({GroupAdd.class})LbPost lbPost) {
+    public R add(@RequestBody @Validated({GroupAdd.class}) LbPostInputParam params) {
 
         try {
+
+            LbPost lbPost=new LbPost();
+            BeanUtils.copyProperties(params,lbPost);
+
+            //条件构造器in上手使用
+//            QueryWrapper<LbAuthor> qw = new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList());
+//            qw.in("id", params.getLbAuthorIdsList());
+            List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList()));
+
+            List<LbAuthorVo> lbAuthorVoList= new ArrayList<>();
+            lbAuthorList.forEach(s -> lbAuthorVoList.add(new LbAuthorVo().setId(s.getId()).setName(s.getName())));
+
+
+            lbPost.setAuthor(JSON.toJSONString(lbAuthorVoList));
+
+
             lbPostService.save(lbPost);
 
             return R.ok().setMessage("新增成功");
@@ -269,10 +290,13 @@ public class LbPostController {
      */
     @PutMapping("/edit")
     @ResponseBody
-    public R edit(@RequestBody  @Validated({GroupEdit.class})LbPost lbPost) {
+    public R edit(@RequestBody  @Validated({GroupEdit.class})LbPostInputParam params) {
 
 
         try {
+
+            LbPost lbPost=new LbPost();
+            BeanUtils.copyProperties(params,lbPost);
 
             LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getId, lbPost.getPostCatalogId()));
             lbPost.setPostCatalog(lbCatalog.getTitle());
@@ -283,6 +307,15 @@ public class LbPostController {
 
             LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbPost.getPeriodicalId()));
             lbPost.setPeriodicalTitle(lbPeriodical.getTitle());
+
+
+            // 修改作者
+            List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList()));
+
+            List<LbAuthorVo> lbAuthorVoList= new ArrayList<>();
+            lbAuthorList.forEach(s -> lbAuthorVoList.add(new LbAuthorVo().setId(s.getId()).setName(s.getName())));
+
+            lbPost.setAuthor(JSON.toJSONString(lbAuthorVoList));
 
             lbPostService.updateById(lbPost);
 
