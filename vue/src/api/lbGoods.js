@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 
 const api = {
-  add: '/base/lb_goods/add',
-  edit: '/base/lb_goods/edit',
-  list: '/base/lb_goods/list',
-  listAll: '/base/lb_goods/listAll',
-  batchDel: '/base/lb_goods/batchDelete',
-  del: '/base/lb_goods/delete'
+  add: '/lb_goods/add',
+  edit: '/lb_goods/edit',
+  list: '/lb_goods/list',
+  listAll: '/lb_goods/listAll',
+  batchDel: '/lb_goods/batchDelete',
+  del: '/lb_goods/delete'
 }
 
 export default api
