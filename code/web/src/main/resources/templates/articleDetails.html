@@ -70,6 +70,25 @@
             $('.collect').click(function () {
                 $(this).toggleClass('collect-on')
             });
+			$('.pay_499').on('click',function(event) { //支付跳转499
+                window.location.href="aves://pay?usertype=2";
+            });
+			$('.pay_4_99').on('click',function(event) { //支付跳转4.99
+                window.location.href="aves://pay?usertype=1";
+            });
+			$('.post_subject').on('click',function(event) { //栏目跳转
+                window.location.href="aves://category?id=1";
+            });
+			$('.link').on('click',function(event) { //分享
+                window.location.href="aves://share";
+            });
+			$('.authorPhoto').on('click',function(event) { //作者
+                window.location.href="aves://author?id=1";
+            });
+			$('.return').on('click',function(event) { //关闭页面
+                window.location.href="aves://finish";
+                //window.location.href="aves://getUserToken";
+            });
             //返回页面定位阅读位置
             $('[data-link]').on('click',function(event) { //阻止默认跳转行为，阻止冒泡
                 event.preventDefault();
@@ -77,35 +96,9 @@
                 savePage();
                 window.location.href=$(this).attr('data-link');
             });
-			$('.pay_499').on('click',function(event) { //支付跳转499
-
-                window.location.href="aves://pay?usertype=2";
-            });
-			$('.pay_4_99').on('click',function(event) { //支付跳转4.99
-                ;
-                window.location.href="aves://pay?usertype=1";
-            });
-			$('.post_subject').on('click',function(event) { //栏目跳转
-
-                window.location.href="aves://category?id=1";
-            });
-			$('.link').on('click',function(event) { //分享
-
-                window.location.href="aves://share";
-            });
-			$('.authorPhoto').on('click',function(event) { //作者
-
-                window.location.href="aves://author?id=1";
-            });
-			$('.return').on('click',function(event) { //关闭页面
-
-                window.location.href="aves://finish";
-                //window.location.href="aves://getUserToken";
-            });
             function savePage(){  //操作浏览器的历史记录
                 history.replaceState('', document.title, location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
             }
-
             //跳转后的判断
             if ($('wrap').height() > nowTop) {
                 scrollTo(0, nowTop);
