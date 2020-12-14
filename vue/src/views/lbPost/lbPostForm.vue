@@ -161,10 +161,10 @@
             <a-tab-pane key="2" tab="内容" force-render>
               <a-form-item :span="24">
                 <a-col :span="24">
-                    <div class="editBox">
-                      <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
-                    </div>
-                    <a-input v-decorator="['content', {initialValue: '123'}]" type="hidden" />
+                  <div class="editBox">
+                    <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                  </div>
+                  <a-input v-decorator="['content', {initialValue: '123'}]" type="hidden" />
                 </a-col>
               </a-form-item>
             </a-tab-pane>
