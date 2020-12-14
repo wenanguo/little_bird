@@ -223,7 +223,7 @@ public class CodeGenerator {
         //生成数据库文档
         String dbdoc_path=projectPath+"/web/src/main/resources/templates/";
         String[] ignoreArr={"article"};
-        //generDoc(url,username,password,dbdoc_path,ignoreArr);
+        generDoc(url,username,password,dbdoc_path,ignoreArr);
     }
 
 
