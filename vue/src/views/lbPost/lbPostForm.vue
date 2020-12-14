@@ -155,27 +155,29 @@
                     <a-button> <a-icon type="upload" />上传图片</a-button>
                   </a-upload>
                   <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
+                  <a-input v-decorator="['content', {initialValue: ''}]" type="hidden" />
+                  <a-input v-decorator="['feeContent', {initialValue: ''}]" type="hidden" />
                 </a-form-item>
               </a-col>
             </a-tab-pane>
             <a-tab-pane key="2" tab="免费内容" force-render>
               <div class="editBox">
-                <quill-editor v-model="freeContent" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
               </div>
             </a-tab-pane>
             <a-tab-pane key="3" tab="收费内容" force-render>
               <div class="editBox">
-                <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                <quill-editor v-model="feeContent" ref="myQuillEditor" :options="editorOption"></quill-editor>
               </div>
-              <a-input v-decorator="['content', {initialValue: '123'}]" type="hidden" />
+
             </a-tab-pane>
           </a-tabs>
         </a-row>
         <div class="phone-view">
           <div class="ql-container ql-snow">
             <div class="ql-editor">
-              <div v-html="this.freeContent"></div>
               <div v-html="this.content"></div>
+              <div v-html="this.feeContent"></div>
             </div>
           </div>
         </div>
@@ -264,7 +266,7 @@
       return {
         form: this.$form.createForm(this),
         content: '',
-        freeContent: '',
+        feeContent: '',
         fileList: [],
         editorOption: {
           placeholder: '输入文章收费内容',
@@ -297,8 +299,13 @@
       // 防止表单未注册
       fields.forEach(v => this.form.getFieldDecorator(v))
 
-      // 当 model 发生改变时，为表单设置值
+      // 当 富文本内容 发生改变时，为表单设置值
       this.$watch('content', () => {
+        this.feeContent && this.form.setFieldsValue({ feeContent: this.feeContent })
+        this.content && this.form.setFieldsValue({ content: this.content })
+      })
+      this.$watch('feeContent', () => {
+        this.feeContent && this.form.setFieldsValue({ feeContent: this.feeContent })
         this.content && this.form.setFieldsValue({ content: this.content })
       })
 
@@ -306,6 +313,7 @@
       this.$watch('model', () => {
         this.model && this.form.setFieldsValue(pick(this.model, fields))
         this.content = this.model.content
+        this.feeContent = this.model.feeContent
         // 初始化图片上传
         if (this.model) {
           this.fileList = [{
