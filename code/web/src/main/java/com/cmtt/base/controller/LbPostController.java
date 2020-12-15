@@ -14,8 +14,6 @@ import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.*;
-import com.cmtt.base.service.impl.LbPostServiceImpl;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,21 +21,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -203,12 +196,14 @@ public class LbPostController {
 
         // 分享内容，隐藏付费内容
         lbPost.setFeeContent("");
-        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
 
+        // 获取作者列表
+        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
 
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("lbPost", lbPost);
+        mv.addObject("lbAuthorList",lbAuthorList);
         mv.setViewName("articleDetails");
         return mv;
 

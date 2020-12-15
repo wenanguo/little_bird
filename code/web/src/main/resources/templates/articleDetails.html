@@ -109,7 +109,7 @@
     </div>
     <div class="authorName">
         <span>
-        <span th:each="c, State : ${lbPost.lbAuthorList}" th:remove="tag">
+        <span th:each="c, State : ${lbAuthorList}" th:remove="tag">
             <div th:text="${c.name}" th:remove="tag"></div>
         </span>
         </span>
@@ -136,7 +136,7 @@
                 <div class="showInfo">
                     <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
                 </div>
-                <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span>￥499</span>，试读三篇价格<span>￥4.99</span></div>
+                <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span>￥588</span>，试读三篇价格<span>￥12</span></div>
                 <div class="subscribeText">
                     *我们一年大概更新300篇文章<br>
                     **别算了，我们这俩价格其实是一样的，没啥折扣
@@ -149,33 +149,16 @@
     </div>
 </div>
 <div class="authorBoxList">
-    <div class="authorBox">
+    <div class="authorBox" th:each="c, State : ${lbAuthorList}">
         <div class="authorInfo">
-            <h1>吉井忍</h1>
-            <h2>日籍华语作家 她一直致力于在美食、书店、生活的领域的写作。她还有一个更深的愿望是，利用华语作家身份促进中日文化交流。</h2>
+            <h1 th:text="${c.name}"></h1>
+            <h2 th:text="${c.introduction}"></h2>
         </div>
         <div class="authorPhoto">
-            <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/img3.png">
+            <img th:src="${c.imgUrl}">
         </div>
     </div>
-    <div class="authorBox">
-        <div class="authorInfo">
-            <h1>吉井忍</h1>
-            <h2>日籍华语作家 她一直致力于在美食、书店、生活的领域的写作。她还有一个更深的愿望是，利用华语作家身份促进中日文化交流。</h2>
-        </div>
-        <div class="authorPhoto">
-            <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/img3.png">
-        </div>
-    </div>
-    <div class="authorBox">
-        <div class="authorInfo">
-            <h1>吉井忍</h1>
-            <h2>日籍华语作家 她一直致力于在美食、书店、生活的领域的写作。她还有一个更深的愿望是，利用华语作家身份促进中日文化交流。</h2>
-        </div>
-        <div class="authorPhoto">
-            <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/img3.png">
-        </div>
-    </div>
+
 </div>
 <div class="footerOperation">
     <div class="footerOperationContent">
