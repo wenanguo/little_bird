@@ -95,50 +95,6 @@ public class LbPostController {
 
 
 
-    /**
-     * 文章详情
-     */
-    @PostMapping("detail")
-    @ResponseBody
-    @ApiOperation("文章详情")
-    public R detail(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
-
-        // 执行查询
-        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
-
-
-        // 判断用户是否已经付费，包年，或者单篇购买
-        boolean isPay=false;
-
-        if(!isPay){
-            // 未付费，隐藏付费内容
-            lbPost.setFeeContent("");
-        }
-
-
-//        Map<String,Object> map = new HashMap<>();
-//        map.put("lbPost",lbPost);
-//        Template template = configurer.getConfiguration().getTemplate("articleDetails.html");
-//        String resStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
-//
-//        lbPost.setContent(resStr);
-
-
-
-
-
-        // 改用thymeleaf
-
-        Context context=new Context();
-        context.setVariable("lbPost",lbPost);
-        String result=templateEngine.process("articleDetails",context);
-        //System.out.println(result);
-        lbPost.setContent(result);
-        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
-
-
-        return R.ok().setResult(lbPost);
-    }
 
 
 
@@ -174,14 +130,55 @@ public class LbPostController {
         // 分享内容，隐藏付费内容
         lbPost.setFeeContent("");
 
-        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
+        // 获取作者列表
+        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
+
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("lbPost", lbPost);
+        mv.addObject("lbAuthorList",lbAuthorList);
         mv.setViewName("shareAreicle");
         return mv;
 
     }
+
+    /**
+     * 文章详情
+     */
+    @PostMapping("detail")
+    @ResponseBody
+    @ApiOperation("文章详情")
+    public R detail(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
+
+        // 执行查询
+        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+
+
+        // 判断用户是否已经付费，包年，或者单篇购买
+        boolean isPay=false;
+
+        if(!isPay){
+            // 未付费，隐藏付费内容
+            lbPost.setFeeContent("");
+        }
+
+        // 获取作者列表
+        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
+
+
+
+        Context context=new Context();
+        context.setVariable("lbPost",lbPost);
+        context.setVariable("lbAuthorList",lbAuthorList);
+        String result=templateEngine.process("articleDetails",context);
+        //System.out.println(result);
+        lbPost.setContent(result);
+        lbPost.setLbAuthorList(lbPost.getLbAuthorList());
+
+
+        return R.ok().setResult(lbPost);
+    }
+
 
 
     /**
