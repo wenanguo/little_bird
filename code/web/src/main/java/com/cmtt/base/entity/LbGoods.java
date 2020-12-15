@@ -38,8 +38,11 @@ public class LbGoods extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "商品编号")
     private String tcode;
 
-    @ApiModelProperty(value = "类型，1安卓2苹果")
+    @ApiModelProperty(value = "类型，1包年2单点")
     private Integer ttype;
+
+    @ApiModelProperty(value = "设备类型，1安卓2苹果")
+    private Integer devType;
 
     @ApiModelProperty(value = "标题")
     @TableField(condition = SqlCondition.LIKE)

@@ -107,6 +107,11 @@
             customRender: (value) => ttypeMap[value].text,
             dataIndex: 'ttype'
         }, {
+            title: '设备类型',
+            sorter: true,
+            customRender: (value) => devTypeMap[value].text,
+            dataIndex: 'devType'
+        }, {
             title: '标题',
             sorter: true,
             dataIndex: 'title'
@@ -154,6 +159,16 @@
     ]
 
     const ttypeMap = {
+    1: {
+        status: 'default',
+        text: '包年'
+    },
+    2: {
+        status: 'processing',
+        text: '单点'
+    }
+  }
+  const devTypeMap = {
     1: {
         status: 'default',
         text: 'Android'

@@ -17,6 +17,12 @@
           <a-input v-decorator="['tcode', {rules: [{required: true, min: 1, message: '请输入至少五个字符！'}]}]" />
         </a-form-item>
         <a-form-item label="类型">
+          <a-radio-group v-decorator="['devType', { initialValue: 1 }]">
+            <a-radio :value="1">包年</a-radio>
+            <a-radio :value="2">单点</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item label="类型">
           <a-radio-group v-decorator="['ttype', { initialValue: 1 }]">
             <a-radio :value="1">Android</a-radio>
             <a-radio :value="2">IOS</a-radio>
@@ -65,6 +71,7 @@
         'id',
         'tcode',
         'ttype',
+        'devType',
         'title',
         'body',
         'info',

@@ -1,17 +1,17 @@
 import request from '@/utils/request'
 
 const api = {
-  add: '/sys_user/add',
-  edit: '/sys_user/edit',
-  list: '/lb_orders/user_order_list',
-  listAll: '/sys_user/listAll',
-  batchDel: '/sys_user/batchDelete',
-  del: '/sys_user/delete'
+  add: '/base/lb-orders/add',
+  edit: '/base/lb-orders/edit',
+  list: '/base/lb-orders/list',
+  listAll: '/base/lb-orders/listAll',
+  batchDel: '/base/lb-orders/batchDelete',
+  del: '/base/lb-orders/delete'
 }
 
 export default api
 
-export function getSysUserList (parameter) {
+export function getLbOrdersList (parameter) {
   return request({
     url: api.list,
     method: 'get',
@@ -21,7 +21,7 @@ export function getSysUserList (parameter) {
 
 // id == 0 add     post
 // id != 0 update  put
-export function saveSysUser (parameter) {
+export function saveLbOrders (parameter) {
   return request({
     url: parameter.id === 0 ? api.add : api.edit,
     method: parameter.id === 0 ? 'post' : 'put',
@@ -29,7 +29,7 @@ export function saveSysUser (parameter) {
   })
 }
 
-export function delSysUser (parameter) {
+export function delLbOrders (parameter) {
   return request({
     url: api.del,
     method: 'delete',
@@ -37,7 +37,7 @@ export function delSysUser (parameter) {
   })
 }
 
-export function batchDelSysUser (parameter) {
+export function batchDelLbOrders (parameter) {
   return request({
     url: api.batchDel,
     method: 'delete',
