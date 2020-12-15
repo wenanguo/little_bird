@@ -12,6 +12,7 @@ import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.List;
 import com.cmtt.base.entity.LbGoods;
 import com.cmtt.base.service.ILbGoodsService;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -47,14 +50,31 @@ public class LbGoodsController {
     @PostMapping("/get_one")
     @ResponseBody
     @ApiOperation("获取商品列表")
-    public R getOne(@Valid GetOneGoodsInputParam params) {
+    public R getOne(@Valid GetOneGoodsInputParam params,HttpServletRequest httpServletRequest) {
 
         try {
+            Integer ttype=1;
+
+            String Phonesys = httpServletRequest.getHeader("Phonesys");
+
+            if(StringUtils.isEmpty(Phonesys)){
+                return R.err().setMessage("请求头中无法获取设备类型");
+            }
+
+            if(Phonesys.equals("iOS")){
+                ttype=2;
+            }else if(Phonesys.equals("Android")){
+                ttype=1;
+            }else {
+                return R.err().setMessage("请求头中无法获取设备类型");
+            }
+
+
 
             // 执行查询
             LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
                     .eq(LbGoods::getTcode,params.getTcode())
-                    .eq(LbGoods::getTtype,params.getTtype())
+                    .eq(LbGoods::getTtype,ttype)
                     .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
 
             if(lbGoods!=null){
@@ -84,7 +104,7 @@ public class LbGoodsController {
 
         try {
 
-// 构建分页类
+            // 构建分页类
             IPage<LbGoods> lbGoodsPage = new Page<>(lbGoods.getPageNo(), lbGoods.getPageSize());
 
             // 构造查询及排序方式

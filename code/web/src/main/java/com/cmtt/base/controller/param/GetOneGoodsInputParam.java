@@ -20,10 +20,5 @@ public class GetOneGoodsInputParam {
 	private Integer tcode;
 
 
-	@ApiModelProperty(value ="类别【1安卓，2苹果】",example = "2")
-	@NotNull(message = "类别不能为空")
-	private Integer ttype;
-
-
 }
 
