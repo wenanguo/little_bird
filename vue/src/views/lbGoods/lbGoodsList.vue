@@ -102,8 +102,9 @@
             sorter: true,
             dataIndex: 'tcode'
         }, {
-            title: '类型，1安卓2苹果',
+            title: '类型',
             sorter: true,
+            customRender: (value) => ttypeMap[value].text,
             dataIndex: 'ttype'
         }, {
             title: '标题',
@@ -151,6 +152,17 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+
+    const ttypeMap = {
+    1: {
+        status: 'default',
+        text: 'Android'
+    },
+    2: {
+        status: 'processing',
+        text: 'IOS'
+    }
+  }
 
     export default {
         name: 'TableList',

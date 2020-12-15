@@ -1,12 +1,10 @@
 package com.cmtt.base.controller;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-
-import com.cmtt.base.entity.LbCatalog;
+import com.cmtt.base.controller.param.GetOneGoodsInputParam;
 import com.cmtt.base.entity.R;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
@@ -19,12 +17,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import com.cmtt.base.entity.LbGoods;
 import com.cmtt.base.service.ILbGoodsService;
 import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -45,20 +42,27 @@ public class LbGoodsController {
     public ILbGoodsService lbGoodsService;
 
     /**
-     * 获取所有列表
+     * 根据商品编号获取商品
      */
-    @PostMapping("/list_all")
+    @PostMapping("/get_one")
     @ResponseBody
     @ApiOperation("获取商品列表")
-    public R listAll() {
+    public R getOne(@Valid GetOneGoodsInputParam params) {
 
         try {
 
             // 执行查询
-            List<LbGoods> list = lbGoodsService.list(Wrappers.<LbGoods>lambdaQuery().eq(LbGoods::getStatus, RC.B_NORMAL.code()));
+            LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
+                    .eq(LbGoods::getTcode,params.getTcode())
+                    .eq(LbGoods::getTtype,params.getTtype())
+                    .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
 
-            // 设置返回数据
-            return R.ok().setResult(list);
+            if(lbGoods!=null){
+                // 设置返回数据
+                return R.ok().setResult(lbGoods);
+            }else{
+                return R.err().setMessage("找不到当前商品");
+            }
 
 
         } catch (Exception e) {
