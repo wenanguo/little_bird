@@ -13,10 +13,15 @@ import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.controller.param.AlipayTradeAppPayInputParam;
 import com.cmtt.base.controller.param.AlipayTradeAppQueryInputParam;
+import com.cmtt.base.controller.param.GetOneGoodsInputParam;
+import com.cmtt.base.entity.LbGoods;
 import com.cmtt.base.entity.LbPayOrder;
 import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.SysUserOrders;
+import com.cmtt.base.service.ILbGoodsService;
 import com.cmtt.base.service.ILbPayOrderService;
 import com.cmtt.base.service.impl.AliPayServiceImpl;
+import com.cmtt.base.service.impl.LbGoodsServiceImpl;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,6 +60,9 @@ public class AliPayController {
 
     @Autowired
     private ILbPayOrderService lbPayOrderService;
+
+    @Autowired
+    private ILbGoodsService lbGoodsService;
 
 
     /**
@@ -152,12 +160,43 @@ public class AliPayController {
     @PostMapping("alipay_trade_app_pay")
     @ResponseBody
     @ApiOperation("创建支付宝订单")
-    public R alipay_trade_app_pay(@RequestBody @Valid AlipayTradeAppPayInputParam params, HttpServletRequest httpRequest){
+    public R alipay_trade_app_pay(@RequestBody @Valid GetOneGoodsInputParam params, HttpServletRequest httpServletRequest){
 
         String outtradeno=String.valueOf(System.currentTimeMillis());
-        System.out.println(outtradeno);
+
+        // 设备类型 1 安卓 2IOS
+        Integer ttype=1;
 
         String returnStr="";
+
+        // 判断设备类型
+        String Phonesys = httpServletRequest.getHeader("Phonesys");
+
+        if(org.apache.commons.lang.StringUtils.isEmpty(Phonesys)){
+            return R.err().setMessage("请求头中无法获取设备类型");
+        }
+
+        if(Phonesys.equals("iOS")){
+            ttype=2;
+        }else if(Phonesys.equals("Android")){
+            ttype=1;
+        }else {
+            return R.err().setMessage("请求头中无法获取设备类型");
+        }
+
+
+        // 根据商品编码获取商品信息
+        // 执行查询
+        LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
+                .eq(LbGoods::getTcode,params.getTcode())
+                .eq(LbGoods::getTtype,ttype)
+                .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
+
+        if(lbGoods==null){
+            return R.err().setMessage("找不到当前商品");
+
+        }
+
 
         //实例化客户端
         //AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
@@ -166,11 +205,11 @@ public class AliPayController {
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody(params.getBody());
-        model.setSubject(params.getSubject());
+        model.setBody(lbGoods.getTitle());
+        model.setSubject(lbGoods.getBody());
         model.setOutTradeNo(outtradeno);
         model.setTimeoutExpress("30m");
-        model.setTotalAmount("0.01");
+        model.setTotalAmount(String.valueOf(lbGoods.getPrice()));
         model.setProductCode("QUICK_MSECURITY_PAY");
         request.setBizModel(model);
         request.setNotifyUrl(aliPayService.getNotifyUrl());
@@ -186,9 +225,9 @@ public class AliPayController {
             LbPayOrder lbPayOrder=new LbPayOrder();
             lbPayOrder.setOutTradeNo(outtradeno);
             lbPayOrder.setTradeNo(response.getTradeNo());
-            lbPayOrder.setBody(params.getBody());
-            lbPayOrder.setSubject(params.getSubject());
-            lbPayOrder.setTotalAmount(new BigDecimal(params.getTotal_amount()));
+            lbPayOrder.setBody(lbGoods.getTitle());
+            lbPayOrder.setSubject(lbGoods.getBody());
+            lbPayOrder.setTotalAmount(lbGoods.getPrice());
             lbPayOrder.setTradeAppPayResponse(JSON.toJSONString(response));
 
             lbPayOrder.setStatus(RC.PAY_NO.code());

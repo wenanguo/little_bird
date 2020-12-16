@@ -336,10 +336,10 @@
                         })
         },
         methods: {
-            getAuthor (jsonstr){
+            getAuthor (jsonstr) {
                 var author = ''
-                for(var i in jsonstr){
-                    author = author +jsonstr[i].name
+                for (var i in jsonstr) {
+                    author = author + jsonstr[i].name
                     }
             },
             async handlePreview (url) {

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
 import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.LbPostInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
@@ -17,6 +18,7 @@ import com.cmtt.base.service.*;
 import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -67,6 +69,9 @@ public class LbPostController {
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    private ILbOrdersService lbOrdersService;
 
     /**
      * 主页
@@ -148,7 +153,7 @@ public class LbPostController {
     @PostMapping("detail")
     @ResponseBody
     @ApiOperation("文章详情")
-    public R detail(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
+    public R detail(@RequestBody @Valid GetOneInputParam params,Principal principal) throws IOException, TemplateException {
 
         // 执行查询
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
@@ -156,6 +161,17 @@ public class LbPostController {
 
         // 判断用户是否已经付费，包年，或者单篇购买
         boolean isPay=false;
+        SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+
+        if(sysUser == null){
+            isPay=false;
+        }else{
+            SysUserOrders sysUserOrders=lbOrdersService.getOneSysUserOrders(Wrappers.<SysUserOrders>lambdaQuery().eq(SysUserOrders::getPhone, sysUser.getPhone()));
+            if(!StringUtils.isEmpty(sysUserOrders.getOutTradeNo())){
+                isPay=true;
+            }
+        }
+
 
         if(!isPay){
             // 未付费，隐藏付费内容

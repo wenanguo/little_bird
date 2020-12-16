@@ -20,5 +20,16 @@ import java.util.List;
  * @since 2020-12-16
  */
 public interface ILbOrdersService extends IService<LbOrders> {
+    /**
+     * 获取用户及订单列表
+     * @return
+     */
     IPage<SysUserOrders> getSysUserOrdersList(IPage<SysUserOrders> page, @Param(Constants.WRAPPER) Wrapper<SysUserOrders> queryWrapper);
+
+
+    /**
+     * 获取单条用户及订单列表
+     * @return
+     */
+    SysUserOrders getOneSysUserOrders(@Param(Constants.WRAPPER) Wrapper<SysUserOrders> queryWrapper);
 }
