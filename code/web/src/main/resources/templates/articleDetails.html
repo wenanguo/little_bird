@@ -19,10 +19,10 @@
             $('.articleContent').html(decodeURI(value));
         }
 
-        
+
         function paySuccess(value){
 
-            
+
 
         // // 请求后台获取收费内容
 
@@ -60,6 +60,7 @@
                 console.log(value);
         }
         $(document).ready(function () {
+            $('.articleBox img').parent('p').css({"padding":"0"});
             var u = navigator.userAgent;
             if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
                 var top = 0,
