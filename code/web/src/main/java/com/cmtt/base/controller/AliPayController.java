@@ -97,7 +97,8 @@ public class AliPayController {
         //boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
         boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayService.getAlipayPublicKey(), aliPayService.getCharset(), aliPayService.getSignType());
 
-        //boolean signVerified =true;
+
+         //signVerified =true;
 
         if (signVerified){
             // TODO 验签成功后
@@ -146,6 +147,7 @@ public class AliPayController {
                     // 支付成功 修改状态
                     lbOrders.setStatus(RC.PAY_YES.code());
                     lbOrders.setTradeStatus(params.get("trade_status"));
+                    lbOrders.setTradeNo(params.get("trade_no"));
                     lbOrdersService.updateById(lbOrders);
                 }
 
