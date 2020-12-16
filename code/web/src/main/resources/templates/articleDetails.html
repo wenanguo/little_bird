@@ -36,11 +36,12 @@
     </style>
     <script>
         function getFeeContent(value){
-            console.log(value)
+            console.log(decodeURI(value))
+
             // // var jsonobj=JSON.parse(value);
             // var jsonobj = eval('('+value.replace(/\n+/g,"\\n")+')');
             $('.subscribeBox').hide();
-            $('.articleContent').html(value);
+            $('.articleContent').html(decodeURI(value));
         }
 
         
@@ -169,12 +170,12 @@
 <div class="articleBox small"><!--字号small middle large-->
     <div class="freeArticleContent">
         <p th:utext="${lbPost.content}"></p>
-        <div class="subscribeBox">
+        <div class="subscribeBox" th:if="${PayYear} != true">
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle">
                 <div>
                     <h1>付费后，可阅读余下内容</h1>
-                    <h2>你目前剩余 3 篇文章的兑换资格</h2>
+                    <h2 th:if="${PayOne} == true">你目前剩余 [[${PayOne.PayOneCount}]] 篇文章的兑换资格</h2>
                     <a href="javascript:;">兑换本文</a>
 
                 </div>
@@ -193,7 +194,7 @@
         </div>
     </div>
     <div class="articleContent">
-        <p th:utext="${lbPost.feeContent}"></p>
+        <p th:utext="${lbPost.feeContent}" th:remove="tag"></p>
     </div>
 </div>
 <div class="authorBoxList">

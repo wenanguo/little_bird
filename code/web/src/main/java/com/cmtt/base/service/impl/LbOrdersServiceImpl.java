@@ -34,7 +34,7 @@ public class LbOrdersServiceImpl extends ServiceImpl<LbOrdersMapper, LbOrders> i
      * 获取单条用户及订单列表
      * @return
      */
-    public SysUserOrders getOneSysUserOrders(@Param(Constants.WRAPPER) Wrapper<SysUserOrders> queryWrapper){
-        return this.baseMapper.getOneSysUserOrders(queryWrapper);
+    public SysUserOrders getOneSysUserOrders(String phone){
+        return this.baseMapper.getOneSysUserOrders(phone);
     }
 }

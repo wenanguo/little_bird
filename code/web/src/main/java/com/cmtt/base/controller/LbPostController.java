@@ -134,7 +134,7 @@ public class LbPostController {
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
 
         // 分享内容，隐藏付费内容
-        lbPost.setFeeContent("");
+        // lbPost.setFeeContent("");
 
         // 获取作者列表
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
@@ -158,7 +158,7 @@ public class LbPostController {
 
         // 执行查询
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
-
+        LbOrders lbOrders=null;
 
         // 判断用户是否已经付费，包年，或者单篇购买
         boolean isPay=false;
@@ -167,10 +167,17 @@ public class LbPostController {
         if(sysUser == null){
             isPay=false;
         }else{
-//            SysUserOrders sysUserOrders=lbOrdersService.getOneSysUserOrders(Wrappers.<SysUserOrders>lambdaQuery().eq(SysUserOrders::getPhone, sysUser.getPhone()));
-//            if(!StringUtils.isEmpty(sysUserOrders.getOutTradeNo())){
-//                isPay=true;
-//            }
+            lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
+                    .eq(LbOrders::getPhone, sysUser.getPhone())
+                    .eq(LbOrders::getStatus, 203)
+                    .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
+            );
+            // 未判断有效时间
+
+            if(lbOrders !=null){
+                // 已支付包年
+                isPay=true;
+            }
         }
 
 
@@ -186,6 +193,9 @@ public class LbPostController {
 
         Context context=new Context();
         context.setVariable("lbPost",lbPost);
+        context.setVariable("PayYear",isPay);
+        context.setVariable("PayOne",false);
+        context.setVariable("PayOneCount",3);
         context.setVariable("lbAuthorList",lbAuthorList);
         String result=templateEngine.process("articleDetails",context);
         //System.out.println(result);

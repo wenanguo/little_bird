@@ -11,14 +11,13 @@ import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
 import com.cmtt.base.controller.param.AlipayTradeAppPayInputParam;
 import com.cmtt.base.controller.param.AlipayTradeAppQueryInputParam;
 import com.cmtt.base.controller.param.GetOneGoodsInputParam;
-import com.cmtt.base.entity.LbGoods;
-import com.cmtt.base.entity.LbPayOrder;
-import com.cmtt.base.entity.R;
-import com.cmtt.base.entity.SysUserOrders;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.service.ILbGoodsService;
+import com.cmtt.base.service.ILbOrdersService;
 import com.cmtt.base.service.ILbPayOrderService;
 import com.cmtt.base.service.impl.AliPayServiceImpl;
 import com.cmtt.base.service.impl.LbGoodsServiceImpl;
@@ -33,8 +32,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -63,6 +64,9 @@ public class AliPayController {
 
     @Autowired
     private ILbGoodsService lbGoodsService;
+
+    @Autowired
+    private ILbOrdersService lbOrdersService;
 
 
     /**
@@ -133,6 +137,20 @@ public class AliPayController {
                 lbPayOrder.setNotifyResponse(params.toString());
                 lbPayOrderService.updateById(lbPayOrder);
 
+
+                // 查询订单 ，修改订单状态
+
+                LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, out_trade_no));
+
+                if(params.get("trade_status").equals("TRADE_SUCCESS")){
+                    // 支付成功 修改状态
+                    lbOrders.setStatus(RC.PAY_YES.code());
+                    lbOrders.setTradeStatus(params.get("trade_status"));
+                    lbOrdersService.updateById(lbOrders);
+                }
+
+
+
             }
 
 
@@ -160,7 +178,12 @@ public class AliPayController {
     @PostMapping("alipay_trade_app_pay")
     @ResponseBody
     @ApiOperation("创建支付宝订单")
-    public R alipay_trade_app_pay(@RequestBody @Valid GetOneGoodsInputParam params, HttpServletRequest httpServletRequest){
+    public R alipay_trade_app_pay(@RequestBody @Valid GetOneGoodsInputParam params, Principal principal, HttpServletRequest httpServletRequest){
+
+        SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+        if(sysUser==null){
+            return R.err().setMessage("找不到用户信息");
+        }
 
         String outtradeno=String.valueOf(System.currentTimeMillis());
 
@@ -221,7 +244,7 @@ public class AliPayController {
 
 
 
-            // 入库
+            // 入库支付宝订单
             LbPayOrder lbPayOrder=new LbPayOrder();
             lbPayOrder.setOutTradeNo(outtradeno);
             lbPayOrder.setTradeNo(response.getTradeNo());
@@ -235,9 +258,24 @@ public class AliPayController {
             lbPayOrderService.save(lbPayOrder);
 
 
+            // 入库商户订单
+            LbOrders lbOrders= new LbOrders();
+            lbOrders.setGoodsId(lbGoods.getId());
+            lbOrders.setDevType(ttype);
+            lbOrders.setTtype(lbGoods.getTtype());
+            lbOrders.setPhone(sysUser.getPhone());
+            lbOrders.setTradeNo("");
+            lbOrders.setOutTradeNo(outtradeno);
+            lbOrders.setTotalAmount(lbGoods.getPrice());
+            lbOrders.setBuyerPayAmount(lbGoods.getPrice());
+            lbOrders.setGmtCreate(LocalDateTime.now());
+            lbOrders.setGmtPayment(LocalDateTime.now());
+            lbOrders.setStatus(RC.PAY_NO.code());
 
 
-//            System.out.println(returnStr);
+            lbOrdersService.save(lbOrders);
+
+
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
