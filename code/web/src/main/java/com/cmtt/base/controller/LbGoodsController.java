@@ -50,7 +50,7 @@ public class LbGoodsController {
     @PostMapping("/get_one")
     @ResponseBody
     @ApiOperation("获取商品列表")
-    public R getOne(@Valid GetOneGoodsInputParam params,HttpServletRequest httpServletRequest) {
+    public R getOne(@RequestBody @Valid GetOneGoodsInputParam params,HttpServletRequest httpServletRequest) {
 
         try {
             Integer ttype=1;
