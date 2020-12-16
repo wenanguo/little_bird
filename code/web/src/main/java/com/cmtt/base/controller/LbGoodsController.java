@@ -52,7 +52,7 @@ public class LbGoodsController {
     public R getOne(@RequestBody @Valid GetOneGoodsInputParam params,HttpServletRequest httpServletRequest) {
 
         try {
-            Integer ttype=1;
+            Integer devType=1;
 
             String Phonesys = httpServletRequest.getHeader("Phonesys");
 
@@ -61,9 +61,9 @@ public class LbGoodsController {
             }
 
             if(Phonesys.equals("iOS")){
-                ttype=2;
+                devType=2;
             }else if(Phonesys.equals("Android")){
-                ttype=1;
+                devType=1;
             }else {
                 return R.err().setMessage("请求头中无法获取设备类型");
             }
@@ -73,7 +73,7 @@ public class LbGoodsController {
             // 执行查询
             LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
                     .eq(LbGoods::getTcode,params.getTcode())
-                    .eq(LbGoods::getTtype,ttype)
+                    .eq(LbGoods::getDevType,devType)
                     .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
 
             if(lbGoods!=null){

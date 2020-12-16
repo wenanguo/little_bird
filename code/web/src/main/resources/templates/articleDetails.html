@@ -111,6 +111,11 @@
                 window.location.href="aves://finish";
                 //window.location.href="aves://getUserToken";
             });
+
+            $('.exchangecss').on('click',function(event) { //兑换
+                window.location.href="aves://exchange";
+
+            });
             //返回页面定位阅读位置
             var windowTop=$(window).scrollTop();
             $("html,body").animate({ scrollTop: windowTop},1);
@@ -150,8 +155,8 @@
             <div class="subscribeTitle" th:if="${isPayOne} != true">
                 <div>
                     <h1>付费后，可阅读余下内容</h1>
-                    <h2 >你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
-                    <a href="javascript:;">兑换本文</a>
+                    <h2 th:if="${PayOneCount} >0">你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
+                    <span th:if="${PayOneCount} >0" class="exchangecss" >兑换本文</span>
                 </div>
             </div>
             <div class="subscribeContent" th:if="${isPayOne} != true">

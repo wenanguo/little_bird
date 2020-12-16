@@ -175,7 +175,7 @@ public class LbPostController {
             lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
                     .eq(LbOrders::getPhone, sysUser.getPhone())
                     .eq(LbOrders::getStatus, 203)
-                    .eq(LbOrders::getTtype,1)
+                    .eq(LbOrders::getTtype,2)
                     .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
             );
             // 未判断有效时间
@@ -206,7 +206,7 @@ public class LbPostController {
                     List<LbOrders> lbOrdersList = lbOrdersService.list(Wrappers.<LbOrders>lambdaQuery()
                             .eq(LbOrders::getPhone, sysUser.getPhone())
                             .eq(LbOrders::getStatus, 203)
-                            .eq(LbOrders::getTtype, 2)
+                            .eq(LbOrders::getTtype, 1)
                             .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
                     );
 

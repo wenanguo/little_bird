@@ -189,8 +189,8 @@ public class AliPayController {
 
         String outtradeno=String.valueOf(System.currentTimeMillis());
 
-        // 设备类型 1 安卓 2IOS
-        Integer ttype=1;
+        // 类型 1 安卓 2IOS
+        Integer devType=1;
 
         String returnStr="";
 
@@ -202,9 +202,9 @@ public class AliPayController {
         }
 
         if(Phonesys.equals("iOS")){
-            ttype=2;
+            devType=2;
         }else if(Phonesys.equals("Android")){
-            ttype=1;
+            devType=1;
         }else {
             return R.err().setMessage("请求头中无法获取设备类型");
         }
@@ -214,7 +214,7 @@ public class AliPayController {
         // 执行查询
         LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
                 .eq(LbGoods::getTcode,params.getTcode())
-                .eq(LbGoods::getTtype,ttype)
+                .eq(LbGoods::getDevType,devType)
                 .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
 
         if(lbGoods==null){
@@ -263,7 +263,7 @@ public class AliPayController {
             // 入库商户订单
             LbOrders lbOrders= new LbOrders();
             lbOrders.setGoodsId(lbGoods.getId());
-            lbOrders.setDevType(ttype);
+            lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());
             lbOrders.setPhone(sysUser.getPhone());
             lbOrders.setTradeNo("");

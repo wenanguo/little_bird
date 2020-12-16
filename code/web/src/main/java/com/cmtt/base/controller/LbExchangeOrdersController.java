@@ -130,7 +130,7 @@ public class LbExchangeOrdersController {
             List<LbOrders> lbOrdersList = lbOrdersService.list(Wrappers.<LbOrders>lambdaQuery()
                     .eq(LbOrders::getPhone, sysUser.getPhone())
                     .eq(LbOrders::getStatus, 203)
-                    .eq(LbOrders::getTtype, 2)
+                    .eq(LbOrders::getTtype, 1)
                     .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
             );
 
