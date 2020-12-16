@@ -42,6 +42,26 @@
                 console.log(value);
         }
         $(document).ready(function () {
+            var u = navigator.userAgent;
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
+                var top = 0,
+                    bottom = 0;
+                $(window).scroll(function () {
+                    top = $(this).scrollTop();
+                    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                        $('.footerOperation').fadeIn()
+                    } else if (bottom < top) {
+                        $('.footerOperation').fadeOut()
+                    } else {
+                        $('.footerOperation').fadeIn()
+                    }
+                    setTimeout(function () {
+                        bottom = top
+                    }, 0)
+                });
+            } else {//ios隐藏底部操作栏
+                $('.footerOperation').hide()
+            }
             $('.authorBoxList').children('.authorBox:even').addClass('left');
             $('.authorBoxList').children('.authorBox:odd').addClass('right');
             $(".top").click(function() {
@@ -50,22 +70,6 @@
                     },
                     500);
                 return false;
-            });
-            var top = 0,
-                bottom = 0;
-            $(window).scroll(function(){
-                top = $(this).scrollTop();
-                if($(window).scrollTop() + $(window).height() == $(document).height()){
-                    $('.footerOperation').fadeIn()
-                }
-                else if(bottom < top){
-                    $('.footerOperation').fadeOut()
-                }else{
-                    $('.footerOperation').fadeIn()
-                }
-                setTimeout(function(){
-                    bottom = top
-                }, 0)
             });
             $('.collect').click(function () {
                 $(this).toggleClass('collect-on')
