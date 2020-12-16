@@ -35,8 +35,50 @@
         }
     </style>
     <script>
+        function getFeeContent(value){
+            console.log(value)
+            // // var jsonobj=JSON.parse(value);
+            // var jsonobj = eval('('+value.replace(/\n+/g,"\\n")+')');
+            $('.subscribeBox').hide();
+            $('.articleContent').html(value);
+        }
+
+        
         function paySuccess(value){
-                console.log(value);
+
+            
+
+        // // 请求后台获取收费内容
+
+        // var list = {'id':1};
+        // jQuery.support.cors = true;
+
+        // $.ajax({
+        //     //请求方式
+        //     type:"POST",
+        //     //请求的媒体类型
+        //     contentType:"application/json;charset=UTF-8",
+        //     //请求地址
+        //     headers:{
+        //       'Access-Token':value
+        //     },
+        //     url:"http://192.168.137.20:8080/api/lb_post/get_fee_content",
+        //     //数据，json字符串
+        //     data:JSON.stringify(list),
+        //     //请求成功
+        //     success:function(result) {
+        //         console.log(result);
+        //         $('.subscribeBox').hide();
+        //         $('.articleContent').html(result.result.feeContent);
+        //     },
+        //     //请求失败，包含具体的错误信息
+        //     error:function(e){
+        //         console.log(e.status);
+        //         console.log(e.responseText);
+        //     }
+        // });
+
+
         }
         function userTokenFromClient(value){
                 console.log(value);
@@ -75,10 +117,10 @@
                 $(this).toggleClass('collect-on')
             });
 			$('.pay_499').on('click',function(event) { //支付跳转499
-                window.location.href="aves://pay?usertype=2";
+                window.location.href="aves://pay?tcode=avesproduct20001";
             });
 			$('.pay_4_99').on('click',function(event) { //支付跳转4.99
-                window.location.href="aves://pay?usertype=1";
+                window.location.href="aves://pay?tcode=avesproduct10001";
             });
 			$('.post_subject').on('click',function(event) { //栏目跳转
                 window.location.href="aves://category?id=1";
@@ -134,13 +176,15 @@
                     <h1>付费后，可阅读余下内容</h1>
                     <h2>你目前剩余 3 篇文章的兑换资格</h2>
                     <a href="javascript:;">兑换本文</a>
+
                 </div>
             </div>
             <div class="subscribeContent">
                 <div class="showInfo">
                     <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
                 </div>
-                <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span>￥588</span>，试读三篇价格<span>￥12</span></div>
+                <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span class="pay_499">￥588</span>，试读三篇价格<span class="pay_4_99">￥12</span></div>
+                <!-- <a href="javascript:getFeeContent('{"code":200,"timestamp":"1608123869044","_headers":"","message":"请求成功","result":{"id":1,"periodicalId":2,"periodicalTitle":"11月第三期","title":"一个南方鱼村里最荡漾的时刻","content":"收费内容","shareTitle":"分享标题","shareContent":"分享内容","description":"“不如买块豆腐，吃死算了。”大老白说。","postSubjectId":1,"postSubject":"媒体往事","postCatalogId":1,"tcolor":"#777777","postCatalog":"非虚构","showType":1,"imgUrl":"https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/images/1607525312124.png","linkUrl":"7","themeInfo":"8","author":"","postOrder":"0","publishedAt":"2020-11-21 15:14:24","praiseCount":111,"recordCount":121,"readCount":131,"recommend":1,"status":100,"updateTime":"2020-12-15 01:01:00","createTime":"2020-11-20 23:13:19"}');">测试购买完成</a> -->
                 <div class="subscribeText">
                     *我们一年大概更新300篇文章<br>
                     **别算了，我们这俩价格其实是一样的，没啥折扣

@@ -117,6 +117,7 @@ public class LbPostController {
 
         // 执行查询
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+        lbPost.setAuthor("");
 
         return R.ok().setResult(lbPost);
     }
@@ -166,10 +167,10 @@ public class LbPostController {
         if(sysUser == null){
             isPay=false;
         }else{
-            SysUserOrders sysUserOrders=lbOrdersService.getOneSysUserOrders(Wrappers.<SysUserOrders>lambdaQuery().eq(SysUserOrders::getPhone, sysUser.getPhone()));
-            if(!StringUtils.isEmpty(sysUserOrders.getOutTradeNo())){
-                isPay=true;
-            }
+//            SysUserOrders sysUserOrders=lbOrdersService.getOneSysUserOrders(Wrappers.<SysUserOrders>lambdaQuery().eq(SysUserOrders::getPhone, sysUser.getPhone()));
+//            if(!StringUtils.isEmpty(sysUserOrders.getOutTradeNo())){
+//                isPay=true;
+//            }
         }
 
 

@@ -205,8 +205,8 @@ public class AliPayController {
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody(lbGoods.getTitle());
-        model.setSubject(lbGoods.getBody());
+        model.setBody(lbGoods.getBody());
+        model.setSubject(lbGoods.getTitle());
         model.setOutTradeNo(outtradeno);
         model.setTimeoutExpress("30m");
         model.setTotalAmount(String.valueOf(lbGoods.getPrice()));
@@ -225,8 +225,8 @@ public class AliPayController {
             LbPayOrder lbPayOrder=new LbPayOrder();
             lbPayOrder.setOutTradeNo(outtradeno);
             lbPayOrder.setTradeNo(response.getTradeNo());
-            lbPayOrder.setBody(lbGoods.getTitle());
-            lbPayOrder.setSubject(lbGoods.getBody());
+            lbPayOrder.setBody(lbGoods.getBody());
+            lbPayOrder.setSubject(lbGoods.getTitle());
             lbPayOrder.setTotalAmount(lbGoods.getPrice());
             lbPayOrder.setTradeAppPayResponse(JSON.toJSONString(response));
 
