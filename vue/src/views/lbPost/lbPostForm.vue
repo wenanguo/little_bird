@@ -1,186 +1,197 @@
 <template>
   <a-modal
     :title="title"
-    :width="800"
+    :width="900"
     :visible="visible"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
     @cancel="() => { $emit('cancel') }"
+    centered
   >
-
     <a-spin :spinning="loading">
       <a-form :form="form" v-bind="formLayout">
-
-        <a-row :span="24" :gutter="24">
-          <a-tabs default-active-key="1" >
-            <a-tab-pane key="1" tab="属性">
-              <a-col :span="0">
-                <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
-                <a-form-item v-show="model && model.id > 0" label="编号">
-                  <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="所属期刊">
-                  <!-- <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
-                  <a-select v-decorator="['periodicalId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
-                    <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
-                      {{ lbPeriodical.title }}
-                    </a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="标题">
-                  <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]" />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="描述">
-                  <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="分享标题">
-                  <a-input v-decorator="['shareTitle', {rules: [{required: false}]}]" />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="分享内容">
-                  <a-input v-decorator="['shareContent', {rules: [{required: false}]}]" />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="栏目">
-                  <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
-                  <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
-                    <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id">
-                      {{ lbSubject.title }}
-                    </a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="所属分类">
-                  <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
-                  <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
-                    <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
-                      {{ lbCatalog.title }}
-                    </a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <!-- <a-col :span="12">
-                <a-form-item label="分类颜色">
-                  <a-input v-decorator="['tcolor', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
-                </a-form-item>
-              </a-col> -->
-              <a-col :span="12">
-                <a-form-item label="显示样式">
-                  <a-select v-decorator="['showType', {rules: [{required: true, message: '请选择分类！'}]}]">
-                    <a-select-option :value="1">左右图文</a-select-option>
-                    <a-select-option :value="2">上下图文</a-select-option>
-                    <a-select-option :value="3">广告类型</a-select-option>
-                    <a-select-option :value="4">无图</a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <!-- <a-col :span="12">
-                <a-form-item label="广告链接地址">
-                  <a-input v-decorator="['linkUrl', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
-                </a-form-item>
-              </a-col> -->
-              <a-col :span="12">
-                <a-form-item label="主题信息">
-                  <a-input v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的主题信息！'}]}]" />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="作者">
-                  <a-select show-search mode="multiple" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
-                    <a-select-option :value="1">
-                      王四五
-                    </a-select-option>
-                    <a-select-option :value="2">
-                      石飞刻
-                    </a-select-option>
-                    <a-select-option :value="3">
-                      吉井忍
-                    </a-select-option>
-                  </a-select>
-                  <!-- <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" /> -->
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="排序">
-                  <a-input-number v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="发布时间">
-                  <a-date-picker style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]" >
-                  </a-date-picker>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="是否推荐">
-                  <a-radio-group name="radioGroup" :default-value="1">
-                    <a-radio :value="1">
-                      是
-                    </a-radio>
-                    <a-radio :value="2">
-                      否
-                    </a-radio>
-                  </a-radio-group>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="状态">
-                  <a-radio-group v-decorator="['status', { initialValue: 100 }]">
-                    <a-radio :value="100">正常</a-radio>
-                    <a-radio :value="101">禁用</a-radio>
-                  </a-radio-group>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="图片上传">
-                  <a-upload
-                    name="file"
-                    :multiple="false"
-                    list-type="picture"
-                    :file-list="fileList"
-                    @change="handleChange"
-                    action="/api/tencent/upload"
-                  >
-                    <a-button> <a-icon type="upload" />上传图片</a-button>
-                  </a-upload>
-                  <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
-                  <a-input v-decorator="['content', {initialValue: ''}]" type="hidden" />
-                  <a-input v-decorator="['feeContent', {initialValue: ''}]" type="hidden" />
-                </a-form-item>
-              </a-col>
-            </a-tab-pane>
-            <a-tab-pane key="2" tab="免费内容" force-render>
-              <div class="editBox">
-                <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+        <a-row>
+          <a-col :span="16">
+            <a-tabs default-active-key="1" >
+              <a-tab-pane key="1" tab="属性">
+                <a-row :span="24" :gutter="10">
+                  <a-col :span="0">
+                    <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
+                    <a-form-item v-show="model && model.id > 0" label="编号">
+                      <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="所属期刊">
+                      <!-- <a-input v-decorator="['periodicalId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
+                      <a-select v-decorator="['periodicalId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
+                        <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
+                          {{ lbPeriodical.title }}
+                        </a-select-option>
+                      </a-select>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="标题">
+                      <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]" v-model="articleTitle" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="描述">
+                      <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" v-model="articleDescription" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="分享标题">
+                      <a-input v-decorator="['shareTitle', {rules: [{required: false}]}]" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="分享内容">
+                      <a-input v-decorator="['shareContent', {rules: [{required: false}]}]" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="栏目">
+                      <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
+                      <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleColumn">
+                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.title">
+                          {{ lbSubject.title }}
+                        </a-select-option>
+                      </a-select>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="所属分类">
+                      <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
+                      <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleClass">
+                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.title">
+                          {{ lbCatalog.title }}
+                        </a-select-option>
+                      </a-select>
+                    </a-form-item>
+                  </a-col>
+                  <!-- <a-col :span="12">
+                    <a-form-item label="分类颜色">
+                      <a-input v-decorator="['tcolor', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                  </a-col> -->
+                  <a-col :span="12">
+                    <a-form-item label="显示样式">
+                      <a-select v-decorator="['showType', {rules: [{required: true, message: '请选择分类！'}]}]">
+                        <a-select-option :value="1">左右图文</a-select-option>
+                        <a-select-option :value="2">上下图文</a-select-option>
+                        <a-select-option :value="3">广告类型</a-select-option>
+                        <a-select-option :value="4">无图</a-select-option>
+                      </a-select>
+                    </a-form-item>
+                  </a-col>
+                  <!-- <a-col :span="12">
+                    <a-form-item label="广告链接地址">
+                      <a-input v-decorator="['linkUrl', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                  </a-col> -->
+                  <a-col :span="12">
+                    <a-form-item label="主题信息">
+                      <a-input v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的主题信息！'}]}]" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="作者">
+                      <a-select v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者" v-model="articleAuthor">
+                        <a-select-option :value="1" :key="王四五">
+                          王四五
+                        </a-select-option>
+                        <a-select-option :value="2" :key="石飞刻">
+                          石飞刻
+                        </a-select-option>
+                        <a-select-option :value="3" :key="吉井忍">
+                          吉井忍
+                        </a-select-option>
+                      </a-select>
+                      <!-- <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" /> -->
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="排序">
+                      <a-input-number v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="发布时间">
+                      <a-date-picker style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]" v-model="articleDate">
+                      </a-date-picker>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="是否推荐">
+                      <a-radio-group name="radioGroup" :default-value="1">
+                        <a-radio :value="1">
+                          是
+                        </a-radio>
+                        <a-radio :value="2">
+                          否
+                        </a-radio>
+                      </a-radio-group>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="状态">
+                      <a-radio-group v-decorator="['status', { initialValue: 100 }]">
+                        <a-radio :value="100">正常</a-radio>
+                        <a-radio :value="101">禁用</a-radio>
+                      </a-radio-group>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="图片上传">
+                      <a-upload
+                        name="file"
+                        :multiple="false"
+                        list-type="picture"
+                        :file-list="fileList"
+                        @change="handleChange"
+                        action="/api/tencent/upload"
+                      >
+                        <a-button> <a-icon type="upload" />上传图片</a-button>
+                      </a-upload>
+                      <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
+                      <a-input v-decorator="['content', {initialValue: ''}]" type="hidden" />
+                      <a-input v-decorator="['feeContent', {initialValue: ''}]" type="hidden" />
+                    </a-form-item>
+                  </a-col>
+                </a-row>
+              </a-tab-pane>
+              <a-tab-pane key="2" tab="免费内容" force-render>
+                <div class="editBox">
+                  <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                </div>
+              </a-tab-pane>
+              <a-tab-pane key="3" tab="收费内容" force-render>
+                <div class="editBox">
+                  <quill-editor v-model="feeContent" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                </div>
+              </a-tab-pane>
+            </a-tabs>
+          </a-col>
+          <a-col :span="8">
+            <div class="phone-view">
+              <div class="ql-container ql-snow">
+                <div class="ql-editor">
+                  <div class="article-editor">
+                    <div class="articleClass" v-html="this.articleClass"></div>
+                    <div class="articleTitle" v-html="this.articleTitle"></div>
+                    <div class="articleAuthor"><span v-html="this.articleAuthor"></span><span v-html="this.articleColumn"></span></div>
+                    <div class="articleDate" v-html="this.articleDate"></div>
+                    <div class="articleDescription" v-html="this.articleDescription"></div>
+                  </div>
+                  <div v-html="this.content"></div>
+                  <div v-html="this.feeContent"></div>
+                </div>
               </div>
-            </a-tab-pane>
-            <a-tab-pane key="3" tab="收费内容" force-render>
-              <div class="editBox">
-                <quill-editor v-model="feeContent" ref="myQuillEditor" :options="editorOption"></quill-editor>
-              </div>
-
-            </a-tab-pane>
-          </a-tabs>
-        </a-row>
-        <div class="phone-view">
-          <div class="ql-container ql-snow">
-            <div class="ql-editor">
-              <div v-html="this.content"></div>
-              <div v-html="this.feeContent"></div>
             </div>
-          </div>
-        </div>
+          </a-col>
+        </a-row>
       </a-form>
     </a-spin>
   </a-modal>
@@ -268,6 +279,12 @@
         form: this.$form.createForm(this),
         content: '',
         feeContent: '',
+        articleTitle: '',
+        articleClass: '',
+        articleAuthor: '',
+        articleColumn: '',
+        articleDate: '',
+        articleDescription: '',
         fileList: [],
         editorOption: {
           placeholder: '输入文章收费内容',
@@ -275,7 +292,7 @@
             toolbar: {
               container: [
                 ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote', 'code-block'],
+                ['code-block', 'blockquote'],
                 [{ 'header': 1 }, { 'header': 2 }],
                 // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                 // [{ 'script': 'sub' }, { 'script': 'super' }],
@@ -283,11 +300,11 @@
                 // [{ 'direction': 'rtl' }],
                 // [{ 'size': ['small', false, 'large', 'huge'] }],
                 // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                [{ 'color': [] }, { 'background': [] }],
+                // [{ 'color': [] }, { 'background': [] }],
                 // [{ 'font': [] }],
                 [{ 'align': [] }],
                 // ['clean'],
-                ['link', 'image', 'video']
+                ['link', 'image']
               ]
             }
           }
@@ -350,26 +367,42 @@
 </script>
 <style>
   .editBox .ql-editor{
-    height:20vw;
+    height:420px;
   }
   .phone-view{
     background: url("../../assets/phone-bg.png") no-repeat;
     background-size: 100%;
-    width: 20vw;
-    height: 40vw;
-    margin-top: -20vw;
-    padding: 5.5vw 0;
-    position: fixed;
-    top: 50%;
-    right: 20px;
+    width:300px;
+    height:561px;
+    padding:80px 40px 91px 40px;
   }
   .phone-view .ql-container.ql-snow{
     border:0;
   }
   .phone-view .ql-editor{
-    width:14.5vw;
-    margin: 0 auto;
-    height:25.5vw;
+    width:220px;
+    height:390px;
+    padding: 0!important;
+  }
+  .phone-view .ql-editor::-webkit-scrollbar
+  {
+    width:4px;
+    height: 8px;
+    background-color: #fefefe;
+  }
+
+  /*定义滚动条轨道 内阴影+圆角*/
+  .phone-view .ql-editor::-webkit-scrollbar-track
+  {
+    border-radius: 10px;
+    background-color:#f1f1f1;
+  }
+
+  /*定义滑块 内阴影+圆角*/
+  .phone-view .ql-editor::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    background-color: #cccccc;
   }
   .ql-blockquote{
     background:url("../../assets/image-text.png") no-repeat center !important;
@@ -383,27 +416,71 @@
     background-size: 70% 70% !important;
   }
   .ql-editor blockquote{
-    background: rgba(229, 230, 231, 0.2);
+    background:url('../../assets/article-line.png') no-repeat right+10px top rgba(229, 230, 231, 0.2);
     border: 0!important;
     margin: 0!important;
-    padding:0 10px 0 10px;
+    padding:5px 10px 15px 10px;
+    text-align: right;
   }
   .ql-snow .ql-editor pre.ql-syntax{
-    background:url('../../assets/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
+    background:url('../../assets/summary_icon.png') no-repeat 10px 10px rgba(229, 230, 231, 0.2);
     background-size: 10%;
     color: #3F3E4C;
     border: 0!important;
     margin: 0!important;
-    padding:10px 10px 10px 15%;
+    padding:15px 10px 10px 15%;
     border-radius: 0;
-    font-size:1.2em;
+    font-size:1em;
     text-align: right;
+    font-weight: bold;
+  }
+  .phone-view .ql-editor p,.article-editor{
+    padding: 10px;
   }
   /*.ant-modal{*/
   /*  width: 100% !important;*/
   /*}*/
   .ql-editing{
-    left: 50% !important;
+    left:auto !important;
+    right: 10px !important;
     top: 0!important;
+    width: 320px;
+  }
+  .ant-form-item{
+    margin-bottom: 16px!important;
+  }
+  .articleClass{
+    text-align: right;
+    font-size: 14px;
+    padding-bottom: 9px;
+    font-weight: 400;
+  }
+  .articleTitle{
+    text-align: right;
+    font-size: 16px;
+    line-height: 22px;
+    color: #3F3E4C;
+    font-weight: bold;
+    padding-bottom: 15px;
+  }
+  .articleAuthor{
+    font-size: 14px;
+    font-weight: 400;
+    text-align: right;
+    margin-bottom: 5px;
+  }
+  .articleDate{
+    font-size: 12px;
+    font-weight: 300;
+    text-align: right;
+  }
+  .articleDescription{
+    background: rgba(229, 230, 231, 0.2);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: right;
+    margin-top: 10px;
   }
 </style>
