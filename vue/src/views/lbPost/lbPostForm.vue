@@ -178,11 +178,13 @@
             <div class="phone-view">
               <div class="ql-container ql-snow">
                 <div class="ql-editor">
-                  <div class="articleClass" v-html="this.articleClass"></div>
-                  <div class="articleTitle" v-html="this.articleTitle"></div>
-                  <div class="articleAuthor"><span v-html="this.articleAuthor"></span><span v-html="this.articleColumn"></span></div>
-                  <div class="articleDate" v-html="this.articleDate"></div>
-                  <div class="articleDescription" v-html="this.articleDescription"></div>
+                  <div class="article-editor">
+                    <div class="articleClass" v-html="this.articleClass"></div>
+                    <div class="articleTitle" v-html="this.articleTitle"></div>
+                    <div class="articleAuthor"><span v-html="this.articleAuthor"></span><span v-html="this.articleColumn"></span></div>
+                    <div class="articleDate" v-html="this.articleDate"></div>
+                    <div class="articleDescription" v-html="this.articleDescription"></div>
+                  </div>
                   <div v-html="this.content"></div>
                   <div v-html="this.feeContent"></div>
                 </div>
@@ -290,7 +292,7 @@
             toolbar: {
               container: [
                 ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote', 'code-block'],
+                ['code-block', 'blockquote'],
                 [{ 'header': 1 }, { 'header': 2 }],
                 // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                 // [{ 'script': 'sub' }, { 'script': 'super' }],
@@ -380,6 +382,7 @@
   .phone-view .ql-editor{
     width:220px;
     height:390px;
+    padding: 0!important;
   }
   .phone-view .ql-editor::-webkit-scrollbar
   {
@@ -431,6 +434,9 @@
     text-align: right;
     font-weight: bold;
   }
+  .phone-view .ql-editor p,.article-editor{
+    padding: 10px;
+  }
   /*.ant-modal{*/
   /*  width: 100% !important;*/
   /*}*/
@@ -475,6 +481,6 @@
     border-radius: 6px;
     padding: 10px;
     text-align: right;
-    margin: 20px 0;
+    margin-top: 10px;
   }
 </style>
