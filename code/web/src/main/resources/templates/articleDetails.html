@@ -140,7 +140,7 @@
             <div th:text="${c.name}" th:remove="tag"></div>
         </span>
         </span>
-         | <span class="post_subject">[[${lbPost.postSubject}]]</span>
+        <span class="post_subject">[[${lbPost.postSubject}]]</span>
     </div>
     <div class="date"><span th:text="${#temporals.format(lbPost.publishedAt,'MM-dd')}"></span></div>
     <div class="summary">
@@ -152,14 +152,16 @@
         <p th:utext="${lbPost.content}"></p>
         <div class="subscribeBox" th:if="${isPayYear} != true">
             <div class="subscribeBorderTop"></div>
-            <div class="subscribeTitle" th:if="${isPayOne} != true">
+            <div class="subscribeTitle" th:if="${isPayOne} == false">
                 <div>
                     <h1>付费后，可阅读余下内容</h1>
-                    <h2 th:if="${PayOneCount} >0">你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
-                    <span th:if="${PayOneCount} >0" class="exchangecss" >兑换本文</span>
+                    <div th:if="${PayOneCount} >0">
+                    <h2 >你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
+                    <span  class="exchangecss" >兑换本文</span>
+                    </div>
                 </div>
             </div>
-            <div class="subscribeContent" th:if="${isPayOne} != true">
+            <div class="subscribeContent" th:if="${isPayOne} == false">
                 <div class="showInfo">
                     <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
                 </div>

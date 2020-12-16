@@ -166,62 +166,73 @@ public class LbPostController {
         Integer PayOneCount=0;
 
 
-        SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+        if(principal==null){
+            // 未登录
 
-        if(sysUser == null){
-            isPayYear=false;
         }else{
+            // 已登录
 
-            lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
-                    .eq(LbOrders::getPhone, sysUser.getPhone())
-                    .eq(LbOrders::getStatus, 203)
-                    .eq(LbOrders::getTtype,2)
-                    .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
-            );
-            // 未判断有效时间
+            SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
 
-            if(lbOrders !=null){
-                // 已支付包年
-                isPayYear=true;
+            if(sysUser == null){
+                isPayYear=false;
             }else{
-                // 未支付包年，判断是否有单点兑换权限
 
-                List<LbExchangeOrders> exchangeOrdersList = lbExchangeOrdersService.list(Wrappers.<LbExchangeOrders>lambdaQuery()
-                        .eq(LbExchangeOrders::getPhone, sysUser.getPhone())
-                        .eq(LbExchangeOrders::getStatus, 100)
+                lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
+                        .eq(LbOrders::getPhone, sysUser.getPhone())
+                        .eq(LbOrders::getStatus, 203)
+                        .eq(LbOrders::getTtype,2)
+                        .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
                 );
+                // 未判断有效时间
 
-                for (LbExchangeOrders ech: exchangeOrdersList) {
+                if(lbOrders !=null){
+                    // 已支付包年
+                    isPayYear=true;
+                }else{
+                    // 未支付包年，判断是否有单点兑换权限
 
-                    if(ech.getPostId()==lbPost.getId()){
-                        isPayOne=true;
-                        break;
+                    List<LbExchangeOrders> exchangeOrdersList = lbExchangeOrdersService.list(Wrappers.<LbExchangeOrders>lambdaQuery()
+                            .eq(LbExchangeOrders::getPhone, sysUser.getPhone())
+                            .eq(LbExchangeOrders::getStatus, 100)
+                    );
+
+                    for (LbExchangeOrders ech: exchangeOrdersList) {
+
+                        if(ech.getPostId()==lbPost.getId()){
+                            isPayOne=true;
+                            break;
+                        }
+
+                    }
+
+
+                    // 如果没有兑换权限，计算剩余兑换数量
+                    if(!isPayOne){
+                        List<LbOrders> lbOrdersList = lbOrdersService.list(Wrappers.<LbOrders>lambdaQuery()
+                                .eq(LbOrders::getPhone, sysUser.getPhone())
+                                .eq(LbOrders::getStatus, 203)
+                                .eq(LbOrders::getTtype, 1)
+                                .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
+                        );
+
+                        PayOneCount=(lbOrdersList.size()*3)-exchangeOrdersList.size();
+
                     }
 
                 }
 
 
-                // 如果没有兑换权限，计算剩余兑换数量
-                if(!isPayOne){
-                    List<LbOrders> lbOrdersList = lbOrdersService.list(Wrappers.<LbOrders>lambdaQuery()
-                            .eq(LbOrders::getPhone, sysUser.getPhone())
-                            .eq(LbOrders::getStatus, 203)
-                            .eq(LbOrders::getTtype, 1)
-                            .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
-                    );
 
-                    PayOneCount=(lbOrdersList.size()*3)-exchangeOrdersList.size();
 
-                }
+
 
             }
 
-
-
-
-
-
         }
+
+
+
 
 
         if(isPayYear || isPayOne){
@@ -267,14 +278,27 @@ public class LbPostController {
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
 
         // 分享内容，隐藏付费内容
-        lbPost.setFeeContent("");
+        // lbPost.setFeeContent("");
+
+
+        // 判断用户是否已经包年付费
+        boolean isPayYear=true;
+        boolean isPayOne =false;
+        boolean isDisplay = false;
+        Integer PayOneCount=0;
 
         // 获取作者列表
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
 
 
         ModelAndView mv = new ModelAndView();
+        mv.addObject("lbPost",lbPost);
+        mv.addObject("isPayYear",isPayYear);
+        mv.addObject("isPayOne",isPayOne);
+        mv.addObject("isDisplay",isDisplay);
         mv.addObject("lbPost", lbPost);
+        mv.addObject("PayOneCount",PayOneCount);
+
         mv.addObject("lbAuthorList",lbAuthorList);
         mv.setViewName("articleDetails");
         return mv;
