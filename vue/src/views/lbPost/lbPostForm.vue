@@ -55,7 +55,7 @@
                     <a-form-item label="栏目">
                       <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                       <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleColumn">
-                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.title">
+                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id">
                           {{ lbSubject.title }}
                         </a-select-option>
                       </a-select>
@@ -65,7 +65,7 @@
                     <a-form-item label="所属分类">
                       <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                       <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleClass">
-                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.title">
+                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
                           {{ lbCatalog.title }}
                         </a-select-option>
                       </a-select>
@@ -294,8 +294,7 @@
                 ['bold', 'italic', 'underline', 'strike'],
                 ['code-block', 'blockquote'],
                 [{ 'header': 1 }, { 'header': 2 }],
-                // [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                // [{ 'script': 'sub' }, { 'script': 'super' }],
+                // [{ 'script': 'sub' }],
                 [{ 'indent': '-1' }, { 'indent': '+1' }],
                 // [{ 'direction': 'rtl' }],
                 // [{ 'size': ['small', false, 'large', 'huge'] }],
@@ -304,7 +303,8 @@
                 // [{ 'font': [] }],
                 [{ 'align': [] }],
                 // ['clean'],
-                ['link', 'image']
+                ['link', 'image'],
+                [{ 'list': 'ordered' }]
               ]
             }
           }
@@ -408,11 +408,15 @@
     background:url("../../assets/image-text.png") no-repeat center !important;
     background-size: 70% 70% !important;
   }
-  .ql-blockquote svg,.ql-code-block svg{
+  .ql-blockquote svg,.ql-code-block svg,.ql-list svg{
     display: none;
   }
   .ql-code-block{
     background:url("../../assets/summary_icon.png") no-repeat center !important;
+    background-size: 70% 70% !important;
+  }
+  .ql-list{
+    background:url("../../assets/album.png") no-repeat center !important;
     background-size: 70% 70% !important;
   }
   .ql-editor blockquote{
@@ -421,6 +425,22 @@
     margin: 0!important;
     padding:5px 10px 15px 10px;
     text-align: right;
+  }
+  .ql-editor ol{
+    list-style-type: none!important;
+  }
+  .ql-editor ol li{
+    color: #767676!important;
+    font-size: 12px!important;
+    font-weight: 300!important;
+    line-height: 20px!important;
+    text-align: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none!important;
+  }
+  .ql-editor ol li::before{
+    display: none!important;
   }
   .ql-snow .ql-editor pre.ql-syntax{
     background:url('../../assets/summary_icon.png') no-repeat 10px 10px rgba(229, 230, 231, 0.2);
@@ -433,6 +453,18 @@
     font-size:1em;
     text-align: right;
     font-weight: bold;
+  }
+  .ql-snow .ql-editor h1{
+    font-size: 42px!important;
+    line-height: 30px!important;
+    margin-top: 70px!important;
+    text-align: right;
+  }
+  .ql-snow .ql-editor h2{
+    font-size: 20px!important;
+    line-height: 30px!important;
+    margin:14px 0 30px 0!important;
+    text-align: right;
   }
   .phone-view .ql-editor p,.article-editor{
     padding: 10px;
