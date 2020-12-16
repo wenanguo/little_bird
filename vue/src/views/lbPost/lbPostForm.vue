@@ -428,6 +428,7 @@
   }
   .ql-editor ol{
     list-style-type: none!important;
+    padding: 0 10px;
   }
   .ql-editor ol li{
     color: #767676!important;
@@ -459,12 +460,14 @@
     line-height: 30px!important;
     margin-top: 70px!important;
     text-align: right;
+    padding: 0 10px;
   }
   .ql-snow .ql-editor h2{
     font-size: 20px!important;
     line-height: 30px!important;
     margin:14px 0 30px 0!important;
     text-align: right;
+    padding: 0 10px;
   }
   .phone-view .ql-editor p,.article-editor{
     padding: 10px;
