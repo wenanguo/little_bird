@@ -298,11 +298,11 @@
                 // [{ 'direction': 'rtl' }],
                 // [{ 'size': ['small', false, 'large', 'huge'] }],
                 // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                [{ 'color': [] }, { 'background': [] }],
+                // [{ 'color': [] }, { 'background': [] }],
                 // [{ 'font': [] }],
                 [{ 'align': [] }],
                 // ['clean'],
-                ['link', 'image', 'video']
+                ['link', 'image']
               ]
             }
           }
@@ -413,10 +413,11 @@
     background-size: 70% 70% !important;
   }
   .ql-editor blockquote{
-    background: rgba(229, 230, 231, 0.2);
+    background:url('../../assets/article-line.png') no-repeat right+10px top rgba(229, 230, 231, 0.2);
     border: 0!important;
     margin: 0!important;
-    padding:0 10px 0 10px;
+    padding:5px 10px 15px 10px;
+    text-align: right;
   }
   .ql-snow .ql-editor pre.ql-syntax{
     background:url('../../assets/summary_icon.png') no-repeat 10px 10px rgba(229, 230, 231, 0.2);
@@ -424,7 +425,7 @@
     color: #3F3E4C;
     border: 0!important;
     margin: 0!important;
-    padding:10px 10px 10px 15%;
+    padding:15px 10px 10px 15%;
     border-radius: 0;
     font-size:1em;
     text-align: right;
@@ -434,8 +435,10 @@
   /*  width: 100% !important;*/
   /*}*/
   .ql-editing{
-    left: 50% !important;
+    left:auto !important;
+    right: 10px !important;
     top: 0!important;
+    width: 320px;
   }
   .ant-form-item{
     margin-bottom: 16px!important;
