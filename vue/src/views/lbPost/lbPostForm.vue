@@ -54,8 +54,8 @@
                   <a-col :span="12">
                     <a-form-item label="栏目">
                       <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
-                      <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleColumn">
-                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id">
+                      <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]" v-model="articleColumn">
+                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.title">
                           {{ lbSubject.title }}
                         </a-select-option>
                       </a-select>
@@ -65,7 +65,7 @@
                     <a-form-item label="所属分类">
                       <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                       <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleClass">
-                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id">
+                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id" :value="lbCatalog.title">
                           {{ lbCatalog.title }}
                         </a-select-option>
                       </a-select>
@@ -181,7 +181,7 @@
                   <div class="article-editor">
                     <div class="articleClass" v-html="this.articleClass"></div>
                     <div class="articleTitle" v-html="this.articleTitle"></div>
-                    <div class="articleAuthor"><span v-html="this.articleAuthor"></span><span v-html="this.articleColumn"></span></div>
+                    <div class="articleAuthor"><span v-html="this.articleAuthor"></span> | <span v-html="this.articleColumn"></span></div>
                     <div class="articleDate" v-html="this.articleDate"></div>
                     <div class="articleDescription" v-html="this.articleDescription"></div>
                   </div>
@@ -483,9 +483,9 @@
   }
   .articleClass{
     text-align: right;
-    font-size: 14px;
+    font-size: 12px;
     padding-bottom: 9px;
-    font-weight: 400;
+    font-weight: bold;
   }
   .articleTitle{
     text-align: right;
@@ -496,8 +496,8 @@
     padding-bottom: 15px;
   }
   .articleAuthor{
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: bold;
     text-align: right;
     margin-bottom: 5px;
   }
