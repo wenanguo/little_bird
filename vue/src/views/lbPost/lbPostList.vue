@@ -336,6 +336,12 @@
                         })
         },
         methods: {
+            getAuthor (jsonstr){
+                var author = ''
+                for(var i in jsonstr){
+                    author = author +jsonstr[i].name
+                    }
+            },
             async handlePreview (url) {
                 this.previewImage = url
                 this.previewVisible = true

@@ -22,7 +22,6 @@ import java.util.List;
 import com.cmtt.base.entity.LbGoods;
 import com.cmtt.base.service.ILbGoodsService;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
