@@ -61,6 +61,12 @@
         <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
+        <span slot="linkslot" slot-scope="text">
+          <a :href="text" target="_blank">访问</a>
+        </span>
+        <span slot="authorslot" slot-scope="text">
+          {{ text | authorFilter }}
+        </span>
         <span slot="imgslot" slot-scope="text">
           <img alt="example" style="width: 50px" @click="handlePreview(text)" :src="text" />
         </span>
@@ -86,6 +92,7 @@
         :loading.sync="confirmLoading"
         :model="mdl"
         :lbCatalogList="lbCatalogList"
+        :lbAuthorList="lbAuthorList"
         :lbSubjectList="lbSubjectList"
         :lbPeriodicalList="lbPeriodicalList"
         @cancel="handleCancel"
@@ -102,6 +109,7 @@
     import { getLbPostList, saveLbPost, delLbPost, batchDelLbPost } from '@/api/lbPost'
     import { getLbCatalogListAll } from '@/api/lbCatalog'
     import { getLbSubjectListAll } from '@/api/lbSubject'
+    import { getLbAuthorListAll } from '@/api/lbAuthor'
     import { getLbPeriodicalListAll } from '@/api/lbPeriodical'
     import EditForm from './lbPostForm'
 
@@ -169,6 +177,7 @@
             title: '广告链接地址',
             sorter: true,
             width: '100px',
+            scopedSlots: { customRender: 'linkslot' },
             dataIndex: 'linkUrl'
         }, {
             title: '主题信息',
@@ -179,6 +188,7 @@
             title: '作者',
             sorter: true,
             width: '100px',
+            scopedSlots: { customRender: 'authorslot' },
             dataIndex: 'author'
         }, {
             title: '排序',
@@ -278,6 +288,7 @@
                 previewVisible: false,
                 previewImage: '',
                 lbCatalogList: [],
+                lbAuthorList: [],
                 lbSubjectList: [],
                 lbPeriodicalList: [],
                 mdl: null,
@@ -310,6 +321,14 @@
             },
             statusTypeFilter (type) {
                 return statusMap[type].status
+            },
+            authorFilter (type) {
+                var retlist = ''
+                var jsonlist = JSON.parse(type)
+                for (var i in jsonlist) {
+                    retlist = retlist + '  ' + jsonlist[i].name
+                }
+                return retlist
             }
         },
         computed: {
@@ -329,6 +348,10 @@
             getLbSubjectListAll()
                         .then(res => {
                             this.lbSubjectList = res.result
+                        })
+            getLbAuthorListAll()
+                        .then(res => {
+                            this.lbAuthorList = res.result
                         })
             getLbPeriodicalListAll()
                         .then(res => {

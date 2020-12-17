@@ -7,15 +7,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.GetAuthorPostInputParam;
 import com.cmtt.base.controller.param.GetOneInputParam;
-import com.cmtt.base.entity.LbAuthor;
-import com.cmtt.base.entity.LbPeriodical;
-import com.cmtt.base.entity.LbPost;
-import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbAuthorService;
 import com.cmtt.base.service.ILbPostService;
+import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -68,6 +66,30 @@ public class LbAuthorController {
         }
 
 
+    }
+
+    /**
+     * 获取所有列表
+     */
+    @GetMapping("/list_all")
+    @ResponseBody
+    public R listAll() {
+
+        try {
+
+            // 执行查询
+            List<LbAuthor> list = lbAuthorService.list(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getStatus, RC.B_NORMAL.code()));
+
+            // 设置返回数据
+            return R.ok().setResult(list);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
     }
 
 

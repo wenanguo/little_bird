@@ -469,4 +469,61 @@ public class LbPostController {
 
 
 
+
+    // 静态页面跳转
+
+    /**
+     * 用户协议
+     */
+    @GetMapping("user_agreement")
+    @ApiOperation("用户协议")
+    public ModelAndView userAgreement()  {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("userAgreement");
+        return mv;
+
+    }
+
+    /**
+     * 隐私协议
+     */
+    @GetMapping("privacy_agreement")
+    @ApiOperation("隐私协议")
+    public ModelAndView privacyAgreement()  {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("privacyAgreement");
+        return mv;
+
+    }
+
+
+
+    /**
+     * 关于小鸟
+     */
+    @GetMapping("about")
+    @ApiOperation("关于小鸟")
+    public ModelAndView about()  {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("about");
+        return mv;
+
+    }
+
+    /**
+     * 下载
+     */
+    @GetMapping("download")
+    @ApiOperation("下载")
+    public ModelAndView download()  {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("download");
+        return mv;
+
+    }
+
 }

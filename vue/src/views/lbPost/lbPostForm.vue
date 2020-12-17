@@ -55,7 +55,7 @@
                     <a-form-item label="栏目">
                       <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                       <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]" v-model="articleColumn">
-                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.title">
+                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.id">
                           {{ lbSubject.title }}
                         </a-select-option>
                       </a-select>
@@ -98,15 +98,9 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="作者">
-                      <a-select v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者" v-model="articleAuthor">
-                        <a-select-option :value="1" :key="王四五">
-                          王四五
-                        </a-select-option>
-                        <a-select-option :value="2" :key="石飞刻">
-                          石飞刻
-                        </a-select-option>
-                        <a-select-option :value="3" :key="吉井忍">
-                          吉井忍
+                      <a-select mode="multiple" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+                        <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
+                          {{ lbAuthor.name }}
                         </a-select-option>
                       </a-select>
                       <!-- <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" /> -->
@@ -252,6 +246,10 @@
         default: () => null
       },
       lbCatalogList: {
+        type: Array,
+        default: () => null
+      },
+      lbAuthorList: {
         type: Array,
         default: () => null
       },
