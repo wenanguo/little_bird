@@ -50,7 +50,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/zfb")
-@Api(tags = "支付相关")
+@Api(tags = "支付宝相关")
 public class AliPayController {
 
 

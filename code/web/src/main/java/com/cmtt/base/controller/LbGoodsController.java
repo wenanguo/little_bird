@@ -35,7 +35,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/api/lb_goods")
-@Api(tags = "支付相关")
+@Api(tags = "商品相关")
 public class LbGoodsController {
 
     private final Logger logger = LoggerFactory.getLogger(LbGoodsController.class);

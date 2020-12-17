@@ -40,7 +40,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/api/lb_exchange_orders")
-@Api(tags = "支付相关")
+@Api(tags = "商品相关")
 public class LbExchangeOrdersController {
 
     private final Logger logger = LoggerFactory.getLogger(LbExchangeOrdersController.class);
