@@ -19,40 +19,11 @@
             $('.articleContent').html(decodeURI(value));
         }
 
+            function authorClick(value){
+             window.location.href="aves://author?id="+value;
+            }
 
         function paySuccess(value){
-
-
-
-        // // 请求后台获取收费内容
-
-        // var list = {'id':1};
-        // jQuery.support.cors = true;
-
-        // $.ajax({
-        //     //请求方式
-        //     type:"POST",
-        //     //请求的媒体类型
-        //     contentType:"application/json;charset=UTF-8",
-        //     //请求地址
-        //     headers:{
-        //       'Access-Token':value
-        //     },
-        //     url:"http://192.168.137.20:8080/api/lb_post/get_fee_content",
-        //     //数据，json字符串
-        //     data:JSON.stringify(list),
-        //     //请求成功
-        //     success:function(result) {
-        //         console.log(result);
-        //         $('.subscribeBox').hide();
-        //         $('.articleContent').html(result.result.feeContent);
-        //     },
-        //     //请求失败，包含具体的错误信息
-        //     error:function(e){
-        //         console.log(e.status);
-        //         console.log(e.responseText);
-        //     }
-        // });
 
 
         }
@@ -105,9 +76,7 @@
 			$('.link').on('click',function(event) { //分享
                 window.location.href="aves://share";
             });
-			$('.authorPhoto').on('click',function(event) { //作者
-                window.location.href="aves://author?id=1";
-            });
+
 			$('.return').on('click',function(event) { //关闭页面
                 window.location.href="aves://finish";
                 //window.location.href="aves://getUserToken";
@@ -151,7 +120,7 @@
 <div class="articleBox small"><!--字号small middle large-->
     <div class="freeArticleContent">
         <p th:utext="${lbPost.content}"></p>
-        <div class="subscribeBox" th:if="${isPayYear} != true">
+        <div class="subscribeBox" th:if="${isDisplay} == false">
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle" th:if="${isPayOne} == false">
                 <div>
@@ -185,7 +154,7 @@
             <h1 th:text="${c.name}"></h1>
             <h2 th:text="${c.introduction}"></h2>
         </div>
-        <div class="authorPhoto">
+        <div class="authorPhoto" th:onclick="'javascript:authorClick('+${c.id}+')' ">
             <img th:src="${c.imgUrl}">
         </div>
     </div>

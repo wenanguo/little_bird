@@ -282,14 +282,23 @@ public class LbPostController {
 
 
         // 判断用户是否已经包年付费
-        boolean isPayYear=true;
+        boolean isPayYear=false;
         boolean isPayOne =false;
         boolean isDisplay = false;
-        Integer PayOneCount=0;
+        Integer PayOneCount=3;
 
         // 获取作者列表
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
 
+
+
+        if(isPayYear || isPayOne){
+            //已付费，显示付费内容
+            isDisplay=true;
+        }else{
+            // 未付费，隐藏付费内容
+            lbPost.setFeeContent("");
+        }
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("lbPost",lbPost);
