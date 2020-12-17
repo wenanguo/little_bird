@@ -125,11 +125,13 @@
             sorter: true,
             scopedSlots: { customRender: 'pdfslot' },
             dataIndex: 'tpdf'
-        }, {
-            title: '推荐期刊',
-            sorter: true,
-            dataIndex: 'recommend'
-        }, {
+        },
+        // {
+        //     title: '推荐期刊',
+        //     sorter: true,
+        //     dataIndex: 'recommend'
+        // },
+        {
             title: '所属年份',
             sorter: true,
             dataIndex: 'tyear'

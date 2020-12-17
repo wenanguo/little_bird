@@ -138,7 +138,7 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
-                    <a-form-item label="图片上传">
+                    <a-form-item label="预览图">
                       <a-upload
                         name="file"
                         :multiple="false"
@@ -150,8 +150,23 @@
                         <a-button> <a-icon type="upload" />上传图片</a-button>
                       </a-upload>
                       <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
+                      <a-input v-decorator="['preimgUrl', {initialValue: ''}]" type="hidden" />
                       <a-input v-decorator="['content', {initialValue: ''}]" type="hidden" />
                       <a-input v-decorator="['feeContent', {initialValue: ''}]" type="hidden" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="文章图">
+                      <a-upload
+                        name="file"
+                        :multiple="false"
+                        list-type="picture"
+                        :file-list="prefileList"
+                        @change="prehandleChange"
+                        action="/api/tencent/upload"
+                      >
+                        <a-button> <a-icon type="upload" />上传图片</a-button>
+                      </a-upload>
                     </a-form-item>
                   </a-col>
                 </a-row>
@@ -211,6 +226,7 @@
     'tcolor',
     'showType',
     'imgUrl',
+    'preimgUrl',
     'linkUrl',
     'themeInfo',
     'author',
@@ -284,6 +300,7 @@
         articleDate: '',
         articleDescription: '',
         fileList: [],
+        prefileList: [],
         editorOption: {
           placeholder: '输入文章收费内容',
           modules: {
@@ -340,8 +357,15 @@
             status: 'done',
             url: this.model.imgUrl
           }]
+          this.prefileList = [{
+            uid: '-1',
+            name: this.model.preimgUrl,
+            status: 'done',
+            url: this.model.preimgUrl
+          }]
         } else {
           this.fileList = []
+          this.prefileList = []
         }
       })
     },
@@ -358,6 +382,20 @@
         if (info.file.status === 'done') {
           this.$emit('update:loading', false)
           this.form.setFieldsValue({ imgUrl: info.file.response.result.url })
+        }
+      },
+      prehandleChange (info) {
+        const prefileListt = [...info.fileList]
+
+        this.prefileList = prefileListt.slice(-1)
+
+        if (info.file.status === 'uploading') {
+          this.$emit('update:loading', true)
+          return
+        }
+        if (info.file.status === 'done') {
+          this.$emit('update:loading', false)
+          this.form.setFieldsValue({ preimgUrl: info.file.response.result.url })
         }
       }
     }

@@ -174,6 +174,12 @@
             scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
         }, {
+            title: '文章图片',
+            sorter: true,
+            width: '100px',
+            scopedSlots: { customRender: 'imgslot' },
+            dataIndex: 'preimgUrl'
+        }, {
             title: '广告链接地址',
             sorter: true,
             width: '100px',

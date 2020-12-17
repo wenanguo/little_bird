@@ -84,6 +84,9 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "图片地址")
     private String imgUrl;
 
+    @ApiModelProperty(value = "详情图片地址")
+    private String preimgUrl;
+
     @ApiModelProperty(value = "广告链接地址")
     private String linkUrl;
 
@@ -133,11 +136,8 @@ public class LbPost extends BaseEntity implements Serializable {
                 e.printStackTrace();
             }
 
-
         }
-
         return null;
-
     }
 
     public void setLbAuthorList(List<LbAuthorVo> lbAuthorList) {

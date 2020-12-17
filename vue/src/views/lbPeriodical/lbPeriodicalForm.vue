@@ -32,12 +32,12 @@
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
-        <a-form-item label="期刊推荐">
+        <!-- <a-form-item label="期刊推荐">
           <a-radio-group v-decorator="['recommend', { initialValue: '2' }]">
             <a-radio :value="1">是</a-radio>
             <a-radio :value="2">否</a-radio>
           </a-radio-group>
-        </a-form-item>
+        </a-form-item> -->
         <a-form-item label="所属年份">
           <a-input v-decorator="['tyear', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
