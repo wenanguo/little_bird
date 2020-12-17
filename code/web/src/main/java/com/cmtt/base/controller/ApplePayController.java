@@ -2,6 +2,7 @@ package com.cmtt.base.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -225,55 +226,60 @@ public class ApplePayController {
 
         Map<String,Object> map=new HashMap<>();
         map.put("receipt-data",params.getReceipt_data());
-        map.put("password","");
+        map.put("password","7006a41e32c24ee9b3b9af23be8b0804");
         map.put("exclude-old-transactions",false);
 
-        System.out.println(params.getPhone());
-        System.out.println(params.getOut_trade_no());
+        System.out.println("Receipt_data"+params.getReceipt_data());
+        System.out.println("Product_id"+params.getProduct_id());
+        System.out.println("Transaction_id"+params.getTransaction_id());
+        System.out.println("Out_trade_no"+params.getOut_trade_no());
 
 
-        String a=JSON.toJSONString(map);
+        String req=JSON.toJSONString(map);
 
 
-        HR hr = HttpclientUtils.doPost(zsurl,a,null);
+        HR hr = HttpclientUtils.doPost(zsurl,req,null);
 
 
-        System.out.println(hr);
-
-
-
-        // 请求沙盒环境
-
-        String shurl="https://buy.itunes.apple.com/verifyReceipt";
-
-        map=new HashMap<>();
-        map.put("receipt-data",params.getReceipt_data());
-        map.put("password","aaa");
-        map.put("exclude-old-transactions",false);
-
-        System.out.println(params.getPhone());
-        System.out.println(params.getOut_trade_no());
-
-
-        System.out.println(JSON.toJSONString(map));
-
-
-        hr = HttpclientUtils.doPost(shurl,a,null);
-
-
-        System.out.println(hr);
+        JSONObject jsonObject = JSONObject.parseObject(hr.getRetStr());
+        if(jsonObject.get("status").equals(21007)){
 
 
 
+            // 请求沙盒环境
 
-        LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
+            String shurl="https://sandbox.itunes.apple.com/verifyReceipt";
+
+            hr = HttpclientUtils.doPost(shurl,req,null);
 
 
-        // 设置验证结果
+            jsonObject = JSONObject.parseObject(hr.getRetStr());
 
-        lbOrders.setTradeStatus("apple_pay_succee");
+            if(jsonObject.get("status").equals(0)){
 
-        return R.ok().setResult(lbOrders);
+                // 支付成功 未做防盗链
+                LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
+
+                if(lbOrders==null){
+                    return R.err().setMessage("失败，未找到当前订单");
+                }
+
+                lbOrders.setStatus(203);
+                // 设置验证结果
+                lbOrders.setTradeStatus("TRADE_SUCCESS");
+                lbOrdersService.updateById(lbOrders);
+
+                return R.ok().setResult(lbOrders);
+
+
+            }
+
+
+            return R.err().setMessage("支付失败,状态为："+jsonObject.get("status"));
+
+        }else {
+            return R.err().setMessage("正式环境调用错误");
+        }
 
     }
 

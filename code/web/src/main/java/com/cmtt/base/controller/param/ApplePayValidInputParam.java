@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class ApplePayValidInputParam {
 
 
-	@ApiModelProperty(value ="小票凭证（base64加密）",example = "0.01")
+	@ApiModelProperty(value ="小票凭证（base64加密）",example = "abcd")
 	@NotNull(message = "小票凭证不能为空")
 	private String receipt_data;
 
@@ -24,9 +24,13 @@ public class ApplePayValidInputParam {
     private String out_trade_no;
 
 
-	@ApiModelProperty(value ="手机号",example = "15285027249")
-	@NotNull(message = "手机号不能为空")
-	private String phone;
+	@ApiModelProperty(value ="苹果商品",example = "avesproduct10001")
+	@NotNull(message = "苹果商品不能为空")
+	private String product_id;
+
+	@ApiModelProperty(value ="交易流水号",example = "a100001")
+	@NotNull(message = "交易流水号不能为空")
+	private String transaction_id;
 
 
 }

@@ -15,6 +15,7 @@ import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.*;
+import com.cmtt.base.utils.RC;
 import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -180,7 +181,7 @@ public class LbPostController {
 
                 lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
                         .eq(LbOrders::getPhone, sysUser.getPhone())
-                        .eq(LbOrders::getStatus, 203)
+                        .eq(LbOrders::getStatus, RC.PAY_YES.code())
                         .eq(LbOrders::getTtype,2)
                         .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
                 );
@@ -194,7 +195,7 @@ public class LbPostController {
 
                     List<LbExchangeOrders> exchangeOrdersList = lbExchangeOrdersService.list(Wrappers.<LbExchangeOrders>lambdaQuery()
                             .eq(LbExchangeOrders::getPhone, sysUser.getPhone())
-                            .eq(LbExchangeOrders::getStatus, 100)
+                            .eq(LbExchangeOrders::getStatus, RC.B_NORMAL.code())
                     );
 
                     for (LbExchangeOrders ech: exchangeOrdersList) {
@@ -211,7 +212,7 @@ public class LbPostController {
                     if(!isPayOne){
                         List<LbOrders> lbOrdersList = lbOrdersService.list(Wrappers.<LbOrders>lambdaQuery()
                                 .eq(LbOrders::getPhone, sysUser.getPhone())
-                                .eq(LbOrders::getStatus, 203)
+                                .eq(LbOrders::getStatus, RC.PAY_YES.code())
                                 .eq(LbOrders::getTtype, 1)
                                 .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
                         );
