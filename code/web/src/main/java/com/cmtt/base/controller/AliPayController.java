@@ -215,7 +215,7 @@ public class AliPayController {
         LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
                 .eq(LbGoods::getTcode,params.getTcode())
                 .eq(LbGoods::getDevType,devType)
-                .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
+                .eq(LbGoods::getStatus, RC.B_NORMAL.code()),false);
 
         if(lbGoods==null){
             return R.err().setMessage("找不到当前商品");

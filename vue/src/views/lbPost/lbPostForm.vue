@@ -65,7 +65,7 @@
                     <a-form-item label="所属分类">
                       <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
                       <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleClass">
-                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id" :value="lbCatalog.title">
+                        <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id" :value="lbCatalog.id">
                           {{ lbCatalog.title }}
                         </a-select-option>
                       </a-select>
@@ -81,7 +81,6 @@
                       <a-select v-decorator="['showType', {rules: [{required: true, message: '请选择分类！'}]}]">
                         <a-select-option :value="1">左右图文</a-select-option>
                         <a-select-option :value="2">上下图文</a-select-option>
-                        <a-select-option :value="3">广告类型</a-select-option>
                         <a-select-option :value="4">无图</a-select-option>
                       </a-select>
                     </a-form-item>
@@ -138,7 +137,7 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
-                    <a-form-item label="预览图">
+                    <a-form-item label="题图">
                       <a-upload
                         name="file"
                         :multiple="false"
@@ -156,7 +155,7 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
-                    <a-form-item label="文章图">
+                    <a-form-item label="长题图">
                       <a-upload
                         name="file"
                         :multiple="false"

@@ -54,7 +54,7 @@ public class LbAuthorController {
     @ApiOperation("获取作者及所属文章")
     public R getAuthorPost(@RequestBody @Valid GetAuthorPostInputParam params){
 
-        LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, params.getId()));
+        LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, params.getId()),false);
 
         if(lbAuthor!=null){
             List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().like(LbPost::getAuthor, lbAuthor.getName()));

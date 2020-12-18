@@ -268,10 +268,6 @@
         status: 'processing',
         text: '上下图文'
     },
-    3: {
-        status: 'processing',
-        text: '广告类型'
-    },
     4: {
         status: 'processing',
         text: '无图'

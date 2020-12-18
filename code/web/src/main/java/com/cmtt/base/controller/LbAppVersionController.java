@@ -52,10 +52,7 @@ public class LbAppVersionController {
     @ApiOperation("app更新")
     public R appUpdate(@RequestBody @Valid AppUpdateInputParam params){
 
-        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId));
-
-
-
+        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
 
         if(lbAppVersion!=null ) {
 

@@ -51,6 +51,11 @@ public class LbAd extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "所属期刊文章位置")
     private String lbPeriodicalIndex;
 
+    @ApiModelProperty(value = "所属分类id")
+    private String lbCataloglId;
+
+    @ApiModelProperty(value = "所属作者id")
+    private String lbAuthorlId;
 
     @ApiModelProperty(value = "连接地址")
     private String linkUrl;
