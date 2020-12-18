@@ -102,12 +102,13 @@
     import EditForm from './lbAdForm'
 
     const columns = [
+        // {
+        //     title: 'id',
+        //     sorter: true,
+        //     width: '80px',
+        //     dataIndex: 'id'
+        // },
         {
-            title: 'id',
-            sorter: true,
-            width: '80px',
-            dataIndex: 'id'
-        }, {
             title: '标题',
             sorter: true,
             dataIndex: 'name'

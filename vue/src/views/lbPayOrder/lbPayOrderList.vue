@@ -77,13 +77,14 @@
     import EditForm from './lbPayOrderForm'
 
     const columns = [
+        // {
+        //     title: 'id',
+        //     sorter: true,
+        //     width: '80px',
+        //     fixed: 'left',
+        //     dataIndex: 'id'
+        // },
         {
-            title: 'id',
-            sorter: true,
-            width: '80px',
-            fixed: 'left',
-            dataIndex: 'id'
-        }, {
             title: '商品标题',
             sorter: true,
             fixed: 'left',

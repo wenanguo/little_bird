@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
@@ -77,6 +78,10 @@ public class SysUserCustController {
 
             Map<String,Object> map=new HashMap<>();
 
+            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+
             map.put("id",sysUser.getId());
             map.put("username",sysUser.getUsername());
             map.put("nickname",sysUser.getNickname());
@@ -93,8 +98,8 @@ public class SysUserCustController {
             map.put("wbId",sysUser.getWbId());
             map.put("last_login",sysUser.getLast_login());
             map.put("status",sysUser.getStatus());
-            map.put("updateTime",sysUser.getUpdateTime());
-            map.put("createTime",sysUser.getCreateTime());
+            map.put("updateTime",dtf2.format(sysUser.getUpdateTime()));
+            map.put("createTime",dtf2.format(sysUser.getCreateTime()));
 
 
             // 判断用户是否已经包年付费
@@ -112,7 +117,7 @@ public class SysUserCustController {
             if(lbOrders!=null){
 
                 map.put("isPayYear",true);
-                map.put("PayYearInvalid",lbOrders.getGmtPayment().plus(1, ChronoUnit.YEARS));
+                map.put("PayYearInvalid",dtf2.format(lbOrders.getGmtPayment().plus(1, ChronoUnit.YEARS)));
 
             }else {
                 map.put("isPayYear",false);

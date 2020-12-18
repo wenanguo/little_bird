@@ -114,13 +114,14 @@
     import EditForm from './lbPostForm'
 
     const columns = [
+        // {
+        //     title: 'id',
+        //     sorter: true,
+        //     fixed: 'left',
+        //     width: '80px',
+        //     dataIndex: 'id'
+        // },
         {
-            title: 'id',
-            sorter: true,
-            fixed: 'left',
-            width: '80px',
-            dataIndex: 'id'
-        }, {
             title: '标题',
             sorter: true,
             fixed: 'left',

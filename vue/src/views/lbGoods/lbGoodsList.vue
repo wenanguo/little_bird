@@ -92,12 +92,13 @@
     import EditForm from './lbGoodsForm'
 
     const columns = [
+        // {
+        //     title: 'id',
+        //     sorter: true,
+        //     width: '80px',
+        //     dataIndex: 'id'
+        // },
         {
-            title: 'id',
-            sorter: true,
-            width: '80px',
-            dataIndex: 'id'
-        }, {
             title: '商品编号',
             sorter: true,
             dataIndex: 'tcode'

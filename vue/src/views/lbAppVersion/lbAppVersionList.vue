@@ -95,12 +95,13 @@
     import EditForm from './lbAppVersionForm'
 
     const columns = [
+        // {
+        //     title: 'id',
+        //     sorter: true,
+        //     width: '80px',
+        //     dataIndex: 'id'
+        // },
         {
-            title: 'id',
-            sorter: true,
-            width: '80px',
-            dataIndex: 'id'
-        }, {
             title: '是否强制更新',
             sorter: true,
             customRender: (value) => isForceMap[value].text,
