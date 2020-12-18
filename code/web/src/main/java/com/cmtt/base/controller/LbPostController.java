@@ -104,23 +104,23 @@ public class LbPostController {
 
 
 
-    /**
-     * 文章详情
-     */
-    @PostMapping("get_fee_content")
-    @ResponseBody
-    @ApiOperation("获取付费内容")
-    public R get_fee_content(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
-
-        // 判断用户是否已经付费，包年，或者单篇购买
-
-
-        // 执行查询
-        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
-        lbPost.setAuthor("");
-
-        return R.ok().setResult(lbPost);
-    }
+//    /**
+//     * 文章详情
+//     */
+//    @PostMapping("get_fee_content")
+//    @ResponseBody
+//    @ApiOperation("获取付费内容")
+//    public R get_fee_content(@RequestBody @Valid GetOneInputParam params) throws IOException, TemplateException {
+//
+//        // 判断用户是否已经付费，包年，或者单篇购买
+//
+//
+//        // 执行查询
+//        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+//        lbPost.setAuthor("");
+//
+//        return R.ok().setResult(lbPost);
+//    }
 
 
     /**

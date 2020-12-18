@@ -33,12 +33,12 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="标题">
-                      <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]" v-model="articleTitle" />
+                      <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]"/>
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="描述">
-                      <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]" v-model="articleDescription" />
+                      <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]"/>
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
@@ -54,7 +54,7 @@
                   <a-col :span="12">
                     <a-form-item label="栏目">
                       <!-- <a-input v-decorator="['postSubjectId', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" /> -->
-                      <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]" v-model="articleColumn">
+                      <a-select v-decorator="['postSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]">
                         <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.id">
                           {{ lbSubject.title }}
                         </a-select-option>
@@ -64,7 +64,7 @@
                   <a-col :span="12">
                     <a-form-item label="所属分类">
                       <!-- <a-input v-decorator="['postCatalogId', {rules: [{required: true,  message: '请输入至少五个字符的规则描述！'}]}]" /> -->
-                      <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]" v-model="articleClass">
+                      <a-select v-decorator="['postCatalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
                         <a-select-option v-for="lbCatalog in this.lbCatalogList" :key="lbCatalog.id" :value="lbCatalog.id">
                           {{ lbCatalog.title }}
                         </a-select-option>
@@ -97,7 +97,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="作者">
-                      <a-select mode="multiple" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+                      <a-select mode="multiple" @change="handleAuthorChange" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
                         <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
                           {{ lbAuthor.name }}
                         </a-select-option>
@@ -112,7 +112,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="发布时间">
-                      <a-date-picker style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]" v-model="articleDate">
+                      <a-date-picker style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]">
                       </a-date-picker>
                     </a-form-item>
                   </a-col>
@@ -187,11 +187,11 @@
               <div class="ql-container ql-snow">
                 <div class="ql-editor">
                   <div class="article-editor">
-                    <div class="articleClass" v-html="this.articleClass"></div>
-                    <div class="articleTitle" v-html="this.articleTitle"></div>
-                    <div class="articleAuthor"><span v-html="this.articleAuthor"></span> | <span v-html="this.articleColumn"></span></div>
-                    <div class="articleDate" v-html="this.articleDate"></div>
-                    <div class="articleDescription" v-html="this.articleDescription"></div>
+                    <div class="articleClass" ></div>
+                    <div class="articleTitle" ></div>
+                    <div class="articleAuthor" v-html="articleAuthor"><span ></span> | <span ></span></div>
+                    <div class="articleDate" ></div>
+                    <div class="articleDescription" ></div>
                   </div>
                   <div v-html="this.content"></div>
                   <div v-html="this.feeContent"></div>
@@ -240,7 +240,6 @@
     'updateTime',
     'createTime'
   ]
-
   export default {
     components: { ACol, AFormItem, quillEditor },
     props: {
@@ -289,7 +288,7 @@
         }
       }
       return {
-        form: this.$form.createForm(this),
+        form: this.$form.createForm(this, { onValuesChange: this.gchange }),
         content: '',
         feeContent: '',
         articleTitle: '',
@@ -346,7 +345,7 @@
         this.model && this.form.setFieldsValue(pick(this.model, fields))
         this.content = this.model.content
         this.feeContent = this.model.feeContent
-
+        console.log(this.model)
         // this.form.setFieldsValue({ lbAuthorIdsList: [2, 3] })
         // 初始化图片上传
         if (this.model) {
@@ -369,6 +368,22 @@
       })
     },
     methods: {
+      gchange (props, values) {
+          console.log(props.title)
+          console.log(props)
+          console.log(values)
+      },
+      handleAuthorChange (info) {
+        var authorstr = ''
+        for (var j = 0; j < info.length; j++) {
+          for (var i = 0; i < this.lbAuthorList.length; i++) {
+              if (this.lbAuthorList[i].id === info[j]) {
+                authorstr = authorstr + ' | ' + this.lbAuthorList[i].name
+              }
+          }
+        }
+        this.articleAuthor = authorstr
+      },
       handleChange (info) {
         const fileListt = [...info.fileList]
 

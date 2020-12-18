@@ -57,7 +57,7 @@
 </head>
 <body>
 <div class="imgBox">
-    <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/img1.png">
+    <img th:src="${lbPost.preimgUrl}">
 </div>
 <div class="articleHead">
     <div class="articleClass">
@@ -67,7 +67,12 @@
         [[${lbPost.title}]]
     </div>
     <div class="authorName">
-        <span>[[${lbPost.author}]]</span> | <span class="post_subject">[[${lbPost.postSubject}]]</span>
+        <span>
+        <span th:each="c, State : ${lbAuthorList}" th:remove="tag">
+            <div th:text="${c.name}" th:remove="tag"></div>
+        </span>
+        </span>
+        <span class="post_subject">[[${lbPost.postSubject}]]</span>
     </div>
     <div class="date"><span th:text="${#temporals.format(lbPost.publishedAt,'MM-dd')}"></span></div>
     <div class="summary">
