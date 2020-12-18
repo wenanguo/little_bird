@@ -79,12 +79,12 @@
 
 			$('.return').on('click',function(event) { //关闭页面
                 window.location.href="aves://finish";
+                alert(111)
                 //window.location.href="aves://getUserToken";
             });
 
             $('.exchangecss').on('click',function(event) { //兑换
                 window.location.href="aves://exchange";
-
             });
             //返回页面定位阅读位置
             var windowTop=$(window).scrollTop();
@@ -126,8 +126,8 @@
                 <div>
                     <h1>付费后，可阅读余下内容</h1>
                     <div th:if="${PayOneCount} >0">
-                    <h2 >你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
-                    <span  class="exchangecss" >兑换本文</span>
+                        <h2 >你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
+                        <span class="exchangecss">兑换本文</span>
                     </div>
                 </div>
             </div>
@@ -162,10 +162,10 @@
 </div>
 <div class="footerOperation">
     <div class="footerOperationContent">
-        <a class="return"></a>
-        <a class="collect"></a>
-        <a class="link"></a>
-        <a class="top"></a>
+        <i class="return"></i>
+        <i class="collect"></i>
+        <i class="link"></i>
+        <i class="top"></i>
     </div>
 </div>
 </body>
