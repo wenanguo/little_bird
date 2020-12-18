@@ -19,7 +19,7 @@
         <a-form-item label="期刊编号">
           <a-input v-decorator="['tcode', {rules: [{required: true, min: 1, message: '请输入期刊编号！'}]}]" />
         </a-form-item>
-        <a-form-item label="期刊封面上传">
+        <a-form-item label="期刊封面上传" help="图片大小：1125*1500">
           <a-upload
             name="file"
             :multiple="false"

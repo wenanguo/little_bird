@@ -137,7 +137,7 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
-                    <a-form-item label="题图">
+                    <a-form-item label="题图" help="左右图文：450*780，上下图文：1005*540">
                       <a-upload
                         name="file"
                         :multiple="false"
@@ -155,7 +155,7 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
-                    <a-form-item label="长题图">
+                    <a-form-item label="长题图" help="图片大小：1125*1350">
                       <a-upload
                         name="file"
                         :multiple="false"

@@ -19,7 +19,7 @@
         <a-form-item label="介绍">
           <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入作者介绍！'}]}]" />
         </a-form-item>
-        <a-form-item label="头像上传">
+        <a-form-item label="头像上传" help="图片大小：480*630">
           <a-upload
             name="file"
             :multiple="false"
