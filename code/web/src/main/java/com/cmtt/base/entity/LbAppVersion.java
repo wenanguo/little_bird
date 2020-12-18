@@ -46,7 +46,7 @@ public class LbAppVersion extends BaseEntity implements Serializable {
     private String appType;
 
     @ApiModelProperty(value = "内部版本号")
-    private String innerVersion;
+    private Integer innerVersion;
 
     @ApiModelProperty(value = "外部版本号")
     private String externalVersion;

@@ -17,7 +17,7 @@ public class AppUpdateInputParam {
 
 	@ApiModelProperty(value ="当前版本",example = "10")
 	@NotNull(message = "当前版本")
-	private String curVersion;
+	private Integer curVersion;
 
 
 }

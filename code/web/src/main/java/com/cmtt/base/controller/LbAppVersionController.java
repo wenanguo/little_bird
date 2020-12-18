@@ -52,7 +52,9 @@ public class LbAppVersionController {
     @ApiOperation("app更新")
     public R appUpdate(@RequestBody @Valid AppUpdateInputParam params){
 
-        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
+
+
+        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().gt(LbAppVersion::getInnerVersion,params.getCurVersion()).orderByDesc(LbAppVersion::getId),false);
 
         if(lbAppVersion!=null ) {
 
@@ -60,7 +62,7 @@ public class LbAppVersionController {
 
             return R.ok().setResult(lbAppVersion);
         }else{
-            return R.err();
+            return R.ok().setMessage("当前已经为最新版");
         }
 
 
