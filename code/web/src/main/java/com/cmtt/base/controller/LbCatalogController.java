@@ -161,7 +161,13 @@ public class LbCatalogController {
 
         try {
 
+
+            // 修改分类表
             lbCatalogService.updateById(lbCatalog);
+
+            // 修改文章表冗余字段
+            lbPostService.update(Wrappers.<LbPost>lambdaUpdate().eq(LbPost::getPostCatalogId, lbCatalog.getId()).set(LbPost::getPostCatalog, lbCatalog.getTitle()));
+
 
             return R.ok().setMessage("修改成功");
 
@@ -182,9 +188,17 @@ public class LbCatalogController {
 
         try {
 
-            lbCatalogService.removeById(lbCatalog.getId());
+            // 修改文章表冗余字段
+            List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostCatalogId, lbCatalog.getId()));
 
-            return R.ok().setMessage("删除成功");
+            if(lbPostList.size()==0){
+
+                lbCatalogService.removeById(lbCatalog.getId());
+                return R.ok().setMessage("删除成功");
+            }else{
+                return R.err().setMessage("当前分类下还有文章，不能删除");
+            }
+
         } catch (Exception e) {
             logger.warn(e.getMessage());
 

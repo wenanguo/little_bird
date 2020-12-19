@@ -274,13 +274,14 @@
             },
             handleDel (record) {
                 if (record.id > 0) {
+                  if (!record['lbPostList']) delete record['lbPostList']
                     // 修改 e.g.
                     delLbCatalog(record).then(res => {
                         this.confirmLoading = false
                         // 刷新表格
                         this.$refs.table.refresh()
-
-                        this.$message.info('删除成功')
+                        console.log(res)
+                        this.$message.info(res.message)
                     })
                 }
             },

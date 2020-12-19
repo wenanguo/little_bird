@@ -12,6 +12,7 @@ import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.service.ILbAdService;
 import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPeriodicalService;
 import com.cmtt.base.service.ILbPostService;
@@ -50,6 +51,9 @@ public class LbPeriodicalController {
 
     @Autowired
     private ILbPostService lbPostService;
+
+    @Autowired
+    private ILbAdService lbAdService;
 
     /**
      * 当期封面
@@ -314,6 +318,12 @@ public class LbPeriodicalController {
 
             lbPeriodicalService.updateById(lbPeriodical);
 
+            // 修改文章表冗余字段
+            lbPostService.update(Wrappers.<LbPost>lambdaUpdate().eq(LbPost::getPeriodicalId, lbPeriodical.getId()).set(LbPost::getPeriodicalTitle, lbPeriodical.getTitle()));
+
+            // 修改广告表冗余字段
+            lbAdService.update(Wrappers.<LbAd>lambdaUpdate().eq(LbAd::getLbPeriodicalId, lbPeriodical.getId()).set(LbAd::getLbPeriodicalTitle, lbPeriodical.getTitle()));
+
             return R.ok().setMessage("修改成功");
 
         } catch (Exception e) {
@@ -333,9 +343,18 @@ public class LbPeriodicalController {
 
         try {
 
-            lbPeriodicalService.removeById(lbPeriodical.getId());
+            // 修改文章表冗余字段
+            List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()));
 
-            return R.ok().setMessage("删除成功");
+            if(lbPostList.size()==0){
+
+                lbPeriodicalService.removeById(lbPeriodical.getId());
+                return R.ok().setMessage("删除成功");
+            }else{
+                return R.err().setMessage("当前期刊下还有文章，不能删除");
+            }
+
+
         } catch (Exception e) {
             logger.warn(e.getMessage());
 

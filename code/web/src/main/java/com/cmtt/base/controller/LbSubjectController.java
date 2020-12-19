@@ -11,6 +11,7 @@ import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.service.ILbAdService;
 import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.service.ILbSubjectService;
@@ -49,6 +50,9 @@ public class LbSubjectController {
 
     @Autowired
     private ILbCatalogService lbCatalogService;
+
+    @Autowired
+    private ILbAdService lbAdService;
 
     /**
      * 主页
@@ -178,6 +182,14 @@ public class LbSubjectController {
 
             lbSubjectService.updateById(lbSubject);
 
+            // 修改文章表冗余字段
+            lbPostService.update(Wrappers.<LbPost>lambdaUpdate().eq(LbPost::getPostSubjectId, lbSubject.getId()).set(LbPost::getPostSubject, lbSubject.getTitle()));
+
+            // 修改广告表冗余字段
+            lbAdService.update(Wrappers.<LbAd>lambdaUpdate().eq(LbAd::getLbSubjectId, lbSubject.getId()).set(LbAd::getLbSubjectTitle, lbSubject.getTitle()));
+
+
+
             return R.ok().setMessage("修改成功");
 
         } catch (Exception e) {
@@ -197,9 +209,19 @@ public class LbSubjectController {
 
         try {
 
-            lbSubjectService.removeById(lbSubject.getId());
+            // 修改文章表冗余字段
+            List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostSubjectId, lbSubject.getId()));
 
-            return R.ok().setMessage("删除成功");
+            if(lbPostList.size()==0){
+                lbSubjectService.removeById(lbSubject.getId());
+
+                return R.ok().setMessage("删除成功");
+            }else{
+                return R.err().setMessage("当前栏目下还有文章，不能删除");
+            }
+
+
+
         } catch (Exception e) {
             logger.warn(e.getMessage());
 

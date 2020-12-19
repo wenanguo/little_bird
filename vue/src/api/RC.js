@@ -36,4 +36,29 @@ const recommendMap = {
     }
   }
 
-export { statusMap, recommendMap }
+const adLocationMap = {
+    1: {
+        status: 'default',
+        text: '启动广告'
+    },
+    2: {
+        status: 'default',
+        text: '首页广告'
+    }
+  }
+const adTypeMap = {
+    1: {
+        status: 'default',
+        text: '外部链接'
+    },
+    2: {
+        status: 'default',
+        text: '作者推荐'
+    },
+    3: {
+        status: 'default',
+        text: '栏目推荐'
+    }
+  }
+
+export { statusMap, recommendMap, adLocationMap, adTypeMap }

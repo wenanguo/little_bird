@@ -42,20 +42,32 @@ public class LbAd extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "图片")
     private String imgUrl;
 
-    @ApiModelProperty(value = "广告分类[1启动广告 2首页广告]")
-    private String adType;
+    @ApiModelProperty(value = "广告分类[1外部链接 2作者广告 3栏目广告]")
+    private Integer adType;
+
+    @ApiModelProperty(value = "广告位置[1启动广告 2首页广告]")
+    private Integer adLocation;
 
     @ApiModelProperty(value = "所属期刊")
-    private String lbPeriodicalId;
+    private Integer lbPeriodicalId;
+
+    @ApiModelProperty(value = "所属期刊名称")
+    private String lbPeriodicalTitle;
 
     @ApiModelProperty(value = "所属期刊文章位置")
-    private String lbPeriodicalIndex;
+    private Integer lbPeriodicalIndex;
 
-    @ApiModelProperty(value = "所属分类id")
-    private String lbCatalogId;
+    @ApiModelProperty(value = "所属栏目id")
+    private Integer lbSubjectId;
+
+    @ApiModelProperty(value = "所属栏目名称")
+    private String lbSubjectTitle;
 
     @ApiModelProperty(value = "所属作者id")
-    private String lbAuthorId;
+    private Integer lbAuthorId;
+
+    @ApiModelProperty(value = "所属作者名称")
+    private String lbAuthorName;
 
     @ApiModelProperty(value = "连接地址")
     private String linkUrl;

@@ -61,8 +61,11 @@
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
 
         </span>
+        <span slot="linkslot" slot-scope="text">
+          <a :href="text" target="_blank">访问</a>
+        </span>
         <span slot="imgslot" slot-scope="text">
-          <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
+          <img alt="example" style="width: 50px;height:50px" @click="handlePreview(text)" :src="text" />
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
@@ -85,6 +88,8 @@
         :visible="visible"
         :loading.sync="confirmLoading"
         :model="mdl"
+        :lbAuthorList="lbAuthorList"
+        :lbSubjectList="lbSubjectList"
         :lbPeriodicalList="lbPeriodicalList"
         @cancel="handleCancel"
         @ok="handleOk"
@@ -96,9 +101,11 @@
 <script>
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
-    import { statusMap } from '@/api/RC'
+    import { statusMap, adLocationMap, adTypeMap } from '@/api/RC'
     import { getLbAdList, saveLbAd, delLbAd, batchDelLbAd } from '@/api/lbAd'
     import { getLbPeriodicalListAll } from '@/api/lbPeriodical'
+    import { getLbSubjectListAll } from '@/api/lbSubject'
+    import { getLbAuthorListAll } from '@/api/lbAuthor'
     import EditForm from './lbAdForm'
 
     const columns = [
@@ -111,10 +118,12 @@
         {
             title: '标题',
             sorter: true,
+            width: '150px',
             dataIndex: 'name'
         }, {
             title: '介绍',
             sorter: true,
+            width: '150px',
             dataIndex: 'introduction'
         }, {
             title: '图片',
@@ -124,7 +133,7 @@
         }, {
             title: '所属期刊',
             sorter: true,
-            dataIndex: 'lbPeriodicalId'
+            dataIndex: 'lbPeriodicalTitle'
         }, {
             title: '期刊位置',
             sorter: true,
@@ -132,10 +141,17 @@
         }, {
             title: '广告分类',
             sorter: true,
+            customRender: (value) => adTypeMap[value].text,
             dataIndex: 'adType'
+        }, {
+            title: '广告位置',
+            sorter: true,
+            customRender: (value) => adLocationMap[value].text,
+            dataIndex: 'adLocation'
         }, {
             title: '连接地址',
             sorter: true,
+            scopedSlots: { customRender: 'linkslot' },
             dataIndex: 'linkUrl'
         }, {
             title: '状态',
@@ -147,13 +163,13 @@
             title: '修改时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'updateTime'
         }, {
             title: '创建时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'createTime'
         },
         {
@@ -180,10 +196,9 @@
                 confirmLoading: false,
                 previewVisible: false,
                 previewImage: '',
-                lbPeriodicalList: [{
-                  id: 1,
-                  title: '期刊1'
-                }],
+                lbAuthorList: [],
+                lbSubjectList: [],
+                lbPeriodicalList: [],
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
@@ -229,6 +244,14 @@
             getLbPeriodicalListAll()
                         .then(res => {
                             this.lbPeriodicalList = res.result
+                        })
+            getLbSubjectListAll()
+                        .then(res => {
+                            this.lbSubjectList = res.result
+                        })
+            getLbAuthorListAll()
+                        .then(res => {
+                            this.lbAuthorList = res.result
                         })
         },
         methods: {

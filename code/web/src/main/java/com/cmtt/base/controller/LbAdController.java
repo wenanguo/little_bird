@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.PageInputParam;
-import com.cmtt.base.entity.LbAd;
-import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbAdService;
+import com.cmtt.base.service.ILbAuthorService;
+import com.cmtt.base.service.ILbPeriodicalService;
+import com.cmtt.base.service.ILbSubjectService;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +41,15 @@ public class LbAdController {
 
     @Autowired
     private ILbAdService lbAdService;
+
+    @Autowired
+    private ILbSubjectService lbSubjectService;
+
+    @Autowired
+    private ILbPeriodicalService lbPeriodicalService;
+
+    @Autowired
+    private ILbAuthorService lbAuthorService;
 
     private final Logger logger = LoggerFactory.getLogger(LbAdController.class);
 
@@ -130,6 +141,25 @@ public class LbAdController {
     public R add(@RequestBody @Validated({GroupAdd.class})LbAd lbAd) {
 
         try {
+
+
+
+            // 设置栏目
+            LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()),false);
+            lbAd.setLbSubjectId(lbSubject.getId());
+            lbAd.setLbSubjectTitle(lbSubject.getTitle());
+
+            // 设置期刊
+            LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()),false);
+            lbAd.setLbPeriodicalId(lbPeriodical.getId());
+            lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+
+            // 设置作者
+            LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
+            lbAd.setLbAuthorId(lbAuthor.getId());
+            lbAd.setLbAuthorName(lbAuthor.getName());
+
+
             lbAdService.save(lbAd);
 
             return R.ok().setMessage("新增成功");
@@ -153,6 +183,22 @@ public class LbAdController {
 
 
         try {
+
+
+            // 设置栏目
+            LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()),false);
+            lbAd.setLbSubjectId(lbSubject.getId());
+            lbAd.setLbSubjectTitle(lbSubject.getTitle());
+
+            // 设置期刊
+            LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()),false);
+            lbAd.setLbPeriodicalId(lbPeriodical.getId());
+            lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+
+            // 设置作者
+            LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
+            lbAd.setLbAuthorId(lbAuthor.getId());
+            lbAd.setLbAuthorName(lbAuthor.getName());
 
             lbAdService.updateById(lbAd);
 
