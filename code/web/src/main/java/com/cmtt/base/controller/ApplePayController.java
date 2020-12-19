@@ -96,28 +96,28 @@ public class ApplePayController {
             // TODO 验签成功后
             //按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
 
-            String notify_type=params.get("notify_type");
-            if((!StringUtils.isEmpty(notify_type))&&notify_type.equals("trade_status_sync")){
-                // 订单同步,根据订单号查询订单
-                String out_trade_no=params.get("out_trade_no");
-
-                // 创建apple pay 订单
-
-
-
-                // 查询订单 ，修改订单状态
-
-                LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, out_trade_no));
-
-                if(params.get("trade_status").equals("TRADE_SUCCESS")){
-                    // 支付成功 修改状态
-                    lbOrders.setStatus(RC.PAY_YES.code());
-                    lbOrders.setTradeStatus(params.get("trade_status"));
-                    lbOrders.setTradeNo(params.get("trade_no"));
-                    lbOrdersService.updateById(lbOrders);
-                }
-
-            }
+//            String notify_type=params.get("notify_type");
+//            if((!StringUtils.isEmpty(notify_type))&&notify_type.equals("trade_status_sync")){
+//                // 订单同步,根据订单号查询订单
+//                String out_trade_no=params.get("out_trade_no");
+//
+//                // 创建apple pay 订单
+//
+//
+//
+//                // 查询订单 ，修改订单状态
+//
+//                LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, out_trade_no));
+//
+//                if(params.get("trade_status").equals("TRADE_SUCCESS")){
+//                    // 支付成功 修改状态
+//                    lbOrders.setStatus(RC.PAY_YES.code());
+//                    lbOrders.setTradeStatus(params.get("trade_status"));
+//                    lbOrders.setTradeNo(params.get("trade_no"));
+//                    lbOrdersService.updateById(lbOrders);
+//                }
+//
+//            }
 
         } else {
             // TODO 验签失败则记录异常日志，并在response中返回failure.
