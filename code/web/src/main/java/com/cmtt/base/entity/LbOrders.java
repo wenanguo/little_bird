@@ -56,6 +56,12 @@ public class LbOrders extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "交易状态")
     private String tradeStatus;
 
+    @ApiModelProperty(value = "请求参数")
+    private String serverReq;
+
+    @ApiModelProperty(value = "返回参数")
+    private String serverResp;
+
     @ApiModelProperty(value = "商品总金额")
     private BigDecimal totalAmount;
 
