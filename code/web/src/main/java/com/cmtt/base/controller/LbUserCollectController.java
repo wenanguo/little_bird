@@ -60,6 +60,7 @@ public class LbUserCollectController {
 
             SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
             lbUserCollect.setUserId(sysUser.getId());
+            lbUserCollect.setPostId(params.getPostId());
 
             lbUserCollectService.save(lbUserCollect);
 

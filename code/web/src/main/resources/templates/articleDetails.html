@@ -28,6 +28,7 @@
         }
         $(document).ready(function () {
             $('.articleBox img').parent('p').css({"padding":"0"});
+
             var u = navigator.userAgent;
             if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
                 var top = 0,
@@ -58,7 +59,20 @@
                 return false;
             });
             $('.collect').click(function () {
-                $(this).toggleClass('collect-on')
+                //$(this).toggleClass('collect-on')
+                
+                if($('#iscollect').val()==='false'){
+                    //点击收藏
+                    window.location.href="aves://addcollection";
+                    $('#iscollect').val(true)
+                    $(this).addClass('collect-on'); // 追加样式
+                }else{
+                     //点击取消收藏
+                     window.location.href="aves://delcollection";
+                     $('#iscollect').val(false)
+                     $(this).removeClass('collect-on'); //移除
+                }
+                
             });
 			$('.pay_499').on('click',function(event) { //支付跳转499
                 window.location.href="aves://pay?tcode=avesproduct20001";
@@ -174,7 +188,7 @@
 <div class="footerOperation">
     <div class="footerOperationContent">
         <i class="return"></i>
-        <i class="collect"></i>
+        <i class="collect" th:classappend="${isCollect}? 'collect-on'"><input id="iscollect" name="iscollect" th:value="${isCollect}" type="hidden" /></i>
         <i class="link"></i>
         <i class="top"></i>
     </div>

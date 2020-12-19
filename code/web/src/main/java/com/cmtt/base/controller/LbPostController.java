@@ -77,6 +77,9 @@ public class LbPostController {
     @Autowired
     public ILbExchangeOrdersService lbExchangeOrdersService;
 
+    @Autowired
+    public ILbUserCollectService lbUserCollectService;
+
     /**
      * 主页
      */
@@ -161,10 +164,11 @@ public class LbPostController {
         LbOrders lbOrders=null;
 
         // 判断用户是否已经包年付费
-        boolean isPayYear=false;
-        boolean isPayOne =false;
-        boolean isDisplay = false;
-        Integer PayOneCount=0;
+        boolean isPayYear=false;  // 是否包年
+        boolean isPayOne =false;  // 是否单点
+        boolean isDisplay = false; // 是否展现内容
+        boolean isCollect = false; // 是否收藏
+        Integer PayOneCount=0;  // 剩余兑换数量
 
 
         if(principal==null){
@@ -176,14 +180,22 @@ public class LbPostController {
             SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
 
             if(sysUser == null){
+                // 游客，未登录
                 isPayYear=false;
+
+
             }else{
 
+                // 判断是否收藏
+                LbUserCollect lbUserCollect = lbUserCollectService.getOne(Wrappers.<LbUserCollect>lambdaQuery().eq(LbUserCollect::getUserId, sysUser.getId()).eq(LbUserCollect::getPostId, params.getId()));
+                if(lbUserCollect!=null)isCollect=true;
+
+                // 查找包年付费订单
                 lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
                         .eq(LbOrders::getPhone, sysUser.getPhone())
                         .eq(LbOrders::getStatus, RC.PAY_YES.code())
                         .eq(LbOrders::getTtype,2)
-                        .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
+                        .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS"),false
                 );
                 // 未判断有效时间
 
@@ -248,12 +260,12 @@ public class LbPostController {
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
 
 
-
         Context context=new Context();
         context.setVariable("lbPost",lbPost);
         context.setVariable("isPayYear",isPayYear);
         context.setVariable("isPayOne",isPayOne);
         context.setVariable("isDisplay",isDisplay);
+        context.setVariable("isCollect",isCollect);
 
         context.setVariable("PayOneCount",PayOneCount);
         context.setVariable("lbAuthorList",lbAuthorList);
@@ -286,6 +298,7 @@ public class LbPostController {
         boolean isPayYear=false;
         boolean isPayOne =false;
         boolean isDisplay = false;
+        boolean isCollect = true;
         Integer PayOneCount=3;
 
         // 获取作者列表
@@ -306,8 +319,10 @@ public class LbPostController {
         mv.addObject("isPayYear",isPayYear);
         mv.addObject("isPayOne",isPayOne);
         mv.addObject("isDisplay",isDisplay);
+        mv.addObject("isCollect",isCollect);
         mv.addObject("lbPost", lbPost);
         mv.addObject("PayOneCount",PayOneCount);
+
 
         mv.addObject("lbAuthorList",lbAuthorList);
         mv.setViewName("articleDetails");
