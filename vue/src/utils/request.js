@@ -60,7 +60,7 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
-  console.log(JSON.stringify(response.data))
+  // console.log(JSON.stringify(response.data))
   return response.data
 }, errorHandler)
 

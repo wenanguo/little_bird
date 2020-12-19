@@ -51,6 +51,12 @@ public class LbPostInputParam {
 	@ApiModelProperty(value = "分享内容")
 	private String shareContent;
 
+	@ApiModelProperty(value = "诗歌类引用标题")
+	private String quoteTitle;
+
+	@ApiModelProperty(value = "诗歌类引用简介")
+	private String quoteDesc;
+
 	@ApiModelProperty(value = "描述")
 	private String description;
 

@@ -3,6 +3,7 @@
     :title="title"
     :width="900"
     :visible="visible"
+    :maskClosable="false"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
     @cancel="() => { $emit('cancel') }"
@@ -83,6 +84,16 @@
                         <a-select-option :value="2">上下图文</a-select-option>
                         <a-select-option :value="4">无图</a-select-option>
                       </a-select>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="引用标题">
+                      <a-input v-decorator="['quoteTitle', {rules: [{required: true, min: 1, message: '请输入诗歌类引用标题！'}]}]"/>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12" >
+                    <a-form-item label="引用简介">
+                      <a-textarea :visible="false" v-decorator="['quoteDesc', {rules: [{required: true, min: 1, message: '请输入诗歌类引用标题！'}]}]"/>
                     </a-form-item>
                   </a-col>
                   <!-- <a-col :span="12">
@@ -217,6 +228,8 @@
     'title',
     'shareTitle',
     'shareContent',
+    'quoteTitle',
+    'quoteDesc',
     'description',
     'postSubjectId',
     'postSubject',

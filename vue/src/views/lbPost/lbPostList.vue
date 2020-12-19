@@ -51,7 +51,7 @@
         :columns="columns"
         :data="loadData"
         :alert="true"
-        :scroll="{ x: 3200}"
+        :scroll="{ x: 1900}"
         :rowSelection="rowSelection"
         showPagination="auto"
       >
@@ -68,7 +68,7 @@
           {{ text | authorFilter }}
         </span>
         <span slot="imgslot" slot-scope="text">
-          <img alt="example" style="width: 50px" @click="handlePreview(text)" :src="text" />
+          <img alt="example" style="width: 50px;height:50px" @click="handlePreview(text)" :src="text" />
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
@@ -180,28 +180,12 @@
         }, {
             title: '发布时间',
             sorter: true,
-            width: '100px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
+            width: '150px',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
             dataIndex: 'publishedAt'
         },
-        // {
-        //     title: '点赞数量',
-        //     sorter: true,
-        //     width: '100px',
-        //     dataIndex: 'praiseCount'
-        // }, {
-        //     title: '收藏数量',
-        //     sorter: true,
-        //     width: '100px',
-        //     dataIndex: 'recordCount'
-        // }, {
-        //     title: '阅读数量',
-        //     sorter: true,
-        //     width: '100px',
-        //     dataIndex: 'readCount'
-        // },
         {
-            title: '是否推荐',
+            title: '推荐',
             sorter: true,
             customRender: (value) => recommendMap[value].text,
             width: '100px',
@@ -216,13 +200,13 @@
             title: '修改时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'updateTime'
         }, {
             title: '创建时间',
             sorter: true,
             width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'createTime'
         },
         {
@@ -450,3 +434,5 @@
         }
     }
 </script>
+<style>
+</style>
