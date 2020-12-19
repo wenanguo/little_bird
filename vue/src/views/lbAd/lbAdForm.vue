@@ -33,19 +33,19 @@
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
         <a-form-item label="作者">
-                      <a-select @change="handleAuthorChange" v-decorator="['lbAuthorId', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
-                        <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
-                          {{ lbAuthor.name }}
-                        </a-select-option>
-                      </a-select>
+          <a-select @change="handleAuthorChange" v-decorator="['lbAuthorId', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+            <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
+              {{ lbAuthor.name }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="栏目">
-                      <a-select v-decorator="['lbSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]">
-                        <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.id">
-                          {{ lbSubject.title }}
-                        </a-select-option>
-                      </a-select>
-                    </a-form-item>
+          <a-select v-decorator="['lbSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]">
+            <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.id">
+              {{ lbSubject.title }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="所属期刊">
           <a-select v-decorator="['lbPeriodicalId', {rules: [{required: false}]}]">
             <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
@@ -57,7 +57,7 @@
           <a-input-number v-decorator="['lbPeriodicalIndex', {rules: [{required: false}]}]" />
         </a-form-item>
         <a-form-item label="广告位置">
-          <a-radio-group v-decorator="['adLocationMap', { initialValue: 2 }]">
+          <a-radio-group v-decorator="['adLocation', { initialValue: 2 }]">
             <a-radio :value="1">启动广告</a-radio>
             <a-radio :value="2">首页广告</a-radio>
           </a-radio-group>
