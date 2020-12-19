@@ -42,6 +42,9 @@ public class LbPeriodical extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "期刊编号")
     private String tcode;
 
+    @ApiModelProperty(value = "期刊描述")
+    private String tinfo;
+
     @ApiModelProperty(value = "期刊封面URL")
     private String imgUrl;
 

@@ -9,19 +9,19 @@
     <meta name="format-detection" content="telephone=no">
     <title>小鸟文学APP下载</title>
     <link rel="stylesheet" type="text/css" href="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/css/style.css">
-    <link rel="stylesheet" type="text/css" href="swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" type="text/css" href="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/swiper/swiper-bundle.min.css">
     <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
-    <script src="swiper/swiper-bundle.min.js"></script>
+    <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/swiper/swiper-bundle.min.js"></script>
     <script>
         $(document).ready(function () {
             var u = navigator.userAgent;
             if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
                 $('.downloadBtn').click(function () {
-                    window.location.href="http://www.baidu.com" //Android下载地址
+                    window.location.href="[[${android}]]" //Android下载地址
                 })
             } else {//ios隐藏底部操作栏
                 $('.downloadBtn').click(function () {
-                    window.location.href="http://www.qq.com" //iOS下载地址
+                    window.location.href="https://apps.apple.com/cn/app/%e5%b0%8f%e9%b8%9f%e6%96%87%e5%ad%a6/id1541992205?mt=8" //iOS下载地址
                 })
             }
             var ua = navigator.userAgent.toLowerCase();
@@ -117,12 +117,12 @@
 <body>
 <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="img/appDownload1.jpg"></div>
-        <div class="swiper-slide"><img src="img/appDownload2.jpg"></div>
-        <div class="swiper-slide"><img src="img/appDownload3.jpg"></div>
-        <div class="swiper-slide"><img src="img/appDownload4.jpg"></div>
-        <div class="swiper-slide"><img src="img/appDownload5.jpg"></div>
-        <div class="swiper-slide"><img src="img/appDownload6.jpg"></div>
+        <div class="swiper-slide"><img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/appDownload1.jpg"></div>
+        <div class="swiper-slide"><img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/appDownload2.jpg"></div>
+        <div class="swiper-slide"><img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/appDownload3.jpg"></div>
+        <div class="swiper-slide"><img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/appDownload4.jpg"></div>
+        <div class="swiper-slide"><img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/appDownload5.jpg"></div>
+        <div class="swiper-slide"><img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/appDownload6.jpg"></div>
     </div>
     <!-- 如果需要分页器 -->
     <div class="line"></div>
@@ -136,7 +136,7 @@
 </div>
 <div class="weixinFooter">
     <div class="content">
-        请点击微信右上角<img src="img/weixin_more.png">并选择在浏览器中打开
+        请点击微信右上角<img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/weixin_more.png">并选择在浏览器中打开
     </div>
 </div>
 <script>

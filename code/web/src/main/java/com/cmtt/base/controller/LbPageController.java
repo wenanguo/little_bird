@@ -1,9 +1,13 @@
 package com.cmtt.base.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cmtt.base.entity.LbAppVersion;
+import com.cmtt.base.service.ILbAppVersionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/page/")
 @Api(tags = "静态页面")
 public class LbPageController {
+
+    @Autowired
+    private ILbAppVersionService lbAppVersionService;
 
     private final Logger logger = LoggerFactory.getLogger(LbPageController.class);
 
@@ -87,6 +94,9 @@ public class LbPageController {
     public ModelAndView app_download()  {
         ModelAndView mv = new ModelAndView();
 
+        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
+
+        mv.addObject("android",lbAppVersion.getLinkUrl());
         mv.setViewName("appDownload");
         return mv;
 

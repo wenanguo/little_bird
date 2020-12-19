@@ -56,6 +56,7 @@
             <a-button> <a-icon type="upload" />上传PDF</a-button>
           </a-upload>
           <a-input v-decorator="['tpdf', {initialValue: ''}]" type="hidden" />
+          <a-input v-decorator="['tinfo', {initialValue: ''}]" type="hidden" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
@@ -80,6 +81,7 @@
         'title',
         'tcode',
         'imgUrl',
+        'tinfo',
         'recommend',
         'tyear',
         'torder',
@@ -121,10 +123,11 @@
             }
             return {
                 form: this.$form.createForm(this),
+                content: '',
                 fileList: [],
                 pdffileList: [],
                 editorOption: {
-                placeholder: '输入文章收费内容',
+                placeholder: '输入期刊描述',
                 modules: {
                   toolbar: {
                     container: [
@@ -149,7 +152,11 @@
             }
         },
         created () {
-            console.log('custom modal created')
+            // 当 富文本内容 发生改变时，为表单设置值
+          this.$watch('content', () => {
+            console.log(this.content)
+            this.content && this.form.setFieldsValue({ tinfo: this.content })
+          })
 
             // 防止表单未注册
             fields.forEach(v => this.form.getFieldDecorator(v))
@@ -157,7 +164,7 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
-
+                this.content = this.model.tinfo
                 // 初始化图片上传
                 if (this.model) {
                   this.fileList = [{

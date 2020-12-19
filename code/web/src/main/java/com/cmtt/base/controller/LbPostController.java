@@ -81,6 +81,9 @@ public class LbPostController {
     @Autowired
     public ILbUserCollectService lbUserCollectService;
 
+    @Autowired
+    private ILbAppVersionService lbAppVersionService;
+
     /**
      * 主页
      */
@@ -137,16 +140,23 @@ public class LbPostController {
         // 执行查询
         LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
 
-        // 分享内容，隐藏付费内容
-        // lbPost.setFeeContent("");
+        // 分享，隐藏付费内容
+        lbPost.setFeeContent("");
 
         // 获取作者列表
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
 
+        LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbPost.getPeriodicalId()),false);
+        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
+
+
 
         ModelAndView mv = new ModelAndView();
+        mv.addObject("android",lbAppVersion.getLinkUrl());
         mv.addObject("lbPost", lbPost);
+        mv.addObject("lbPeriodical", lbPeriodical);
         mv.addObject("lbAuthorList",lbAuthorList);
+        mv.addObject("SocialDate", DateTimeUtils.getSocialDateDisplay(lbPost.getPublishedAt()));
         mv.setViewName("shareAreicle");
         return mv;
 

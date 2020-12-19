@@ -51,7 +51,12 @@
     <script>
         $(document).ready(function () {
             $('.authorBoxList').children('.authorBox:even').addClass('left');
-            $('.authorBoxList').children('.authorBox:odd').addClass('right')
+            $('.authorBoxList').children('.authorBox:odd').addClass('right');
+
+            $('.open_down').on('click',function(event) { //打开或者跳转
+                window.location.href="aves://index?id=[[${lbPost.id}]]";
+                window.location.href="[[${android}]]" //Android下载地址
+            });
         })
     </script>
 </head>
@@ -74,7 +79,7 @@
         </span>
         <span class="post_subject">[[${lbPost.postSubject}]]</span>
     </div>
-    <div class="date"><span th:text="${#temporals.format(lbPost.publishedAt,'MM-dd')}"></span></div>
+    <div class="date"><span th:text="${SocialDate}"></span></div>
     <div class="summary">
         [[${lbPost.description}]]
     </div>
@@ -84,7 +89,7 @@
     <div class="subscribeBox">
         <div class="subscribeBorderTop"></div>
         <div class="subscribeTitle">
-            <div>
+            <div class="open_down">
                 <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/bird-logo.png">
                 <a href="javascript:;">打开或下载小鸟APP</a>
                 <h2>它是一本包含小说、非虚构、诗歌、档案等板块的新型文学杂志</h2>
@@ -94,11 +99,11 @@
 </div>
 <div class="periodicalBox">
     <div class="periodicalCover">
-        <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/img1.png">
+        <img th:src="${lbPeriodical.imgUrl}">
     </div>
     <div class="periodicalContent">
         <h1>本期作品</h1>
-        <h2>非虚构班宇在光明堂冬泳|小说苏怡杰云霄间一只鞋|旅行文学关军在宋庄|昨日世界刘质真十年里没有变化的人|驻村调查王五四爱与哀愁与夏日Beatles|纪念碑阿花慎余堂|小说连载彭伦拖拖拉拉摇摇摆摆|故事群岛</h2>
+        <h2 th:utext="${lbPeriodical.tinfo}"></h2>
     </div>
 </div>
 </body>
