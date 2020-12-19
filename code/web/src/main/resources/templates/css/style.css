@@ -1,0 +1,408 @@
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, pre, a, code, em, img, small, strong, sub, sup, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+}
+body{
+    font-family: "Arial", Gadget, sans-serif;
+}
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover {
+    text-decoration: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+img {
+    border: none;
+    outline: none
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: disc;
+}
+
+input[type=button], input[type=text], input[type=password], button, textarea {
+    -webkit-appearance: none;
+    outline: none
+}
+
+.imgBox{
+    overflow: hidden;
+    display: block;
+    width: 100%;
+}
+.imgBox img{
+    width: 100%;
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+}
+.articleHead{
+    padding: 20px 20px 10px 20px;
+    text-align: right;
+}
+.articleClass{
+   padding-bottom: 10px;
+}
+.articleClass span{
+    border-bottom: 1px solid;
+    font-size: 16px;
+    font-weight: bold;
+}
+.articleTitle{
+    font-weight: bold;
+    font-size: 28px;
+}
+.authorName{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0;
+}
+.authorName span:first-child{
+    border-right: 2px solid #3F3E4C;
+    margin-right:8px;
+    padding-right: 8px;
+}
+.articleHead .date{
+    font-size: 14px;
+}
+.summary{
+    padding: 10px;
+    font-size: 14px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    line-height: 200%;
+}
+.articleBox{
+}
+.articleBox.large p{
+    font-size: 20px
+}
+.articleBox.middle p{
+    font-size: 18px
+}
+.articleBox.small p{
+    font-size: 16px
+}
+.freeArticleContent p,.articleContent p{
+    padding: 18px 20px 0 20px;
+    line-height: 187.5%;
+}
+.articleContent p:last-child{
+    padding-bottom: 30px;
+}
+.articleBox img{
+    width: 100%;
+    display: block;
+}
+.articleContent{
+    overflow: hidden;
+}
+.articleContent h1{
+    margin-top: 70px;
+    color: #3F3E4C;
+    font-size: 42px;
+    font-weight: bold;
+    text-align: right;
+    padding: 0 20px;
+}
+.articleContent h2{
+    margin-top: 10px;
+    color: #3F3E4C;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: right;
+    padding: 0 20px;
+}
+.subscribeBox{
+    overflow: hidden;
+    margin-top: -9rem;
+    z-index: 99;
+    position: relative;
+}
+.subscribeBorderTop{
+    height: 5rem;
+}
+.subscribeTitle{
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:20px;
+}
+.subscribeTitle h1{
+    font-size: 14px!important;
+    font-weight: bold;
+    margin: 20px 0;
+}
+.subscribeTitle h2{
+    font-size: 14px!important;
+    font-weight: 300;
+}
+.subscribeTitle .exchangecss{
+    color: #D7A03C;
+    font-size: 16px;
+    margin: 20px 0;
+    line-height: 22px;
+    display: inline-block;
+    border: 0;
+    background: none;
+    outline: none;
+}
+.subscribeTitle img{
+    width: 30% !important;
+    display: block;
+    margin: 0 auto;
+}
+.subscribeContent{
+    overflow: hidden;
+}
+.subscribeBox .priceInfo{
+    color: #fff;
+    font-size: 14px;
+    border-top: 1px solid #3a3a3a;
+    border-bottom:1px dashed #3a3a3a;
+    padding: 20px;
+}
+.subscribeBox .priceInfo span{
+    background: #3c3425;
+    color: #d7a03c;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding: 0 6px;
+    margin: 0 5px;
+    line-height:2rem;
+}
+.subscribeBox .subscribeText{
+    line-height: 187.5%;
+    font-size: 12px;
+    padding: 20px;
+}
+.authorBox{
+    overflow: hidden;
+    padding: 25px 20px;
+    position: relative;
+}
+.authorInfo{
+    width: 40%;
+    padding: 0 5%;
+}
+.authorInfo h1{
+    font-size: 16px
+}
+.authorInfo h2{
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 300;
+    margin-top: 10px;
+}
+.authorBox.left .authorInfo{
+    float: left;
+}
+.authorBox.left .authorInfo h1,.authorBox.left .authorInfo h2{
+    text-align: right;
+}
+.authorBox.right .authorInfo{
+    float: right;
+}
+.authorBox.right .authorInfo h1,.authorBox.right .authorInfo h2{
+    text-align: left;
+}
+.authorPhoto{
+    width: 50%;
+    float: left;
+}
+.authorPhoto img{
+    width: 100%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.periodicalBox{
+    overflow: hidden;
+}
+.periodicalCover{
+    overflow: hidden;
+}
+.periodicalCover img{
+    width: 100%;
+    -webkit-border-radius: 0 0 20px 20px;
+    -moz-border-radius: 0 0 20px 20px;
+    border-radius: 0 0 20px 20px;
+}
+.periodicalContent{
+    overflow: hidden;
+    padding: 20px;
+    text-align: right;
+}
+.periodicalContent h1{
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.periodicalContent h2{
+    font-size: 1rem;
+    font-weight: 300;
+}
+.footerOperation{
+    position: fixed;
+    bottom: 5vh;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+.footerOperationContent{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.footerOperationContent i{
+    display: inline-block;
+    width: 10vw;
+    height: 10vw;
+}
+.footerOperationContent i.return{
+    background: url("../img/return-icon.png") no-repeat;
+    background-size: 100% 100%;
+}
+.footerOperationContent i.collect{
+    background: url("../img/collect-icon.png") no-repeat;
+    background-size: 100% 100%;
+}
+.footerOperationContent i.collect-on{
+    background: url("../img/collect-on.png") no-repeat;
+    background-size: 100% 100%;
+}
+.footerOperationContent i.link{
+    background: url("../img/share-icon.png") no-repeat;
+    background-size: 100% 100%;
+}
+.footerOperationContent i.top{
+    background: url("../img/top-icon.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.day_mode{
+    color: #3F3E4C;
+    background: #FFFFFF;
+}
+.day_mode .summary{
+    background:rgba(229, 230, 231, 0.2);
+}
+.day_mode .subscribeBorderTop{
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,1));
+}
+.day_mode .subscribeTitle{
+    background: #ffffff;
+}
+.day_mode .subscribeContent{
+    background: #222222;
+}
+.day_mode .subscribeTitle h1{
+    color: #3F3E4C;
+}
+.day_mode .subscribeTitle h2{
+    color: #3F3E4C;
+}
+.day_mode .authorBoxList{
+    background:#E5E6E7;
+}
+.day_mode .authorInfo h1{
+    color: #303042;
+}
+.day_mode .authorInfo h2{
+    color: #303042;
+}
+.night_mode{
+    color: #DBDBDB;
+    background: #222222;
+}
+.night_mode .summary{
+    background:rgba(229, 230, 231, 0.05);
+}
+.night_mode pre.ql-syntax{
+    background:url('../img/summary_icon_night.png') no-repeat 20px 20px rgba(229, 230, 231, 0.05);
+}
+.night_mode blockquote{
+    background:rgba(229, 230, 231, 0.05);
+}
+.night_mode .subscribeBorderTop{
+    background-image: linear-gradient(rgba(34,34,34,0.5), rgba(34,34,34,1));
+}
+.night_mode .subscribeTitle{
+    background: #222222;
+}
+.night_mode .subscribeContent{
+    background: #363738;
+}
+.night_mode .subscribeTitle h1{
+    color: #ffffff;
+}
+.night_mode .subscribeTitle h2{
+    color: #DBDBDB;
+}
+.night_mode .authorBoxList{
+    background:rgba(229, 230, 231, 0.2);
+}
+.night_mode .authorInfo h1{
+    color: #DBDBDB;
+}
+.night_mode .authorInfo h2{
+    color: #DBDBDB;
+}
+.night_mode .subscribeText{
+    color: #757575;
+}
+pre.ql-syntax{
+    background:url('../img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
+    background-size: 10%;
+    min-height: 10%;
+    text-align: right;
+    padding:30px 19px 20px 15%;
+    font-size:18px;
+    font-weight: 400;
+    margin: 0;
+    white-space: pre-wrap!important;
+}
+blockquote{
+    text-align: right;
+    color: #767676;
+    font-size: 12px;
+    background:url('../img/article-line.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
+    margin: 0;
+    padding:5px 19px 15px 10px;
+}
+.articleBox ol{
+    list-style-type: none!important;
+    padding: 10px 20px;
+}
+.articleBox ol li{
+    color: #767676!important;
+    font-size: 12px!important;
+    font-weight: 300!important;
+    line-height: 20px!important;
+    text-align: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none!important;
+}
+.articleBox ol li::before{
+    display: none!important;
+}

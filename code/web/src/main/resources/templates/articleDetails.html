@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>[[${lbPost.title}]]</title>
-    <link rel="stylesheet" type="text/css" href="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
     <script>
 
@@ -60,7 +60,7 @@
             });
             $('.collect').click(function () {
                 //$(this).toggleClass('collect-on')
-                
+
                 if($('#iscollect').val()==='false'){
                     //点击收藏
                     window.location.href="aves://addcollection";
@@ -72,7 +72,7 @@
                      $('#iscollect').val(false)
                      $(this).removeClass('collect-on'); //移除
                 }
-                
+
             });
 			$('.pay_499').on('click',function(event) { //支付跳转499
                 window.location.href="aves://pay?tcode=avesproduct20001";
@@ -94,28 +94,17 @@
                 window.location.href="aves://exchange";
             });
             //返回页面定位阅读位置
-            //var windowTop=$(window).scrollTop();
-            //$("html,body").animate({ scrollTop: windowTop},1);
-            //$("html,body").animate({ scrollTop: $().offset().top-$().height()});
-            //----------------
-            $('[data-link]').on('click',function(event) { //阻止默认跳转行为，阻止冒泡
-                console.log("阻止默认跳转行为，阻止冒泡")
-                console.log(event)
-                event.preventDefault();
-                event.stopPropagation();
-                savePage();
-                window.location.href=$(this).attr('data-link');
+            //滚动时保存滚动位置
+            $(window).scroll(function(){
+                if($(document).scrollTop()!=0){
+                    localStorage.setItem("offsetTop", $(window).scrollTop());
+                }
             });
-            function savePage(){  //操作浏览器的历史记录
-            console.log("操作浏览器的历史记录")
-                console.log(location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop())
-                window.localStorage.setItem(document.title,location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
-                //history.replaceState('', document.title, location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
-            }
-            //跳转后的判断
-            if ($('wrap').height() > nowTop) {
-                scrollTo(0, nowTop);
-             }
+            //onload时，取出并滚动到上次保存位置
+            window.onload = function(){
+                var offset = localStorage.getItem("offsetTop");
+                $(document).scrollTop(offset);
+            };
         })
     </script>
 </head>
