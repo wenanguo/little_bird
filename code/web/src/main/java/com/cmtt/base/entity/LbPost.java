@@ -102,7 +102,11 @@ public class LbPost extends BaseEntity implements Serializable {
     private String author;
 
     @ApiModelProperty(value = "排序")
-    private String postOrder;
+    private Integer postOrder;
+
+    @ApiModelProperty(value = "是否免费 1免费 2收费")
+    private Integer isFree;
+
 
     @ApiModelProperty(value = "发布时间")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")

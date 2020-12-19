@@ -31,6 +31,9 @@
             <a-radio :value="2">不推荐</a-radio>
           </a-radio-group>
         </a-form-item>
+        <a-form-item label="排序">
+          <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入至少排序！'}]}]" />
+        </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
@@ -50,6 +53,7 @@
         'id',
         'title',
         'tcolor',
+        'torder',
         'status',
         'ttype',
         'recommend',

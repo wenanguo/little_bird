@@ -46,6 +46,9 @@ public class LbCatalog extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "推荐")
     private Integer recommend;
 
+    @ApiModelProperty(value = "排序")
+    private Integer torder;
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 

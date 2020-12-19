@@ -47,7 +47,7 @@ public class LbCatalogController {
     private ILbPostService lbPostService;
 
 
-    @PostMapping("list")
+    @PostMapping("catalog_list")
     @ResponseBody
     @ApiOperation("分类文章列表")
     public R list(){
@@ -55,7 +55,7 @@ public class LbCatalogController {
 
         // 执行查询
         //List<LbCatalog> lbCatalogPostList= lbCatalogService.getLbCatalogPostList();
-        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getStatus, RC.B_NORMAL.code()));
+        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getStatus, RC.B_NORMAL.code()).orderByDesc(LbCatalog::getTorder));
 
         return R.ok().setResult(lbCatalogPostList);
     }

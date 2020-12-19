@@ -45,7 +45,7 @@ public class LbAd extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "广告分类[1外部链接 2作者广告 3栏目广告]")
     private Integer adType;
 
-    @ApiModelProperty(value = "广告位置[1启动广告 2首页广告]")
+    @ApiModelProperty(value = "广告位置[1首页广告 2启动广告]")
     private Integer adLocation;
 
     @ApiModelProperty(value = "所属期刊")

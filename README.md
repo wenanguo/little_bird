@@ -16,3 +16,15 @@ docker tag 118.126.66.51/wenanguo/little_bird_api:v1.0.151 ccr.ccs.tencentyun.co
 
 docker push ccr.ccs.tencentyun.com/little_bird/api:v1.0.151
 ```
+
+本地运行
+
+```
+docker run -it -p 18080:8080 -e spring.datasource.password='wwwwww' ccr.ccs.tencentyun.com/little_bird/api:v1.0.151
+
+
+spring.datasource.username
+spring.datasource.url
+spring.datasource.password
+
+```

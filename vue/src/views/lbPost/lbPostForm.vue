@@ -123,7 +123,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="发布时间">
-                      <a-date-picker style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]">
+                      <a-date-picker show-time style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]">
                       </a-date-picker>
                     </a-form-item>
                   </a-col>
@@ -135,6 +135,18 @@
                         </a-radio>
                         <a-radio :value="2">
                           否
+                        </a-radio>
+                      </a-radio-group>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-form-item label="是否免费">
+                      <a-radio-group name="radioGroup" v-decorator="['isFree', {initialValue: 1,rules: [{required: true}]}]">
+                        <a-radio :value="1">
+                          免费
+                        </a-radio>
+                        <a-radio :value="2">
+                          收费
                         </a-radio>
                       </a-radio-group>
                     </a-form-item>
@@ -236,6 +248,7 @@
     'postCatalog',
     'postCatalogId',
     'tcolor',
+    'isFree',
     'showType',
     'imgUrl',
     'preimgUrl',

@@ -117,6 +117,10 @@
             customRender: (value) => ttypeMap[value].text,
             dataIndex: 'ttype'
         }, {
+            title: '排序',
+            sorter: true,
+            dataIndex: 'torder'
+        }, {
             title: '状态',
             sorter: true,
             width: '100px',

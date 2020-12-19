@@ -15,6 +15,7 @@ import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.*;
+import com.cmtt.base.utils.DateTimeUtils;
 import com.cmtt.base.utils.RC;
 import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
@@ -248,7 +249,7 @@ public class LbPostController {
 
 
 
-        if(isPayYear || isPayOne){
+        if(isPayYear || isPayOne || lbPost.getIsFree()==1){
             //已付费，显示付费内容
             isDisplay=true;
         }else{
@@ -266,6 +267,7 @@ public class LbPostController {
         context.setVariable("isPayOne",isPayOne);
         context.setVariable("isDisplay",isDisplay);
         context.setVariable("isCollect",isCollect);
+        context.setVariable("SocialDate", DateTimeUtils.getSocialDateDisplay(lbPost.getPublishedAt()));
 
         context.setVariable("PayOneCount",PayOneCount);
         context.setVariable("lbAuthorList",lbAuthorList);
@@ -306,7 +308,7 @@ public class LbPostController {
 
 
 
-        if(isPayYear || isPayOne){
+        if(isPayYear || isPayOne || lbPost.getIsFree()==1){
             //已付费，显示付费内容
             isDisplay=true;
         }else{
@@ -322,6 +324,7 @@ public class LbPostController {
         mv.addObject("isCollect",isCollect);
         mv.addObject("lbPost", lbPost);
         mv.addObject("PayOneCount",PayOneCount);
+        mv.addObject("SocialDate", DateTimeUtils.getSocialDateDisplay(lbPost.getPublishedAt()));
 
 
         mv.addObject("lbAuthorList",lbAuthorList);

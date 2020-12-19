@@ -61,7 +61,7 @@ public class LbAdController {
     @ApiOperation("获取启动广告")
     public R getStartAd(){
 
-        LbAd lbAd = lbAdService.getOne(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,1));
+        LbAd lbAd = lbAdService.getOne(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,2));
 
         return R.ok().setResult(lbAd);
 
@@ -81,7 +81,7 @@ public class LbAdController {
 
         // 构造查询及排序方式
         QueryWrapper<LbAd> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("ad_type",2);
+        queryWrapper.eq("ad_location",1);
         queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         // 执行查询
