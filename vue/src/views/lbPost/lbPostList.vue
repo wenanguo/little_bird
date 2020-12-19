@@ -128,25 +128,10 @@
             width: '150px',
             dataIndex: 'title'
         }, {
-            title: '分享标题',
-            sorter: true,
-            width: '150px',
-            dataIndex: 'shareTitle'
-        }, {
-            title: '分享内容',
-            sorter: true,
-            width: '150px',
-            dataIndex: 'shareContent'
-        }, {
             title: '期刊',
             sorter: true,
             width: '150px',
             dataIndex: 'periodicalTitle'
-        }, {
-            title: '描述',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'description'
         }, {
             title: '栏目',
             sorter: true,
@@ -157,11 +142,6 @@
             sorter: true,
             width: '100px',
             dataIndex: 'postCatalog'
-        }, {
-            title: '分类颜色',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'tcolor'
         }, {
             title: '显示样式',
             sorter: true,
@@ -186,11 +166,6 @@
             width: '100px',
             scopedSlots: { customRender: 'linkslot' },
             dataIndex: 'linkUrl'
-        }, {
-            title: '主题信息',
-            sorter: true,
-            width: '100px',
-            dataIndex: 'themeInfo'
         }, {
             title: '作者',
             sorter: true,

@@ -80,17 +80,21 @@
                 window.location.href="aves://exchange";
             });
             //返回页面定位阅读位置
-            var windowTop=$(window).scrollTop();
-            $("html,body").animate({ scrollTop: windowTop},1);
-            $("html,body").animate({ scrollTop: $().offset().top-$().height()});
+            //var windowTop=$(window).scrollTop();
+            //$("html,body").animate({ scrollTop: windowTop},1);
+            //$("html,body").animate({ scrollTop: $().offset().top-$().height()});
             //----------------
             $('[data-link]').on('click',function(event) { //阻止默认跳转行为，阻止冒泡
+                console.log("阻止默认跳转行为，阻止冒泡")
+                console.log(event)
                 event.preventDefault();
                 event.stopPropagation();
                 savePage();
                 window.location.href=$(this).attr('data-link');
             });
             function savePage(){  //操作浏览器的历史记录
+            console.log("操作浏览器的历史记录")
+                console.log(location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop())
                 window.localStorage.setItem(document.title,location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
                 //history.replaceState('', document.title, location.href.replace(location.hash, "") + "#nowTop=" + $(window).scrollTop());
             }
