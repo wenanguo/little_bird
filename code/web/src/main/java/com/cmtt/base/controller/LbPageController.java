@@ -79,5 +79,18 @@ public class LbPageController {
 
     }
 
+    /**
+     * app下载
+     */
+    @GetMapping("app_download")
+    @ApiOperation("APP下载")
+    public ModelAndView app_download()  {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appDownload");
+        return mv;
+
+    }
+
 
 }
