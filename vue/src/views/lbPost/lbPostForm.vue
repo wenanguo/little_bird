@@ -594,4 +594,36 @@
     text-align: right;
     margin-top: 10px;
   }
+  .ql-editor .ql-indent-1:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 3em;
+  }
+  .ql-editor .ql-indent-2:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 6em;
+  }
+  .ql-editor .ql-indent-3:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 9em;
+  }
+  .ql-editor .ql-indent-4:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 12em;
+  }
+  .ql-editor .ql-indent-5:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 15em;
+  }
+  .ql-editor .ql-indent-6:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 18em;
+  }
+  .ql-editor .ql-indent-7:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 21em;
+  }
+  .ql-editor .ql-indent-6:not(.ql-direction-rtl) {
+    padding-left: 0!important;
+    text-indent: 24em;
+  }
 </style>

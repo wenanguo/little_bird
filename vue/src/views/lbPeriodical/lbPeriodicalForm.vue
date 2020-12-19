@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="640"
+    :width="800"
     :visible="visible"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
@@ -64,13 +64,16 @@
           </a-radio-group>
         </a-form-item>
       </a-form>
+      <div class="editBox">
+        <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+      </div>
     </a-spin>
   </a-modal>
 </template>
 
 <script>
     import pick from 'lodash.pick'
-
+    import { quillEditor } from 'vue-quill-editor'
     // 表单字段
     const fields = [
         'id',
@@ -86,7 +89,8 @@
     ]
 
     export default {
-        props: {
+      components: { quillEditor },
+      props: {
             visible: {
                 type: Boolean,
                 required: true
@@ -118,7 +122,30 @@
             return {
                 form: this.$form.createForm(this),
                 fileList: [],
-                pdffileList: []
+                pdffileList: [],
+                editorOption: {
+                placeholder: '输入文章收费内容',
+                modules: {
+                  toolbar: {
+                    container: [
+                      ['bold']// ['bold', 'italic', 'underline', 'strike']
+                      // ['code-block', 'blockquote'],
+                      // [{ 'header': 1 }, { 'header': 2 }],
+                      // [{ 'script': 'sub' }],
+                      // [{ 'indent': '-1' }, { 'indent': '+1' }],
+                      // [{ 'direction': 'rtl' }],
+                      // [{ 'size': ['small', false, 'large', 'huge'] }],
+                      // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                      // [{ 'color': [] }, { 'background': [] }],
+                      // [{ 'font': [] }],
+                      // [{ 'align': [] }],
+                      // ['clean'],
+                      // ['link', 'image'],
+                      // [{ 'list': 'ordered' }]
+                    ]
+                  }
+                }
+              }
             }
         },
         created () {
@@ -184,3 +211,11 @@
 
     }
 </script>
+<style>
+  .editBox .ql-editor{
+    height:200px;
+  }
+  .editBox p{
+    font-size: 14px;
+  }
+</style>
