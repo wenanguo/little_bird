@@ -58,8 +58,8 @@
         </a-form-item>
         <a-form-item label="广告位置">
           <a-radio-group v-decorator="['adLocation', { initialValue: 2 }]">
-            <a-radio :value="1">启动广告</a-radio>
-            <a-radio :value="2">首页广告</a-radio>
+            <a-radio :value="1">首页广告</a-radio>
+            <a-radio :value="2">启动广告</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="广告分类">

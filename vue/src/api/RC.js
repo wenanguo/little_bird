@@ -39,11 +39,11 @@ const recommendMap = {
 const adLocationMap = {
     1: {
         status: 'default',
-        text: '启动广告'
+        text: '首页广告'
     },
     2: {
         status: 'default',
-        text: '首页广告'
+        text: '启动广告'
     }
   }
 const adTypeMap = {
