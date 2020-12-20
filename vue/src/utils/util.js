@@ -10,6 +10,26 @@ export function welcome () {
   return arr[index]
 }
 
+export function fontNumber (data, dlength) {
+  const length = data.length
+  if (length > dlength) {
+    var str = ''
+    str = data.substring(0, dlength) + '...'
+    return str
+  } else {
+    return data
+  }
+}
+
+/**
+ * 从列表数据获取指定属性的值
+ */
+export function listGetVal (data) {
+  Object.keys(data).forEach(key => {
+    console.log(key)
+  })
+}
+
 /**
  * 触发 window.resize
  */

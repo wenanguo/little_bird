@@ -14,30 +14,22 @@
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
         <a-form-item label="手机号">
-          <a-input v-decorator="['phone', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['phone', {rules: [{required: true, min: 1, message: '请输入至少五个字符！'}]}]" />
         </a-form-item>
         <a-form-item label="邮箱">
-          <a-input v-decorator="['email', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['email', {rules: [{required: true, min: 1, message: '请输入至少五个字符！'}]}]" />
         </a-form-item>
         <a-form-item label="举报地址">
-          <a-input v-decorator="['reportLink', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['reportLink', {rules: [{required: true, min: 1, message: '请输入至少五个字符！'}]}]" />
         </a-form-item>
         <a-form-item label="原因">
-          <a-input v-decorator="['reason', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['reason', {rules: [{required: true, min: 1, message: '请输入至少五个字符！'}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['状态', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="修改时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['updateTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
-        </a-form-item>
-        <a-form-item label="创建时间">
-          <a-date-picker style="width: 100%" show-time v-decorator="['createTime', {rules: [{required: true}]}]" >
-          </a-date-picker>
         </a-form-item>
       </a-form>
     </a-spin>

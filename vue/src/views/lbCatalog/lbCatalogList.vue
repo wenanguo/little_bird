@@ -23,7 +23,7 @@
             <a-col :md="!advanced && 8 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-                <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
+                <a-button style="margin-left: 8px" @click="resetSearchForm">重置</a-button>
               </span>
             </a-col>
           </a-row>
@@ -50,8 +50,7 @@
         rowKey="id"
         :columns="columns"
         :data="loadData"
-        :alert="true"
-        :rowSelection="rowSelection"
+        :alert="false"
         showPagination="auto"
       >
         <span slot="serial" slot-scope="text, record, index">
@@ -60,12 +59,15 @@
         <span slot="status" slot-scope="text">
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
+        <span slot="tcolorslot" slot-scope="text">
+          <div :style="'float: left;width: 15px;height: 15px;background-color:'+ text +';'"></div>  {{ text }}
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">修改</a>
             <a-divider type="vertical" />
             <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
-              <a>删除</a>
+              <a style="color: red">删除</a>
             </a-popconfirm>
           </template>
         </span>
@@ -105,6 +107,7 @@
         }, {
             title: '分割线颜色',
             sorter: true,
+            scopedSlots: { customRender: 'tcolorslot' },
             dataIndex: 'tcolor'
         }, {
             title: '推荐',
@@ -127,19 +130,6 @@
             scopedSlots: { customRender: 'status' },
             dataIndex: 'status'
         }, {
-            title: '修改时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
-            dataIndex: 'updateTime'
-        }, {
-            title: '创建时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
-            dataIndex: 'createTime'
-        },
-        {
             title: '操作',
             dataIndex: 'action',
             width: '150px',
@@ -307,6 +297,8 @@
                 this.queryParam = {
                     date: moment(new Date())
                 }
+                // 刷新表格
+                this.$refs.table.refresh()
             }
         }
     }

@@ -23,7 +23,7 @@
             <a-col :md="!advanced && 8 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-                <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
+                <a-button style="margin-left: 8px" @click="resetSearchForm">重置</a-button>
               </span>
             </a-col>
           </a-row>
@@ -50,7 +50,7 @@
         rowKey="id"
         :columns="columns"
         :data="loadData"
-        :alert="true"
+        :alert="false"
         :scroll="{ x: 1900}"
         :rowSelection="rowSelection"
         showPagination="auto"
@@ -430,6 +430,8 @@
                 this.queryParam = {
                     date: moment(new Date())
                 }
+                // 刷新表格
+                this.$refs.table.refresh()
             }
         }
     }

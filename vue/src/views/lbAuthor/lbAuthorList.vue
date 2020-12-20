@@ -23,7 +23,7 @@
             <a-col :md="!advanced && 8 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-                <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
+                <a-button style="margin-left: 8px" @click="resetSearchForm">重置</a-button>
               </span>
             </a-col>
           </a-row>
@@ -61,14 +61,14 @@
           <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
         <span slot="imgslot" slot-scope="text">
-          <img alt="example" style="width: 100px" @click="handlePreview(text)" :src="text" />
+          <img alt="example" style="width: 50px;height:50px" @click="handlePreview(text)" :src="text" />
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">修改</a>
             <a-divider type="vertical" />
             <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
-              <a>删除</a>
+              <a style="color: red">删除</a>
             </a-popconfirm>
           </template>
         </span>
@@ -94,6 +94,7 @@
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
+    import { fontNumber } from '@/utils/util'
     import { getLbAuthorList, saveLbAuthor, delLbAuthor, batchDelLbAuthor } from '@/api/lbAuthor'
     import EditForm from './lbAuthorForm'
 
@@ -105,12 +106,14 @@
         //     dataIndex: 'id'
         // },
         {
-            title: '标题',
+            title: '名称',
             sorter: true,
+            width: '150px',
             dataIndex: 'name'
         }, {
             title: '介绍',
             sorter: true,
+            customRender: (value) => fontNumber(value, 30),
             dataIndex: 'introduction'
         }, {
             title: '图片',
@@ -290,6 +293,8 @@
                 this.queryParam = {
                     date: moment(new Date())
                 }
+                // 刷新表格
+                this.$refs.table.refresh()
             }
         }
     }

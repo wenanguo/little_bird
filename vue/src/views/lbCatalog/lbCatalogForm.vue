@@ -14,10 +14,16 @@
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
         <a-form-item label="标题">
-          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入内容！'}]}]" />
+        </a-form-item>
+        <a-form-item label="排序">
+          <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入排序！'}]}]" />
         </a-form-item>
         <a-form-item label="分割线颜色">
-          <colorPicker v-decorator="['tcolor', { initialValue: '#777777' }]"/>
+          <colorPicker v-decorator="['tcolor', { initialValue: '#777777' }]" @change="handleColorChange"/>
+          <span>
+            {{ this.color }}
+          </span>
         </a-form-item>
         <a-form-item label="分类">
           <a-radio-group v-decorator="['ttype', { initialValue: 1 }]">
@@ -26,13 +32,10 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="推荐">
-          <a-radio-group v-decorator="['recommend', { initialValue: 1 }]">
+          <a-radio-group v-decorator="['recommend', { initialValue: 2 }]">
             <a-radio :value="1">推荐</a-radio>
             <a-radio :value="2">不推荐</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="排序">
-          <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入至少排序！'}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
@@ -98,8 +101,6 @@
             }
         },
         created () {
-            console.log('custom modal created')
-
             // 防止表单未注册
             fields.forEach(v => this.form.getFieldDecorator(v))
 
@@ -107,7 +108,13 @@
             this.$watch('model', () => {
                 var json = pick(this.model, fields)
                 this.model && this.form.setFieldsValue(json)
+                this.color = this.model.color
             })
+        },
+        methods: {
+          handleColorChange (info) {
+            this.color = info
+          }
         }
     }
 </script>

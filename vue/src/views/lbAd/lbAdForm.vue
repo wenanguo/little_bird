@@ -175,6 +175,8 @@
             })
         },
         methods: {
+          handleAuthorChange (info) {
+          },
           handleChange (info) {
             const fileListt = [...info.fileList]
 

@@ -19,7 +19,19 @@
         <a-form-item label="期刊编号">
           <a-input v-decorator="['tcode', {rules: [{required: true, min: 1, message: '请输入期刊编号！'}]}]" />
         </a-form-item>
-        <a-form-item label="期刊封面上传" help="图片大小：1125*1500">
+        <!-- <a-form-item label="期刊推荐">
+          <a-radio-group v-decorator="['recommend', { initialValue: '2' }]">
+            <a-radio :value="1">是</a-radio>
+            <a-radio :value="2">否</a-radio>
+          </a-radio-group>
+        </a-form-item> -->
+        <a-form-item label="所属年份">
+          <a-input v-decorator="['tyear', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        </a-form-item>
+        <a-form-item label="排序">
+          <a-input-number style="width: 100%" v-decorator="['torder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+        </a-form-item>
+        <a-form-item label="期刊封面" help="图片大小：1125*1500">
           <a-upload
             name="file"
             :multiple="false"
@@ -32,19 +44,7 @@
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
-        <!-- <a-form-item label="期刊推荐">
-          <a-radio-group v-decorator="['recommend', { initialValue: '2' }]">
-            <a-radio :value="1">是</a-radio>
-            <a-radio :value="2">否</a-radio>
-          </a-radio-group>
-        </a-form-item> -->
-        <a-form-item label="所属年份">
-          <a-input v-decorator="['tyear', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
-        </a-form-item>
-        <a-form-item label="排序">
-          <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
-        </a-form-item>
-        <a-form-item label="PDF上传">
+        <a-form-item label="PDF">
           <a-upload
             name="file"
             :multiple="false"
