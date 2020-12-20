@@ -108,11 +108,13 @@
             title: '介绍',
             sorter: true,
             dataIndex: 'introduction'
-        }, {
-            title: '所属分类ID',
-            sorter: true,
-            dataIndex: 'catalogId'
-        }, {
+        },
+        // {
+        //     title: '所属分类ID',
+        //     sorter: true,
+        //     dataIndex: 'catalogId'
+        // },
+        {
             title: '状态',
             sorter: true,
             width: '100px',

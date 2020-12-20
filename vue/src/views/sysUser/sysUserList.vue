@@ -150,16 +150,6 @@
             width: '150px',
             customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
             dataIndex: 'createTime'
-        }, {
-            title: '类型',
-            sorter: true,
-            dataIndex: 'ttype'
-        },
-        {
-            title: '操作',
-            dataIndex: 'action',
-            width: '150px',
-            scopedSlots: { customRender: 'action' }
         }
     ]
 
@@ -191,7 +181,6 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    console.log('loadData request parameters:', requestParameters)
                     return getSysUserList(requestParameters)
                         .then(res => {
                             return res.result
@@ -233,8 +222,6 @@
                 this.confirmLoading = true
                 form.validateFields((errors, values) => {
                     if (!errors) {
-                        console.log('values', values)
-
                          // 日期格式化
                             values.updateTime = moment(values.updateTime).format('YYYY-MM-DD HH:mm:ss')
                             values.createTime = moment(values.createTime).format('YYYY-MM-DD HH:mm:ss')

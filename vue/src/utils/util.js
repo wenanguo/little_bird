@@ -25,7 +25,7 @@ export function getSocialDateDisplay (dateString) {
     } else if (cz < 60) {
         return parseInt(cz) + '分钟前'
     } else if (cz < (60 * 24)) {
-        return parseInt(cz) / 60 + '小时前'
+        return parseInt(cz / 60) + '小时前'
     } else if (cz > (59 * 24) && cz < (60 * 24 * 2)) {
         return '昨天'
     } else if (cz > (60 * 24 * 2) && cz < (60 * 24 * 365)) {
