@@ -14,7 +14,7 @@
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
         <a-form-item label="标题">
-          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入内容！'}]}]" />
+          <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入内容！'}]}]" :disabled="isSg"/>
         </a-form-item>
         <a-form-item label="排序">
           <a-input-number v-decorator="['torder', {rules: [{required: true, message: '请输入排序！'}]}]" />
@@ -25,8 +25,8 @@
             {{ this.color }}
           </span>
         </a-form-item>
-        <a-form-item label="分类">
-          <a-radio-group v-decorator="['ttype', { initialValue: 1 }]">
+        <a-form-item label="分类" >
+          <a-radio-group v-decorator="['ttype', { initialValue: 1 }]" :disabled="isSg">
             <a-radio :value="1">半屏</a-radio>
             <a-radio :value="2">全屏</a-radio>
           </a-radio-group>
@@ -95,6 +95,7 @@
             }
             return {
                 color: '#777777',
+                isSg: '',
                 form: this.$form.createForm(this)
             }
         },
@@ -110,6 +111,7 @@
                     if (this.model) {
                     // 修改
                       this.color = this.model.tcolor
+                      if (this.model.id === 1) this.isSg = true
                     } else {
                     // 新增
                       this.color = '#777777'

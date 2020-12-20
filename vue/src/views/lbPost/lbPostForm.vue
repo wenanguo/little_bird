@@ -446,6 +446,12 @@
             this.articleDate = getSocialDateDisplay(values[p])
           } else if (p === 'description') {
             this.articleDescription = values[p]
+          } else if (p === 'postCatalogId') {
+            if (values[p] === 1) {
+               this.isSg = true
+            } else {
+              this.isSg = false
+            }
           }
         }
       },
