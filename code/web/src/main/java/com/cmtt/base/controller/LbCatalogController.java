@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.GetCatalogPostInputParam;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
@@ -184,7 +185,7 @@ public class LbCatalogController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class})LbCatalog lbCatalog) {
+    public R delete(@RequestBody @Validated({GroupDelete.class}) GetOneInputParam lbCatalog) {
 
         try {
 
@@ -207,23 +208,6 @@ public class LbCatalogController {
     }
 
 
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbCatalogService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
 
 
 

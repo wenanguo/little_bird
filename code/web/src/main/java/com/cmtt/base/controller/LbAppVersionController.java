@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.AppUpdateInputParam;
 import com.cmtt.base.controller.param.GetAuthorPostInputParam;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.entity.LbAppVersion;
 import com.cmtt.base.entity.LbAuthor;
 import com.cmtt.base.entity.LbPost;
@@ -156,7 +157,7 @@ public class LbAppVersionController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class})LbAppVersion lbAppVersion) {
+    public R delete(@RequestBody @Validated({GroupDelete.class}) GetOneInputParam lbAppVersion) {
 
         try {
 
@@ -170,24 +171,6 @@ public class LbAppVersionController {
         }
     }
 
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbAppVersionService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
 
 
 

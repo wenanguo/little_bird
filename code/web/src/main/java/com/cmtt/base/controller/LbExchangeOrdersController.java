@@ -192,7 +192,7 @@ public class LbExchangeOrdersController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class}) LbExchangeOrders lbExchangeOrders) {
+    public R delete(@RequestBody @Validated({GroupDelete.class}) GetOneInputParam lbExchangeOrders) {
 
         try {
 
@@ -207,23 +207,6 @@ public class LbExchangeOrdersController {
     }
 
 
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbExchangeOrdersService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
 
 
 }

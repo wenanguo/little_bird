@@ -462,7 +462,7 @@ public class LbPostController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class})LbPost lbPost) {
+    public R delete(@RequestBody @Validated({GroupDelete.class})GetOneInputParam lbPost) {
 
         try {
 
@@ -475,26 +475,6 @@ public class LbPostController {
             return R.err().setMessage("删除失败");
         }
     }
-
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbPostService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
-
 
 
 

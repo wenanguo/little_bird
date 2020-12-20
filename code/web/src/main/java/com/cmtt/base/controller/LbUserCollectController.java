@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.controller.param.UserCollectInputParam;
 import com.cmtt.base.entity.*;
@@ -219,7 +220,7 @@ public class LbUserCollectController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class})LbUserCollect lbUserCollect) {
+    public R delete(@RequestBody @Validated({GroupDelete.class}) GetOneInputParam lbUserCollect) {
 
         try {
 
@@ -232,26 +233,6 @@ public class LbUserCollectController {
             return R.err().setMessage("删除失败");
         }
     }
-
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbUserCollectService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
-
 
 
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cmtt.base.controller.param.GetOneGoodsInputParam;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.entity.R;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
@@ -175,7 +176,7 @@ public class LbGoodsController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class}) LbGoods lbGoods) {
+    public R delete(@RequestBody @Validated({GroupDelete.class}) GetOneInputParam lbGoods) {
 
         try {
 
@@ -190,23 +191,6 @@ public class LbGoodsController {
     }
 
 
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbGoodsService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
 
 
 }

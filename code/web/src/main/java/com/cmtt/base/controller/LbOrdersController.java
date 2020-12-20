@@ -3,6 +3,7 @@ package com.cmtt.base.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.entity.R;
 import com.cmtt.base.entity.SysUserOrders;
 import com.cmtt.base.entity.validated.GroupAdd;
@@ -148,7 +149,7 @@ public class LbOrdersController {
      */
     @DeleteMapping("/delete")
     @ResponseBody
-    public R delete(@RequestBody @Validated({GroupDelete.class}) LbOrders lbOrders) {
+    public R delete(@RequestBody @Validated({GroupDelete.class}) GetOneInputParam lbOrders) {
 
         try {
 
@@ -159,25 +160,6 @@ public class LbOrdersController {
             logger.warn(e.getMessage());
 
             return R.err().setMessage("删除失败");
-        }
-    }
-
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbOrdersService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
         }
     }
 
