@@ -140,11 +140,15 @@
     const ttypeMap = {
     1: {
         status: 'default',
-        text: '半屏'
+        text: '半屏文字'
     },
     2: {
         status: 'processing',
-        text: '全屏'
+        text: '全屏图文'
+    },
+    3: {
+        status: 'processing',
+        text: '诗歌引用'
     }
   }
 

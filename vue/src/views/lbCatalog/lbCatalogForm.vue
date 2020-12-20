@@ -27,8 +27,9 @@
         </a-form-item>
         <a-form-item label="分类" >
           <a-radio-group v-decorator="['ttype', { initialValue: 1 }]" :disabled="isSg">
-            <a-radio :value="1">半屏</a-radio>
-            <a-radio :value="2">全屏</a-radio>
+            <a-radio :value="1">半屏文字</a-radio>
+            <a-radio :value="2">全屏图文</a-radio>
+            <a-radio :value="3">诗歌引用</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="推荐">
@@ -95,7 +96,7 @@
             }
             return {
                 color: '#777777',
-                isSg: '',
+                isSg: false,
                 form: this.$form.createForm(this)
             }
         },
@@ -111,10 +112,15 @@
                     if (this.model) {
                     // 修改
                       this.color = this.model.tcolor
-                      if (this.model.id === 1) this.isSg = true
+                      if (this.model.id === 1) {
+                        this.isSg = true
+                      } else {
+                        this.isSg = false
+                      }
                     } else {
                     // 新增
                       this.color = '#777777'
+                      this.isSg = false
                     }
             })
         },

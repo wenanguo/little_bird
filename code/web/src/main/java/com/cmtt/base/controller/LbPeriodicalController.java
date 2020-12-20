@@ -1,10 +1,12 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
 import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.PageInputParam;
 import com.cmtt.base.controller.param.PhoneLoginInputParam;
@@ -26,6 +28,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -183,11 +186,18 @@ public class LbPeriodicalController {
     @PostMapping("bookrack")
     @ResponseBody
     @ApiOperation("书架列表")
-    public R bookrack(){
+    public R bookrack(Principal principal){
 
 
+        LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100).orderByDesc(LbPeriodical::getId);
 
-        List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100).orderByDesc(LbPeriodical::getId));
+        if(principal==null){
+            // 未登录 去掉下载链接
+            queryWrapper.select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"));
+
+        }
+
+        List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(queryWrapper);
 
 
 
