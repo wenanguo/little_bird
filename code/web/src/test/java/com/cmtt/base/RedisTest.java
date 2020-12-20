@@ -11,12 +11,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = DemoApplication.class)
 @RunWith(SpringRunner.class)
 public class RedisTest {
-//
+
 //    @Autowired
 //    private StringRedisTemplate stringRedisTemplate;
-//
+
 //    @Test
 //    public void testString(){
-//        stringRedisTemplate.opsForValue().set("name","wenanguo");
+//        stringRedisTemplate.opsForValue().set("name2","wenanguo2");
 //    }
 }

@@ -4,23 +4,14 @@ package com.cmtt.base.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.internal.util.StringUtils;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
-import com.cmtt.base.controller.param.AlipayTradeAppQueryInputParam;
 import com.cmtt.base.controller.param.ApplePayValidInputParam;
-import com.cmtt.base.controller.param.ApplePayVisitorBindInputParam;
 import com.cmtt.base.controller.param.GetOneGoodsInputParam;
 import com.cmtt.base.entity.*;
 import com.cmtt.base.service.ILbGoodsService;
 import com.cmtt.base.service.ILbOrdersService;
-import com.cmtt.base.service.ILbPayOrderService;
-import com.cmtt.base.service.impl.AliPayServiceImpl;
-import com.cmtt.base.utils.HttpclientUtils;
+import com.cmtt.base.utils.HttpUtils;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,10 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -298,7 +287,7 @@ public class ApplePayController {
         String req = JSON.toJSONString(map);
 
 
-        HR hr = HttpclientUtils.doPost(zsurl, req, null);
+        HR hr = HttpUtils.doPost(zsurl, req, null);
 
 
         JSONObject jsonObject = JSONObject.parseObject(hr.getRetStr());
@@ -309,7 +298,7 @@ public class ApplePayController {
 
             String shurl = "https://sandbox.itunes.apple.com/verifyReceipt";
 
-            hr = HttpclientUtils.doPost(shurl, req, null);
+            hr = HttpUtils.doPost(shurl, req, null);
 
 
             jsonObject = JSONObject.parseObject(hr.getRetStr());

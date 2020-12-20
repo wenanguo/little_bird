@@ -3,8 +3,6 @@ package com.cmtt.base.service.impl;
 
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.cmtt.base.controller.LbAdController;
-import io.lettuce.core.output.ScanOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
