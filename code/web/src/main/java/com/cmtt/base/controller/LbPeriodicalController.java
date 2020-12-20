@@ -126,6 +126,7 @@ public class LbPeriodicalController {
 //        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
+                .inSql(LbPeriodical::getId, "select periodical_id from lb_post where status=100")
                 .orderBy(true,false,LbPeriodical::getTorder));
 
 
@@ -139,7 +140,8 @@ public class LbPeriodicalController {
 
             item.setLbPostList(lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                     .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                    .eq(LbPost::getPeriodicalId,item.getId()).orderByDesc(LbPost::getPostOrder).last("limit "+topPospSize)));
+                    .eq(LbPost::getPeriodicalId,item.getId())
+                    .orderByDesc(LbPost::getPostOrder).last("limit "+topPospSize)));
 
 //            resultList.add(item.getId());
         });

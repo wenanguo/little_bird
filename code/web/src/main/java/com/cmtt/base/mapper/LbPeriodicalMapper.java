@@ -1,11 +1,7 @@
 package com.cmtt.base.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cmtt.base.entity.LbPeriodical;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cmtt.base.entity.LbPeriodical;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,5 +16,6 @@ import java.util.List;
  */
 public interface LbPeriodicalMapper extends BaseMapper<LbPeriodical> {
 
-    public List<LbPeriodical> getLbPostList(@Param("ids") List<Integer> ids);
+    List<LbPeriodical> getLbPostList(@Param("ids") List<Integer> ids);
+
 }

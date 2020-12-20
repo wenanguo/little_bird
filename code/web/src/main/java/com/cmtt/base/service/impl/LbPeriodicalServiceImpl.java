@@ -2,6 +2,7 @@ package com.cmtt.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.entity.LbPeriodical;
 import com.cmtt.base.mapper.LbPeriodicalMapper;
@@ -29,4 +30,7 @@ public class LbPeriodicalServiceImpl extends ServiceImpl<LbPeriodicalMapper, LbP
 
         return this.baseMapper.getLbPostList(ids);
     }
+
+
+
 }
