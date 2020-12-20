@@ -19,7 +19,7 @@ pipeline {
                 }
             }
             steps {                
-                sh 'cd vue && npm install yarn && npm --registry=https://registry.npm.taobao.org install && yarn build'                
+                sh 'pwd && cd vue && npm install yarn && npm --registry=https://registry.npm.taobao.org install && yarn build'                
             }
         }
         stage('Deliver') { 

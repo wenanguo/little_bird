@@ -67,7 +67,7 @@ public class LbCatalogController {
     public R getCatalogPost(@RequestBody @Valid GetCatalogPostInputParam params){
 
         // 执行查询
-        List<LbPost> lbCatalogPostList= lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostCatalogId,params.getCatalogId()).last("limit 0,5"));;
+        List<LbPost> lbCatalogPostList= lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostCatalogId,params.getCatalogId()).orderByDesc(LbPost::getPostOrder).last("limit 0,5"));
 
 
         return R.ok().setResult(lbCatalogPostList);

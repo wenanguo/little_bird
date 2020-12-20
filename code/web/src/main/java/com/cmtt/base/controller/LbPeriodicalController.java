@@ -141,7 +141,7 @@ public class LbPeriodicalController {
             item.setLbPostList(lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                     .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
                     .eq(LbPost::getPeriodicalId,item.getId())
-                    .orderByDesc(LbPost::getPostOrder).last("limit "+topPospSize)));
+                    .orderByDesc(LbPost::getPublishedAt).last("limit "+topPospSize)));
 
 //            resultList.add(item.getId());
         });
