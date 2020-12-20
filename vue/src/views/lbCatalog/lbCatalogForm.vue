@@ -59,9 +59,7 @@
         'torder',
         'status',
         'ttype',
-        'recommend',
-        'updateTime',
-        'createTime'
+        'recommend'
     ]
 
     export default {
@@ -96,7 +94,7 @@
                 }
             }
             return {
-                color: '#eeeeee',
+                color: '#777777',
                 form: this.$form.createForm(this)
             }
         },
@@ -106,9 +104,16 @@
 
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
-                var json = pick(this.model, fields)
-                this.model && this.form.setFieldsValue(json)
-                this.color = this.model.color
+                    var json = pick(this.model, fields)
+                    this.model && this.form.setFieldsValue(json)
+                    // 初始化
+                    if (this.model) {
+                    // 修改
+                      this.color = this.model.tcolor
+                    } else {
+                    // 新增
+                      this.color = '#777777'
+                    }
             })
         },
         methods: {

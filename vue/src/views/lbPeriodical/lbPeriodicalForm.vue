@@ -82,12 +82,11 @@
         'tcode',
         'imgUrl',
         'tinfo',
+        'tpdf',
         'recommend',
         'tyear',
         'torder',
-        'status',
-        'updateTime',
-        'createTime'
+        'status'
     ]
 
     export default {
@@ -164,7 +163,6 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
-                this.content = this.model.tinfo
                 // 初始化图片上传
                 if (this.model) {
                   this.fileList = [{
@@ -179,9 +177,11 @@
                                     status: 'done',
                                     url: this.model.tpdf
                                   }]
+                  this.content = this.model.tinfo
                 } else {
                   this.fileList = []
                   this.pdffileList = []
+                  this.content = ''
                 }
             })
         },

@@ -60,6 +60,7 @@
 
 <script>
     import pick from 'lodash.pick'
+    import { getFileName } from '@/utils/util'
 
     // 表单字段
     const fields = [
@@ -111,8 +112,6 @@
             }
         },
         created () {
-            console.log('custom modal created')
-
             // 防止表单未注册
             fields.forEach(v => this.form.getFieldDecorator(v))
 
@@ -124,7 +123,7 @@
                 if (this.model) {
                   this.fileList = [{
                                     uid: '-1',
-                                    name: this.model.linkUrl,
+                                    name: getFileName(this.model.linkUrl),
                                     status: 'done',
                                     url: this.model.linkUrl
                                   }]
@@ -144,8 +143,6 @@
               return
             }
             if (info.file.status === 'done') {
-              // Get this url from response in real world.
-              console.log(info.file.response.result.url)
               this.$emit('update:loading', false)
               this.form.setFieldsValue({ linkUrl: info.file.response.result.url })
             }

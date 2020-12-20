@@ -87,13 +87,18 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
+                    <a-form-item label="排序">
+                      <a-input-number style="width:100%" v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
                     <a-form-item label="引用标题">
-                      <a-input v-decorator="['quoteTitle', {rules: [{required: true, min: 1, message: '请输入诗歌类引用标题！'}]}]"/>
+                      <a-input v-decorator="['quoteTitle', {rules: [{required: false}]}]"/>
                     </a-form-item>
                   </a-col>
                   <a-col :span="12" >
                     <a-form-item label="引用简介">
-                      <a-textarea :visible="false" v-decorator="['quoteDesc', {rules: [{required: true, min: 1, message: '请输入诗歌类引用标题！'}]}]"/>
+                      <a-textarea :visible="false" v-decorator="['quoteDesc', {rules: [{required: false}]}]"/>
                     </a-form-item>
                   </a-col>
                   <!-- <a-col :span="12">
@@ -103,7 +108,7 @@
                   </a-col> -->
                   <a-col :span="12">
                     <a-form-item label="主题信息">
-                      <a-input v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的主题信息！'}]}]" />
+                      <a-textarea v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的主题信息！'}]}]" />
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
@@ -114,11 +119,6 @@
                         </a-select-option>
                       </a-select>
                       <!-- <a-input v-decorator="['author', {rules: [{required: true, message: '请输入作者名称！'}]}]" /> -->
-                    </a-form-item>
-                  </a-col>
-                  <a-col :span="12">
-                    <a-form-item label="排序">
-                      <a-input-number v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
@@ -262,9 +262,7 @@
     'readCount',
     'recommend',
     'lbAuthorIdsList',
-    'status',
-    'updateTime',
-    'createTime'
+    'status'
   ]
   export default {
     components: { ACol, AFormItem, quillEditor },
@@ -326,7 +324,7 @@
         fileList: [],
         prefileList: [],
         editorOption: {
-          placeholder: '输入文章收费内容',
+          placeholder: '输入文章内容',
           modules: {
             toolbar: {
               container: [
@@ -351,8 +349,6 @@
       }
     },
     created () {
-      console.log('custom modal created')
-
       // 防止表单未注册
       fields.forEach(v => this.form.getFieldDecorator(v))
 
@@ -369,11 +365,7 @@
       // 当 model 发生改变时，为表单设置值
       this.$watch('model', () => {
         this.model && this.form.setFieldsValue(pick(this.model, fields))
-        this.content = this.model.content
-        this.feeContent = this.model.feeContent
-        console.log(this.model)
-        // this.form.setFieldsValue({ lbAuthorIdsList: [2, 3] })
-        // 初始化图片上传
+        // 初始化
         if (this.model) {
           this.fileList = [{
             uid: '-1',
@@ -387,17 +379,18 @@
             status: 'done',
             url: this.model.preimgUrl
           }]
+          this.content = this.model.content
+          this.feeContent = this.model.feeContent
         } else {
           this.fileList = []
           this.prefileList = []
+          this.content = ''
+          this.feeContent = ''
         }
       })
     },
     methods: {
       gchange (props, values) {
-          console.log(props.title)
-          console.log(props)
-          console.log(values)
       },
       handleAuthorChange (info) {
         var authorstr = ''

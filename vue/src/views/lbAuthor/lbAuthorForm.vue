@@ -45,6 +45,7 @@
 
 <script>
     import pick from 'lodash.pick'
+    import { getFileName } from '@/utils/util'
 
     // 表单字段
     const fields = [
@@ -52,9 +53,7 @@
         'name',
         'introduction',
         'imgUrl',
-        'status',
-        'updateTime',
-        'createTime'
+        'status'
     ]
 
     export default {
@@ -93,8 +92,6 @@
             }
         },
         created () {
-            console.log('custom modal created')
-
             // 防止表单未注册
             fields.forEach(v => this.form.getFieldDecorator(v))
 
@@ -106,7 +103,7 @@
                 if (this.model) {
                   this.fileList = [{
                                     uid: '-1',
-                                    name: this.model.imgUrl,
+                                    name: getFileName(this.model.imgUrl),
                                     status: 'done',
                                     url: this.model.imgUrl
                                   }]

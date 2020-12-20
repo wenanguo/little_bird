@@ -110,6 +110,7 @@
         {
             title: '标题',
             sorter: true,
+            width: '150px',
             dataIndex: 'title'
         }, {
             title: '期刊编号',
@@ -126,14 +127,10 @@
             scopedSlots: { customRender: 'pdfslot' },
             dataIndex: 'tpdf'
         },
-        // {
-        //     title: '推荐期刊',
-        //     sorter: true,
-        //     dataIndex: 'recommend'
-        // },
         {
             title: '所属年份',
             sorter: true,
+            width: '150px',
             dataIndex: 'tyear'
         }, {
             title: '排序',
@@ -196,7 +193,6 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    console.log('loadData request parameters:', requestParameters)
                     return getLbPeriodicalList(requestParameters)
                         .then(res => {
                             return res.result
@@ -245,7 +241,6 @@
                 this.confirmLoading = true
                 form.validateFields((errors, values) => {
                     if (!errors) {
-                        console.log('values', values)
                         if (values.id > 0) {
                             // 修改 e.g.
 

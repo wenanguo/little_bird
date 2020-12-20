@@ -30,6 +30,11 @@ export function listGetVal (data) {
   })
 }
 
+export function getFileName (o) {
+  var pos = o.lastIndexOf('/')
+  return o.substring(pos + 1)
+}
+
 /**
  * 触发 window.resize
  */

@@ -187,7 +187,6 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    console.log('loadData request parameters:', requestParameters)
                     return getLbAppVersionList(requestParameters)
                         .then(res => {
                             return res.result
@@ -224,16 +223,11 @@
                 this.visible = true
                 this.mdl = { ...record }
             },
-            addcounter () {
-                console.log('载入中')
-                this.confirmLoading = false
-            },
             handleOk () {
                 const form = this.$refs.editForm.form
                 this.confirmLoading = true
                 form.validateFields((errors, values) => {
                     if (!errors) {
-                        console.log('values', values)
                         if (values.id > 0) {
                             // 修改 e.g.
 
