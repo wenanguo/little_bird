@@ -96,6 +96,9 @@ public class LbPostInputParam {
 	@ApiModelProperty(value = "排序")
 	private String postOrder;
 
+	@ApiModelProperty(value = "是否免费 1免费 2收费")
+	private Integer isFree;
+
 	@ApiModelProperty(value = "发布时间")
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime publishedAt;

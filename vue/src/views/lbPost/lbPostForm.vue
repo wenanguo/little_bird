@@ -91,12 +91,12 @@
                       <a-input-number style="width:100%" v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
                     </a-form-item>
                   </a-col>
-                  <a-col :span="12">
+                  <a-col :span="12" v-if="isSg">
                     <a-form-item label="引用标题">
                       <a-input v-decorator="['quoteTitle', {rules: [{required: false}]}]"/>
                     </a-form-item>
                   </a-col>
-                  <a-col :span="12" >
+                  <a-col :span="12" v-if="isSg" >
                     <a-form-item label="引用简介">
                       <a-textarea :visible="false" v-decorator="['quoteDesc', {rules: [{required: false}]}]"/>
                     </a-form-item>
@@ -113,7 +113,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="作者">
-                      <a-select mode="multiple" @change="handleAuthorChange" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+                      <a-select mode="multiple" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
                         <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
                           {{ lbAuthor.name }}
                         </a-select-option>
@@ -129,7 +129,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="是否推荐">
-                      <a-radio-group name="radioGroup" :default-value="1">
+                      <a-radio-group name="radioGroup" v-decorator="['recommend', {initialValue: 1,rules: [{required: true}]}]">
                         <a-radio :value="1">
                           是
                         </a-radio>
@@ -195,12 +195,32 @@
               </a-tab-pane>
               <a-tab-pane key="2" tab="免费内容" force-render>
                 <div class="editBox">
-                  <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                  <a-upload
+                    class="contentImg"
+                    :multiple="false"
+                    list-type="picture"
+                    :file-list="contentfileList"
+                    @change="contenthandleChange"
+                    action="/api/tencent/upload"
+                  >
+                    <a-button> <a-icon type="upload" />上传图片</a-button>
+                  </a-upload>
+                  <quill-editor v-model="content" ref="contentQuillEditor" :options="contentEditorOption"></quill-editor>
                 </div>
               </a-tab-pane>
               <a-tab-pane key="3" tab="收费内容" force-render>
                 <div class="editBox">
-                  <quill-editor v-model="feeContent" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                  <a-upload
+                    class="feeContentImg"
+                    :multiple="false"
+                    list-type="picture"
+                    :file-list="feeContentfileList"
+                    @change="feeContenthandleChange"
+                    action="/api/tencent/upload"
+                  >
+                    <a-button> <a-icon type="upload" />上传图片</a-button>
+                  </a-upload>
+                  <quill-editor v-model="feeContent" ref="feeContentQuillEditor" :options="feeContentEditorOption"></quill-editor>
                 </div>
               </a-tab-pane>
             </a-tabs>
@@ -211,10 +231,10 @@
                 <div class="ql-editor">
                   <div class="article-editor">
                     <div class="articleClass" ></div>
-                    <div class="articleTitle" ></div>
+                    <div class="articleTitle" v-html="articleTitle" ></div>
                     <div class="articleAuthor" v-html="articleAuthor"><span ></span> | <span ></span></div>
-                    <div class="articleDate" ></div>
-                    <div class="articleDescription" ></div>
+                    <div class="articleDate" v-html="articleDate"></div>
+                    <div class="articleDescription" v-html="articleDescription"></div>
                   </div>
                   <div v-html="this.content"></div>
                   <div v-html="this.feeContent"></div>
@@ -233,6 +253,7 @@
   import { quillEditor } from 'vue-quill-editor'
   import AFormItem from 'ant-design-vue/es/form/FormItem'
   import ACol from 'ant-design-vue/es/grid/Col'
+  import { listGetVal, getSocialDateDisplay } from '@/utils/util'
   // 表单字段
   const fields = [
     'id',
@@ -244,26 +265,27 @@
     'quoteDesc',
     'description',
     'postSubjectId',
-    'postSubject',
-    'postCatalog',
     'postCatalogId',
-    'tcolor',
     'isFree',
     'showType',
     'imgUrl',
     'preimgUrl',
-    'linkUrl',
     'themeInfo',
-    'author',
     'postOrder',
     'publishedAt',
-    'praiseCount',
-    'recordCount',
-    'readCount',
     'recommend',
     'lbAuthorIdsList',
     'status'
   ]
+  const quillContainer = [
+                ['bold', 'italic', 'underline', 'strike'],
+                ['code-block', 'blockquote'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'indent': '-1' }, { 'indent': '+1' }],
+                [{ 'align': [] }],
+                ['link', 'image'],
+                [{ 'list': 'ordered' }]
+              ]
   export default {
     components: { ACol, AFormItem, quillEditor },
     props: {
@@ -313,6 +335,7 @@
       }
       return {
         form: this.$form.createForm(this, { onValuesChange: this.gchange }),
+        isSg: false,
         content: '',
         feeContent: '',
         articleTitle: '',
@@ -323,26 +346,39 @@
         articleDescription: '',
         fileList: [],
         prefileList: [],
-        editorOption: {
+        contentfileList: [],
+        feeContentfileList: [],
+        contentEditorOption: {
           placeholder: '输入文章内容',
           modules: {
             toolbar: {
-              container: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['code-block', 'blockquote'],
-                [{ 'header': 1 }, { 'header': 2 }],
-                // [{ 'script': 'sub' }],
-                [{ 'indent': '-1' }, { 'indent': '+1' }],
-                // [{ 'direction': 'rtl' }],
-                // [{ 'size': ['small', false, 'large', 'huge'] }],
-                // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                // [{ 'color': [] }, { 'background': [] }],
-                // [{ 'font': [] }],
-                [{ 'align': [] }],
-                // ['clean'],
-                ['link', 'image'],
-                [{ 'list': 'ordered' }]
-              ]
+              container: quillContainer,
+              handlers: {
+                'image': (value) => {
+                      if (value) {
+                          document.querySelector('.contentImg input').click()
+                      } else {
+                          this.quill.format('image', false)
+                      }
+                    }
+              }
+            }
+          }
+        },
+        feeContentEditorOption: {
+          placeholder: '输入文章内容',
+          modules: {
+            toolbar: {
+              container: quillContainer,
+              handlers: {
+                'image': (value) => {
+                      if (value) {
+                          document.querySelector('.feeContentImg input').click()
+                      } else {
+                          this.quill.format('image', false)
+                      }
+                    }
+              }
             }
           }
         }
@@ -386,22 +422,30 @@
           this.prefileList = []
           this.content = ''
           this.feeContent = ''
+          this.articleTitle = ''
+          this.articleAuthor = ''
+          this.articleDescription = ''
+          this.articleDate = ''
         }
       })
     },
     methods: {
       gchange (props, values) {
-      },
-      handleAuthorChange (info) {
-        var authorstr = ''
-        for (var j = 0; j < info.length; j++) {
-          for (var i = 0; i < this.lbAuthorList.length; i++) {
-              if (this.lbAuthorList[i].id === info[j]) {
-                authorstr = authorstr + ' | ' + this.lbAuthorList[i].name
-              }
+        for (var p in values) {
+          if (p === 'title') {
+            this.articleTitle = values[p]
+          } else if (p === 'lbAuthorIdsList') {
+            var authorstr = ''
+            for (var j = 0; j < values[p].length; j++) {
+              authorstr = authorstr + '&nbsp;' + listGetVal(this.lbAuthorList, values[p][j], 'id', 'name')
+            }
+            this.articleAuthor = authorstr
+          } else if (p === 'publishedAt') {
+            this.articleDate = getSocialDateDisplay(values[p])
+          } else if (p === 'description') {
+            this.articleDescription = values[p]
           }
         }
-        this.articleAuthor = authorstr
       },
       handleChange (info) {
         const fileListt = [...info.fileList]
@@ -430,11 +474,53 @@
           this.$emit('update:loading', false)
           this.form.setFieldsValue({ preimgUrl: info.file.response.result.url })
         }
+      },
+      feeContenthandleChange (info) {
+        const feeContentfileListt = [...info.fileList]
+
+        this.feeContentfileList = feeContentfileListt.slice(-1)
+
+        if (info.file.status === 'uploading') {
+          this.$emit('update:loading', true)
+          return
+        }
+        if (info.file.status === 'done') {
+          this.$emit('update:loading', false)
+
+          const quill = this.$refs.feeContentQuillEditor.quill
+          const length = quill.getSelection().index
+          quill.insertEmbed(length, 'image', info.file.response.result.url)
+          quill.setSelection(length + 1)
+        }
+      },
+      contenthandleChange (info) {
+        const contentfileListt = [...info.fileList]
+
+        this.contentfileList = contentfileListt.slice(-1)
+
+        if (info.file.status === 'uploading') {
+          this.$emit('update:loading', true)
+          return
+        }
+        if (info.file.status === 'done') {
+          this.$emit('update:loading', false)
+
+          const quill = this.$refs.contentQuillEditor.quill
+          const length = quill.getSelection().index
+          quill.insertEmbed(length, 'image', info.file.response.result.url)
+          quill.setSelection(length + 1)
+        }
       }
     }
   }
 </script>
 <style>
+.contentImg,
+.feeContentImg{
+    width: 0;
+    height: 0;
+    display: none;
+}
   .editBox .ql-editor{
     height:420px;
   }

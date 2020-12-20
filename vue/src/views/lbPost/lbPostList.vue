@@ -267,7 +267,6 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    console.log('loadData request parameters:', requestParameters)
                     return getLbPostList(requestParameters)
                         .then(res => {
                             return res.result
@@ -349,8 +348,6 @@
                 this.confirmLoading = true
                 form.validateFields((errors, values) => {
                     if (!errors) {
-                        console.log('values', values)
-
                             // 日期格式化
                             values.publishedAt = moment(values.publishedAt).format('YYYY-MM-DD HH:mm:ss')
 
