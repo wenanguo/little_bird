@@ -77,7 +77,7 @@ public class LbPeriodicalController {
      */
     @PostMapping("get_one")
     @ResponseBody
-    @ApiOperation("单期期刊数据")
+    @ApiOperation("单期期刊数据(目录页)")
     public R getOne(@RequestBody @Valid GetOneInputParam params){
 
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, params.getId()));
@@ -121,32 +121,47 @@ public class LbPeriodicalController {
         // 构建分页类
         IPage<LbPeriodical> lbPeriodicalPage = new Page<>(params.getPageNo(), params.getPageSize());
 
-        // 构造查询及排序方式
-        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+//        // 构造查询及排序方式
+//        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
-        lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100));
+        lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
+                .orderBy(true,false,LbPeriodical::getTorder));
 
 
+        // 每个分类取前面第几条
+        int topPospSize=5;
 
         //结果集
         List<Integer> resultList = new ArrayList<>();
         //遍历集合取值
         lbPeriodicalPage.getRecords().forEach(item->{
-            resultList.add(item.getId());
+
+            item.setLbPostList(lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                    .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                    .eq(LbPost::getPeriodicalId,item.getId()).orderByDesc(LbPost::getPostOrder).last("limit "+topPospSize)));
+
+//            resultList.add(item.getId());
         });
-        //条件构造器in上手使用
-        QueryWrapper<LbPeriodical> qw = new QueryWrapper<>();
-        qw.in("id", resultList);
-
-        if(resultList.size()>0){
-            List<LbPeriodical> list = lbPeriodicalService.getLbPostList(resultList);
-
-            lbPeriodicalPage.setRecords(list);
-        }
-
 
         return R.ok().setPageResult(lbPeriodicalPage);
+//        //条件构造器in上手使用
+//        QueryWrapper<LbPeriodical> qw = new QueryWrapper<>();
+//        qw.in("id", resultList);
+//
+//        // 每个分类获取前五
+//
+//
+//
+//
+//        if(resultList.size()>0){
+//            List<LbPeriodical> list = lbPeriodicalService.getLbPostList(resultList);
+//
+//            lbPeriodicalPage.setRecords(list);
+//        }
+//        System.out.println(lbPeriodicalPage);
+
+
 
         // 执行查询
         //lbPeriodicalPage = lbPeriodicalService.getBaseMapper().selectPage(lbPeriodicalPage, queryWrapper);

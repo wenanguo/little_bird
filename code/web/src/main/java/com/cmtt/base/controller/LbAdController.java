@@ -61,7 +61,7 @@ public class LbAdController {
     @ApiOperation("获取启动广告")
     public R getStartAd(){
 
-        LbAd lbAd = lbAdService.getOne(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,2));
+        LbAd lbAd = lbAdService.getOne(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,2),false);
 
         return R.ok().setResult(lbAd);
 
@@ -79,13 +79,13 @@ public class LbAdController {
         // 构建分页类
         IPage<LbAd> lbAdPage = new Page<>(params.getPageNo(), params.getPageSize());
 
-        // 构造查询及排序方式
-        QueryWrapper<LbAd> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("ad_location",1);
-        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+//        // 构造查询及排序方式
+//        QueryWrapper<LbAd> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("ad_location",1);
+//        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         // 执行查询
-        lbAdPage = lbAdService.getBaseMapper().selectPage(lbAdPage, queryWrapper);
+        lbAdPage = lbAdService.page(lbAdPage, Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,1).orderByDesc(LbAd::getId));
 
 //        List<LbAd> lbAdList = iLbAdService.list(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,params.getAd_type()));
 
@@ -142,8 +142,6 @@ public class LbAdController {
 
         try {
 
-
-
             // 设置栏目
             LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()),false);
             lbAd.setLbSubjectId(lbSubject.getId());
@@ -183,7 +181,6 @@ public class LbAdController {
 
 
         try {
-
 
             // 设置栏目
             LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()),false);
