@@ -34,12 +34,12 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="标题">
-                      <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名章标题！'}]}]"/>
+                      <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入文章标题！'}]}]"/>
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="描述">
-                      <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章摘要！'}]}]"/>
+                      <a-input v-decorator="['description', {rules: [{required: true, min: 1, message: '请输入文章描述！'}]}]"/>
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
@@ -88,7 +88,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="排序">
-                      <a-input-number style="width:100%" v-decorator="['postOrder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
+                      <a-input-number style="width:100%" v-decorator="['postOrder', {initialValue: 1,rules: [{required: true, message: '请输入排序！'}]}]" />
                     </a-form-item>
                   </a-col>
                   <a-col :span="12" v-if="isSg">
@@ -108,7 +108,7 @@
                   </a-col> -->
                   <a-col :span="12">
                     <a-form-item label="主题信息">
-                      <a-textarea v-decorator="['themeInfo', {rules: [{required: true, message: '请输入至少五个字符的主题信息！'}]}]" />
+                      <a-textarea v-decorator="['themeInfo', {rules: [{required: false, message: '请输入主题信息！'}]}]" />
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
@@ -123,7 +123,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="发布时间">
-                      <a-date-picker show-time style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true}]}]">
+                      <a-date-picker show-time style="width: 100%" v-decorator="['publishedAt', {rules: [{required: true, message: '请输入发布时间！'}]}]">
                       </a-date-picker>
                     </a-form-item>
                   </a-col>
@@ -171,8 +171,7 @@
                       >
                         <a-button> <a-icon type="upload" />上传图片</a-button>
                       </a-upload>
-                      <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
-                      <a-input v-decorator="['preimgUrl', {initialValue: ''}]" type="hidden" />
+                      <a-input v-decorator="['imgUrl', {initialValue: '',rules: [{required: true, message: '请上传题图！'}]}]" type="hidden" />
                       <a-input v-decorator="['content', {initialValue: ''}]" type="hidden" />
                       <a-input v-decorator="['feeContent', {initialValue: ''}]" type="hidden" />
                     </a-form-item>
@@ -189,6 +188,7 @@
                       >
                         <a-button> <a-icon type="upload" />上传图片</a-button>
                       </a-upload>
+                      <a-input v-decorator="['preimgUrl', {initialValue: '',rules: [{required: true, message: '请上传长题图！'}]}]" type="hidden" />
                     </a-form-item>
                   </a-col>
                 </a-row>
@@ -230,7 +230,7 @@
               <div class="ql-container ql-snow">
                 <div class="ql-editor">
                   <div class="article-editor">
-                    <div class="articleClass" ></div>
+                    <div class="articleClass" ><img style="width:100%" :src="articleClass"></div>
                     <div class="articleTitle" v-html="articleTitle" ></div>
                     <div class="articleAuthor" v-html="articleAuthor"><span ></span> | <span ></span></div>
                     <div class="articleDate" v-html="articleDate"></div>
@@ -417,15 +417,17 @@
           }]
           this.content = this.model.content
           this.feeContent = this.model.feeContent
+          this.articleClass = this.model.preimgUrl
         } else {
-          this.fileList = []
-          this.prefileList = []
+          this.fileList = null
+          this.prefileList = null
           this.content = ''
           this.feeContent = ''
           this.articleTitle = ''
           this.articleAuthor = ''
           this.articleDescription = ''
           this.articleDate = ''
+          this.articleClass = ''
         }
       })
     },
@@ -473,6 +475,7 @@
         if (info.file.status === 'done') {
           this.$emit('update:loading', false)
           this.form.setFieldsValue({ preimgUrl: info.file.response.result.url })
+          this.articleClass = info.file.response.result.url
         }
       },
       feeContenthandleChange (info) {

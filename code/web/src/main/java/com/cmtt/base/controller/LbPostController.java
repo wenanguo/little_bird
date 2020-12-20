@@ -387,6 +387,17 @@ public class LbPostController {
             LbPost lbPost=new LbPost();
             BeanUtils.copyProperties(params,lbPost);
 
+            LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getId, lbPost.getPostCatalogId()));
+            lbPost.setPostCatalog(lbCatalog.getTitle());
+            lbPost.setTcolor(lbCatalog.getTcolor());
+
+            LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbPost.getPostSubjectId()));
+            lbPost.setPostSubject(lbSubject.getTitle());
+
+            LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbPost.getPeriodicalId()));
+            lbPost.setPeriodicalTitle(lbPeriodical.getTitle());
+
+
             //条件构造器in上手使用
 //            QueryWrapper<LbAuthor> qw = new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList());
 //            qw.in("id", params.getLbAuthorIdsList());
