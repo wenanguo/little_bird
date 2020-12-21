@@ -136,10 +136,7 @@
 </div>
 <div class="articleBox small"><!--字号small middle large-->
     <div class="freeArticleContent">
-        <p th:utext="${lbPost.content}">
-            <h1>01</h1>
-            <h2>标题</h2>
-        </p>
+        <p th:utext="${lbPost.content}"></p>
         <div class="subscribeBox" th:if="${isDisplay} == false">
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle" th:if="${isPayOne} == false">
@@ -162,6 +159,7 @@
                 </div>
             </div>
         </div>
+        <h2>它是一本包</h2>
     </div>
     <div class="articleContent">
         <div th:utext="${lbPost.feeContent}" th:remove="tag"></div>
