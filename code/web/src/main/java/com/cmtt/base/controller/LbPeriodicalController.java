@@ -189,7 +189,7 @@ public class LbPeriodicalController {
     public R bookrack(Principal principal){
 
 
-        LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, 100).orderByDesc(LbPeriodical::getId);
+        LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getTyear);
 
         if(principal==null){
             // 未登录 去掉下载链接
