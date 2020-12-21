@@ -94,7 +94,7 @@ public class LbPostInputParam {
 	private String author;
 
 	@ApiModelProperty(value = "排序")
-	private String postOrder;
+	private Integer postOrder;
 
 	@ApiModelProperty(value = "是否免费 1免费 2收费")
 	private Integer isFree;
