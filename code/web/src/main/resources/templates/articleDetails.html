@@ -36,11 +36,13 @@
                 $(window).scroll(function () {
                     top = $(this).scrollTop();
                     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-                        $('.footerOperation').fadeIn()
+                        $('.footerOperation').show()
                     } else if (bottom < top) {
-                        $('.footerOperation').fadeOut()
+                        $('.footerOperation').hide()
+                    } else if($(this).scrollTop()==0){
+                        $('.footerOperation').hide()
                     } else {
-                        $('.footerOperation').fadeIn()
+                        $('.footerOperation').show()
                     }
                     setTimeout(function () {
                         bottom = top
@@ -134,7 +136,10 @@
 </div>
 <div class="articleBox small"><!--字号small middle large-->
     <div class="freeArticleContent">
-        <p th:utext="${lbPost.content}"></p>
+        <p th:utext="${lbPost.content}">
+            <h1>01</h1>
+            <h2>标题</h2>
+        </p>
         <div class="subscribeBox" th:if="${isDisplay} == false">
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle" th:if="${isPayOne} == false">
