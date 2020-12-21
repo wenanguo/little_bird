@@ -118,19 +118,16 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 }
 .articleBox h1{
     margin-top: 70px;
-    color: #3F3E4C;
     font-size: 42px;
-    font-weight: bold;
+    font-weight: normal;
     text-align: right;
     padding: 0 20px;
 }
 .articleBox h2{
-    margin-top: 10px;
-    color: #3F3E4C;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: normal;
     text-align: right;
-    padding: 0 20px;
+    padding:12px 20px;
 }
 .subscribeBox{
     overflow: hidden;
@@ -324,6 +321,12 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 .day_mode .subscribeTitle h2{
     color: #3F3E4C;
 }
+.day_mode .articleBox h1{
+    color: #3F3E4C;
+}
+.day_mode .articleBox h2{
+    color: #3F3E4C;
+}
 .day_mode .authorBoxList{
     background:#E5E6E7;
 }
@@ -345,7 +348,7 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     background-size: 10%;
 }
 .night_mode blockquote{
-    background:rgba(229, 230, 231, 0.05);
+    background:url('../img/article-line-night.png') no-repeat right+19px top rgba(229, 230, 231, 0.05);
 }
 .night_mode .subscribeBorderTop{
     background-image: linear-gradient(rgba(34,34,34,0.5), rgba(34,34,34,1));
@@ -360,6 +363,12 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     color: #ffffff;
 }
 .night_mode .subscribeTitle h2{
+    color: #DBDBDB;
+}
+.night_mode .articleBox h1{
+    color: #DBDBDB;
+}
+.night_mode .articleBox h2{
     color: #DBDBDB;
 }
 .night_mode .authorBoxList{
@@ -384,14 +393,15 @@ pre.ql-syntax{
     font-weight: 400;
     margin: 0;
     white-space: pre-wrap!important;
+    line-height: 32px;
 }
 blockquote{
     text-align: right;
     color: #767676;
     font-size: 12px;
-    background:url('../img/article-line.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
+    background:url('../img/article-line-day.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
     margin: 0;
-    padding:5px 19px 15px 10px;
+    padding:10px 19px 30px 10px;
 }
 .articleBox ol{
     list-style-type: none!important;
@@ -400,7 +410,7 @@ blockquote{
 .articleBox ol li{
     color: #767676!important;
     font-size: 12px!important;
-    font-weight: 300!important;
+    font-weight: lighter!important;
     line-height: 20px!important;
     text-align: right;
     margin: 0 !important;
