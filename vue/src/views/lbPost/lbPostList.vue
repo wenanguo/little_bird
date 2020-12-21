@@ -348,6 +348,7 @@
                 this.confirmLoading = true
                 form.validateFields((errors, values) => {
                     if (!errors) {
+                            console.log(values)
                             // 日期格式化
                             values.publishedAt = moment(values.publishedAt).format('YYYY-MM-DD HH:mm:ss')
 

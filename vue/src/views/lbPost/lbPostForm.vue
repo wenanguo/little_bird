@@ -98,7 +98,7 @@
                   </a-col>
                   <a-col :span="12" v-if="isSg" >
                     <a-form-item label="引用简介">
-                      <a-textarea :visible="false" v-decorator="['quoteDesc', {rules: [{required: false}]}]"/>
+                      <a-textarea v-decorator="['quoteDesc', {rules: [{required: false}]}]"/>
                     </a-form-item>
                   </a-col>
                   <!-- <a-col :span="12">
@@ -259,6 +259,8 @@
     'id',
     'periodicalId',
     'title',
+    'content',
+    'feeContent',
     'shareTitle',
     'shareContent',
     'quoteTitle',
@@ -400,7 +402,6 @@
 
       // 当 model 发生改变时，为表单设置值
       this.$watch('model', () => {
-        this.model && this.form.setFieldsValue(pick(this.model, fields))
         // 初始化
         if (this.model) {
           this.fileList = [{
@@ -418,6 +419,7 @@
           this.content = this.model.content
           this.feeContent = this.model.feeContent
           this.articleClass = this.model.preimgUrl
+          this.model && this.form.setFieldsValue(pick(this.model, fields))
         } else {
           this.fileList = null
           this.prefileList = null
