@@ -55,7 +55,7 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     text-align: right;
 }
 .articleClass{
-   padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 .articleClass span{
     border-bottom: 1px solid;
@@ -91,17 +91,20 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 .articleBox{
 }
 .articleBox.large p{
-    font-size: 20px
+    font-size: 18px;
+    line-height: 34px;
 }
 .articleBox.middle p{
-    font-size: 18px
+    font-size: 16px;
+    line-height: 30px;
 }
 .articleBox.small p{
-    font-size: 16px
+    font-size: 14px;
+    line-height: 26px;
 }
 .freeArticleContent p,.articleContent p{
     padding: 18px 20px 0 20px;
-    line-height: 187.5%;
+    font-weight: lighter;
 }
 .articleContent p:last-child{
     padding-bottom: 30px;
@@ -113,21 +116,18 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 .articleContent{
     overflow: hidden;
 }
-.articleContent h1{
+.articleBox h1{
     margin-top: 70px;
-    color: #3F3E4C;
     font-size: 42px;
-    font-weight: bold;
+    font-weight: normal;
     text-align: right;
     padding: 0 20px;
 }
-.articleContent h2{
-    margin-top: 10px;
-    color: #3F3E4C;
+.articleBox h2{
     font-size: 20px;
-    font-weight: 400;
+    font-weight: normal;
     text-align: right;
-    padding: 0 20px;
+    padding:12px 20px;
 }
 .subscribeBox{
     overflow: hidden;
@@ -321,6 +321,12 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 .day_mode .subscribeTitle h2{
     color: #3F3E4C;
 }
+.day_mode .articleBox h1{
+    color: #3F3E4C;
+}
+.day_mode .articleBox h2{
+    color: #3F3E4C;
+}
 .day_mode .authorBoxList{
     background:#E5E6E7;
 }
@@ -339,9 +345,10 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 }
 .night_mode pre.ql-syntax{
     background:url('../img/summary_icon_night.png') no-repeat 20px 20px rgba(229, 230, 231, 0.05);
+    background-size: 10%;
 }
 .night_mode blockquote{
-    background:rgba(229, 230, 231, 0.05);
+    background:url('../img/article-line-night.png') no-repeat right+19px top rgba(229, 230, 231, 0.05);
 }
 .night_mode .subscribeBorderTop{
     background-image: linear-gradient(rgba(34,34,34,0.5), rgba(34,34,34,1));
@@ -356,6 +363,12 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     color: #ffffff;
 }
 .night_mode .subscribeTitle h2{
+    color: #DBDBDB;
+}
+.night_mode .articleBox h1{
+    color: #DBDBDB;
+}
+.night_mode .articleBox h2{
     color: #DBDBDB;
 }
 .night_mode .authorBoxList{
@@ -380,14 +393,15 @@ pre.ql-syntax{
     font-weight: 400;
     margin: 0;
     white-space: pre-wrap!important;
+    line-height: 32px;
 }
 blockquote{
     text-align: right;
     color: #767676;
     font-size: 12px;
-    background:url('../img/article-line.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
+    background:url('../img/article-line-day.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
     margin: 0;
-    padding:5px 19px 15px 10px;
+    padding:10px 19px 30px 10px;
 }
 .articleBox ol{
     list-style-type: none!important;
@@ -396,7 +410,7 @@ blockquote{
 .articleBox ol li{
     color: #767676!important;
     font-size: 12px!important;
-    font-weight: 300!important;
+    font-weight: lighter!important;
     line-height: 20px!important;
     text-align: right;
     margin: 0 !important;

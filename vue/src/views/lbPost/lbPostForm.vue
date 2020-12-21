@@ -286,7 +286,8 @@
                 [{ 'indent': '-1' }, { 'indent': '+1' }],
                 [{ 'align': [] }],
                 ['link', 'image'],
-                [{ 'list': 'ordered' }]
+                [{ 'list': 'ordered' }],
+                ['clean']
               ]
   export default {
     components: { ACol, AFormItem, quillEditor },
