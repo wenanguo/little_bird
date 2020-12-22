@@ -1,13 +1,42 @@
 package com.cmtt.base;
 
+import com.alibaba.fastjson.JSON;
+import com.cmtt.base.entity.HR;
+import com.cmtt.base.utils.HttpUtils;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-//启动Spring
-@SpringBootTest
+import java.util.HashMap;
+import java.util.Map;
+
+//@RunWith(SpringRunner.class)
+////启动Spring
+//@SpringBootTest
 public class HelloControllerTest {
+
+
+
+    @Test
+    public void getSendsms() throws Exception {
+
+        String url="http://www.teamyy.cn:18087/api/sys_user/sms";
+        //String url="http://127.0.0.1:8080/api/sys_user/sms";
+        Map<String, Object> map = new HashMap<>();
+        map.put("phone", "15285027249");
+        map.put("type", "1");
+
+        String req = JSON.toJSONString(map);
+
+
+        HR hr = HttpUtils.doPost(url, req, null);
+
+
+        System.out.println(hr);
+
+
+    }
 
 //    @Autowired
 //    private ApiController apiController;
