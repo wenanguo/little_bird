@@ -644,8 +644,8 @@
   /*}*/
   .ql-editing{
     left:auto !important;
-    right: 10px !important;
-    top: 0!important;
+    /* right: 10px !important; */
+    /* top: 0!important; */
     width: 320px;
   }
   .ant-form-item{

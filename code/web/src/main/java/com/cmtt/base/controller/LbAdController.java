@@ -86,7 +86,7 @@ public class LbAdController {
 //        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         // 执行查询
-        lbAdPage = lbAdService.page(lbAdPage, Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,1).orderByDesc(LbAd::getId));
+        lbAdPage = lbAdService.page(lbAdPage, Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,1).orderByAsc(LbAd::getLbPeriodicalIndex));
 
 //        List<LbAd> lbAdList = iLbAdService.list(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,params.getAd_type()));
 
