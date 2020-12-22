@@ -252,14 +252,20 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     overflow: hidden;
     padding: 20px;
     text-align: right;
+    margin-top: 16px;
+    line-height: 20px;
+    font-weight: lighter;
 }
 .periodicalContent h1{
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: normal;
 }
 .periodicalContent h2{
-    font-size: 1rem;
-    font-weight: 300;
+    font-size: 12px;
+    font-weight: lighter;
+}
+.periodicalContent h2 strong{
+    font-weight: normal;
 }
 .footerOperation{
     position: fixed;
