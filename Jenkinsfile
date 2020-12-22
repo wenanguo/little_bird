@@ -39,8 +39,7 @@ pipeline {
                 }
             }
             steps {
-
-                if (env.BRANCH_NAME == 'master') {
+                if(env.BRANCH_NAME == 'master') {
                     echo '$BUILD_TAG'
                     echo '正式版本发布'
                 } else {
