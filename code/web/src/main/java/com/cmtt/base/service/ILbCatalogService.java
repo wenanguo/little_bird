@@ -9,13 +9,15 @@ import java.util.List;
 
 /**
  * <p>
- * 分类表 服务类
+ * 分类表 服务类1
  * </p>
  *
  * @author Andrew.Wen
  * @since 2020-11-25
  */
 public interface ILbCatalogService extends IService<LbCatalog> {
+
+
 
     public List<LbCatalog> getLbCatalogPostList();
 
