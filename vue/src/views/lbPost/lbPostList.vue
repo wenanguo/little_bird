@@ -124,12 +124,12 @@
             title: '标题',
             sorter: true,
             fixed: 'left',
-            width: '150px',
+            width: '200px',
             dataIndex: 'title'
         }, {
             title: '期刊',
             sorter: true,
-            width: '150px',
+            width: '100px',
             dataIndex: 'periodicalTitle'
         }, {
             title: '栏目',
@@ -198,13 +198,13 @@
         }, {
             title: '修改时间',
             sorter: true,
-            width: '150px',
+            width: '100px',
             customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'updateTime'
         }, {
             title: '创建时间',
             sorter: true,
-            width: '150px',
+            width: '100px',
             customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'createTime'
         },
