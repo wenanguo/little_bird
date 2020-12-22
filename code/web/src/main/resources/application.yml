@@ -103,7 +103,16 @@ logging:
 common:
   noauto: /favicon.ico,/api/auth/login,/api/db_doc,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_periodical/bookrack,/api/lb_catalog/get_catalog_post,/api/lb_catalog/catalog_list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_goods/get_one,/api/apple_pay/apple_pay_create,/api/apple_pay/apple_pay_valid,/api/lb_report/add,/api/lb_post/share,/api/lb_post/preview,/page/user_agreement,/page/privacy_agreement,/page/about,/page/download,/page/app_download
 
-
+tencent:
+  secret-id: AKIDFF2f3SoIL9gwlR7atvgAdbJuObYPpwPj
+  SECRET_KEY: FSPRQSJujHH4bt1swlgKp66zdhaFdpmY
+  SMS_SDK_APPID: 1400460605
+  SMS_SIGN: 小乌文化
+  SMS_BIND_TEMPLATE: 804312
+  SMS_LOGIN_TEMPLATE: 804310
+  SMS_REG_TEMPLATE: 804312
+  REGION_CODE: ap-shanghai
+  BUCKET_NAME: littlebird-cos-1304137331
 
 
 pagehelper:
