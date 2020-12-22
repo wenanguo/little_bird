@@ -68,7 +68,6 @@ public class AliPayController {
     @Autowired
     private ILbOrdersService lbOrdersService;
 
-
     /**
      * 回调接口
      */
