@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>[[${lbPost.title}]]</title>
-    <link rel="stylesheet" type="text/css" href="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/css/style.css">
-    <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="${domainPath}+'common/css/style.css'">
+    <script th:src="${domainPath}+'common/js/jquery-1.11.3.min.js'"></script>
     <style>
         .articleContent p{
             font-size: 1rem;/*小*/
@@ -25,7 +25,7 @@
             display: block;
         }
         pre.ql-syntax{
-            background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
+            background:url('[[${domainPath}]]common/img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
             background-size: 10%;
             min-height: 10%;
             text-align: right;
@@ -92,7 +92,7 @@
             <div class="subscribeTitle">
                 <div class="open_down">
                     <a href="javascript:;" class="exchangecss">打开或下载小鸟App阅读更多</a>
-                    <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/bird-logo.png">
+                    <img th:src="${domainPath}+'common/img/bird-logo.png'">
                     <h2 style="text-align: center">它是一本包含小说、非虚构、诗歌、档案等板块的新型文学杂志</h2>
                 </div>
             </div>

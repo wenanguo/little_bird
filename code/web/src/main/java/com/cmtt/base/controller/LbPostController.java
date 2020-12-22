@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -83,6 +84,8 @@ public class LbPostController {
     @Autowired
     private ILbAppVersionService lbAppVersionService;
 
+    @Value("${spring.static-file.domain-path}")
+    private String domainPath;
     /**
      * 主页
      */
@@ -151,6 +154,7 @@ public class LbPostController {
 
 
         ModelAndView mv = new ModelAndView();
+        mv.addObject("domainPath",this.domainPath);
         mv.addObject("android",lbAppVersion.getLinkUrl());
         mv.addObject("lbPost", lbPost);
         mv.addObject("lbPeriodical", lbPeriodical);
@@ -271,6 +275,7 @@ public class LbPostController {
 
 
         Context context=new Context();
+        context.setVariable("domainPath",this.domainPath);
         context.setVariable("lbPost",lbPost);
         context.setVariable("isPayYear",isPayYear);
         context.setVariable("isPayOne",isPayOne);
@@ -326,6 +331,8 @@ public class LbPostController {
         }
 
         ModelAndView mv = new ModelAndView();
+
+        mv.addObject("domainPath",this.domainPath);
         mv.addObject("lbPost",lbPost);
         mv.addObject("isPayYear",isPayYear);
         mv.addObject("isPayOne",isPayOne);

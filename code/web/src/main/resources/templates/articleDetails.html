@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>[[${lbPost.title}]]</title>
-    <link rel="stylesheet" type="text/css" href="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/css/style.css">
-    <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="${domainPath}+'common/css/style.css'">
+    <script th:src="${domainPath}+'common/js/jquery-1.11.3.min.js'"></script>
     <script>
 
             function authorClick(value){
@@ -150,7 +150,7 @@
             </div>
             <div class="subscribeContent" th:if="${isPayOne} == false">
                 <div class="showInfo">
-                    <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/subscribe-bg.png">
+                    <img th:src="${domainPath}+'common/img/subscribe-bg.png'">
                 </div>
                 <div class="priceInfo">《小鸟Aves》付费阅读，全年十二卷定价<span class="pay_499">￥588</span>，试读三篇价格<span class="pay_4_99">￥12</span></div>
                 <!-- <a href="javascript:getFeeContent('{"code":200,"timestamp":"1608123869044","_headers":"","message":"请求成功","result":{"id":1,"periodicalId":2,"periodicalTitle":"11月第三期","title":"一个南方鱼村里最荡漾的时刻","content":"收费内容","shareTitle":"分享标题","shareContent":"分享内容","description":"“不如买块豆腐，吃死算了。”大老白说。","postSubjectId":1,"postSubject":"媒体往事","postCatalogId":1,"tcolor":"#777777","postCatalog":"非虚构","showType":1,"imgUrl":"https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/images/1607525312124.png","linkUrl":"7","themeInfo":"8","author":"","postOrder":"0","publishedAt":"2020-11-21 15:14:24","praiseCount":111,"recordCount":121,"readCount":131,"recommend":1,"status":100,"updateTime":"2020-12-15 01:01:00","createTime":"2020-11-20 23:13:19"}');">测试购买完成</a> -->
