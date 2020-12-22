@@ -263,7 +263,7 @@ public class LbPeriodicalController {
 
         try {
 
-// 构建分页类
+            // 构建分页类
             IPage<LbPeriodical> lbPeriodicalPage = new Page<>(lbPeriodical.getPageNo(), lbPeriodical.getPageSize());
 
             // 构造查询及排序方式
