@@ -717,4 +717,10 @@
     padding-left: 0!important;
     text-indent: 24em;
   }
+  .ql-snow a {
+    color: #5F5E6C!important;
+    border-bottom: #D7A03C solid 1px;
+    text-decoration: none!important;
+  }
+
 </style>

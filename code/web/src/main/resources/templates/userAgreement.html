@@ -12,6 +12,10 @@
     <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('.return').hide();
+            $(window).on('click',function () {
+                $('.return').toggle();
+            });
             $('.return').on('click',function(event) { //关闭页面
                 window.location.href="aves://finish";
                 //window.location.href="aves://getUserToken";
