@@ -21,9 +21,9 @@
 仓库
 
 ```
-docker tag 118.126.66.51/wenanguo/little_bird_api:v1.0.151 ccr.ccs.tencentyun.com/little_bird/api:v1.0.151
+docker tag 118.126.66.51/wenanguo/little_bird_api:v1.0.213 ccr.ccs.tencentyun.com/little_bird/api:v1.0.3
 
-docker push ccr.ccs.tencentyun.com/little_bird/api:v1.0.151
+docker push ccr.ccs.tencentyun.com/little_bird/api:v1.0.3
 ```
 
 本地运行

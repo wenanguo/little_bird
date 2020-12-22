@@ -107,7 +107,8 @@ const vueConfig = {
     proxy: {
       '/api': {
         // target: 'http://www.teamyy.cn:18087',
-        target: 'http://127.0.0.1:8080',
+        target: 'http://app.aves.art:18087',
+        // target: 'http://127.0.0.1:8080',
         ws: false,
         changeOrigin: true
       }
