@@ -21,19 +21,19 @@ public class HelloControllerTest {
     @Test
     public void getSendsms() throws Exception {
 
-        String url="http://www.teamyy.cn:18087/api/sys_user/sms";
-        //String url="http://127.0.0.1:8080/api/sys_user/sms";
-        Map<String, Object> map = new HashMap<>();
-        map.put("phone", "15285027249");
-        map.put("type", "1");
-
-        String req = JSON.toJSONString(map);
-
-
-        HR hr = HttpUtils.doPost(url, req, null);
-
-
-        System.out.println(hr);
+//        String url="http://www.teamyy.cn:18087/api/sys_user/sms";
+//        //String url="http://127.0.0.1:8080/api/sys_user/sms";
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("phone", "15285027249");
+//        map.put("type", "1");
+//
+//        String req = JSON.toJSONString(map);
+//
+//
+//        HR hr = HttpUtils.doPost(url, req, null);
+//
+//
+//        System.out.println(hr);
 
 
     }
