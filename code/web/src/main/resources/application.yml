@@ -6,7 +6,7 @@ spring:
     username: springboot
     password: spring
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://586f85cf61241.sh.cdb.myqcloud.com:3759/common?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://586f85cf61241.sh.cdb.myqcloud.com:3759/example?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     # initialization-mode: ALWAYS
     #   Druid数据源配置
