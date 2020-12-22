@@ -205,20 +205,19 @@ public class LbPostController {
                 if(lbUserCollect!=null)isCollect=true;
 
                 // 查找包年付费订单
-                lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
-                        .eq(LbOrders::getPhone, sysUser.getPhone())
-                        .eq(LbOrders::getStatus, RC.PAY_YES.code())
-                        .eq(LbOrders::getTtype,2)
-                        .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS"),false
-                );
+//                lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
+//                        .eq(LbOrders::getPhone, sysUser.getPhone())
+//                        .eq(LbOrders::getStatus, RC.PAY_YES.code())
+//                        .eq(LbOrders::getTtype,2)
+//                        .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS"),false
+//                );
+
+                isPayYear=lbOrdersService.isPayYear(sysUser.getPhone());
                 // 未判断有效时间
 
-                if(lbOrders !=null){
-                    // 已支付包年
-                    isPayYear=true;
-                }else{
-                    // 未支付包年，判断是否有单点兑换权限
+                if(isPayYear==false){
 
+                    // 未支付包年，判断是否有单点兑换权限
                     List<LbExchangeOrders> exchangeOrdersList = lbExchangeOrdersService.list(Wrappers.<LbExchangeOrders>lambdaQuery()
                             .eq(LbExchangeOrders::getPhone, sysUser.getPhone())
                             .eq(LbExchangeOrders::getStatus, RC.B_NORMAL.code())
@@ -232,7 +231,6 @@ public class LbPostController {
                         }
 
                     }
-
 
                     // 如果没有兑换权限，计算剩余兑换数量
                     if(!isPayOne){

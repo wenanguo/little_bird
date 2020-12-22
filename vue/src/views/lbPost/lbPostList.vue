@@ -52,7 +52,6 @@
         :data="loadData"
         :alert="false"
         :scroll="{ x: 1900}"
-        :rowSelection="rowSelection"
         showPagination="auto"
       >
         <span slot="serial" slot-scope="text, record, index">

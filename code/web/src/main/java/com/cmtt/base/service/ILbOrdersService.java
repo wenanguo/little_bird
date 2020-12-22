@@ -32,4 +32,12 @@ public interface ILbOrdersService extends IService<LbOrders> {
      * @return
      */
     SysUserOrders getOneSysUserOrders(String phone);
+
+
+    /**
+     * 判断当前用户是否包年
+     * @param phone
+     * @return
+     */
+    boolean isPayYear(String phone);
 }

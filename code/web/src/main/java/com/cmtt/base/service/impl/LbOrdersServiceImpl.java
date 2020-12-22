@@ -3,12 +3,14 @@ package com.cmtt.base.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.entity.LbOrders;
 import com.cmtt.base.entity.SysUser;
 import com.cmtt.base.entity.SysUserOrders;
 import com.cmtt.base.mapper.LbOrdersMapper;
 import com.cmtt.base.service.ILbOrdersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cmtt.base.utils.RC;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +38,29 @@ public class LbOrdersServiceImpl extends ServiceImpl<LbOrdersMapper, LbOrders> i
      */
     public SysUserOrders getOneSysUserOrders(String phone){
         return this.baseMapper.getOneSysUserOrders(phone);
+    }
+
+
+    /**
+     * 判断当前用户是否包年
+     * @param phone
+     * @return
+     */
+    public boolean isPayYear(String phone){
+        // 查找包年付费订单
+        LbOrders lbOrders = this.getOne(Wrappers.<LbOrders>lambdaQuery()
+                .eq(LbOrders::getPhone, phone)
+                .eq(LbOrders::getStatus, RC.PAY_YES.code())
+                .eq(LbOrders::getTtype, 2)
+                .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS"), false
+        );
+
+        if(lbOrders !=null){
+            // 已支付包年
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }

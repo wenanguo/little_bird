@@ -94,6 +94,7 @@
         'imgUrl',
         'lbPeriodicalId',
         'lbSubjectId',
+        'adLocation',
         'lbAuthorId',
         'lbPeriodicalIndex',
         'adType',

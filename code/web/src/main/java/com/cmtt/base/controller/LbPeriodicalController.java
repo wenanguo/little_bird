@@ -14,10 +14,7 @@ import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
-import com.cmtt.base.service.ILbAdService;
-import com.cmtt.base.service.ILbCatalogService;
-import com.cmtt.base.service.ILbPeriodicalService;
-import com.cmtt.base.service.ILbPostService;
+import com.cmtt.base.service.*;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,6 +54,9 @@ public class LbPeriodicalController {
 
     @Autowired
     private ILbAdService lbAdService;
+
+    @Autowired
+    private ILbOrdersService lbOrdersService;
 
     /**
      * 当期封面
@@ -191,10 +191,17 @@ public class LbPeriodicalController {
 
         LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getTyear);
 
-        if(principal==null){
-            // 未登录 去掉下载链接
-            queryWrapper.select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"));
+        if(principal!=null){
+            // 未登录
+            SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+            boolean isPayYear=lbOrdersService.isPayYear(sysUser.getPhone());
+            if(isPayYear==false){
+                // 未包年
+                queryWrapper.select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"));
+            }
 
+        }else {
+            queryWrapper.select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"));
         }
 
         List<LbPeriodical> lbPeriodicalList = lbPeriodicalService.list(queryWrapper);
