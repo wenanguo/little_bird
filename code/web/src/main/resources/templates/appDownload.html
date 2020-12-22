@@ -38,6 +38,8 @@
     <style>
         .swiper-container {
             height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
         .swiper-slide img{
             width: 100%;
@@ -45,7 +47,7 @@
         .swiper-container .line{
             background: url("https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/footerBg.png") no-repeat bottom;
             background-size: 100%;
-            position: absolute;
+            position: fixed;
             bottom: 87px;
             left: 0;
             width: 100%;
@@ -61,6 +63,8 @@
             text-align: left;
             color: #767676;
             padding: 6px 20px;
+            position: fixed;
+            z-index: 99;
         }
         .downloadFooter{
             background: #222222;

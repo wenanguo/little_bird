@@ -252,14 +252,20 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     overflow: hidden;
     padding: 20px;
     text-align: right;
+    margin-top: 16px;
+    line-height: 20px;
+    font-weight: lighter;
 }
 .periodicalContent h1{
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: normal;
 }
 .periodicalContent h2{
-    font-size: 1rem;
-    font-weight: 300;
+    font-size: 12px;
+    font-weight: lighter;
+}
+.periodicalContent h2 strong{
+    font-weight: normal;
 }
 .footerOperation{
     position: fixed;
@@ -279,23 +285,23 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     height: 10vw;
 }
 .footerOperationContent i.return{
-    background: url("../img/return-icon.png") no-repeat;
+    background: url("https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/return-icon.png") no-repeat;
     background-size: 100% 100%;
 }
 .footerOperationContent i.collect{
-    background: url("../img/collect-icon.png") no-repeat;
+    background: url("https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/collect-icon.png") no-repeat;
     background-size: 100% 100%;
 }
 .footerOperationContent i.collect-on{
-    background: url("../img/collect-on.png") no-repeat;
+    background: url("https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/collect-on.png") no-repeat;
     background-size: 100% 100%;
 }
 .footerOperationContent i.link{
-    background: url("../img/share-icon.png") no-repeat;
+    background: url("https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/share-icon.png") no-repeat;
     background-size: 100% 100%;
 }
 .footerOperationContent i.top{
-    background: url("../img/top-icon.png") no-repeat;
+    background: url("https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/top-icon.png") no-repeat;
     background-size: 100% 100%;
 }
 
@@ -344,11 +350,11 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     background:rgba(229, 230, 231, 0.05);
 }
 .night_mode pre.ql-syntax{
-    background:url('../img/summary_icon_night.png') no-repeat 20px 20px rgba(229, 230, 231, 0.05);
+    background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/summary_icon_night.png') no-repeat 20px 20px rgba(229, 230, 231, 0.05);
     background-size: 10%;
 }
 .night_mode blockquote{
-    background:url('../img/article-line-night.png') no-repeat right+19px top rgba(229, 230, 231, 0.05);
+    background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/article-line-night.png') no-repeat right+19px top rgba(229, 230, 231, 0.05);
 }
 .night_mode .subscribeBorderTop{
     background-image: linear-gradient(rgba(34,34,34,0.5), rgba(34,34,34,1));
@@ -384,11 +390,11 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     color: #757575;
 }
 pre.ql-syntax{
-    background:url('../img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
+    background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
     background-size: 10%;
     min-height: 10%;
     text-align: right;
-    padding:30px 19px 20px 15%;
+    padding:30px 19px 20px 20%;
     font-size:18px;
     font-weight: 400;
     margin: 0;
@@ -399,7 +405,7 @@ blockquote{
     text-align: right;
     color: #767676;
     font-size: 12px;
-    background:url('../img/article-line-day.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
+    background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/article-line-day.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
     margin: 0;
     padding:10px 19px 30px 10px;
 }
@@ -420,35 +426,44 @@ blockquote{
 .articleBox ol li::before{
     display: none!important;
 }
-.ql-editor .ql-indent-1:not(.ql-direction-rtl) {
+.articleBox .ql-indent-1:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 3em;
 }
-.ql-editor .ql-indent-2:not(.ql-direction-rtl) {
+.articleBox .ql-indent-2:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 6em;
 }
-.ql-editor .ql-indent-3:not(.ql-direction-rtl) {
+.articleBox .ql-indent-3:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 9em;
 }
-.ql-editor .ql-indent-4:not(.ql-direction-rtl) {
+.articleBox .ql-indent-4:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 12em;
 }
-.ql-editor .ql-indent-5:not(.ql-direction-rtl) {
+.articleBox .ql-indent-5:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 15em;
 }
-.ql-editor .ql-indent-6:not(.ql-direction-rtl) {
+.articleBox .ql-indent-6:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 18em;
 }
-.ql-editor .ql-indent-7:not(.ql-direction-rtl) {
+.articleBox .ql-indent-7:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 21em;
 }
-.ql-editor .ql-indent-6:not(.ql-direction-rtl) {
+.articleBox .ql-indent-6:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 24em;
+}
+.articleBox .ql-align-center {
+    text-align: center;
+}
+.articleBox .ql-align-right {
+    text-align: right;
+}
+.articleBox .ql-align-justify {
+    text-align: justify;
 }
