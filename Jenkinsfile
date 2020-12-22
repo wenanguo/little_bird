@@ -40,7 +40,7 @@ pipeline {
             }
             steps {
                 script {
-                    if(env.BRANCH_NAME == 'master') {
+                    if(env.BRANCH_NAME == 'master1') {
                         echo "$BUILD_TAG"
                         echo '正式版本发布'
                     } else {
