@@ -388,7 +388,7 @@ pre.ql-syntax{
     background-size: 10%;
     min-height: 10%;
     text-align: right;
-    padding:30px 19px 20px 15%;
+    padding:30px 19px 20px 20%;
     font-size:18px;
     font-weight: 400;
     margin: 0;
@@ -420,35 +420,44 @@ blockquote{
 .articleBox ol li::before{
     display: none!important;
 }
-.ql-editor .ql-indent-1:not(.ql-direction-rtl) {
+.articleBox .ql-indent-1:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 3em;
 }
-.ql-editor .ql-indent-2:not(.ql-direction-rtl) {
+.articleBox .ql-indent-2:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 6em;
 }
-.ql-editor .ql-indent-3:not(.ql-direction-rtl) {
+.articleBox .ql-indent-3:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 9em;
 }
-.ql-editor .ql-indent-4:not(.ql-direction-rtl) {
+.articleBox .ql-indent-4:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 12em;
 }
-.ql-editor .ql-indent-5:not(.ql-direction-rtl) {
+.articleBox .ql-indent-5:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 15em;
 }
-.ql-editor .ql-indent-6:not(.ql-direction-rtl) {
+.articleBox .ql-indent-6:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 18em;
 }
-.ql-editor .ql-indent-7:not(.ql-direction-rtl) {
+.articleBox .ql-indent-7:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 21em;
 }
-.ql-editor .ql-indent-6:not(.ql-direction-rtl) {
+.articleBox .ql-indent-6:not(.ql-direction-rtl) {
     padding-left: 0!important;
     text-indent: 24em;
+}
+.articleBox .ql-align-center {
+    text-align: center;
+}
+.articleBox .ql-align-right {
+    text-align: right;
+}
+.articleBox .ql-align-justify {
+    text-align: justify;
 }
