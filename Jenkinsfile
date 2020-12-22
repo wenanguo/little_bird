@@ -39,18 +39,20 @@ pipeline {
                 }
             }
             steps {
-                if(env.BRANCH_NAME == 'master') {
-                    echo '$BUILD_TAG'
-                    echo '正式版本发布'
-                } else {
-                    echo '测试版本发布'
-                    //sh './jenkins/scripts/deliver-for-development.sh' 
-                    //input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                    sh "echo ok && cd code/web && docker build -t 118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER -f Dockerfile . && docker push 118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER"
-                    sh "wget \"http://123.206.104.174:5000/update?images=118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER&project=little_bird_api\""
-                    //sh "echo ok && cd vue && docker build -t 118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER -f Dockerfile-vue . && docker push 118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER"
-                    //sh "wget \"http://123.206.104.174:5000/update?images=118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER&project=little_bird_vue\""
-                    //sh './jenkins/scripts/publish.sh' 
+                script {
+                    if(env.BRANCH_NAME == 'master') {
+                        echo '$BUILD_TAG'
+                        echo '正式版本发布'
+                    } else {
+                        echo '测试版本发布'
+                        //sh './jenkins/scripts/deliver-for-development.sh' 
+                        //input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                        sh "echo ok && cd code/web && docker build -t 118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER -f Dockerfile . && docker push 118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER"
+                        sh "wget \"http://123.206.104.174:5000/update?images=118.126.66.51/wenanguo/little_bird_api:v1.0.$BUILD_NUMBER&project=little_bird_api\""
+                        //sh "echo ok && cd vue && docker build -t 118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER -f Dockerfile-vue . && docker push 118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER"
+                        //sh "wget \"http://123.206.104.174:5000/update?images=118.126.66.51/wenanguo/little_bird_vue:v1.0.$BUILD_NUMBER&project=little_bird_vue\""
+                        //sh './jenkins/scripts/publish.sh' 
+                    }
                 }
 
                 
