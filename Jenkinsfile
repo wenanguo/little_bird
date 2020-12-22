@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3-adoptopenjdk-14' 
-                    args '-v /root/.m2:/root/.m2' 
+                    args '-v /usr/local/jenkins-data/maven/.m2:/root/.m2' 
                 }
             }
             steps {
