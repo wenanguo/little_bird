@@ -342,6 +342,11 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 .day_mode .authorInfo h2{
     color: #303042;
 }
+.day_mode .articleBox a{
+    color: #3F3E4C;
+    border-bottom: 1px solid #D7A03C;
+    text-decoration: none!important;
+}
 .night_mode{
     color: #DBDBDB;
     background: #222222;
@@ -388,6 +393,11 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 }
 .night_mode .subscribeText{
     color: #757575;
+}
+.night_mode .articleBox a{
+    color: #DBDBDB;
+    text-decoration: none!important;
+    border-bottom: 1px solid #D7A03C;
 }
 pre.ql-syntax{
     background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
