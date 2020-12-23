@@ -65,9 +65,12 @@ public class LbPeriodicalController {
     @ResponseBody
     @ApiOperation("当期封面信息")
     public R current(){
-        LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getId),false);
+        LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery()
+                .eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getId),false);
 
-        List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPeriodicalId, lbPeriodical.getId()).orderByDesc(LbPost::getPublishedAt));
+        List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                .eq(LbPost::getPeriodicalId, lbPeriodical.getId()).orderByDesc(LbPost::getPublishedAt));
 
         lbPeriodical.setLbPostList(lbPostList);
 
