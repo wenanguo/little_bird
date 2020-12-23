@@ -657,8 +657,10 @@
   .ql-editing{
     left:auto !important;
     /* right: 10px !important; */
-    /* top: 0!important; */
+    /*top: 0!important;*/
     width: 320px;
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
   }
   .ant-form-item{
     margin-bottom: 16px!important;
@@ -736,5 +738,11 @@
   }
   .ql-toolbar.ql-snow .ql-formats{
     margin-right: 0!important;
+  }
+  .ql-action{
+    border-bottom:none!important;
+  }
+  .ql-action::after{
+    color: #06c!important;
   }
 </style>
