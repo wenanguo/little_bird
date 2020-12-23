@@ -353,7 +353,7 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/summary_icon_night.png') no-repeat 20px 20px rgba(229, 230, 231, 0.05);
     background-size: 10%;
 }
-.night_mode blockquote{
+.night_mode .articleBox ul{
     background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/article-line-night.png') no-repeat right+19px top rgba(229, 230, 231, 0.05);
 }
 .night_mode .subscribeBorderTop{
@@ -401,14 +401,6 @@ pre.ql-syntax{
     white-space: pre-wrap!important;
     line-height: 32px;
 }
-blockquote{
-    text-align: right;
-    color: #767676;
-    font-size: 12px;
-    background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/article-line-day.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
-    margin: 0;
-    padding:10px 19px 30px 10px;
-}
 .articleBox ol{
     list-style-type: none!important;
     padding: 10px 20px;
@@ -424,6 +416,24 @@ blockquote{
     list-style-type: none!important;
 }
 .articleBox ol li::before{
+    display: none!important;
+}
+.articleBox ul{
+    list-style-type: none!important;
+    padding:10px 19px 30px 10px;
+    background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/article-line-day.png') no-repeat right+19px top rgba(229, 230, 231, 0.2);
+}
+.articleBox ul li{
+    color: #767676!important;
+    font-size: 12px!important;
+    font-weight: 300!important;
+    line-height: 17px!important;
+    text-align: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none!important;
+}
+.articleBox ul li::before{
     display: none!important;
 }
 .articleBox .ql-indent-1:not(.ql-direction-rtl) {

@@ -281,7 +281,8 @@
   ]
   const quillContainer = [
                 ['bold', 'italic', 'underline', 'strike'],
-                ['code-block', 'blockquote'],
+                ['code-block'],
+                [{ 'list': 'bullet' }],
                 [{ 'header': 1 }, { 'header': 2 }],
                 [{ 'indent': '-1' }, { 'indent': '+1' }],
                 [{ 'align': [] }],
@@ -571,10 +572,6 @@
     border-radius: 10px;
     background-color: #cccccc;
   }
-  .ql-blockquote{
-    background:url("../../assets/image-text.png") no-repeat center !important;
-    background-size: 70% 70% !important;
-  }
   .ql-blockquote svg,.ql-code-block svg,.ql-list svg{
     display: none;
   }
@@ -582,16 +579,13 @@
     background:url("../../assets/summary_icon.png") no-repeat center !important;
     background-size: 70% 70% !important;
   }
-  .ql-list{
-    background:url("../../assets/album.png") no-repeat center !important;
+  .ql-snow .ql-formats:nth-child(3) .ql-list{
+    background:url("../../assets/image-text.png") no-repeat center !important;
     background-size: 70% 70% !important;
   }
-  .ql-editor blockquote{
-    background:url('../../assets/article-line.png') no-repeat right+10px top rgba(229, 230, 231, 0.2);
-    border: 0!important;
-    margin: 0!important;
-    padding:5px 10px 15px 10px;
-    text-align: right;
+  .ql-snow .ql-formats:nth-child(8) .ql-list{
+    background:url("../../assets/album.png") no-repeat center !important;
+    background-size: 70% 70% !important;
   }
   .ql-editor ol{
     list-style-type: none!important;
@@ -608,6 +602,24 @@
     list-style-type: none!important;
   }
   .ql-editor ol li::before{
+    display: none!important;
+  }
+  .ql-editor ul{
+    list-style-type: none!important;
+    padding:10px 17px 15px 17px;
+    background:url('../../assets/article-line.png') no-repeat right+10px top rgba(229, 230, 231, 0.2);
+  }
+  .ql-editor ul li{
+    color: #767676!important;
+    font-size: 12px!important;
+    font-weight: 300!important;
+    line-height: 17px!important;
+    text-align: right;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none!important;
+  }
+  .ql-editor ul li::before{
     display: none!important;
   }
   .ql-snow .ql-editor pre.ql-syntax{
@@ -722,5 +734,7 @@
     border-bottom: #D7A03C solid 1px;
     text-decoration: none!important;
   }
-
+  .ql-toolbar.ql-snow .ql-formats{
+    margin-right: 0!important;
+  }
 </style>
