@@ -174,7 +174,10 @@ public class LbPostController {
     public R detail(@RequestBody @Valid GetOneInputParam params,Principal principal) throws IOException, TemplateException {
 
         // 执行查询
-        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+        LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()),false);
+
+        if(lbPost==null)return R.err().setMessage("找不到当前文章");
+
         LbOrders lbOrders=null;
 
         // 判断用户是否已经包年付费
@@ -201,7 +204,7 @@ public class LbPostController {
             }else{
 
                 // 判断是否收藏
-                LbUserCollect lbUserCollect = lbUserCollectService.getOne(Wrappers.<LbUserCollect>lambdaQuery().eq(LbUserCollect::getUserId, sysUser.getId()).eq(LbUserCollect::getPostId, params.getId()));
+                LbUserCollect lbUserCollect = lbUserCollectService.getOne(Wrappers.<LbUserCollect>lambdaQuery().eq(LbUserCollect::getUserId, sysUser.getId()).eq(LbUserCollect::getPostId, params.getId()),false);
                 if(lbUserCollect!=null)isCollect=true;
 
                 // 查找包年付费订单
@@ -287,6 +290,9 @@ public class LbPostController {
         //System.out.println(result);
         lbPost.setContent(result);
         lbPost.setLbAuthorList(lbPost.getLbAuthorList());
+
+        // 解决ios无法获取收藏状态
+        lbPost.setCollect(isCollect);
 
 
         return R.ok().setResult(lbPost);

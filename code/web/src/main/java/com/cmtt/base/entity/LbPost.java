@@ -34,6 +34,9 @@ public class LbPost extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableField(exist = false)
+    private boolean collect;
+
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -179,5 +182,7 @@ public class LbPost extends BaseEntity implements Serializable {
 
     @TableField(exist = false)
     private List<Integer> lbAuthorIdsList;
+
+
 
 }
