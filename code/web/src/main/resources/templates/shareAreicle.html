@@ -15,7 +15,8 @@
             $('.authorBoxList').children('.authorBox:odd').addClass('right');
 
             $('.open_down').on('click',function(event) { //打开或者跳转
-                window.location.href="aves://index?id=[[${lbPost.id}]]";
+                window.location.href="https://share.aves.art/avesapp/articledetail?id=[[${lbPost.id}]]";
+                // window.location.href="aves://index?id=[[${lbPost.id}]]";
                 window.location.href="/page/app_download" //Android下载地址
             });
         })
