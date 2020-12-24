@@ -55,7 +55,7 @@ public class ArticleController {
         R httpResp = new R();
 
 
-            System.out.println(principal);
+            //System.out.println(principal);
 
        // try {
 
