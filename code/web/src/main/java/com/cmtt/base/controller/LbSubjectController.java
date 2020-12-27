@@ -25,6 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -84,6 +85,7 @@ public class LbSubjectController {
             List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                     .eq(LbPost::getPostSubjectId, lbSubject.getId())
                     .in(LbPost::getIsFree, new Integer[]{1,2})
+                    .lt(LbPost::getPublishedAt, LocalDateTime.now())
                     .eq(LbPost::getStatus,RC.B_NORMAL.code())
             );
             lbSubject.setLbPostList(lbPosts);
@@ -104,7 +106,7 @@ public class LbSubjectController {
 
         try {
 
-// 构建分页类
+            // 构建分页类
             IPage<LbSubject> lbSubjectPage = new Page<>(lbSubject.getPageNo(), lbSubject.getPageSize());
 
             // 构造查询及排序方式

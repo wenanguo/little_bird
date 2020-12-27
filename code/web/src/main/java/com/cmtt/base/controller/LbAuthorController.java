@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -60,6 +61,7 @@ public class LbAuthorController {
             List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().like(LbPost::getAuthor, lbAuthor.getName())
             .eq(LbPost::getStatus,RC.B_NORMAL.code())
             .in(LbPost::getIsFree, new Integer[]{1,2})
+            .lt(LbPost::getPublishedAt, LocalDateTime.now())
             );
             lbAuthor.setLbPostList(list);
             return R.ok().setResult(lbAuthor);

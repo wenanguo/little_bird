@@ -24,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -72,6 +73,7 @@ public class LbCatalogController {
                 .in(LbPost::getIsFree, new Integer[]{1,2})
                 .eq(LbPost::getRecommend,1)
                 .eq(LbPost::getStatus,RC.B_NORMAL.code())
+                .lt(LbPost::getPublishedAt, LocalDateTime.now())
                 .orderByDesc(LbPost::getPostOrder)
                 .last("limit 0,5"));
 

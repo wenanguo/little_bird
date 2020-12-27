@@ -124,7 +124,7 @@ public class LbPeriodicalController {
      */
     @PostMapping("index_post")
     @ResponseBody
-    @ApiOperation("主页文章列表")
+    @ApiOperation("主页文章列表1")
     public R index_post(@RequestBody @Valid PageInputParam params){
 
 
