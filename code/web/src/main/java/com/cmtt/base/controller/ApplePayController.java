@@ -219,18 +219,16 @@ public class ApplePayController {
         LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
 
         if(lbOrders!=null){
-            // 存在订单，不需要再次请求苹果验证
+
             // 检查是否有用户信息，如果有，而且已经有的那个钱订单，进行绑定
 
             if(principal!=null){
+                // 登录模式
                 SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
 
+                if(lbOrders.getStatus().equals(RC.PAY_YES.code())&&lbOrders.getPhone()==null){
+                // 订单状态为203，已支付，手机号为空，则绑定
 
-
-                String phone=null;
-                if(lbOrders.getPhone()!=null){ // 如果订单手机号为空，则绑定
-
-                        // 绑定订单
                         lbOrders.setPhone(sysUser.getPhone());
                         lbOrdersService.updateById(lbOrders);
                         Map<String,Object> mapRet=new HashMap<>();
@@ -239,7 +237,7 @@ public class ApplePayController {
 
                 }else{
                     // 正常验证
-                    lbOrders.setPhone(sysUser.getPhone());
+//                    lbOrders.setPhone(sysUser.getPhone());
                     return this.postAppleServer(params);
                 }
             }else{
