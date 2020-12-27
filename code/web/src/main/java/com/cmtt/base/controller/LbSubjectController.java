@@ -83,6 +83,7 @@ public class LbSubjectController {
             lbSubject.setLbCatalog(lbCatalog);
 
             List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                    .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
                     .eq(LbPost::getPostSubjectId, lbSubject.getId())
                     .in(LbPost::getIsFree, new Integer[]{1,2})
                     .lt(LbPost::getPublishedAt, LocalDateTime.now())

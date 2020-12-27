@@ -34,6 +34,7 @@ import org.thymeleaf.context.Context;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -96,19 +97,26 @@ public class LbPostController {
 
         // 构建分页类
         IPage<LbPost> lbPostPage = new Page<>(params.getPageNo(), params.getPageSize());
+//
+//        // 构造查询及排序方式
+//        QueryWrapper<LbPost> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.like("title",params.getKeyString());
+//        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
-        // 构造查询及排序方式
-        QueryWrapper<LbPost> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("title",params.getKeyString());
-        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
+        lbPostPage = lbPostService.page(lbPostPage,Wrappers.<LbPost>lambdaQuery()
+                .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                        .like(LbPost::getTitle, params.getKeyString())
+                        .in(LbPost::getIsFree, new Integer[]{1,2})
+                        .lt(LbPost::getPublishedAt, LocalDateTime.now())
+                        .eq(LbPost::getStatus,RC.B_NORMAL.code()));
 
-        // 执行查询
-        lbPostPage = lbPostService.getBaseMapper().selectPage(lbPostPage, queryWrapper);
 
 
-        R r=R.ok();
-        r.setPageResult(lbPostPage);
-        return r;
+//        // 执行查询
+//        lbPostPage = lbPostService.page(lbPostPage, queryWrapper);
+
+
+        return R.ok().setPageResult(lbPostPage);
     }
 
 
