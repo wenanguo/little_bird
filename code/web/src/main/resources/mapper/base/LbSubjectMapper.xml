@@ -49,7 +49,7 @@ b.id as pid,b.periodical_id ,b.periodical_title,b.title as ptitle,b.description,
 b.post_catalog,b.tcolor,b.post_catalog_id,b.show_type,b.img_url as pimg_url,b.link_url,b.theme_info,b.author,b.post_order,
 b.published_at,b.praise_count,b.record_count,b.read_count,b.recommend as precommend,b.status as pstatus,
 b.update_time as pupdate_time,b.create_time as pcreate_time
- from lb_subject as a,lb_post as b where a.id=b.post_subject_id
+ from lb_subject as a,lb_post as b where a.id=b.post_subject_id and b.is_free in (1,2)
     </select>
 
 

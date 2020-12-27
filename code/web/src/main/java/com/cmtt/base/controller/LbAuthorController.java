@@ -57,7 +57,10 @@ public class LbAuthorController {
         LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, params.getId()),false);
 
         if(lbAuthor!=null){
-            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().like(LbPost::getAuthor, lbAuthor.getName()));
+            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().like(LbPost::getAuthor, lbAuthor.getName())
+            .eq(LbPost::getStatus,RC.B_NORMAL.code())
+            .in(LbPost::getIsFree, new Integer[]{1,2})
+            );
             lbAuthor.setLbPostList(list);
             return R.ok().setResult(lbAuthor);
         }else{

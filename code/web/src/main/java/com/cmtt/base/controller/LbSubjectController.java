@@ -81,7 +81,11 @@ public class LbSubjectController {
             LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getId, lbSubject.getCatalogId()));
             lbSubject.setLbCatalog(lbCatalog);
 
-            List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostSubjectId, lbSubject.getId()));
+            List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                    .eq(LbPost::getPostSubjectId, lbSubject.getId())
+                    .in(LbPost::getIsFree, new Integer[]{1,2})
+                    .eq(LbPost::getStatus,RC.B_NORMAL.code())
+            );
             lbSubject.setLbPostList(lbPosts);
         }
 

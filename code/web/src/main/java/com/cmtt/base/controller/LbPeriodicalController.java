@@ -150,6 +150,7 @@ public class LbPeriodicalController {
 
             item.setLbPostList(lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                     .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                    .in(LbPost::getIsFree, new Integer[]{1,2})
                     .eq(LbPost::getPeriodicalId,item.getId())
                     .eq(LbPost::getStatus,RC.B_NORMAL.code())
                     .lt(LbPost::getPublishedAt, LocalDateTime.now())

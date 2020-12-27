@@ -69,7 +69,9 @@ public class LbCatalogController {
         // 执行查询
         List<LbPost> lbCatalogPostList= lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostCatalogId,params.getCatalogId())
                 .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                .in(LbPost::getIsFree, new Integer[]{1,2})
                 .eq(LbPost::getRecommend,1)
+                .eq(LbPost::getStatus,RC.B_NORMAL.code())
                 .orderByDesc(LbPost::getPostOrder)
                 .last("limit 0,5"));
 
