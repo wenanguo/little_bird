@@ -148,6 +148,9 @@
                         <a-radio :value="2">
                           收费
                         </a-radio>
+                        <a-radio :value="3">
+                          测试
+                        </a-radio>
                       </a-radio-group>
                     </a-form-item>
                   </a-col>

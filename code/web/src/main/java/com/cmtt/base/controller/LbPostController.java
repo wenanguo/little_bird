@@ -359,6 +359,34 @@ public class LbPostController {
     /**
      * 分页获取列表
      */
+    @PostMapping("/testlist")
+    @ResponseBody
+    @ApiOperation("测试文章列表")
+    public R testlist() {
+
+        try {
+
+            // 执行查询
+            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getIsFree, 3)
+                    .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                    .orderByDesc(LbPost::getPostOrder));
+
+            // 设置返回数据
+            return R.ok().setResult(list);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+
+    /**
+     * 分页获取列表
+     */
     @GetMapping("/list")
     @ResponseBody
     public R list(LbPost lbPost) {

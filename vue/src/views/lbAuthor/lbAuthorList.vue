@@ -12,9 +12,9 @@
             <a-col :md="8" :sm="24">
               <a-form-item label="使用状态">
                 <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="100">正常</a-select-option>
-                  <a-select-option value="101">禁用</a-select-option>
+                  <a-select-option :value="0">全部</a-select-option>
+                  <a-select-option :value="100">正常</a-select-option>
+                  <a-select-option :value="101">禁用</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>

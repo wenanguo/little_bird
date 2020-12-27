@@ -12,9 +12,9 @@
             <a-col :md="8" :sm="24">
               <a-form-item label="使用状态">
                 <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="100">正常</a-select-option>
-                  <a-select-option value="101">禁用</a-select-option>
+                  <a-select-option :value="0">全部</a-select-option>
+                  <a-select-option :value="100">正常</a-select-option>
+                  <a-select-option :value="101">禁用</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -22,7 +22,7 @@
             </template>
             <a-col :md="!advanced && 8 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-                <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+                <a-button type="primary" @click="searchForm">查询</a-button>
                 <a-button style="margin-left: 8px" @click="resetSearchForm">重置</a-button>
               </span>
             </a-col>
@@ -212,7 +212,6 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    console.log('loadData request parameters:', requestParameters)
                     return getLbAdList(requestParameters)
                         .then(res => {
                             return res.result
@@ -354,6 +353,10 @@
             },
             toggleAdvanced () {
                 this.advanced = !this.advanced
+            },
+            searchForm () {
+                // 刷新表格
+                this.$refs.table.refresh(true)
             },
             resetSearchForm () {
                 this.queryParam = {

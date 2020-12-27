@@ -12,9 +12,9 @@
             <a-col :md="8" :sm="24">
               <a-form-item label="使用状态">
                 <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="100">正常</a-select-option>
-                  <a-select-option value="101">禁用</a-select-option>
+                  <a-select-option :value="0">全部</a-select-option>
+                  <a-select-option :value="100">正常</a-select-option>
+                  <a-select-option :value="101">禁用</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -148,13 +148,19 @@
             customRender: (value) => showTypeMap[value].text,
             dataIndex: 'showType'
         }, {
-            title: '图片',
+            title: '是否免费',
+            sorter: true,
+            width: '100px',
+            customRender: (value) => isFreeMap[value].text,
+            dataIndex: 'isFree'
+        }, {
+            title: '题图',
             sorter: true,
             width: '100px',
             scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
         }, {
-            title: '文章图片',
+            title: '长题图',
             sorter: true,
             width: '100px',
             scopedSlots: { customRender: 'imgslot' },
@@ -198,13 +204,13 @@
         }, {
             title: '修改时间',
             sorter: true,
-            width: '100px',
+            width: '120px',
             customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'updateTime'
         }, {
             title: '创建时间',
             sorter: true,
-            width: '100px',
+            width: '120px',
             customRender: (text) => text ? moment(text).format('YYYY-MM-DD') : '',
             dataIndex: 'createTime'
         },
@@ -229,6 +235,21 @@
     4: {
         status: 'processing',
         text: '无图'
+    }
+  }
+
+  const isFreeMap = {
+    1: {
+        status: 'default',
+        text: '免费'
+    },
+    2: {
+        status: 'processing',
+        text: '收费'
+    },
+    3: {
+        status: 'processing',
+        text: '测试'
     }
   }
 
