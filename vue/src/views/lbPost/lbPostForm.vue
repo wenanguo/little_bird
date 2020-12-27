@@ -151,13 +151,15 @@
                       </a-radio-group>
                     </a-form-item>
                   </a-col>
-                  <a-col :span="12">
-                    <a-form-item label="状态">
-                      <a-radio-group v-decorator="['status', { initialValue: 100 }]">
-                        <a-radio :value="100">正常</a-radio>
-                        <a-radio :value="101">禁用</a-radio>
-                      </a-radio-group>
-                    </a-form-item>
+                  <a-col :span="24">
+                    <a-col :span="12">
+                      <a-form-item label="状态">
+                        <a-radio-group v-decorator="['status', { initialValue: 100 }]">
+                          <a-radio :value="100">正常</a-radio>
+                          <a-radio :value="101">禁用</a-radio>
+                        </a-radio-group>
+                      </a-form-item>
+                    </a-col>
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="题图" help="左右图文：450*780，上下图文：1005*540">
@@ -648,8 +650,9 @@
     text-align: right;
     padding: 0 10px;
   }
-  .phone-view .ql-editor p,.article-editor{
+  .ql-editor p,.article-editor{
     padding: 10px;
+    font-size: 14px;
   }
   /*.ant-modal{*/
   /*  width: 100% !important;*/
