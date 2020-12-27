@@ -228,13 +228,14 @@ public class ApplePayController {
 
 
                 String phone=null;
-                if(lbOrders.getPhone()==null){ // 如果订单手机号为空，则绑定
+                if(lbOrders.getPhone()!=null){ // 如果订单手机号为空，则绑定
 
                         // 绑定订单
                         lbOrders.setPhone(sysUser.getPhone());
                         lbOrdersService.updateById(lbOrders);
-
-                    return R.ok().setMessage("当前订单绑定成功");
+                        Map<String,Object> mapRet=new HashMap<>();
+                        mapRet.put("status",RC.PAY_YES.code());
+                    return R.ok().setMessage("当前订单绑定成功").setResult(mapRet);
 
                 }else{
                     // 正常验证
