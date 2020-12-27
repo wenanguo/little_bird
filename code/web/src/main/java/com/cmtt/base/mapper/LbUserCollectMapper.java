@@ -25,6 +25,6 @@ public interface LbUserCollectMapper extends BaseMapper<LbUserCollect> {
      * @param id
      * @return
      */
-    @Select("select * from lb_post where id in (select post_id from lb_user_collect where user_id =#{id})")
+    @Select("select id,periodical_id,periodical_title,title,share_title,share_content,quote_title,quote_desc,description,post_subject_id,post_subject,post_catalog_id,tcolor,post_catalog,show_type,img_url,preimg_url,link_url,theme_info,author,post_order,is_free,published_at,praise_count,record_count,read_count,recommend,status,update_time,create_time from lb_post where id in (select post_id from lb_user_collect where user_id =#{id})")
     IPage<LbPost> getMyCollectPostByUserId(IPage<LbPost> page,Integer id);
 }

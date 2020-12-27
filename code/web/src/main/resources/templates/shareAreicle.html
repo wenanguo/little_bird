@@ -15,9 +15,14 @@
             $('.authorBoxList').children('.authorBox:odd').addClass('right');
 
             $('.open_down').on('click',function(event) { //打开或者跳转
+                var u = navigator.userAgent;
+                if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
+                    window.location.href="aves://index?id=[[${lbPost.id}]]";
+                    window.location.href="/page/app_download" //Android下载地址
 
-                window.location.href="https://share.aves.art/avesapp/articledetail?id=[[${lbPost.id}]]";
-              
+                } else {//ios隐藏底部操作栏
+                    window.location.href="https://share.aves.art/avesapp/articledetail?id=[[${lbPost.id}]]";
+                }
             });
         })
     </script>

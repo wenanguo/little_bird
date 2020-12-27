@@ -76,6 +76,23 @@ spring:
       # 连接池最大阻塞等待时间（使用负值表示没有限制）
       max-wait: -1
 
+  cmtt-session:
+    # session 过期时间，单位为分钟,30天
+    session_expire_time: 43200
+    # session 刷新时间，单位为分钟，25天
+    session_refresh_time: 36000
+
+  tencent:
+    secret_id: AKIDFF2f3SoIL9gwlR7atvgAdbJuObYPpwPj
+    secret_key: FSPRQSJujHH4bt1swlgKp66zdhaFdpmY
+    sms_sdk_appid: 1400460605
+    sms_sign: 小乌文化
+    sms_bind_template: 804312
+    sms_login_template: 804310
+    sms_reg_template: 804312
+    region_code: ap-shanghai
+    bucket_name: littlebird-cos-1304137331
+
 #  # 安全框架
 #  springsecurity:
 #    headertoken: Access-Token

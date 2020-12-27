@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -70,7 +71,10 @@ public class LbPeriodicalController {
 
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                 .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                .eq(LbPost::getPeriodicalId, lbPeriodical.getId()).orderByDesc(LbPost::getPublishedAt));
+                .eq(LbPost::getPeriodicalId, lbPeriodical.getId())
+                .eq(LbPost::getStatus,RC.B_NORMAL.code())
+                .lt(LbPost::getPublishedAt, LocalDateTime.now())
+                .orderByDesc(LbPost::getPublishedAt));
 
         lbPeriodical.setLbPostList(lbPostList);
 
@@ -147,6 +151,8 @@ public class LbPeriodicalController {
             item.setLbPostList(lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                     .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
                     .eq(LbPost::getPeriodicalId,item.getId())
+                    .eq(LbPost::getStatus,RC.B_NORMAL.code())
+                    .lt(LbPost::getPublishedAt, LocalDateTime.now())
                     .orderByDesc(LbPost::getPublishedAt)));
                     //.last("limit "+topPospSize)));
 

@@ -186,6 +186,7 @@ public class LbPostController {
         boolean isDisplay = false; // 是否展现内容
         boolean isCollect = false; // 是否收藏
         Integer PayOneCount=0;  // 剩余兑换数量
+        boolean isAdmin=false;  // 是否管理员
 
 
         if(principal==null){
@@ -195,6 +196,7 @@ public class LbPostController {
             // 已登录
 
             SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+            if(sysUser.getTtype().equals(4))isAdmin=true;
 
             if(sysUser == null){
                 // 游客，未登录
@@ -263,7 +265,7 @@ public class LbPostController {
 
 
 
-        if(isPayYear || isPayOne || lbPost.getIsFree()==1){
+        if(isPayYear || isPayOne || lbPost.getIsFree()==1 || isAdmin){
             //已付费，显示付费内容
             isDisplay=true;
         }else{
