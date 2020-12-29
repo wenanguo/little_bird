@@ -187,6 +187,9 @@ public class ApplePayController {
     @ApiOperation("验证订单支付情况接口")
     public R apple_pay_valid(@RequestBody @Valid ApplePayValidInputParam params, Principal principal, HttpServletRequest httpRequest) throws Exception {
 
+//        五种情况：
+//        1、登录，第一次验证，支付成功
+//        2、登录，第二次验证，第一次支付成功，
 
 
         // 查询当前订单是否已经验证
@@ -212,13 +215,18 @@ public class ApplePayController {
                     return r;
                 }
 
-            }else if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())&&lbOrders.getPhone()==null) {
+            }else if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())) {
                 // 第二次请求，第一次支付成功,且手机号为空，绑定
 
-                lbOrders.setPhone(sysUser.getPhone());
-                lbOrdersService.updateById(lbOrders);
+                if(lbOrders.getPhone()==null){
+                    lbOrders.setPhone(sysUser.getPhone());
+                    lbOrdersService.updateById(lbOrders);
 
-                return R.ok().setMessage("绑定成功").setResult(lbOrders);
+                    return R.ok().setMessage("绑定成功").setResult(lbOrders);
+                }else{
+                    return R.ok().setResult(lbOrders);
+                }
+
 
             }else {
 
@@ -229,6 +237,7 @@ public class ApplePayController {
 
                 if(r.getCode().equals(HttpStatus.OK.value())){
                     // 成功，创建订单
+                    if(lbOrders.getPhone()==null)lbOrders.setPhone(sysUser.getPhone()); // 如果为空，设置绑定手机号
                     lbOrders.setStatus(RC.PAY_YES.code());
                     lbOrdersService.updateById(lbOrders);
 
@@ -248,7 +257,7 @@ public class ApplePayController {
                     Map<String,Object> mapRet=new HashMap<>();
                     mapRet.put("status",RC.PAY_YES.code());
                     return R.ok().setMessage("当前订单已经支付，请登录进行绑定").setResult(mapRet);
-                }else{
+            }else{
 
                 // 第一次支付
                 // 请求苹果
