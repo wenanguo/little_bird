@@ -32,6 +32,10 @@ public class ApplePayValidInputParam {
 	@NotNull(message = "交易流水号不能为空")
 	private String transaction_id;
 
+	@ApiModelProperty(value ="商品编号",example = "1001")
+	@NotNull(message = "商品编号不能为空")
+	private String tcode;
+
 
 }
 
