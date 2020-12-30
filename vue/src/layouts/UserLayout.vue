@@ -22,7 +22,7 @@
           <a href="_self">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2020 vueComponent
+          Copyright &copy; 2020 v1.0.246
         </div>
       </div>
     </div>
