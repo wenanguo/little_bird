@@ -21,7 +21,7 @@
               placeholder="账户"
               v-decorator="[
                 'username',
-                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], initialValue: 'admin', validateTrigger: 'change'}
+                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }],  validateTrigger: 'change'}
               ]"
             >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -34,7 +34,7 @@
               placeholder="密码"
               v-decorator="[
                 'password',
-                {rules: [{ required: true, message: '请输入密码' }],initialValue: 'admin123', validateTrigger: 'blur'}
+                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
               ]"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>

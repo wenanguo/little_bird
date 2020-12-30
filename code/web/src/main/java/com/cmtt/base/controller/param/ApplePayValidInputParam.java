@@ -19,9 +19,9 @@ public class ApplePayValidInputParam {
 	private String receipt_data;
 
 
-    @ApiModelProperty(value ="商户订单号",example = "123456789")
-    @NotNull(message = "商户订单号不能为空")
-    private String out_trade_no;
+//    @ApiModelProperty(value ="商户订单号",example = "123456789")
+//    @NotNull(message = "商户订单号不能为空")
+//    private String out_trade_no;
 
 
 	@ApiModelProperty(value ="苹果商品",example = "avesproduct10001")
@@ -32,9 +32,9 @@ public class ApplePayValidInputParam {
 	@NotNull(message = "交易流水号不能为空")
 	private String transaction_id;
 
-	@ApiModelProperty(value ="商品编号",example = "1001")
-	@NotNull(message = "商品编号不能为空")
-	private String tcode;
+//	@ApiModelProperty(value ="商品编号",example = "1001")
+//	@NotNull(message = "商品编号不能为空")
+//	private String tcode;
 
 
 }
