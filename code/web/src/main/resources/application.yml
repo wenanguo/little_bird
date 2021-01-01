@@ -86,7 +86,7 @@ spring:
     secret_id: AKIDFF2f3SoIL9gwlR7atvgAdbJuObYPpwPj
     secret_key: FSPRQSJujHH4bt1swlgKp66zdhaFdpmY
     sms_sdk_appid: 1400460605
-    sms_sign: 小乌文化
+    sms_sign: 小鸟文学
     sms_bind_template: 804312
     sms_login_template: 804310
     sms_reg_template: 804312

@@ -62,6 +62,8 @@ public class LbAuthorController {
             .eq(LbPost::getStatus,RC.B_NORMAL.code())
             .in(LbPost::getIsFree, new Integer[]{1,2})
             .lt(LbPost::getPublishedAt, LocalDateTime.now())
+            //.orderByDesc(LbPost::getPublishedAt)
+            .orderByDesc(LbPost::getPostOrder)
             );
             lbAuthor.setLbPostList(list);
             return R.ok().setResult(lbAuthor);
