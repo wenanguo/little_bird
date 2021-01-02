@@ -2,7 +2,11 @@ package com.cmtt.base.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.entity.LbAppVersion;
+import com.cmtt.base.entity.R;
+import com.cmtt.base.entity.SysUserSession;
 import com.cmtt.base.service.ILbAppVersionService;
+import com.cmtt.base.service.ISysUserSessionService;
+import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -10,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -29,6 +36,29 @@ public class LbPageController {
     private ILbAppVersionService lbAppVersionService;
 
     private final Logger logger = LoggerFactory.getLogger(LbPageController.class);
+
+
+    @Autowired
+    private ISysUserSessionService sysUserSessionService;
+
+//    /**
+//     * 健康检查
+//     */
+//    @GetMapping("health_check")
+//    @ResponseBody
+//    @ApiOperation("健康检查")
+//    public R health_check()  {
+//
+//        Map<String,Object> map=new HashMap<>();
+//
+//        int count = sysUserSessionService.count(Wrappers.<SysUserSession>lambdaQuery().eq(SysUserSession::getStatus, RC.B_NORMAL.code()));
+//
+//        map.put("userOnline",count);
+//        map.put("mysql","ok");
+//
+//        return R.ok();
+//
+//    }
 
 
     // 静态页面跳转
