@@ -23,7 +23,7 @@
         </div> -->
         <div class="copyright">
           <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
-            <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/gongan.png?q-sign-algorithm=sha1&q-ak=AKIDlbgYc7ZZPO_Qqr5w5d66X_gPKG1s-xGgfBPaGELUvx6MtevTRZZ7OhFFIkTi1r-i&q-sign-time=1609429191;1609432791&q-key-time=1609429191;1609432791&q-header-list=&q-url-param-list=&q-signature=7bf8f471c3a78116af7dbcc2e7541959a061a83b&x-cos-security-token=gUmqNG2UDDx48SSQRc97raNWtZkrRn6a86fbf624e0864c2768b081d3f84b51eaU4fn9_yKHows1-rz1GwBLENqvTBdoGsL2gL5ozNy83z5ofH1VUNHY3sEULkSD7G447LAgRC1-rIRmWhpbNmVXkgXMyvl8_Hcdt9rrLnuUj3STnyYhzRheVa0RzQz0NFeYCv6AGCy4Hpuh3__-2ZHqjmt7NkY-_zWsJEqFX1MyyE" style="float:left;width: 20px;">
+            <img src="~@/assets/gongan.png" style="float:left;width: 20px;">
             <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#000;">沪公网安备 31010402008695号</p>
           </a>
           <a target="_blank" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" style="display: inline-block; margin-left: 20px;line-height:20px; margin: 0px 100px 0px 25px;color:#000;">沪ICP备2020035114号</a>
