@@ -89,7 +89,7 @@ spring:
     sms_sign: 小鸟文学
     sms_bind_template: 804312
     sms_login_template: 804310
-    sms_reg_template: 804312
+    sms_reg_template: 804305
     region_code: ap-shanghai
     bucket_name: littlebird-cos-1304137331
 
