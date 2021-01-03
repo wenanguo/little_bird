@@ -4,13 +4,13 @@
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
           <a-row :gutter="48">
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item label="手机号">
                 <a-input v-model="queryParam.phone" placeholder=""/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="使用状态">
+            <a-col :md="6" :sm="24">
+              <a-form-item label="购买状态">
                 <a-select v-model="queryParam.orderType" placeholder="请选择" default-value="0">
                   <a-select-option :value="0">全部</a-select-option>
                   <a-select-option :value="1">点播</a-select-option>
@@ -18,9 +18,18 @@
                 </a-select>
               </a-form-item>
             </a-col>
+            <a-col :md="6" :sm="24">
+              <a-form-item label="购买渠道">
+                <a-select v-model="queryParam.devType" placeholder="请选择" default-value="0">
+                  <a-select-option :value="0">全部</a-select-option>
+                  <a-select-option :value="1">支付宝</a-select-option>
+                  <a-select-option :value="2">苹果内购</a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
             <template v-if="advanced">
             </template>
-            <a-col :md="!advanced && 8 || 24" :sm="24">
+            <a-col :md="!advanced && 6 || 24" :sm="24">
               <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
                 <a-button style="margin-left: 8px" @click="resetSearchForm">重置</a-button>
@@ -115,6 +124,20 @@
             },
             dataIndex: 'orderType'
         }, {
+            title: '购买渠道',
+            sorter: true,
+            width: '100px',
+            customRender: (text) => {
+                if (text === 1) {
+                    return '支付宝'
+                } else if (text === 2) {
+                    return '苹果内购'
+                } else {
+                    return ''
+                }
+            },
+            dataIndex: 'devType'
+        }, {
             title: '付款金额',
             sorter: true,
             width: '120px',
@@ -170,7 +193,8 @@
                         if (!requestParameters[item]) delete requestParameters[item]
                     })
                     // 设置获取全部状态
-                    if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
+                    if (requestParameters['orderType'] && requestParameters['orderType'] === 0) delete requestParameters['orderType']
+                    if (requestParameters['devType'] && requestParameters['devType'] === 0) delete requestParameters['devType']
                     return getSysUserList(requestParameters)
                         .then(res => {
                             return res.result

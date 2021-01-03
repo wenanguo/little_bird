@@ -112,6 +112,9 @@ public class SysUserOrders extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "订单类型")
     private Integer orderType;
 
+    @ApiModelProperty(value = "设备类型")
+    private Integer devType;
+
 
     @ApiModelProperty(value = "商品总金额")
     private BigDecimal totalAmount;

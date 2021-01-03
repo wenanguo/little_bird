@@ -89,6 +89,9 @@ public class LbOrdersController {
             if(lbOrders.getOrderType()!=null){
                 queryWrapper.eq("order_type",lbOrders.getOrderType());
             }
+            if(lbOrders.getDevType()!=null){
+                queryWrapper.eq("dev_type",lbOrders.getDevType());
+            }
             queryWrapper.orderBy(true, lbOrders.getIsAsc(), lbOrders.getIsSortField());
 
 
