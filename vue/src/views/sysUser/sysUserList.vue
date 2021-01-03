@@ -5,16 +5,16 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="名称">
-                <a-input v-model="queryParam.username" placeholder=""/>
+              <a-form-item label="手机号">
+                <a-input v-model="queryParam.phone" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
               <a-form-item label="使用状态">
-                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                <a-select v-model="queryParam.orderType" placeholder="请选择" default-value="0">
                   <a-select-option :value="0">全部</a-select-option>
-                  <a-select-option :value="100">正常</a-select-option>
-                  <a-select-option :value="101">禁用</a-select-option>
+                  <a-select-option :value="1">点播</a-select-option>
+                  <a-select-option :value="2">包年</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -86,6 +86,7 @@
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
+    import { numberFormat } from '@/utils/util'
     import { getSysUserList, saveSysUser, delSysUser, batchDelSysUser } from '@/api/sysUser'
     import EditForm from './sysUserForm'
 
@@ -102,54 +103,43 @@
         }, {
             title: 'VIP',
             sorter: true,
-            customRender: (text) => text ? '包年用户' : '普通用户',
+            width: '100px',
+            customRender: (text) => {
+                if (text === 1) {
+                    return '点播用户'
+                } else if (text === 2) {
+                    return '包年用户'
+                } else {
+                    return '普通用户'
+                }
+            },
+            dataIndex: 'orderType'
+        }, {
+            title: '付款金额',
+            sorter: true,
+            width: '120px',
+            customRender: (text) => text ? '￥' + numberFormat(text, 2, '.', ',') : '',
+            dataIndex: 'totalAmount'
+        }, {
+            title: '付款时间',
+            sorter: true,
+            width: '150px',
+            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
+            dataIndex: 'gmtPayment'
+        }, {
+            title: '订单编号',
+            sorter: true,
             dataIndex: 'outTradeNo'
         }, {
             title: '昵称',
             sorter: true,
             dataIndex: 'nickname'
         }, {
-            title: '手机号',
-            sorter: true,
-            dataIndex: 'phone'
-        }, {
-            title: '备注',
-            sorter: true,
-            dataIndex: 'memo'
-        }, {
-            title: '性别',
-            sorter: true,
-            dataIndex: 'sex'
-        }, {
-            title: '邮箱',
-            sorter: true,
-            dataIndex: 'email'
-        }, {
-            title: '头像',
-            sorter: true,
-            dataIndex: 'icon'
-        }, {
-            title: '最后登录信息',
-            sorter: true,
-            dataIndex: 'lastLogin'
-        }, {
             title: '状态',
             sorter: true,
             width: '100px',
             scopedSlots: { customRender: 'status' },
             dataIndex: 'status'
-        }, {
-            title: '修改时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
-            dataIndex: 'updateTime'
-        }, {
-            title: '创建时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-DD-MM HH:mm') : '',
-            dataIndex: 'createTime'
         }
     ]
 

@@ -83,7 +83,14 @@ public class LbOrdersController {
 
             // 构造查询及排序方式
             QueryWrapper<SysUserOrders> queryWrapper = new QueryWrapper<>(lbOrders);
+            if(lbOrders.getPhone()!=null){
+                queryWrapper.eq("phone",lbOrders.getPhone());
+            }
+            if(lbOrders.getOrderType()!=null){
+                queryWrapper.eq("order_type",lbOrders.getOrderType());
+            }
             queryWrapper.orderBy(true, lbOrders.getIsAsc(), lbOrders.getIsSortField());
+
 
             // 执行查询
             lbOrdersPage = lbOrdersService.getSysUserOrdersList(lbOrdersPage, queryWrapper);

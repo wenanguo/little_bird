@@ -15,6 +15,62 @@ export function convertDateFromString (dateString) {
   }
 }
 
+/**
+ * 格式化日期
+ * @param {} number 要格式化的数字
+ * @param {*} decimals 保留几位小数
+ * @param {*} dec_point 小数点符号
+ * @param {*} thousandsSep 千分位符号
+ * @param {*} roundtag 舍入参数，默认 "ceil" 向上取,"floor"向下取,"round" 四舍五入
+ */
+export function numberFormat (number, decimals, decPoint, thousandsSep, roundtag) {
+  /*
+  * 参数说明：
+  * number：要格式化的数字
+  * decimals：保留几位小数
+  * dec_point：小数点符号
+  * thousandsSep：千分位符号
+  * roundtag:舍入参数，默认 "ceil" 向上取,"floor"向下取,"round" 四舍五入
+  * */
+// console.log(numberFormat(2, 2, ".", ","))//"2.00"
+// console.log(numberFormat(3.7, 2, ".", ","))//"3.70"
+// console.log(numberFormat(3, 0, ".", ",")) //"3"
+// console.log(numberFormat(9.0312, 2, ".", ","))//"9.03"
+// console.log(numberFormat(9.00, 2, ".", ","))//"9.00"
+// console.log(numberFormat(39.715001, 2, ".", ",", "floor")) //"39.71"
+// console.log(numberFormat(9.7, 2, ".", ","))//"9.70"
+// console.log(numberFormat(39.7, 2, ".", ","))//"39.70"
+// console.log(numberFormat(9.70001, 2, ".", ","))//"9.71"
+// console.log(numberFormat(39.70001, 2, ".", ","))//"39.71"
+// console.log(numberFormat(9996.03, 2, ".", ","))//"9996.03"
+// console.log(numberFormat(1.797, 3, ".", ",", "floor"))//"1.797"
+
+  number = (number + '').replace(/[^0-9+-Ee.]/g, '')
+  roundtag = roundtag || 'ceil' // "ceil","floor","round"
+  var n = !isFinite(+number) ? 0 : +number
+  var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
+  var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep
+  var dec = (typeof decPoint === 'undefined') ? '.' : decPoint
+  var s = ''
+  var toFixedFix = function (n, prec) {
+  var k = Math.pow(10, prec)
+  console.log()
+
+  return '' + parseFloat(Math[roundtag](parseFloat((n * k).toFixed(prec * 2))).toFixed(prec * 2)) / k
+  }
+  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.')
+  var re = /(-?\d+)(\d{3})/
+  while (re.test(s[0])) {
+  s[0] = s[0].replace(re, '$1' + sep + '$2')
+  }
+
+  if ((s[1] || '').length < prec) {
+  s[1] = s[1] || ''
+  s[1] += new Array(prec - s[1].length + 1).join('0')
+  }
+  return s.join(dec)
+  }
+
 export function getSocialDateDisplay (dateString) {
   if (dateString === '') return ''
   const time = new Date(dateString)

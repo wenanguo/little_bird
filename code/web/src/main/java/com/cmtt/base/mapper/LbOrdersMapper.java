@@ -29,20 +29,20 @@ public interface LbOrdersMapper extends BaseMapper<LbOrders> {
      */
     @Select("\n" +
             "select * from sys_user as a left join \n" +
-            "(select phone as order_phone,out_trade_no,gmt_payment,status as order_status from lb_orders where now() <DATE_ADD(gmt_payment,INTERVAL 1 YEAR) and ttype=1 ) as b\n" +
-            "on a.phone=b.order_phone ${ew.customSqlSegment}")
+            "(select phone as order_phone,out_trade_no,gmt_payment,status as order_status,trade_status,ttype as order_type,total_amount from lb_orders where now() <DATE_ADD(gmt_payment,INTERVAL 1 YEAR) and trade_status = 'TRADE_SUCCESS'\n" +
+            "and status = 203 ) as b on a.phone=b.order_phone ${ew.customSqlSegment}")
     IPage<SysUserOrders> getSysUserOrdersList(IPage<SysUserOrders> page, @Param(Constants.WRAPPER) Wrapper<SysUserOrders> queryWrapper);
 
 
-    /**
-     * 获取单条用户及订单列表
-     * @return
-     */
-    @Select("\n" +
-            "select * from sys_user as a left join \n" +
-            "(select phone as order_phone,out_trade_no,gmt_payment,status as order_status from lb_orders where now() <DATE_ADD(gmt_payment,INTERVAL 1 YEAR) and ttype=1 ) as b\n" +
-            "on a.phone=b.order_phone where phone=${phone}")
-    SysUserOrders getOneSysUserOrders(String phone);
+//    /**
+//     * 获取单条用户及订单列表
+//     * @return
+//     */
+//    @Select("\n" +
+//            "select * from sys_user as a left join \n" +
+//            "(select phone as order_phone,out_trade_no,gmt_payment,status as order_status from lb_orders where now() <DATE_ADD(gmt_payment,INTERVAL 1 YEAR) and ttype=1 ) as b\n" +
+//            "on a.phone=b.order_phone where phone=${phone}")
+//    SysUserOrders getOneSysUserOrders(String phone);
 
 
 }
