@@ -124,7 +124,7 @@ public class LbPeriodicalController {
      */
     @PostMapping("index_post")
     @ResponseBody
-    @ApiOperation("主页文章列表1")
+    @ApiOperation("主页文章列表(文章)")
     public R index_post(@RequestBody @Valid PageInputParam params){
 
 
@@ -148,13 +148,12 @@ public class LbPeriodicalController {
         //遍历集合取值
         lbPeriodicalPage.getRecords().forEach(item->{
 
-            item.setLbPostList(lbPostService.list(Wrappers.<LbPost>lambdaQuery()
-                    .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                    .in(LbPost::getIsFree, new Integer[]{1,2})
-                    .eq(LbPost::getPeriodicalId,item.getId())
-                    .eq(LbPost::getStatus,RC.B_NORMAL.code())
-                    .lt(LbPost::getPublishedAt, LocalDateTime.now())
-                    .orderByDesc(LbPost::getPublishedAt)));
+
+            // 获取统一的文章查询条件
+            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+                    .eq(LbPost::getPeriodicalId,item.getId());
+
+            item.setLbPostList(lbPostService.list(queryWrapper));
                     //.last("limit "+topPospSize)));
 
 //            resultList.add(item.getId());

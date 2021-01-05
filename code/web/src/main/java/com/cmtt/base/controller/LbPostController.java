@@ -2,6 +2,7 @@ package com.cmtt.base.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -92,7 +93,7 @@ public class LbPostController {
      */
     @PostMapping("search")
     @ResponseBody
-    @ApiOperation("搜索")
+    @ApiOperation("搜索(文章)")
     public R search(@RequestBody @Valid PageInputParam params){
 
         // 构建分页类
@@ -103,12 +104,11 @@ public class LbPostController {
 //        queryWrapper.like("title",params.getKeyString());
 //        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
-        lbPostPage = lbPostService.page(lbPostPage,Wrappers.<LbPost>lambdaQuery()
-                .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                        .like(LbPost::getTitle, params.getKeyString())
-                        .in(LbPost::getIsFree, new Integer[]{1,2})
-                        .lt(LbPost::getPublishedAt, LocalDateTime.now())
-                        .eq(LbPost::getStatus,RC.B_NORMAL.code()));
+        // 获取统一的文章查询条件
+        LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+                .like(LbPost::getTitle, params.getKeyString());
+
+        lbPostPage = lbPostService.page(lbPostPage,queryWrapper);
 
 
 

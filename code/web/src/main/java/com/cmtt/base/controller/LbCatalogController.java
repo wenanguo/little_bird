@@ -1,6 +1,7 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -67,15 +68,13 @@ public class LbCatalogController {
     @ApiOperation("获取当前分类文章列表")
     public R getCatalogPost(@RequestBody @Valid GetCatalogPostInputParam params){
 
+        // 获取统一的文章查询条件
+        LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+                .eq(LbPost::getPostCatalogId,params.getCatalogId())
+                .last("limit 0,5");
+
         // 执行查询
-        List<LbPost> lbCatalogPostList= lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getPostCatalogId,params.getCatalogId())
-                .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                .in(LbPost::getIsFree, new Integer[]{1,2})
-                .eq(LbPost::getRecommend,1)
-                .eq(LbPost::getStatus,RC.B_NORMAL.code())
-                .lt(LbPost::getPublishedAt, LocalDateTime.now())
-                .orderByDesc(LbPost::getPostOrder)
-                .last("limit 0,5"));
+        List<LbPost> lbCatalogPostList= lbPostService.list(queryWrapper);
 
 
         return R.ok().setResult(lbCatalogPostList);

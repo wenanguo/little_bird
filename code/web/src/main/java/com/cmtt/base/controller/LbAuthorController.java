@@ -1,6 +1,7 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -52,19 +53,18 @@ public class LbAuthorController {
      */
     @PostMapping("get_author_post")
     @ResponseBody
-    @ApiOperation("获取作者及所属文章")
+    @ApiOperation("获取作者及所属文章（文章）")
     public R getAuthorPost(@RequestBody @Valid GetAuthorPostInputParam params){
 
         LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, params.getId()),false);
 
         if(lbAuthor!=null){
-            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().like(LbPost::getAuthor, lbAuthor.getName())
-            .eq(LbPost::getStatus,RC.B_NORMAL.code())
-            .in(LbPost::getIsFree, new Integer[]{1,2})
-            .lt(LbPost::getPublishedAt, LocalDateTime.now())
-            .orderByDesc(LbPost::getPublishedAt)
-            //.orderByDesc(LbPost::getPostOrder)
-            );
+
+            // 获取统一的文章查询条件
+            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+                    .like(LbPost::getAuthor, lbAuthor.getName());
+
+            List<LbPost> list = lbPostService.list(queryWrapper);
             lbAuthor.setLbPostList(list);
             return R.ok().setResult(lbAuthor);
         }else{
