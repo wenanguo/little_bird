@@ -5,16 +5,16 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
+              <a-form-item label="手机号">
+                <a-input v-model="queryParam.phone" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
               <a-form-item label="使用状态">
                 <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
                   <a-select-option :value="0">全部</a-select-option>
-                  <a-select-option :value="100">正常</a-select-option>
-                  <a-select-option :value="101">禁用</a-select-option>
+                  <a-select-option :value="201">未支付</a-select-option>
+                  <a-select-option :value="203">已支付</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -87,6 +87,7 @@
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
+    import { numberFormat } from '@/utils/util'
     import { getLbOrdersList, saveLbOrders, delLbOrders, batchDelLbOrders } from '@/api/lbOrders'
     import EditForm from './lbOrdersForm'
 
@@ -99,25 +100,44 @@
         }, {
             title: '商品编号',
             sorter: true,
+            width: '150px',
+            customRender: (text) => {
+                if (text === 1) {
+                    return '支付宝-3篇试读'
+                } else if (text === 2) {
+                    return '支付宝-1年VIP'
+                } else if (text === 3) {
+                    return '苹果内购-3篇试读'
+                } else if (text === 4) {
+                    return '苹果内购-1年VIP'
+                } else {
+                    return ''
+                }
+            },
             dataIndex: 'goodsId'
         }, {
             title: '设备类型',
             sorter: true,
+            customRender: (text) => {
+                if (text === 1) {
+                    return 'Android'
+                } else if (text === 2) {
+                    return 'IOS'
+                } else {
+                    return ''
+                }
+            },
             dataIndex: 'devType'
-        }, {
-            title: '类型',
-            sorter: true,
-            dataIndex: 'ttype'
         }, {
             title: '手机号',
             sorter: true,
             dataIndex: 'phone'
         }, {
-            title: '支付宝交易号',
+            title: '外部平台交易号',
             sorter: true,
             dataIndex: 'tradeNo'
         }, {
-            title: '商户订单号',
+            title: '内部订单号',
             sorter: true,
             dataIndex: 'outTradeNo'
         }, {
@@ -125,27 +145,10 @@
             sorter: true,
             dataIndex: 'tradeStatus'
         }, {
-            title: '商品总金额',
-            sorter: true,
-            dataIndex: 'totalAmount'
-        }, {
             title: '付款金额',
             sorter: true,
+            customRender: (text) => text ? '￥' + numberFormat(text, 2, '.', ',') : '',
             dataIndex: 'buyerPayAmount'
-        }, {
-            title: '优惠金额',
-            sorter: true,
-            dataIndex: 'discount'
-        }, {
-            title: '总退款金额',
-            sorter: true,
-            dataIndex: 'refundFee'
-        }, {
-            title: '交易创建时间',
-            sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
-            dataIndex: 'gmtCreate'
         }, {
             title: '交易付款时间',
             sorter: true,
@@ -155,7 +158,7 @@
         }, {
             title: '状态',
             sorter: true,
-            width: '100px',
+            width: '120px',
             scopedSlots: { customRender: 'status' },
             dataIndex: 'status'
         }, {

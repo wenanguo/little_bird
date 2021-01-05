@@ -16,10 +16,10 @@ const statusMap = {
       text: '禁用'
   },
   201: {
-      status: 'success',
+      status: 'default',
       text: '未支付'
   },
-  202: {
+  203: {
       status: 'success',
       text: '已支付'
   }
