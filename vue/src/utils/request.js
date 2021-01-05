@@ -20,7 +20,7 @@ const errorHandler = (error) => {
     const token = storage.get(ACCESS_TOKEN)
     if (error.response.status === 403) {
       notification.error({
-        message: 'Forbidden',
+        message: '无权限访问',
         description: data.message
       })
     }
@@ -31,10 +31,10 @@ const errorHandler = (error) => {
       })
     }
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
-      notification.error({
-        message: 'Unauthorized',
-        description: 'Authorization verification failed'
-      })
+      // notification.error({
+      //   message: 'Unauthorized',
+      //   description: 'Authorization verification failed'
+      // })
       if (token) {
         store.dispatch('Logout').then(() => {
           setTimeout(() => {

@@ -7,7 +7,6 @@ import com.alipay.api.AlipayApiException;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
 import com.cmtt.base.controller.param.ApplePayValidInputParam;
-import com.cmtt.base.controller.param.GetOneGoodsInputParam;
 import com.cmtt.base.entity.*;
 import com.cmtt.base.service.ILbGoodsService;
 import com.cmtt.base.service.ILbOrdersService;
@@ -18,8 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -123,85 +122,76 @@ public class ApplePayController {
 
     }
 
+//    /**
+//     * 创建订单接口
+//     */
+//    @PostMapping("apple_pay_create")
+//    @ResponseBody
+//    @ApiOperation("创建apple pay 订单")
+//    public R apple_pay_create(@RequestBody @Valid GetOneGoodsInputParam params, Principal principal, HttpServletRequest httpServletRequest){
+
     /**
      * 创建订单接口
+     * @param product_id 商品编码
+     * @param transaction_id 苹果流水号
+     * @param req 请求
+     * @param resp 相应
+     * @param sysUser 用户
+     * @return
      */
-    @PostMapping("apple_pay_create")
-    @ResponseBody
-    @ApiOperation("创建apple pay 订单")
-    public R apple_pay_create(@RequestBody @Valid GetOneGoodsInputParam params, Principal principal, HttpServletRequest httpServletRequest){
+    private R create_order(String product_id,String transaction_id,String req,String resp, SysUser sysUser){
 
-        // 类型 1 安卓 2IOS
-        Integer devType=2;
-        String phone=null;
-        SysUser sysUser=null;
-
-        try {
-
-            if(principal!=null){
-                // 鉴权模式
-                sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
-                phone=sysUser.getPhone();
-            }else{
-                // 游客模式
-            }
+            // 类型 1 安卓 2IOS
+            Integer devType=2;
 
 
 
-            String outtradeno=String.valueOf(System.currentTimeMillis());
+
+        // 根据商品编码获取商品信息
+        // 执行查询
+        LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
+                .eq(LbGoods::getTcode,product_id)
+                .eq(LbGoods::getDevType,devType)
+                .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
+
+        if(lbGoods==null){
+            return R.err().setMessage("找不到当前商品");
+        }
+        String outtradeno=String.valueOf(System.currentTimeMillis());
+
+        // 查询订单，防止重复
+        LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getTradeNo, transaction_id),false);
+
+        if(lbOrders==null){
+            // 新增
 
 
-            // 判断设备类型是否是苹果
-            String Phonesys = httpServletRequest.getHeader("Phonesys");
+            lbOrders = new LbOrders();
 
-            if(!Phonesys.equals("iOS")){
-                return R.err().setMessage("apple pay 只支持苹果客户端");
-            }
-
-
-            // 根据商品编码获取商品信息
-            // 执行查询
-            LbGoods lbGoods = lbGoodsService.getOne(Wrappers.<LbGoods>lambdaQuery()
-                    .eq(LbGoods::getTcode,params.getTcode())
-                    .eq(LbGoods::getDevType,devType)
-                    .eq(LbGoods::getStatus, RC.B_NORMAL.code()));
-
-            if(lbGoods==null){
-                return R.err().setMessage("找不到当前商品");
-
-            }
-
-
-            // 入库 apple_pay 订单
-
-
-
-            // 入库商户订单
-            LbOrders lbOrders = new LbOrders();
             lbOrders.setGoodsId(lbGoods.getId());
             lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());
-            lbOrders.setPhone(phone); // 游客模式时，phone为空
-            lbOrders.setTradeNo("");
+            if(sysUser!=null)lbOrders.setPhone(sysUser.getPhone());
+            lbOrders.setTradeNo(transaction_id);
             lbOrders.setOutTradeNo(outtradeno);
+            lbOrders.setTradeStatus("TRADE_SUCCESS");
             lbOrders.setTotalAmount(lbGoods.getPrice());
             lbOrders.setBuyerPayAmount(lbGoods.getPrice());
             lbOrders.setGmtCreate(LocalDateTime.now());
             lbOrders.setGmtPayment(LocalDateTime.now());
-            lbOrders.setStatus(RC.PAY_NO.code());
-
+            lbOrders.setServerReq(req);
+            lbOrders.setServerResp(resp);
+            lbOrders.setStatus(RC.PAY_YES.code());
             lbOrdersService.save(lbOrders);
 
-            return R.ok().setResult(lbOrders);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
+            Map<String,Object> mapRet=new HashMap<>();
+            mapRet.put("status",RC.PAY_YES.code());
+            mapRet.put("outtradeno",outtradeno);
+            mapRet.put("transaction_id",transaction_id);
+            return R.ok().setResult(mapRet);
 
-
-
-        return R.err().setMessage("创建订单失败");
     }
 
 
@@ -212,49 +202,164 @@ public class ApplePayController {
     @PostMapping("apple_pay_valid")
     @ResponseBody
     @ApiOperation("验证订单支付情况接口")
-    public R apple_pay_valid(@RequestBody @Valid ApplePayValidInputParam params, Principal principal, HttpServletRequest httpRequest) throws IOException {
+    public R apple_pay_valid(@RequestBody @Valid ApplePayValidInputParam params, Principal principal, HttpServletRequest httpRequest) throws Exception {
 
-        // 查询当前订单是否已经验证
 
-        LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
 
-        if(lbOrders!=null){
+        if(principal!=null) {
+            //判断是否登录成功
 
-            // 检查是否有用户信息，如果有，而且已经有的那个钱订单，进行绑定
+            SysUser sysUser = (SysUser) ((JwtAuthenticationToken) principal).getPrincipal();
 
-            if(principal!=null){
-                // 登录模式
-                SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
 
-                if(lbOrders.getStatus().equals(RC.PAY_YES.code())&&lbOrders.getPhone()==null){
-                // 订单状态为203，已支付，手机号为空，则绑定
+            // 查询订单，防止重复
+            LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getTradeNo, params.getTransaction_id()),false);
 
-                        lbOrders.setPhone(sysUser.getPhone());
-                        lbOrdersService.updateById(lbOrders);
-                        Map<String,Object> mapRet=new HashMap<>();
-                        mapRet.put("status",RC.PAY_YES.code());
-                    return R.ok().setMessage("当前订单绑定成功").setResult(mapRet);
-
-                }else{
-                    // 正常验证
-//                    lbOrders.setPhone(sysUser.getPhone());
-                    return this.postAppleServer(params);
-                }
-            }else{
-                if(lbOrders.getStatus().equals(RC.PAY_YES.code())){
-                    Map<String,Object> mapRet=new HashMap<>();
-                    mapRet.put("status",RC.PAY_YES.code());
-                    return R.ok().setMessage("当前订单已经支付，请登录进行绑定").setResult(mapRet);
-                }else{
-
-                    return this.postAppleServer(params);
-                }
-
+            if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())){
+                return R.ok().setMessage("当前订单已验证成功，不需重复验证");
             }
 
+
+            // 请求苹果
+            return this.postAppleServer(params,sysUser);
+
+
+        }else{
+            return R.err().setMessage("请登录后进行验证");
         }
 
-        return R.err().setMessage("验证失败");
+
+
+//
+//
+//        // 查询当前订单是否已经验证
+//        LbOrders lbOrders = null;
+//
+//
+//        if(params.getOut_trade_no()!=null)lbOrders=lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
+//
+//
+//        if(principal!=null){
+//            //判断是否登录成功
+//
+//            SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+//
+//            if(lbOrders==null) {
+//                // 第一次支付
+//
+//                // 请求苹果
+//                R r =this.postAppleServer(params);
+//
+//                if(r.getCode().equals(HttpStatus.OK.value())){
+//                    // 成功，创建订单
+//                    return this.apple_pay_create(params.getProduct_id(), sysUser);
+//
+//                }else {
+//                    return r;
+//                }
+//
+//            }else if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())) {
+//                // 第二次请求，第一次支付成功,且手机号为空，绑定
+//
+//                if(lbOrders.getPhone()==null){
+//                    lbOrders.setPhone(sysUser.getPhone());
+//                    lbOrdersService.updateById(lbOrders);
+//
+//                    return R.ok().setMessage("绑定成功").setResult(lbOrders);
+//                }else{
+//                    return R.ok().setResult(lbOrders);
+//                }
+//
+//
+//            }else {
+//
+//                // 第二次请求，第一次支付失败
+//
+//                // 请求苹果
+//                R r =this.postAppleServer(params);
+//
+//                if(r.getCode().equals(HttpStatus.OK.value())){
+//                    // 成功，创建订单
+//                    if(lbOrders.getPhone()==null)lbOrders.setPhone(sysUser.getPhone()); // 如果为空，设置绑定手机号
+//                    lbOrders.setStatus(RC.PAY_YES.code());
+//                    lbOrdersService.updateById(lbOrders);
+//
+//                    return R.ok().setResult(lbOrders);
+//
+//                }else {
+//                    return r;
+//                }
+//
+//            }
+//
+//        }else{
+//            // 游客模式
+//
+//            if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())){
+//                // 支付成功，未绑定，提示绑定
+//                    Map<String,Object> mapRet=new HashMap<>();
+//                    mapRet.put("status",RC.PAY_YES.code());
+//                    return R.ok().setMessage("当前订单已经支付，请登录进行绑定").setResult(mapRet);
+//            }else{
+//
+//                // 第一次支付
+//                // 请求苹果
+//                R r =this.postAppleServer(params);
+//
+//                if(r.getCode().equals(HttpStatus.OK.value())){
+//                    // 成功，创建订单
+//                    return this.apple_pay_create(params.getProduct_id(), null);
+//
+//                }else {
+//                    return r;
+//                }
+//
+//            }
+//
+//        }
+
+//        // 查询当前订单是否已经验证
+//
+//        LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
+//
+//        if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())){
+//            // 已经支付成功的情况
+//
+//            // 检查是否有用户信息，如果有，而且已经有的那个钱订单，进行绑定
+//
+//            if(principal!=null){
+//                // 登录模式
+//                SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+//
+//                if(lbOrders.getStatus().equals(RC.PAY_YES.code())&&lbOrders.getPhone()==null){
+//                // 订单状态为203，已支付，手机号为空，则绑定
+//
+//                        lbOrders.setPhone(sysUser.getPhone());
+//                        lbOrdersService.updateById(lbOrders);
+//                        Map<String,Object> mapRet=new HashMap<>();
+//                        mapRet.put("status",RC.PAY_YES.code());
+//                    return R.ok().setMessage("当前订单绑定成功").setResult(mapRet);
+//
+//                }else{
+//                    // 正常验证
+////                    lbOrders.setPhone(sysUser.getPhone());
+//                    return this.postAppleServer(params);
+//                }
+//            }else{
+//                if(lbOrders.getStatus().equals(RC.PAY_YES.code())){
+//                    Map<String,Object> mapRet=new HashMap<>();
+//                    mapRet.put("status",RC.PAY_YES.code());
+//                    return R.ok().setMessage("当前订单已经支付，请登录进行绑定").setResult(mapRet);
+//                }else{
+//
+//                    return this.postAppleServer(params);
+//                }
+//
+//            }
+//
+//        }
+//
+//        return R.err().setMessage("验证失败");
 
     }
 
@@ -264,7 +369,7 @@ public class ApplePayController {
      * @return
      * @throws IOException
      */
-    private R postAppleServer(ApplePayValidInputParam params) throws IOException {
+    private R postAppleServer(ApplePayValidInputParam params,SysUser sysUser) throws IOException {
         // 不存在订单，请求苹果验证，并新建订单
 
 
@@ -277,21 +382,20 @@ public class ApplePayController {
         map.put("password", "7006a41e32c24ee9b3b9af23be8b0804");
         map.put("exclude-old-transactions", false);
 
-        System.out.println("Receipt_data" + params.getReceipt_data());
-        System.out.println("Product_id" + params.getProduct_id());
-        System.out.println("Transaction_id" + params.getTransaction_id());
-        System.out.println("Out_trade_no" + params.getOut_trade_no());
+        logger.debug("Receipt_data" + params.getReceipt_data());
+        logger.debug("Product_id" + params.getProduct_id());
+        logger.debug("Transaction_id" + params.getTransaction_id());
+        //logger.debug("Out_trade_no" + params.getOut_trade_no());
 
 
         String req = JSON.toJSONString(map);
 
-
         HR hr = HttpUtils.doPost(zsurl, req, null);
 
-
         JSONObject jsonObject = JSONObject.parseObject(hr.getRetStr());
-        if (jsonObject.get("status").equals(21007)) {
 
+
+        if (jsonObject.get("status").equals(21007)) {
 
             // 请求沙盒环境
 
@@ -302,39 +406,35 @@ public class ApplePayController {
 
             jsonObject = JSONObject.parseObject(hr.getRetStr());
 
-            // 支付成功 未做防盗链
-            LbOrders lbOrdersNew = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, params.getOut_trade_no()));
 
-            lbOrdersNew.setServerReq(params.toString());
-            lbOrdersNew.setServerResp(hr.getRetStr());
 
             if (jsonObject.get("status").equals(0)) {
 
-
-                if (lbOrdersNew == null) {
-                    return R.err().setMessage("失败，未找到当前订单");
-                }
-
-                lbOrdersNew.setStatus(RC.PAY_YES.code());
-                // 设置验证结果
-                lbOrdersNew.setTradeStatus("TRADE_SUCCESS");
-                lbOrdersService.updateById(lbOrdersNew);
-
-                return R.ok().setResult(lbOrdersNew);
+                return create_order(params.getProduct_id(),params.getTransaction_id(),params.toString(),hr.getRetStr(),sysUser);
 
 
             }else{
-                lbOrdersService.updateById(lbOrdersNew);
+
                 Map<String,Object> mapRet=new HashMap<>();
                 mapRet.put("status",jsonObject.getInteger("status"));
 
-                return R.ok().setMessage("支付失败,状态为：" + jsonObject.get("status")).setResult(mapRet);
+                return R.err().setMessage("支付失败,状态为：" + jsonObject.get("status")).setResult(mapRet);
             }
 
 
+        } else if (jsonObject.get("status").equals(0))  {
+            // 正式服
 
-        } else {
-            return R.err().setMessage("正式环境调用错误");
+            return create_order(params.getProduct_id(),params.getTransaction_id(),params.toString(),hr.getRetStr(),sysUser);
+
+
+        }else{
+
+
+            Map<String,Object> mapRet=new HashMap<>();
+            mapRet.put("status",jsonObject.getInteger("status"));
+
+            return R.err().setMessage("支付失败,状态为：" + jsonObject.get("status")).setResult(mapRet);
         }
     }
 

@@ -86,10 +86,10 @@ spring:
     secret_id: AKIDFF2f3SoIL9gwlR7atvgAdbJuObYPpwPj
     secret_key: FSPRQSJujHH4bt1swlgKp66zdhaFdpmY
     sms_sdk_appid: 1400460605
-    sms_sign: 小乌文化
+    sms_sign: 小鸟文学
     sms_bind_template: 804312
     sms_login_template: 804310
-    sms_reg_template: 804312
+    sms_reg_template: 804305
     region_code: ap-shanghai
     bucket_name: littlebird-cos-1304137331
 
@@ -100,6 +100,15 @@ spring:
 # 静态文件地址
   static-file:
     domain-path: https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+
+
 
 mybatis-plus:
   # 指定全局配置文件位置
@@ -118,7 +127,7 @@ logging:
     com.cmtt.base.mapper: debug
 
 common:
-  noauto: /favicon.ico,/api/auth/login,/api/db_doc,/api/sys_user/register,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_periodical/bookrack,/api/lb_catalog/get_catalog_post,/api/lb_catalog/catalog_list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_goods/get_one,/api/apple_pay/apple_pay_create,/api/apple_pay/apple_pay_valid,/api/lb_report/add,/api/lb_post/share,/api/lb_post/preview,/page/user_agreement,/page/privacy_agreement,/page/about,/page/download,/page/app_download
+  noauto: /actuator/health,/favicon.ico,/api/auth/login,/api/db_doc,/api/sys_sms_country/list_all,/api/sys_user/register,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_periodical/bookrack,/api/lb_catalog/get_catalog_post,/api/lb_catalog/catalog_list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_goods/get_one,/api/apple_pay/apple_pay_create,/api/apple_pay/apple_pay_valid,/api/lb_report/add,/api/lb_post/share,/api/lb_post/preview,/page/user_agreement,/page/privacy_agreement,/page/about,/page/download,/page/app_download
 
 tencent:
   secret-id: AKIDFF2f3SoIL9gwlR7atvgAdbJuObYPpwPj

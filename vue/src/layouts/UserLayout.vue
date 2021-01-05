@@ -16,13 +16,17 @@
       <router-view />
 
       <div class="footer">
-        <div class="links">
+        <!-- <div class="links">
           <a href="_self">帮助</a>
           <a href="_self">隐私</a>
           <a href="_self">条款</a>
-        </div>
+        </div> -->
         <div class="copyright">
-          Copyright &copy; 2020 vueComponent
+          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+            <img src="~@/assets/gongan.png" style="float:left;width: 20px;">
+            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#000;">沪公网安备 31010402008695号</p>
+          </a>
+          <a target="_blank" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" style="display: inline-block; margin-left: 20px;line-height:20px; margin: 0px 100px 0px 25px;color:#000;">沪ICP备2020035114号</a>
         </div>
       </div>
     </div>

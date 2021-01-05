@@ -32,13 +32,13 @@ public class LbOrdersServiceImpl extends ServiceImpl<LbOrdersMapper, LbOrders> i
     }
 
 
-    /**
-     * 获取单条用户及订单列表
-     * @return
-     */
-    public SysUserOrders getOneSysUserOrders(String phone){
-        return this.baseMapper.getOneSysUserOrders(phone);
-    }
+//    /**
+//     * 获取单条用户及订单列表
+//     * @return
+//     */
+//    public SysUserOrders getOneSysUserOrders(String phone){
+//        return this.baseMapper.getOneSysUserOrders(phone);
+//    }
 
 
     /**

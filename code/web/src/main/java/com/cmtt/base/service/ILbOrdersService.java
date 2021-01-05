@@ -27,11 +27,11 @@ public interface ILbOrdersService extends IService<LbOrders> {
     IPage<SysUserOrders> getSysUserOrdersList(IPage<SysUserOrders> page, @Param(Constants.WRAPPER) Wrapper<SysUserOrders> queryWrapper);
 
 
-    /**
-     * 获取单条用户及订单列表
-     * @return
-     */
-    SysUserOrders getOneSysUserOrders(String phone);
+//    /**
+//     * 获取单条用户及订单列表
+//     * @return
+//     */
+//    SysUserOrders getOneSysUserOrders(String phone);
 
 
     /**

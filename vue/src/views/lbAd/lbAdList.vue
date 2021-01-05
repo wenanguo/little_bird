@@ -31,7 +31,7 @@
       </div>
 
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+        <a-button type="primary" v-action:add icon="plus" @click="handleAdd">新建</a-button>
         <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">
             <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
@@ -68,7 +68,7 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">修改</a>
+            <a v-action:edit @click="handleEdit(record)">修改</a>
             <a-divider type="vertical" />
             <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
               <a>删除</a>
