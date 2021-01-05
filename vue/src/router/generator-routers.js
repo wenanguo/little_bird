@@ -67,7 +67,7 @@ const constantRouterComponents = {
   'SysUserList': () => import('@/views/sysUser/sysUserList'),
   // 支付
   'LbGoodsList': () => import('@/views/lbGoods/lbGoodsList'),
-  'LbPayOrderList': () => import('@/views/lbPayOrder/lbPayOrderList')
+  'LbOrdersList': () => import('@/views/lbOrders/lbOrdersList')
 }
 
 // 前端未找到页面路由（固定不用改）
