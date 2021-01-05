@@ -216,9 +216,14 @@ public class ApplePayController {
             LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getTradeNo, params.getTransaction_id()),false);
 
             if(lbOrders!=null&&lbOrders.getStatus().equals(RC.PAY_YES.code())){
-                return R.ok().setMessage("当前订单已验证成功，不需重复验证");
-            }
 
+                Map<String,Object> mapRet=new HashMap<>();
+                mapRet.put("status",lbOrders.getStatus());
+                mapRet.put("outtradeno",lbOrders.getOutTradeNo());
+                mapRet.put("transaction_id",lbOrders.getTradeNo());
+
+                return R.ok().setMessage("当前订单已验证成功，不需重复验证").setResult(mapRet);
+            }
 
             // 请求苹果
             return this.postAppleServer(params,sysUser);
