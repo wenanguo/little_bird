@@ -1,6 +1,7 @@
 package com.cmtt.base.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -60,7 +61,7 @@ public class LbSubjectController {
      */
     @PostMapping("/get_one")
     @ResponseBody
-    @ApiOperation("获取单个栏目文章列表")
+    @ApiOperation("获取单个栏目文章列表(文章)")
     public R list(@RequestBody @Valid GetOneInputParam params){
 
 //        // 构建分页类
@@ -82,13 +83,12 @@ public class LbSubjectController {
             LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getId, lbSubject.getCatalogId()));
             lbSubject.setLbCatalog(lbCatalog);
 
-            List<LbPost> lbPosts = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
-                    .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                    .eq(LbPost::getPostSubjectId, lbSubject.getId())
-                    .in(LbPost::getIsFree, new Integer[]{1,2})
-                    .lt(LbPost::getPublishedAt, LocalDateTime.now())
-                    .eq(LbPost::getStatus,RC.B_NORMAL.code())
-            );
+            // 获取统一的文章查询条件
+            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+                    .eq(LbPost::getPostSubjectId, lbSubject.getId());
+
+            List<LbPost> lbPosts = lbPostService.list(queryWrapper);
+
             lbSubject.setLbPostList(lbPosts);
         }
 

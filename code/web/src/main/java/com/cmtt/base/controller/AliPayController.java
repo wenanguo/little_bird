@@ -273,6 +273,9 @@ public class AliPayController {
             lbOrders.setGmtPayment(LocalDateTime.now());
             lbOrders.setStatus(RC.PAY_NO.code());
 
+            lbOrders.setServerReq(JSON.toJSONString(request));
+            lbOrders.setServerResp(JSON.toJSONString(response));
+
 
             lbOrdersService.save(lbOrders);
 

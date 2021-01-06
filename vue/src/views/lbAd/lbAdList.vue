@@ -71,7 +71,7 @@
             <a v-action:edit @click="handleEdit(record)">修改</a>
             <a-divider type="vertical" />
             <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
-              <a>删除</a>
+              <a style="color: red">删除</a>
             </a-popconfirm>
           </template>
         </span>

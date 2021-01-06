@@ -55,7 +55,9 @@ public class LbAppVersionController {
 
 
 
-        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().gt(LbAppVersion::getInnerVersion,params.getCurVersion()).orderByDesc(LbAppVersion::getId),false);
+        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery()
+                .gt(LbAppVersion::getInnerVersion,params.getCurVersion())
+                .orderByDesc(LbAppVersion::getId),false);
 
         if(lbAppVersion!=null ) {
 
