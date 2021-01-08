@@ -14,6 +14,7 @@ import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbOrdersService;
 import com.cmtt.base.service.ILbPostService;
+import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -137,18 +138,36 @@ public class LbExchangeOrdersController {
             Integer PayOneCount=(lbOrdersList.size()*3)-exchangeOrdersList.size();
 
             if(PayOneCount>0){
-                LbExchangeOrders lbExchangeOrders =new LbExchangeOrders();
-                lbExchangeOrders.setUserId(sysUser.getId());
-                lbExchangeOrders.setPhone(sysUser.getPhone());
 
-                LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
-                lbExchangeOrders.setPostId(lbPost.getId());
-                lbExchangeOrders.setPostTitle(lbPost.getTitle());
+                // 查找是否已经兑换过当前文章，如果兑换过，不再重复兑换
+                LbExchangeOrders ordersServiceOne = lbExchangeOrdersService.getOne(Wrappers.<LbExchangeOrders>lambdaQuery()
+                                .eq(LbExchangeOrders::getUserId, sysUser.getId())
+                                .eq(LbExchangeOrders::getPhone, sysUser.getPhone())
+                                .eq(LbExchangeOrders::getPostId, params.getId())
+                                .eq(LbExchangeOrders::getStatus, RC.B_NORMAL.code())
+                        , false);
+
+                if(ordersServiceOne==null){
+
+                    // 未兑换过，开始兑换
+                    LbExchangeOrders lbExchangeOrders =new LbExchangeOrders();
+                    lbExchangeOrders.setUserId(sysUser.getId());
+                    lbExchangeOrders.setPhone(sysUser.getPhone());
+
+                    LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, params.getId()));
+                    lbExchangeOrders.setPostId(lbPost.getId());
+                    lbExchangeOrders.setPostTitle(lbPost.getTitle());
 
 
-                lbExchangeOrdersService.save(lbExchangeOrders);
+                    lbExchangeOrdersService.save(lbExchangeOrders);
 
-                return R.ok().setMessage("兑换成功");
+                    return R.ok().setMessage("兑换成功");
+
+                }else{
+                    return R.ok().setMessage("当前文章已经兑换过，无需重复兑换");
+                }
+
+
             }else{
                 return R.err().setMessage("兑换失败，可兑换次数不够，请再次购买");
             }
