@@ -98,12 +98,12 @@
             //滚动时保存滚动位置
             $(window).scroll(function(){
                 if($(document).scrollTop()!=0){
-                    window.localStorage.setItem("offsetTop", $(window).scrollTop());
+                    window.localStorage.setItem(${lbPost.feeContent}+"_offsetTop", $(window).scrollTop());
                 }
             });
             //onload时，取出并滚动到上次保存位置
             window.onload = function(){
-                var offset = window.localStorage.getItem("offsetTop");
+                var offset = window.localStorage.getItem(${lbPost.feeContent}+"_offsetTop");
                 $(document).scrollTop(offset);
             };
         })
