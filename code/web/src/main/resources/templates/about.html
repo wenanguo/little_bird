@@ -13,16 +13,9 @@
     <script>
         $(document).ready(function () {
             $('.return').hide();
-            var u = navigator.userAgent;
-            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
-                $(window).on('click',function () {
-                    $('.return').toggle();
-                });
-            } else {//ios
-                $(window).on('touchstart',function () {
-                    $('.return').toggle();
-                });
-            }
+            $('.section-content').on('click',function () {
+                $('.return').toggle();
+            });
             $('.return').on('click',function(event) { //关闭页面
                 window.location.href="aves://finish";
                 //window.location.href="aves://getUserToken";
