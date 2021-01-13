@@ -13,13 +13,18 @@
     <script>
         $(document).ready(function () {
             $('.return').hide();
-            $('.section-content').on('click',function () {
-                $('.return').toggle();
-            });
-            $('.return').on('click',function(event) { //关闭页面
-                window.location.href="aves://finish";
-                //window.location.href="aves://getUserToken";
-            });
+            var u = navigator.userAgent;
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
+                $('.section-content').on('click',function () {
+                    $('.return').toggle();
+                    $('.return').on('click',function(event) { //关闭页面
+                        window.location.href="aves://finish";
+                        //window.location.href="aves://getUserToken";
+                    });
+                });
+            } else {//ios
+                $('.return').hide();
+            }
         })
     </script>
     <style>
