@@ -250,6 +250,10 @@
     3: {
         status: 'processing',
         text: '测试'
+    },
+    4: {
+        status: 'processing',
+        text: '预览'
     }
   }
 

@@ -151,6 +151,9 @@
                         <a-radio :value="3">
                           测试
                         </a-radio>
+                        <a-radio :value="4">
+                          预览
+                        </a-radio>
                       </a-radio-group>
                     </a-form-item>
                   </a-col>

@@ -84,7 +84,7 @@ public class LbSubjectController {
             lbSubject.setLbCatalog(lbCatalog);
 
             // 获取统一的文章查询条件
-            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers(true)
                     .eq(LbPost::getPostSubjectId, lbSubject.getId());
 
             List<LbPost> lbPosts = lbPostService.list(queryWrapper);

@@ -22,17 +22,55 @@ import java.time.LocalDateTime;
 @Service
 public class LbPostServiceImpl extends ServiceImpl<LbPostMapper, LbPost> implements ILbPostService {
 
+
     /**
      * 获取统一的文章列表
      * @return
      */
     public LambdaQueryWrapper<LbPost> getCommonPostWrappers(){
-       return Wrappers.<LbPost>lambdaQuery()
-                .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
-                .in(LbPost::getIsFree, new Integer[]{1,2})
-                .eq(LbPost::getRecommend,1)
-                .lt(LbPost::getPublishedAt, LocalDateTime.now())
-                .eq(LbPost::getStatus, RC.B_NORMAL.code())
-                .orderByDesc(LbPost::getPublishedAt);
+        return this.getCommonPostWrappers(false);
+    }
+
+    /**
+     * 获取统一的文章列表
+     * @return
+     */
+    public LambdaQueryWrapper<LbPost> getCommonPostWrappers(boolean isShowPreview){
+
+        LambdaQueryWrapper<LbPost> lbPostLambdaQueryWrapper = null;
+
+
+        if(isShowPreview){
+            // 展示预览
+            lbPostLambdaQueryWrapper=Wrappers.<LbPost>lambdaQuery()
+                    .select(LbPost.class, info -> !info.getColumn().equals("content") && !info.getColumn().equals("fee_content"))
+                    .and(
+                            wrapper -> wrapper
+                                    .and(wrapper2 -> wrapper2
+                                            .in(LbPost::getIsFree, new Integer[]{1, 2})
+                                            .lt(LbPost::getPublishedAt, LocalDateTime.now()))
+                                    .or()
+                                    .eq(LbPost::getIsFree, 4)
+
+                    )
+                    .eq(LbPost::getRecommend, 1)
+                    .eq(LbPost::getStatus, RC.B_NORMAL.code())
+                    .orderByDesc(LbPost::getPublishedAt);
+        }else{
+            // 不展示预览
+            lbPostLambdaQueryWrapper=Wrappers.<LbPost>lambdaQuery()
+                    .select(LbPost.class, info -> !info.getColumn().equals("content") && !info.getColumn().equals("fee_content"))
+                    .in(LbPost::getIsFree, new Integer[]{1, 2})
+                    .lt(LbPost::getPublishedAt, LocalDateTime.now())
+                    .eq(LbPost::getRecommend, 1)
+                    .eq(LbPost::getStatus, RC.B_NORMAL.code())
+                    .orderByDesc(LbPost::getPublishedAt);
+        }
+
+
+
+
+
+        return lbPostLambdaQueryWrapper;
     }
 }

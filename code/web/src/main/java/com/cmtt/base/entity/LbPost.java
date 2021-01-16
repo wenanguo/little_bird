@@ -107,7 +107,7 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "排序")
     private Integer postOrder;
 
-    @ApiModelProperty(value = "是否免费 1免费 2收费")
+    @ApiModelProperty(value = "是否免费 1免费 2收费 3测试 4 预览")
     private Integer isFree;
 
 

@@ -59,7 +59,7 @@ public class LbAuthorController {
         if(lbAuthor!=null){
 
             // 获取统一的文章查询条件
-            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
+            LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers(true)
                     .like(LbPost::getAuthor, lbAuthor.getName());
 
             List<LbPost> list = lbPostService.list(queryWrapper);

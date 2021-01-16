@@ -23,4 +23,10 @@ public interface ILbPostService extends IService<LbPost> {
      * @return
      */
     public LambdaQueryWrapper<LbPost> getCommonPostWrappers();
+
+    /**
+     * 获取统一的文章列表
+     * @return
+     */
+    public LambdaQueryWrapper<LbPost> getCommonPostWrappers(boolean isShowPreview);
 }
