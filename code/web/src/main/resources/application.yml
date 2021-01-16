@@ -47,6 +47,9 @@ spring:
     resources:
       add-mappings: false
 
+  # 需要特殊处理的国家代码
+  sms:
+    special_country: +64,+81
 
   servlet:
     multipart:
