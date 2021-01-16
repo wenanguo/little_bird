@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import com.cmtt.base.entity.LbGoods;
 import com.cmtt.base.service.ILbGoodsService;
 import org.springframework.web.bind.annotation.RestController;

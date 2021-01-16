@@ -13,18 +13,13 @@
     <script>
         $(document).ready(function () {
             $('.return').hide();
-            var u = navigator.userAgent;
-            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//android
-                $('.section-content').on('click',function () {
-                    $('.return').toggle();
-                    $('.return').on('click',function(event) { //关闭页面
-                        window.location.href="aves://finish";
-                        //window.location.href="aves://getUserToken";
-                    });
-                });
-            } else {//ios
-                $('.return').hide();
-            }
+            $(window).on('click',function () {
+                $('.return').toggle();
+            });
+            $('.return').on('click',function(event) { //关闭页面
+                window.location.href="aves://finish";
+                //window.location.href="aves://getUserToken";
+            });
         })
     </script>
     <style>
@@ -55,7 +50,6 @@
     </style>
 </head>
 <body>
-<div class="section-content">
     <h1>《小鸟》用户协议</h1>
     <h2>请阅读以下协议，在本协议的结束处点击“同意”，表示您同意接受本协议并遵守所有条款。</h2>
     <h2>《小鸟》是由上海小乌文化传播有限公司（以下简称“小乌文化”）提供的信息服务。您在完成注册程序后，点击“同意”键并使用《小鸟》，即表示您十三岁以上，同意遵守本协议下的全部条款。您可以打印并保存一份本协议。小乌文化可以对协议条款进行修改。小乌文化将以发送电子邮件，或在网上张贴通知的方式，告知您有关条款的修改。如果您同意遵守更改后的协议，即点击“同意”。如果您不同意协议的修改，您应不再继续使用《小鸟》服务并取消订阅。即使您不点击“同意”，但在收到有关协议的修改通知后仍旧继续使用 《小鸟》服务，您将被视为同意遵守修改后的协议。</h2>
@@ -85,11 +79,10 @@
     <h3>5、申明、保证和义务：</h3>
     <h2>在您的密码使用过程中，您将对一切陈述、行为、遗漏承担责任。您不能为非法目的使用《小鸟》。小乌文化将拒绝授予您为假冒他人之目的而使用的用户名或使用受商标权和其他权利保护的用户名。您在申请用户时不能使用带有侮辱、毁谤、造谣类的或是有其含义的各种语言进行注册用户，否则我们会将其删除。</h2>
     <h2>本协议仅针对您个人，您不可以将您的权利和义务转让给任何人。如果在现行法律条文中，本协议的某些条款无效或无法执行，其余条款将继续有效。</h2>
-</div>
-<div class="footerOperation">
-    <div class="footerOperationContent">
-        <i class="return"></i>
+    <div class="footerOperation">
+        <div class="footerOperationContent">
+            <i class="return"></i>
+        </div>
     </div>
-</div>
 </body>
 </html>
