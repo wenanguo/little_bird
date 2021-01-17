@@ -58,7 +58,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="所属期刊" v-if="AdTypeValue == 4">
-          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: false}]}]">
+          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择所属期刊！'}]}]">
             <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
               {{ lbPeriodical.title }}
             </a-select-option>
@@ -175,6 +175,7 @@
                   this.AdTypeValue = this.model.adType
                 } else {
                   this.fileList = []
+                  this.AdTypeValue = 2
                 }
             })
         },

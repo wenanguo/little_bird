@@ -143,20 +143,26 @@ public class LbAdController {
 
         try {
 
-            // 设置栏目
-            LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()),false);
-            lbAd.setLbSubjectId(lbSubject.getId());
-            lbAd.setLbSubjectTitle(lbSubject.getTitle());
+            if(lbAd.getLbSubjectId()!=null) {
+                // 设置栏目
+                LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()), false);
+                lbAd.setLbSubjectId(lbSubject.getId());
+                lbAd.setLbSubjectTitle(lbSubject.getTitle());
+            }
 
-            // 设置期刊
-            LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()),false);
-            lbAd.setLbPeriodicalId(lbPeriodical.getId());
-            lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+            if(lbAd.getLbPeriodicalId()!=null) {
+                // 设置期刊
+                LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()), false);
+                lbAd.setLbPeriodicalId(lbPeriodical.getId());
+                lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+            }
 
-            // 设置作者
-            LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
-            lbAd.setLbAuthorId(lbAuthor.getId());
-            lbAd.setLbAuthorName(lbAuthor.getName());
+            if(lbAd.getLbAuthorId()!=null) {
+                // 设置作者
+                LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
+                lbAd.setLbAuthorId(lbAuthor.getId());
+                lbAd.setLbAuthorName(lbAuthor.getName());
+            }
 
 
             lbAdService.save(lbAd);
@@ -183,20 +189,26 @@ public class LbAdController {
 
         try {
 
-            // 设置栏目
-            LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()),false);
-            lbAd.setLbSubjectId(lbSubject.getId());
-            lbAd.setLbSubjectTitle(lbSubject.getTitle());
+            if(lbAd.getLbSubjectId()!=null) {
+                // 设置栏目
+                LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbAd.getLbSubjectId()), false);
+                lbAd.setLbSubjectId(lbSubject.getId());
+                lbAd.setLbSubjectTitle(lbSubject.getTitle());
+            }
 
-            // 设置期刊
-            LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()),false);
-            lbAd.setLbPeriodicalId(lbPeriodical.getId());
-            lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+            if(lbAd.getLbPeriodicalId()!=null) {
+                // 设置期刊
+                LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()), false);
+                lbAd.setLbPeriodicalId(lbPeriodical.getId());
+                lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+            }
 
-            // 设置作者
-            LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
-            lbAd.setLbAuthorId(lbAuthor.getId());
-            lbAd.setLbAuthorName(lbAuthor.getName());
+            if(lbAd.getLbAuthorId()!=null) {
+                // 设置作者
+                LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
+                lbAd.setLbAuthorId(lbAuthor.getId());
+                lbAd.setLbAuthorName(lbAuthor.getName());
+            }
 
             lbAdService.updateById(lbAd);
 
