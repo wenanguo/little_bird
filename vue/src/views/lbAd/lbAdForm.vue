@@ -32,45 +32,46 @@
           </a-upload>
           <a-input v-decorator="['imgUrl', {initialValue: ''}]" type="hidden" />
         </a-form-item>
-        <a-form-item label="作者">
+        <a-form-item style="margin-top:20px" label="广告分类">
+          <a-radio-group v-decorator="['adType', { initialValue: 2 }]" @change="handleAdTypeChange">
+            <a-radio :value="1">外部链接</a-radio>
+            <a-radio :value="2">作者推荐</a-radio>
+            <a-radio :value="3">栏目推荐</a-radio>
+            <a-radio :value="4">期刊(目录)推荐</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item label="链接地址" v-if="AdTypeValue == 1">
+          <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入链接地址！'}]}]" />
+        </a-form-item>
+        <a-form-item label="作者" v-if="AdTypeValue == 2">
           <a-select @change="handleAuthorChange" v-decorator="['lbAuthorId', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
             <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
               {{ lbAuthor.name }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="栏目">
+        <a-form-item label="栏目" v-if="AdTypeValue == 3">
           <a-select v-decorator="['lbSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]">
             <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.id">
               {{ lbSubject.title }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="所属期刊">
+        <a-form-item label="所属期刊" v-if="AdTypeValue == 4">
           <a-select v-decorator="['lbPeriodicalId', {rules: [{required: false}]}]">
             <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
               {{ lbPeriodical.title }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="期刊位置">
-          <a-input-number v-decorator="['lbPeriodicalIndex', {rules: [{required: false}]}]" />
+        <a-form-item label="期刊位置" >
+          <a-input-number v-decorator="['lbPeriodicalIndex', {initialValue: 1,rules: [{required: false}]}]" />
         </a-form-item>
         <a-form-item label="广告位置">
           <a-radio-group v-decorator="['adLocation', { initialValue: 2 }]">
             <a-radio :value="1">首页广告</a-radio>
             <a-radio :value="2">启动广告</a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item label="广告分类">
-          <a-radio-group v-decorator="['adType', { initialValue: 2 }]">
-            <a-radio :value="1">外部链接</a-radio>
-            <a-radio :value="2">作者推荐</a-radio>
-            <a-radio :value="3">栏目推荐</a-radio>
-          </a-radio-group>
-        </a-form-item>
-        <a-form-item label="链接地址" :visable="false">
-          <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入链接地址！'}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
@@ -148,6 +149,7 @@
             }
             return {
                 form: this.$form.createForm(this),
+                AdTypeValue: 2,
                 dateFormat: 'YYYY-MM-DD HH:mm:ss',
                 fileList: []
             }
@@ -170,12 +172,17 @@
                                     status: 'done',
                                     url: this.model.imgUrl
                                   }]
+                  this.AdTypeValue = this.model.adType
                 } else {
                   this.fileList = []
                 }
             })
         },
         methods: {
+          handleAdTypeChange (e) {
+               console.log('radio checked', e.target.value)
+               this.AdTypeValue = e.target.value
+          },
           handleAuthorChange (info) {
           },
           handleChange (info) {

@@ -22,6 +22,22 @@ const statusMap = {
   203: {
       status: 'success',
       text: '已支付'
+  },
+  211: {
+      status: 'default',
+      text: '未发送'
+  },
+  212: {
+      status: 'default',
+      text: '发送中'
+  },
+  213: {
+      status: 'success',
+      text: '发送成功'
+  },
+  214: {
+      status: 'error',
+      text: '发送失败'
   }
 }
 
