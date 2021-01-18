@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>关于小鸟</title>
+    <link rel="stylesheet" type="text/css" href="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/css/style.css">
+    <script src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/js/jquery-1.11.3.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.return').hide();
+            $('.sectionBox').on('click',function () {
+                $('.return').toggle();
+            });
+            $('.return').on('click',function(event) { //关闭页面
+                window.location.href="aves://finish";
+                //window.location.href="aves://getUserToken";
+            });
+        })
+    </script>
+    <style>
+        body{
+            padding: 20px;
+            background: #222222;
+            margin: 0;
+            font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+            color: #fff;
+        }
+        h2{
+            font-size: 16px;
+            font-weight: lighter;
+            line-height: 30px;
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        h3{
+            font-size: 16px;
+            line-height: 30px;
+            text-align: right;
+            font-weight: lighter;
+            margin-top: 30px;
+        }
+        h3 span{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="sectionBox">
+    <h2>找不到当前内容</h2>
+</div>
+<div class="footerOperation">
+    <div class="footerOperationContent">
+        <i class="return"></i>
+    </div>
+</div>
+</body>
+</html>

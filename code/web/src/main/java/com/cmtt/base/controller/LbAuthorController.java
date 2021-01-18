@@ -20,8 +20,11 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -45,6 +48,9 @@ public class LbAuthorController {
 
     @Autowired
     private ILbPostService lbPostService;
+
+    @Value("${spring.static-file.domain-path}")
+    private String domainPath;
 
     /**
      * 获取作者及所属文章
@@ -70,6 +76,43 @@ public class LbAuthorController {
             return R.err().setMessage("找不当当前期刊数据");
         }
 
+
+    }
+
+
+
+    /**
+     * 作者分享
+     */
+    @GetMapping("share")
+    @ApiOperation("栏目分享")
+    public ModelAndView share(@Valid GetOneInputParam params)  {
+
+        ModelAndView mv = new ModelAndView();
+
+        // 执行查询
+        LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery()
+                .eq(LbAuthor::getId, params.getId())
+                .eq(LbAuthor::getStatus,RC.B_NORMAL.code())
+        );
+
+        if(lbAuthor==null){
+            mv.setViewName("error");
+            return mv;
+        }
+
+        // 获取文章列表
+        List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                .like(LbPost::getAuthor, lbAuthor.getName())
+                .eq(LbPost::getStatus, RC.B_NORMAL.code())
+        );
+
+
+        mv.addObject("domainPath",this.domainPath);
+        mv.addObject("lbAuthor",lbAuthor);
+        mv.addObject("lbPostList",lbPostList);
+        mv.setViewName("shareAuthor");
+        return mv;
 
     }
 

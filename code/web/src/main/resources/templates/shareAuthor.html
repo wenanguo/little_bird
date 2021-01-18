@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>作者分享</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="${domainPath}+'/common/css/style.css'">
 </head>
 <body style="background: #E6E7E8">
 <section class="shareBox">
@@ -16,77 +16,47 @@
         <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/logo_black_text.png" class="shareColumnLogo">
         <div class="shareAuthorBox">
             <div class="shareAuthorInfo">
-                <h1>吉井忍</h1>
-                <h2>日籍华语作家。<br>
-                    一直致力于在美食、书店、生活的领域的写作。她还有一个更深的愿望是，利用华语作家身份促进中日文化交流。一直致力于在美食、书店、生活的领域的写作。她还有一个更深的愿望是，利用华语作家身份促进中日文化交流。日籍华语作家。一直致力于在美食、书店、生活的领域的写作。</h2>
+                <h1>[[${lbAuthor.name}]]</h1>
+                <h2>[[${lbAuthor.introduction}]]
+                </h2>
             </div>
             <div class="shareAuthorImg">
-                <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/img3.png">
+                <img th:src="${lbAuthor.imgUrl}">
             </div>
         </div>
     </div>
     <div class="shareColumnListBox">
         <div class="topBg"></div>
         <div class="shareColumnListContent">
-            <div class="shareColumnList">
-                <div class="noticeBox">
-                    <div class="noticeIcon"></div>
-                    <div class="noticeMask"></div>
-                </div>
-                <div>
-                    <div class="coverImg">
-                        <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/img2.png">
-                    </div>
-                    <div class="columnTitleInfo">
-                        <div class="columnArticleInfo">
-                            <h1><span>在萨尔瓦多离世那一年</span></h1>
-                            <h2>媒体往事</h2>
-                        </div>
-                        <h3>卷十一 · 9月28日更新</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="shareColumnList">
-                <div>
-                    <div class="coverImg">
-                        <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/img2.png">
-                    </div>
-                    <div class="columnTitleInfo">
-                        <div class="columnArticleInfo">
-                            <h1><span>一个南方鱼村里最荡漾的时刻</span></h1>
-                            <h2>媒体往事</h2>
-                        </div>
-                        <h3>卷十一 · 9月28日更新</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="shareColumnList notImgBox">
-                <div>
-                    <div class="coverImg">
-                        <div class="coverNotImg">
-                            <em></em>
-                            <i></i>
+            <span th:each="c, State : ${lbPostList}" th:remove="tag">
+
+                      <div class="shareColumnList" th:class="${c.showType == 4}? 'shareColumnList notImgBox' : 'shareColumnList' ">
+                        <div>
+                            <div class="coverImg" >
+                                <img th:if="${c.showType != 4}" th:src="${c.imgUrl}">
+                            </div>
+                            <div class="columnTitleInfo">
+                                <div class="columnArticleInfo">
+                                    <h1><span>[[${c.title}]]</span></h1>
+                                    <h2>[[${c.getLbAuthorListStr()}]]</h2>
+                                </div>
+                                <h3>[[${c.periodicalTitle}]] · [[${c.getSocialDateDisplay()}]]更新</h3>
+                            </div>
                         </div>
                     </div>
-                    <div class="columnTitleInfo">
-                        <div class="columnArticleInfo">
-                            <h1><span>一个南方鱼村里最荡漾的时刻</span></h1>
-                            <h2>媒体往事</h2>
-                        </div>
-                        <h3>卷十一 · 9月28日更新</h3>
-                    </div>
-                </div>
-            </div>
+
+
+            </span>
         </div>
     </div>
     <div class="shareFooter">
         <div class="shareFooterTop">
-            <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/footerBg.png">
+            <img th:src="${domainPath}+'common/img/footerBg.png'">
         </div>
         <div class="shareFooterContent">
             <div class="text">识别二维码，阅读小鸟文学</div>
             <div class="code">
-                <img src="https://littlebird-cos-1304137331.file.myqcloud.com/common/img/ewm.png">
+                <img th:src="${domainPath}+'common/img/ewm.png'">
             </div>
         </div>
     </div>
