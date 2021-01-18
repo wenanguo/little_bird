@@ -58,13 +58,30 @@
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle">
                 <div class="open_down">
-                    <span href="javascript:;" class="exchangecss">打开或下载小鸟App阅读更多</span>
-                    <img th:src="${domainPath}+'common/img/bird-logo.png'">
-                    <h2 style="text-align: center">它是一本包含小说、非虚构、诗歌、档案等板块的新型文学杂志</h2>
+                    <span class="exchangecss">打开或下载小鸟App阅读更多</span>
+                    <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/logo_black.png">
+                    <h2 style="text-align: center;margin-top: 24px;">它是一本包含小说、非虚构、诗歌、档案等板块的新型文学杂志</h2>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="authorBoxList">
+    <div class="authorBox" th:each="c, State : ${lbAuthorList}">
+        <div class="authorInfo">
+            <h1 th:text="${c.name}"></h1>
+            <h2 th:text="${c.introduction}"></h2>
+        </div>
+        <div class="authorPhoto" th:onclick="'javascript:authorClick('+${c.id}+')' ">
+            <img th:src="${c.imgUrl}">
+        </div>
+    </div>
+</div>
+<div class="columnBox">
+    <h1><span style="border-bottom-color: #D7A03C">媒体往事</span></h1>
+    <h2>
+        栏目介绍时间当然不会像节奏很快的媒体那样重要，但是在读者看到一个哪怕是一年之前的事件的记录，对于读者来说，也是一种获得新信息的感觉。栏目介绍时间当然不会像节奏很快的媒体那样重要，但是在读者看到一个哪怕是一年之前的事件的记录，对于读者来说，也是一种获得新信息的感觉。
+    </h2>
 </div>
 <div class="periodicalBox">
     <div class="periodicalCover">
