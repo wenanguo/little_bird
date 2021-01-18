@@ -173,22 +173,79 @@ input[type=button], input[type=text], input[type=password], button, textarea {
 .subscribeContent{
     overflow: hidden;
 }
+.showInfo{
+    overflow: hidden;
+}
+.showInfo img{
+    display: block;
+    width: 32%;
+    margin: 30px auto;
+}
+.showInfo h1{
+    color: #fff!important;
+    font-size: 14px;
+    margin: 0 0 20px 0!important;
+    text-align: center;
+    line-height: 25px;
+}
 .subscribeBox .priceInfo{
     color: #fff;
     font-size: 14px;
     border-top: 1px solid #3a3a3a;
     border-bottom:1px dashed #3a3a3a;
-    padding: 20px;
+    padding: 20px 0;
+    margin: 0 20px;
 }
-.subscribeBox .priceInfo span{
-    background: #3c3425;
-    color: #d7a03c;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    padding: 0 6px;
-    margin: 0 5px;
-    line-height:2rem;
+.subscribeBox .priceInfo .priceInfoTitle{
+    color: #fff;
+    height: 30px;
+}
+.subscribeBox .priceInfo .priceInfoList{
+    overflow: hidden;
+}
+.subscribeBox .priceInfo .priceInfoList div{
+    background: #2b2924;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    width: 48%;
+    float: left;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.subscribeBox .priceInfo .priceInfoList div:first-child{
+    margin-right: 4%;
+}
+.subscribeBox .priceInfo .priceInfoList div h1{
+    color: #fff;
+    font-weight: lighter;
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+    padding: 0;
+}
+.subscribeBox .priceInfo .priceInfoList div h2{
+    color: #fff;
+    font-weight: lighter;
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+    padding: 0;
+}
+.subscribeBox .priceInfo .priceInfoList div h2 span{
+    display: inline-block;
+    color: #747474;
+}
+.subscribeBox .priceInfo .priceInfoList div h2 span:first-child{
+    font-weight: 500;
+    color: #d59f3c;
+    padding-right: 5px;
+}
+.subscribeBox .priceInfo .priceInfoList div h2 span:last-child{
+    text-align: right;
+    width: 40%;
+    float: right;
+    color: #d59f3c;
 }
 .subscribeBox .subscribeText{
     line-height: 187.5%;
@@ -273,6 +330,9 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     left: 0;
     width: 100%;
     z-index: 99;
+    -webkit-overflow-scrolling: touch;
+    transform: translate3d(0,0,0);
+    overflow-y: scroll;
 }
 .footerOperationContent{
     padding: 20px;
@@ -347,6 +407,7 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     border-bottom: 1px solid #D7A03C;
     text-decoration: none!important;
 }
+
 .night_mode{
     color: #DBDBDB;
     background: #222222;
@@ -362,7 +423,7 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/article-line-night.png') no-repeat right+19px top rgba(229, 230, 231, 0.05);
 }
 .night_mode .subscribeBorderTop{
-    background-image: linear-gradient(rgba(34,34,34,0.5), rgba(34,34,34,1));
+    background-image: linear-gradient(rgba(34,34,34,0), rgba(34,34,34,1));
 }
 .night_mode .subscribeTitle{
     background: #222222;
@@ -398,6 +459,23 @@ input[type=button], input[type=text], input[type=password], button, textarea {
     color: #DBDBDB;
     text-decoration: none!important;
     border-bottom: 1px solid #D7A03C;
+}
+.night_mode .columnBox{
+    background:rgba(229, 230, 231, 0.2);
+}
+.night_mode .columnBox h1{
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #DBDBDB;
+}
+.night_mode .columnBox h2{
+    color: #DBDBDB;
+}
+.night_mode .priceInfo{
+    border-top: 1px solid #3F3E4C;
+    border-bottom: 1px dashed #3F3E4C;
+}
+.night_mode .subscribeBox .priceInfo .priceInfoList div{
+    background: rgba(215, 160, 60, 0.05);
 }
 pre.ql-syntax{
     background:url('https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/summary_icon.png') no-repeat 20px 20px rgba(229, 230, 231, 0.2);
@@ -486,4 +564,279 @@ pre.ql-syntax{
 }
 .articleBox .ql-align-justify {
     text-align: justify;
+}
+.authorShareBox{
+    padding: 30px 20px;
+    overflow: hidden;
+}
+.columnBox{
+    overflow: hidden;
+    background: #E5E6E7;
+}
+.columnBox h1{
+    margin: 0 20px;
+    border-top: 1px solid #D1D0D0;
+    color: #303042;
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 30px;
+}
+.columnBox h1 span{
+    line-height: 24px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+}
+.columnBox h2{
+    font-size: 14px;
+    font-weight: 300;
+    color: #3F3E4C;
+    line-height: 24px;
+    padding: 10px 20px 30px 20px;
+}
+
+.shareAuthorHeader h1{
+    margin-top: 10px;
+    color: #3F3E4C;
+    font-size: 24px;
+    font-weight: bold;
+}
+.shareAuthorHeader h2{
+    margin-top: 20px;
+    color: #3F3E4C;
+    font-size: 14px;
+    font-weight: lighter;
+    line-height: 24px;
+}
+.shareAuthorBox{
+    overflow: hidden;
+    padding-top: 20px;
+}
+.shareAuthorInfo{
+    overflow: hidden;
+    float: left;
+    width: 60%;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+.shareAuthorImg{
+    float: left;
+    width:40%;
+}
+.shareAuthorImg img{
+    width: 100%;
+    overflow: hidden;
+    -webkit-border-radius: 6px 0 0 6px;
+    -moz-border-radius: 6px 0 0 6px;
+    border-radius: 6px 0 0 6px;
+}
+.shareAuthorHeader, .shareColumnHeader{
+    background: #FAFAFA;
+    overflow: hidden;
+    padding: 5vw 0 8vw 5vw;
+}
+.shareColumnLogo{
+    width: 16.8%;
+    display: inline-block;
+}
+.shareColumnHeader h1{
+    margin-top: 30px;
+    color: #3F3E4C;
+    font-size: 24px;
+    font-weight: 500;
+}
+.shareColumnHeader h1 span{
+    border-bottom: 2px solid #D7A03C;
+}
+.shareColumnHeader h2{
+    margin-top: 20px;
+    color: #3F3E4C;
+    font-size: 14px;
+    font-weight: lighter;
+}
+.shareColumnListBox{
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 34vw;
+}
+.shareColumnListBox .topBg{
+    background: #FAFAFA;
+    height: 33px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+}
+.shareColumnListContent{
+    overflow: hidden;
+    padding: 0 5vw;
+}
+.shareColumnListBox .shareColumnList{
+    overflow: hidden;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: #F5F5F5;
+    position: relative;
+    margin-bottom: 20px;
+    height: 34.6vw;
+}
+.shareColumnListBox .shareColumnList.notImgBox{
+    background: #418F9B;
+}
+.shareColumnListBox .shareColumnList.notImgBox .columnTitleInfo h1,
+.shareColumnListBox .shareColumnList.notImgBox .columnTitleInfo h2,
+.shareColumnListBox .shareColumnList.notImgBox .columnTitleInfo h3{
+    color: #fff;
+}
+.shareColumnListBox .shareColumnList.notImgBox .columnTitleInfo h1 span{
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.shareColumnListBox .shareColumnList .coverImg{
+    float: left;
+    width: 40vw;
+    height: 34.6vw;
+}
+.shareColumnListBox .shareColumnList .coverImg img{
+    width: 100%;
+    display: block;
+}
+.shareColumnListBox .shareColumnList .columnTitleInfo{
+    float: left;
+    width: 50vw;
+    box-sizing: border-box;
+    text-align: right;
+}
+@media screen and (min-width: 375px) {
+    .shareColumnListBox .shareColumnList .columnTitleInfo {
+        padding: 20px 20px 10px 20px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .shareColumnListBox .shareColumnList .columnTitleInfo {
+        padding: 20px 20px 10px 20px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .shareColumnListBox .shareColumnList .columnTitleInfo {
+        padding: 10px;
+    }
+}
+.shareColumnListBox .shareColumnList .columnTitleInfo .columnArticleInfo{
+    height: 22vw;
+    overflow: hidden;
+}
+.shareColumnListBox .shareColumnList .columnTitleInfo h1{
+    color: #3F3E4C;
+    font-size: 14px;
+    font-weight: 600;
+    max-height: 51px;
+    overflow: hidden;
+}
+.shareColumnListBox .shareColumnList .columnArticleInfo h1 span{
+    border-bottom: 1px solid #D7A03C;
+    padding: 5px 0;
+    line-height: 20px;
+    display: inline-block;
+}
+.shareColumnListBox .shareColumnList .columnTitleInfo h2{
+    color: #3F3E4C;
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 4px;
+}
+.shareColumnListBox .shareColumnList .columnTitleInfo h3{
+    color: #3F3E4C;
+    font-size: 12px;
+    font-weight: lighter;
+}
+.noticeBox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 34.6vw;
+    z-index: 99;
+}
+.noticeBox .noticeIcon{
+    background: url("https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/notice-icon.png") no-repeat;
+    background-size:cover;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 10vw;
+    height: 10vw;
+    z-index: 2;
+}
+.noticeBox .noticeMask{
+    background: rgba(255,255,255,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 34.6vw;
+}
+.coverNotImg{
+    overflow: hidden;
+    position: relative;
+    height: 34.6vw;
+}
+.coverNotImg em{
+    position: absolute;
+    height: 1px;
+    width: 90%;
+    background: rgba(255,255,255,0.1);
+    left: 0;
+    bottom: 40px;
+    z-index: 1;
+}
+.coverNotImg i{
+    position: absolute;
+    height: 1px;
+    width: 20%;
+    border-top:1px dashed rgba(255,255,255,0.1);
+    left: 0;
+    bottom: 16px;
+    z-index: 1;
+}
+.shareFooter{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+.shareFooterTop{
+    width: 100%;
+}
+.shareFooterTop img{
+    width: 100%;
+    display: block;
+}
+.shareFooterContent{
+    background: #222222;
+    overflow: hidden;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    height: 30vw;
+    padding: 25px 20px 25px 30px;
+    box-sizing: border-box;
+}
+.shareFooterContent .text{
+    font-size: 12px;
+    font-weight: lighter;
+    width: 80%;
+    display: block;
+    float: left;
+}
+.shareFooterContent .code{
+    width: 20%;
+    float: left;
+}
+.shareFooterContent .code img{
+    width: 100%;
+    display: block;
+    float: right;
 }
