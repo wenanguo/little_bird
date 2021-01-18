@@ -257,13 +257,7 @@ public class LbPostController {
                         PayOneCount=(lbOrdersList.size()*3)-exchangeOrdersList.size();
 
                     }
-
                 }
-
-
-
-
-
 
             }
 
@@ -284,6 +278,11 @@ public class LbPostController {
         // 获取作者列表
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
 
+        // 获取所属栏目
+        LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery()
+                .eq(LbSubject::getStatus, RC.B_NORMAL.code())
+                .eq(LbSubject::getId, lbPost.getPostSubjectId())
+        );
 
         Context context=new Context();
         context.setVariable("domainPath",this.domainPath);
@@ -296,6 +295,7 @@ public class LbPostController {
 
         context.setVariable("PayOneCount",PayOneCount);
         context.setVariable("lbAuthorList",lbAuthorList);
+        context.setVariable("lbSubject",lbSubject);
         String result=templateEngine.process("articleDetails",context);
         //System.out.println(result);
         lbPost.setContent(result);
@@ -333,7 +333,11 @@ public class LbPostController {
 
         // 获取作者列表
         List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
-
+// 获取所属栏目
+        LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery()
+                .eq(LbSubject::getStatus, RC.B_NORMAL.code())
+                .eq(LbSubject::getId, lbPost.getPostSubjectId())
+        );
 
 
         if(isPayYear || isPayOne || lbPost.getIsFree()==1){
@@ -358,6 +362,7 @@ public class LbPostController {
 
 
         mv.addObject("lbAuthorList",lbAuthorList);
+        mv.addObject("lbSubject",lbSubject);
         mv.setViewName("articleDetails");
         return mv;
 
@@ -401,7 +406,7 @@ public class LbPostController {
 
         try {
 
-// 构建分页类
+            // 构建分页类
             IPage<LbPost> lbPostPage = new Page<>(lbPost.getPageNo(), lbPost.getPageSize());
 
             // 构造查询及排序方式
