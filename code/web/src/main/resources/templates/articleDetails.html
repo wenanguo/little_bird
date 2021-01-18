@@ -122,13 +122,11 @@
     </div>
     <div class="authorName">
         <span>
-        <span th:each="c, State : ${lbAuthorList}" th:remove="tag">
-            <div th:text="${c.name}" th:remove="tag"></div>
-        </span>
+        [[${lbPost.getLbAuthorListStr()}]]
         </span>
         <span class="post_subject" th:onclick="'javascript:subjectClick('+${lbPost.postSubjectId}+')'">[[${lbPost.postSubject}]]</span>
     </div>
-    <div class="date"><span th:text="${SocialDate}"></span></div>
+    <div class="date"><span th:text="${lbPost.getSocialDateDisplay()}"></span></div>
     <div class="summary">
         [[${lbPost.description}]]
     </div>
@@ -149,7 +147,7 @@
             </div>
             <div class="subscribeContent" th:if="${isPayOne} == false">
                 <div class="showInfo">
-                    <img src="https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/common/img/subscribe-logo.png">
+                    <img th:src="${domainPath}+'common/img/subscribe-logo.png'">
                     <h1>“当所有选项都被拿走的时候，<br>你依然有无限自由的可能。”</h1>
                 </div>
                 <div class="priceInfo">

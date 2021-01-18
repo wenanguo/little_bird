@@ -49,7 +49,7 @@ spring:
 
   # 需要特殊处理的国家代码
   sms:
-    special_country: +64,+81
+    special_country: +64,+81,+886
 
   servlet:
     multipart:
@@ -102,7 +102,7 @@ spring:
 
 # 静态文件地址
   static-file:
-    domain-path: https://littlebird-cos-1304137331.cos.ap-shanghai.myqcloud.com/
+    domain-path: https://littlebird-cos-1304137331.file.myqcloud.com/
 
 
 management:
@@ -130,7 +130,7 @@ logging:
     com.cmtt.base.mapper: debug
 
 common:
-  noauto: /actuator/health,/favicon.ico,/api/auth/login,/api/db_doc,/api/sys_sms_country/list_all,/api/sys_user/register,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_periodical/bookrack,/api/lb_catalog/get_catalog_post,/api/lb_catalog/catalog_list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_goods/get_one,/api/apple_pay/apple_pay_create,/api/apple_pay/apple_pay_valid,/api/lb_report/add,/api/lb_post/share,/api/lb_post/preview,/page/user_agreement,/page/privacy_agreement,/page/about,/page/download,/page/app_download
+  noauto: /actuator/health,/favicon.ico,/api/auth/login,/api/db_doc,/api/sys_sms_country/list_all,/api/sys_user/register,/api/sys_user/social_register,/api/sys_user/social_login,/api/user/info,/api/sys_user/sms,/api/sys_user/phone_login,/api/sys_user/check,/api/auth/register,/api/auth/2step-code,/api/account/sms,/api/zfb/callback,/druid/**,/api/lb_ad/get_start_ad,/api/upload.html,/api/tencent/upload,/upload,/multiUpload,/api/lb_ad/get_index_ad,/api/lb_ad/get_start_ad,/api/lb_app_version/app_update,/api/lb_author/get_author_post,/api/lb_periodical/bookrack,/api/lb_catalog/get_catalog_post,/api/lb_catalog/catalog_list,/api/lb_periodical/current,/api/lb_periodical/get_one,/api/lb_periodical/index_post,/api/lb_post/detail,/api/lb_post/search,/api/lb_subject/get_one,/api/lb_goods/get_one,/api/apple_pay/apple_pay_create,/api/apple_pay/apple_pay_valid,/api/lb_report/add,/api/lb_post/share,/api/lb_post/preview,/page/user_agreement,/page/privacy_agreement,/page/about,/page/download,/page/app_download,/api/lb_subject/share
 
 tencent:
   secret-id: AKIDFF2f3SoIL9gwlR7atvgAdbJuObYPpwPj

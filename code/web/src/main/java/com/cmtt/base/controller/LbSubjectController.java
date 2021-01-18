@@ -16,14 +16,17 @@ import com.cmtt.base.service.ILbAdService;
 import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.service.ILbSubjectService;
+import com.cmtt.base.utils.DateTimeUtils;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -55,6 +58,9 @@ public class LbSubjectController {
 
     @Autowired
     private ILbAdService lbAdService;
+
+    @Value("${spring.static-file.domain-path}")
+    private String domainPath;
 
     /**
      * 主页
@@ -96,6 +102,50 @@ public class LbSubjectController {
         return R.ok().setResult(lbSubject);
     }
 
+
+    /**
+     * 栏目分享
+     */
+    @GetMapping("share")
+    @ApiOperation("栏目分享")
+    public ModelAndView share(@Valid GetOneInputParam params)  {
+
+        ModelAndView mv = new ModelAndView();
+
+        // 执行查询
+        LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery()
+                .eq(LbSubject::getId, params.getId())
+                .eq(LbSubject::getStatus,RC.B_NORMAL.code())
+        );
+
+        if(lbSubject==null){
+            mv.setViewName("error");
+            return mv;
+        }
+
+        // 获取文章列表
+        List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                .eq(LbPost::getPostSubjectId, lbSubject.getId())
+                .eq(LbPost::getStatus, RC.B_NORMAL.code())
+        );
+
+//
+//        // 获取作者列表
+//        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
+//
+//        LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbPost.getPeriodicalId()),false);
+//        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
+//
+
+
+
+        mv.addObject("domainPath",this.domainPath);
+        mv.addObject("lbSubject",lbSubject);
+        mv.addObject("lbPostList",lbPostList);
+        mv.setViewName("shareSubject");
+        return mv;
+
+    }
 
 
     /**

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.cmtt.base.utils.DateTimeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -137,6 +138,41 @@ public class LbPost extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
+
+
+    /**
+     * 获取社交日期展示
+     * @return
+     */
+    public String getSocialDateDisplay(){
+        return DateTimeUtils.getSocialDateDisplay(this.publishedAt);
+    }
+
+
+    /**
+     * 获取作者字符串
+     * @return
+     */
+    public String getLbAuthorListStr(){
+
+        String returnStr="";
+
+        if(this.author.length()>0) {
+            try{
+                List<JSONObject> list = JSON.parseObject(this.author, new ArrayList<LbAuthorVo>().getClass());
+
+                for (JSONObject lav:list) {
+
+                    returnStr= returnStr + lav.get("name").toString()+" ";
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        return returnStr.trim();
+    }
 
     public List<LbAuthorVo> getLbAuthorList() {
 
