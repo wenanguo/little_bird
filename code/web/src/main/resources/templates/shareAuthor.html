@@ -29,23 +29,20 @@
         <div class="topBg"></div>
         <div class="shareColumnListContent">
             <span th:each="c, State : ${lbPostList}" th:remove="tag">
-
-                      <div class="shareColumnList" th:class="${c.showType == 4}? 'shareColumnList notImgBox' : 'shareColumnList' ">
-                        <div>
-                            <div class="coverImg" >
-                                <img th:if="${c.showType != 4}" th:src="${c.imgUrl}">
+                  <div class="shareColumnList" th:class="${c.showType == 4}? 'shareColumnList notImgBox' : 'shareColumnList' ">
+                    <div>
+                        <div class="coverImg" style='background-image: url("${c.imgUrl}")'>
+                            <img th:if="${c.showType != 4}" th:src="${c.imgUrl}">
+                        </div>
+                        <div class="columnTitleInfo">
+                            <div class="columnArticleInfo">
+                                <h1><span style="border-bottom-color: #D7A03C">[[${c.title}]]</span></h1>
+                                <h2>[[${c.getLbAuthorListStr()}]]</h2>
                             </div>
-                            <div class="columnTitleInfo">
-                                <div class="columnArticleInfo">
-                                    <h1><span>[[${c.title}]]</span></h1>
-                                    <h2>[[${c.getLbAuthorListStr()}]]</h2>
-                                </div>
-                                <h3>[[${c.periodicalTitle}]] · [[${c.getSocialDateDisplay()}]]更新</h3>
-                            </div>
+                            <h3>[[${c.periodicalTitle}]] · [[${c.getSocialDateDisplay()}]]更新</h3>
                         </div>
                     </div>
-
-
+                </div>
             </span>
         </div>
     </div>

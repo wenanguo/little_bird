@@ -697,10 +697,15 @@ pre.ql-syntax{
     float: left;
     width: 40vw;
     height: 34.6vw;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .shareColumnListBox .shareColumnList .coverImg img{
-    width: 100%;
-    display: block;
+    height: 100%;
+    display:inline-block;
+    margin: 0 auto;
 }
 .shareColumnListBox .shareColumnList .columnTitleInfo{
     float: left;
@@ -735,7 +740,8 @@ pre.ql-syntax{
     overflow: hidden;
 }
 .shareColumnListBox .shareColumnList .columnArticleInfo h1 span{
-    border-bottom: 1px solid #D7A03C;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     padding: 5px 0;
     line-height: 20px;
     display: inline-block;
