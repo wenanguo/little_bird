@@ -66,6 +66,7 @@ const constantRouterComponents = {
   // 系统管理
   'SysUserList': () => import('@/views/sysUser/sysUserList'),
   'SysSmsList': () => import('@/views/sysSms/sysSmsList'),
+  'SysRoleList': () => import('@/views/sysRole/sysRoleList'),
   // 支付
   'LbGoodsList': () => import('@/views/lbGoods/lbGoodsList'),
   'LbOrdersList': () => import('@/views/lbOrders/lbOrdersList')

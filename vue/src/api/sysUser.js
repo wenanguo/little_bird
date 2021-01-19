@@ -5,6 +5,7 @@ const api = {
   edit: '/sys_user/edit',
   list: '/lb_orders/user_order_list',
   listAll: '/sys_user/listAll',
+  adminListAll: '/sys_user/adminListAll',
   batchDel: '/sys_user/batchDelete',
   del: '/sys_user/delete'
 }
@@ -14,6 +15,14 @@ export default api
 export function getSysUserList (parameter) {
   return request({
     url: api.list,
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function getSysUserAdminListAll (parameter) {
+  return request({
+    url: api.adminListAll,
     method: 'get',
     params: parameter
   })

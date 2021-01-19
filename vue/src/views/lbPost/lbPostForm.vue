@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="900"
+    :width="1000"
     :visible="visible"
     :maskClosable="false"
     :confirmLoading="loading"
