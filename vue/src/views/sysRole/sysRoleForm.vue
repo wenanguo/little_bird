@@ -14,32 +14,31 @@
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
         <a-form-item label="角色名">
-          <a-input v-decorator="['roleName', {rules: [{required: true, min: 1, message: '请输入角色名称！'}]}]" />
+          <a-input v-decorator="['roleName', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="角色代码">
-          <a-input v-decorator="['roleCode', {rules: [{required: true, min: 1, message: '请输入角色代码！'}]}]" />
+          <a-input v-decorator="['roleCode', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="备注">
-          <a-input v-decorator="['memo', {rules: [{required: true, min: 1, message: '请输入备注！'}]}]" />
+          <a-input v-decorator="['memo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+        </a-form-item>
+        <a-form-item label="包含用户">
+          <a-transfer
+            :data-source="mockData"
+            :titles="['未包含', '已包含']"
+            :target-keys="targetKeys"
+            :selected-keys="selectedKeys"
+            :render="item => item.title"
+            :disabled="disabled"
+            @change="handleChange"
+            @selectChange="handleSelectChange"
+          />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
             <a-radio :value="100">正常</a-radio>
             <a-radio :value="101">禁用</a-radio>
           </a-radio-group>
-          <a-input v-decorator="['roleUsersId', {initialValue: []}]" type="hidden" />
-        </a-form-item>
-        <a-form-item label="用户">
-          <div>
-            <a-transfer
-              :data-source="mockData"
-              :titles="['用户', '包含']"
-              :target-keys="targetKeys"
-              :selected-keys="selectedKeys"
-              :render="item => item.title"
-              @change="handleChange"
-            />
-          </div>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -77,20 +76,24 @@
                 default: () => null
             },
             sysUserList: {
-              type: Array,
-              default: () => null
+                type: Array,
+                default: () => null
             }
         },
         data () {
           const mockData = []
-          for (let i = 0; i < 20; i++) {
-            mockData.push({
-              key: i.toString(),
-              title: `content${i + 1}`,
-              description: `description of content${i + 1}`,
-              disabled: i % 3 < 1
-            })
+          for (let i = 0; i < this.sysUserList.length; i++) {
+            console.log(this.sysUserList[i].id)
+            var tempJson = {
+              key: this.sysUserList[i].id.toString(),
+              title: this.sysUserList[i].username,
+              description: this.sysUserList[i].memo,
+              disabled: false
+            }
+            mockData.push(tempJson)
           }
+
+    // const oriTargetKeys = mockData.filter(item => +item.key % 3 > 1).map(item => item.key)
             this.formLayout = {
                 labelCol: {
                     xs: { span: 24 },
@@ -105,7 +108,8 @@
                 form: this.$form.createForm(this),
                 mockData,
                 targetKeys: [],
-                selectedKeys: []
+                selectedKeys: [],
+                disabled: false
             }
         },
         created () {
@@ -116,22 +120,12 @@
 
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
-              if (this.model) {
-                // 修改
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
-                this.model && this.form.setFieldsValue({ roleUsersId: this.model.roleUsersId })
-                this.targetKeys = this.model.roleUsersId
-              } else {
-                // 新增
-                this.targetKeys = []
-              }
             })
         },
         methods: {
           handleChange (nextTargetKeys, direction, moveKeys) {
             this.targetKeys = nextTargetKeys
-
-            this.form.setFieldsValue({ roleUsersId: nextTargetKeys })
 
             console.log('targetKeys: ', nextTargetKeys)
             console.log('direction: ', direction)
