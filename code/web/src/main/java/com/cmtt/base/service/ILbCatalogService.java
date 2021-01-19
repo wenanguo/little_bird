@@ -23,4 +23,6 @@ public interface ILbCatalogService extends IService<LbCatalog> {
 
     public List<LbCatalog> getLbCatalogPostListByPeriodicalId(Integer periodicalId);
 
+    public List<LbCatalog> getV2LbCatalogPostListByPeriodicalId(Integer periodicalId);
+
 }
