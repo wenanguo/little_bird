@@ -20,10 +20,10 @@
           <a-input v-decorator="['roleCode', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="备注">
-          <a-input v-decorator="['memo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['memo', {rules: [{required: false}]}]" />
         </a-form-item>
         <a-form-item label="包含用户">
-          <a-select mode="tags" v-decorator="['roleUsersId', {rules: [{required: true, message: '请选择所属用户'}]}]">
+          <a-select mode="tags" v-decorator="['roleUsersId', {rules: [{required: false, message: '请选择所属用户'}]}]">
             <a-select-option v-for="sysUser in this.sysUserList" :key="sysUser.id.toString()">
               {{ sysUser.username }}
             </a-select-option>
@@ -97,7 +97,7 @@
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
-                this.form.setFieldsValue({ roleUsersId: this.model.roleUsersId })
+                this.model && this.form.setFieldsValue({ roleUsersId: this.model.roleUsersId })
             })
         },
         methods: {
