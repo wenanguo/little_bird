@@ -105,6 +105,7 @@ public class LbAuthorController {
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                 .like(LbPost::getAuthor, lbAuthor.getName())
                 .eq(LbPost::getStatus, RC.B_NORMAL.code())
+                .orderByDesc(LbPost::getPublishedAt)
         );
 
 

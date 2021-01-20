@@ -127,6 +127,7 @@ public class LbSubjectController {
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                 .eq(LbPost::getPostSubjectId, lbSubject.getId())
                 .eq(LbPost::getStatus, RC.B_NORMAL.code())
+                .orderByDesc(LbPost::getPublishedAt)
         );
 
 //
