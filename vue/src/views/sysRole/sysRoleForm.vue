@@ -23,16 +23,11 @@
           <a-input v-decorator="['memo', {rules: [{required: true, min: 1, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
         <a-form-item label="包含用户">
-          <a-transfer
-            :data-source="mockData"
-            :titles="['未包含', '已包含']"
-            :target-keys="targetKeys"
-            :selected-keys="selectedKeys"
-            :render="item => item.title"
-            :disabled="disabled"
-            @change="handleChange"
-            @selectChange="handleSelectChange"
-          />
+          <a-select mode="tags" v-decorator="['roleUsersId', {rules: [{required: true, message: '请选择所属用户'}]}]">
+            <a-select-option v-for="sysUser in this.sysUserList" :key="sysUser.id.toString()">
+              {{ sysUser.username }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
@@ -81,19 +76,6 @@
             }
         },
         data () {
-          const mockData = []
-          for (let i = 0; i < this.sysUserList.length; i++) {
-            console.log(this.sysUserList[i].id)
-            var tempJson = {
-              key: this.sysUserList[i].id.toString(),
-              title: this.sysUserList[i].username,
-              description: this.sysUserList[i].memo,
-              disabled: false
-            }
-            mockData.push(tempJson)
-          }
-
-    // const oriTargetKeys = mockData.filter(item => +item.key % 3 > 1).map(item => item.key)
             this.formLayout = {
                 labelCol: {
                     xs: { span: 24 },
@@ -105,38 +87,20 @@
                 }
             }
             return {
-                form: this.$form.createForm(this),
-                mockData,
-                targetKeys: [],
-                selectedKeys: [],
-                disabled: false
+                form: this.$form.createForm(this)
             }
         },
         created () {
-            console.log('custom modal created')
-
             // 防止表单未注册
             fields.forEach(v => this.form.getFieldDecorator(v))
 
             // 当 model 发生改变时，为表单设置值
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
+                this.form.setFieldsValue({ roleUsersId: this.model.roleUsersId })
             })
         },
         methods: {
-          handleChange (nextTargetKeys, direction, moveKeys) {
-            this.targetKeys = nextTargetKeys
-
-            console.log('targetKeys: ', nextTargetKeys)
-            console.log('direction: ', direction)
-            console.log('moveKeys: ', moveKeys)
-          },
-          handleSelectChange (sourceSelectedKeys, targetSelectedKeys) {
-            this.selectedKeys = [...sourceSelectedKeys, ...targetSelectedKeys]
-
-            console.log('sourceSelectedKeys: ', sourceSelectedKeys)
-            console.log('targetSelectedKeys: ', targetSelectedKeys)
-          }
         }
     }
 </script>

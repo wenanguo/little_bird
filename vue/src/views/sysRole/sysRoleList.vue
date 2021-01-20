@@ -168,7 +168,6 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    console.log('loadData request parameters:', requestParameters)
                     return getSysRoleList(requestParameters)
                         .then(res => {
                             return res.result
