@@ -30,7 +30,7 @@
                             </div>
                             <div class="columnTitleInfo">
                                 <div class="columnArticleInfo">
-                                    <h1><span style="border-bottom-color: #D7A03C">[[${c.title}]]</span></h1>
+                                    <h1><span th:style="'border-bottom-color:'+${lbCatalog.tcolor}+';'">[[${c.title}]]</span></h1>
                                     <h2>[[${c.getLbAuthorListStr()}]]</h2>
                                 </div>
                                 <h3>[[${c.periodicalTitle}]] · [[${c.getSocialDateDisplay()}]]更新</h3>

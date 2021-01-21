@@ -138,10 +138,17 @@ public class LbSubjectController {
 //        LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
 //
 
+        LbCatalog lbCatalog = lbCatalogService.getOne(Wrappers.<LbCatalog>lambdaQuery()
+                        .eq(LbCatalog::getId, lbSubject.getCatalogId())
+                , false);
+
+
+
 
 
         mv.addObject("domainPath",this.domainPath);
         mv.addObject("lbSubject",lbSubject);
+        mv.addObject("lbCatalog",lbCatalog);
         mv.addObject("lbPostList",lbPostList);
         mv.setViewName("shareSubject");
         return mv;
