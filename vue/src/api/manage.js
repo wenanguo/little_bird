@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const api = {
   user: '/user',
-  role: '/role',
+  role: '/base/sys-role/premissionList',
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
