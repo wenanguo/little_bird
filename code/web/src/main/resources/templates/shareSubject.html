@@ -24,8 +24,9 @@
 
                       <div class="shareColumnList" th:class="${c.showType == 4}? 'shareColumnList notImgBox' : 'shareColumnList' ">
                         <div>
-                            <div class="coverImg" style='background-image: url("${c.imgUrl}")'>
-                                <img th:if="${c.showType != 4}" th:src="${c.imgUrl}">
+                            <div class="coverImg" th:style="'background-image: url(\''+${c.imgUrl}+'\')'">
+<!--                                <img th:if="${c.showType != 4}" th:src="${c.imgUrl}">-->
+
                             </div>
                             <div class="columnTitleInfo">
                                 <div class="columnArticleInfo">
