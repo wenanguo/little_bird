@@ -36,11 +36,14 @@
                         </div>
                       <div>
                         <div class="coverImg" th:style="${c.showType == 4}? '' : 'background-image: url(\''+${c.imgUrl}+'\')'">
-
+                            <div th:if="${c.showType == 4}" class="coverNotImg">
+                                <em></em>
+                                <i></i>
+                            </div>
                         </div>
                         <div class="columnTitleInfo">
                             <div class="columnArticleInfo">
-                                <h1><span style="border-bottom-color: #D7A03C">[[${c.title}]]</span></h1>
+                                <h1><span style="border-bottom-color: #D7A03C">[[${#strings.abbreviate(c.title,20)}]]</span></h1>
                                 <h2>[[${c.getLbAuthorListStr()}]]</h2>
                             </div>
                             <h3>[[${c.periodicalTitle}]] · [[${c.getSocialDateDisplay()}]]更新</h3>
