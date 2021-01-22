@@ -79,15 +79,15 @@
     </s-table>
 
     <edit-form
-        ref="editForm"
-        :title="title"
-        :visible="visible"
-        :loading="confirmLoading"
-        :model="mdl"
-        :permissions="permissions"
-        @cancel="handleCancel"
-        @ok="handleOk"
-      />
+      ref="editForm"
+      :title="title"
+      :visible="visible"
+      :loading="confirmLoading"
+      :model="mdl"
+      :permissions="permissions"
+      @cancel="handleCancel"
+      @ok="handleOk"
+    />
 
     <!-- <a-modal
       title="操作"

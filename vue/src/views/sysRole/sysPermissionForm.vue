@@ -29,7 +29,7 @@
           >
             <a-checkbox-group v-decorator="[`permissions.${permission.permissionName}`]" :options="permission.actionsOptions"/>
           </a-form-item>
-          </template>
+        </template>
       </a-form>
     </a-spin>
   </a-modal>

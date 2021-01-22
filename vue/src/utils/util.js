@@ -76,7 +76,9 @@ export function getSocialDateDisplay (dateString) {
   const time = new Date(dateString)
   const currtime = new Date()
   var cz = parseInt((currtime - time) / (1000 * 60))
-    if (cz < 30) {
+    if (cz < 0) {
+      return time.getMonth() + '月' + time.getDate() + '日'
+    } else if (cz < 30) {
       return '刚刚'
     } else if (cz < 60) {
         return parseInt(cz) + '分钟前'
