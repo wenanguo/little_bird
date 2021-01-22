@@ -122,7 +122,9 @@
     </div>
     <div class="authorName">
         <span>
-        [[${lbPost.getLbAuthorListStr()}]]
+        <span th:each="c, State : ${lbAuthorList}" th:remove="tag">
+            <div style="display: inline-block;" th:text="${c.name}" th:onclick="'javascript:authorClick('+${c.id}+')' "></div>
+        </span>
         </span>
         <span class="post_subject" th:onclick="'javascript:subjectClick('+${lbPost.postSubjectId}+')'">[[${lbPost.postSubject}]]</span>
     </div>
@@ -177,7 +179,7 @@
 <div class="authorBoxList">
     <div class="authorBox" th:each="c, State : ${lbAuthorList}">
         <div class="authorInfo">
-            <h1 th:text="${c.name}"></h1>
+            <h1 th:text="${c.name}" th:onclick="'javascript:authorClick('+${c.id}+')' "></h1>
             <h2 th:text="${c.introduction}"></h2>
         </div>
         <div class="authorPhoto" th:onclick="'javascript:authorClick('+${c.id}+')' ">
