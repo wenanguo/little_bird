@@ -13,6 +13,7 @@ import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbAuthorService;
+import com.cmtt.base.service.ILbCatalogService;
 import com.cmtt.base.service.ILbPostService;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
@@ -48,6 +49,9 @@ public class LbAuthorController {
 
     @Autowired
     private ILbPostService lbPostService;
+
+    @Autowired
+    private ILbCatalogService lbCatalogService;
 
     @Value("${spring.static-file.domain-path}")
     private String domainPath;
@@ -104,9 +108,11 @@ public class LbAuthorController {
         // 获取文章列表
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                 .like(LbPost::getAuthor, lbAuthor.getName())
+                .in(LbPost::getIsFree, new Integer[]{1, 2,4})
                 .eq(LbPost::getStatus, RC.B_NORMAL.code())
                 .orderByDesc(LbPost::getPublishedAt)
         );
+
 
 
         mv.addObject("domainPath",this.domainPath);

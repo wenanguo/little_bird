@@ -126,6 +126,7 @@ public class LbSubjectController {
         // 获取文章列表
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                 .eq(LbPost::getPostSubjectId, lbSubject.getId())
+                .in(LbPost::getIsFree, new Integer[]{1, 2,4})
                 .eq(LbPost::getStatus, RC.B_NORMAL.code())
                 .orderByDesc(LbPost::getPublishedAt)
         );
