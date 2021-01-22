@@ -30,9 +30,13 @@
         <div class="shareColumnListContent">
             <span th:each="c, State : ${lbPostList}" th:remove="tag">
                   <div class="shareColumnList" th:class="${c.showType == 4}? 'shareColumnList notImgBox' : 'shareColumnList' ">
-                    <div>
-                        <div class="coverImg" style='background-image: url("${c.imgUrl}")'>
-                            <img th:if="${c.showType != 4}" th:src="${c.imgUrl}">
+                        <div th:if="${c.isFree == 4}" class="noticeBox">
+                            <div class="noticeIcon"></div>
+                            <div class="noticeMask"></div>
+                        </div>
+                      <div>
+                        <div class="coverImg" th:style="${c.showType == 4}? '' : 'background-image: url(\''+${c.imgUrl}+'\')'">
+
                         </div>
                         <div class="columnTitleInfo">
                             <div class="columnArticleInfo">
