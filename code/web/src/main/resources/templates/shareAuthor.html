@@ -30,7 +30,7 @@
         <div class="shareColumnListContent">
             <span th:each="c, State : ${lbPostList}" th:remove="tag">
                   <div class="shareColumnList" th:class="${c.showType == 4}? 'shareColumnList notImgBox' : 'shareColumnList' ">
-                        <div th:if="${c.isFree == 4}" class="noticeBox">
+                        <div th:if="${c.isPreview == 2}" class="noticeBox">
                             <div class="noticeIcon"></div>
                             <div class="noticeMask"></div>
                         </div>
