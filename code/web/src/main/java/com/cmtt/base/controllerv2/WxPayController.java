@@ -100,7 +100,7 @@ public class WxPayController {
         // 类型 1 安卓 2IOS
         Integer devType=1;
 
-        String returnStr="";
+        Map returnMap=null;
 
         // 判断设备类型
         String Phonesys = httpServletRequest.getHeader("Phonesys");
@@ -156,7 +156,7 @@ public class WxPayController {
 //            //这里和普通的接口调用不同，使用的是sdkExecute
 //            AlipayTradeAppPayResponse response = aliPayService.getAlipayClient().sdkExecute(request);
 //            returnStr=response.getBody();//就是orderString 可以直接给客户端请求，无需再做处理。
-            returnStr=wxPayService.WxCreateOrder(lbGoods.getPrice().intValue(),lbGoods.getTitle(),notify_url,outtradeno);
+            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice().intValue(),lbGoods.getTitle(),notify_url,outtradeno);
 
 
 
@@ -175,7 +175,7 @@ public class WxPayController {
             lbOrders.setStatus(RC.PAY_NO.code());
 
 //            lbOrders.setServerReq(JSON.toJSONString(request));
-            lbOrders.setServerResp(returnStr);
+            lbOrders.setServerResp(returnMap.toString());
 
 
             lbOrdersService.save(lbOrders);
@@ -186,7 +186,7 @@ public class WxPayController {
         }
 
 
-        return R.ok().setResult((Map)JSON.parse(returnStr));
+        return R.ok().setResult(returnMap);
     }
 
 
