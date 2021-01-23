@@ -105,15 +105,13 @@ public class LbAuthorController {
             return mv;
         }
 
+
+
+        LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers(true)
+                .like(LbPost::getAuthor, lbAuthor.getName());
+
         // 获取文章列表
-        List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
-                .like(LbPost::getAuthor, lbAuthor.getName())
-                .in(LbPost::getIsFree, new Integer[]{1, 2,4})
-                .eq(LbPost::getStatus, RC.B_NORMAL.code())
-                .orderByDesc(LbPost::getPublishedAt)
-        );
-
-
+        List<LbPost> lbPostList = lbPostService.list(queryWrapper);
 
         mv.addObject("domainPath",this.domainPath);
         mv.addObject("lbAuthor",lbAuthor);
