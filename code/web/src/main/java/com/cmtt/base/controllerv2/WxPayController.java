@@ -130,7 +130,7 @@ public class WxPayController {
 
         }
 
-        String notify_url="http://wenanguo.5gzvip.idcfengye.com:8080/api/wx/notify_url";
+        String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
 
 
 
