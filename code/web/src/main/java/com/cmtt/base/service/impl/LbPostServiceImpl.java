@@ -50,7 +50,7 @@ public class LbPostServiceImpl extends ServiceImpl<LbPostMapper, LbPost> impleme
                                             .in(LbPost::getIsFree, new Integer[]{1, 2})
                                             .lt(LbPost::getPublishedAt, LocalDateTime.now()))
                                     .or()
-                                    .eq(LbPost::getIsFree, 4)
+                                    .eq(LbPost::getIsPreview, 2)
 
                     )
                     .eq(LbPost::getRecommend, 1)
