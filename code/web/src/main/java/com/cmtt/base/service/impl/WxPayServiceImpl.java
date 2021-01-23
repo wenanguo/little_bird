@@ -1,47 +1,43 @@
-package com.cmtt.base;
+package com.cmtt.base.service.impl;
 
-import com.cmtt.base.utils.JwtUtils;
+
 import com.wechat.pay.contrib.apache.httpclient.WechatPayHttpClientBuilder;
 import com.wechat.pay.contrib.apache.httpclient.auth.AutoUpdateCertificatesVerifier;
 import com.wechat.pay.contrib.apache.httpclient.auth.PrivateKeySigner;
 import com.wechat.pay.contrib.apache.httpclient.auth.WechatPay2Credentials;
 import com.wechat.pay.contrib.apache.httpclient.auth.WechatPay2Validator;
 import com.wechat.pay.contrib.apache.httpclient.util.PemUtil;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.PrivateKey;
 
-//@SpringBootTest
-class DemoApplicationTests {
-
-    CloseableHttpClient httpClient;
-
-    @Test
-    void contextLoads() {
-
-    }
-
-
-    @Test
-    void test1(){
+/**
+ * <p>
+ * 微信支付服务类
+ * </p>
+ *
+ * @author Andrew.Wen
+ * @since 2020-11-25
+ */
+@Service
+public class WxPayServiceImpl {
 
 
+    /**
+     * 请求客户端
+     */
+    private CloseableHttpClient httpClient;
 
-    }
+    WxPayServiceImpl() throws UnsupportedEncodingException {
 
-    @Before
-    public void setup() throws IOException {
         // 加载商户私钥（privateKey：私钥字符串）
         String privateKey="-----BEGIN PRIVATE KEY-----\n" +
                 "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD2D9o9EudQWOad\n" +
@@ -86,31 +82,33 @@ class DemoApplicationTests {
         httpClient = WechatPayHttpClientBuilder.create()
                 .withMerchant(mchId, mchSerialNo, merchantPrivateKey)
                 .withValidator(new WechatPay2Validator(verifier)).build();
-    }
 
-    @After
-    public void after() throws IOException {
-        httpClient.close();
     }
 
 
-    @Test
-    public void CreateOrder() throws Exception{
+    /**
+     * 统一支付订单
+     * @param total
+     * @param description
+     * @param notify_url
+     * @param out_trade_no
+     * @throws Exception
+     */
+    public String WxCreateOrder(Integer total,String description,String notify_url,String out_trade_no) throws Exception{
 
-        this.setup();
 
         //请求URL
         HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/v3/pay/transactions/app");
         // 请求body参数
         String reqdata = "{"
                 + "\"amount\": {"
-                + "\"total\":100,"
+                + "\"total\":"+total+","
                 + "\"currency\":\"CNY\""
                 + "},"
                 + "\"mchid\":\"1605717250\","
-                + "\"description\":\"三篇试读\","
-                + "\"notify_url\":\"https://www.weixin.qq.com/wxpay/pay.php\","
-                + "\"out_trade_no\":\"12177525012014070332333680182\","
+                + "\"description\":\""+description+"\","
+                + "\"notify_url\":\""+notify_url+"\","
+                + "\"out_trade_no\":\""+out_trade_no+"\","
                 + "\"goods_tag\":\"WXG\","
                 + "\"appid\":\"wx952a2a49d57ce755\","
                 + "\"attach\":\"自定义数据说明\""
@@ -156,7 +154,7 @@ class DemoApplicationTests {
         try {
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == 200) { //处理成功
-                System.out.println("success,return body = " + EntityUtils.toString(response.getEntity()));
+                return EntityUtils.toString(response.getEntity());
             } else if (statusCode == 204) { //处理成功，无返回Body
                 System.out.println("success");
             } else {
@@ -167,9 +165,7 @@ class DemoApplicationTests {
             response.close();
         }
 
+        return null;
 
-        this.after();
     }
-
-
 }

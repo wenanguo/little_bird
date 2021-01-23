@@ -17,28 +17,6 @@ public class SampleTest {
     @Autowired
     SysRoleServiceImpl sysRoleService;
 
-//    @Test
-//    public void testSelect() throws IOException {
-//
-//        // String url="http://www.httpbin.org/anything";
-//        String url="https://buy.itunes.apple.com/verifyReceipt";
-//
-//        Map<String,Object> map=new HashMap<>();
-//        map.put("receipt-data","aaa");
-//        map.put("password","aaa");
-//        map.put("exclude-old-transactions",false);
-//
-//
-//        String a=JSON.toJSONString(map);
-//
-//
-//
-//        HR hr = HttpclientUtils.doPost(url,a,null);
-//
-//
-//        System.out.println(hr);
-//
-//    }
 
     @Test
     public void testSelect() throws IOException {
