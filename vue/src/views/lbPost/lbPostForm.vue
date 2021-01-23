@@ -140,6 +140,18 @@
                     </a-form-item>
                   </a-col>
                   <a-col :span="12">
+                    <a-form-item label="是否预览">
+                      <a-radio-group name="radioGroup" v-decorator="['isPreview', {initialValue: 1,rules: [{required: true}]}]">
+                        <a-radio :value="1">
+                          正常
+                        </a-radio>
+                        <a-radio :value="2">
+                          预览
+                        </a-radio>
+                      </a-radio-group>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="12">
                     <a-form-item label="是否免费">
                       <a-radio-group name="radioGroup" v-decorator="['isFree', {initialValue: 1,rules: [{required: true}]}]">
                         <a-radio :value="1">
@@ -150,9 +162,6 @@
                         </a-radio>
                         <a-radio :value="3">
                           测试
-                        </a-radio>
-                        <a-radio :value="4">
-                          预览
                         </a-radio>
                       </a-radio-group>
                     </a-form-item>
@@ -277,6 +286,7 @@
     'postSubjectId',
     'postCatalogId',
     'isFree',
+    'isPreview',
     'showType',
     'imgUrl',
     'preimgUrl',

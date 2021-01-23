@@ -154,6 +154,12 @@
             customRender: (value) => isFreeMap[value].text,
             dataIndex: 'isFree'
         }, {
+            title: '是否预览',
+            sorter: true,
+            width: '100px',
+            customRender: (value) => isPreviewMap[value].text,
+            dataIndex: 'isPreview'
+        }, {
             title: '题图',
             sorter: true,
             width: '100px',
@@ -252,6 +258,17 @@
         text: '测试'
     },
     4: {
+        status: 'processing',
+        text: '预览'
+    }
+  }
+
+  const isPreviewMap = {
+    1: {
+        status: 'default',
+        text: '正常'
+    },
+    2: {
         status: 'processing',
         text: '预览'
     }
