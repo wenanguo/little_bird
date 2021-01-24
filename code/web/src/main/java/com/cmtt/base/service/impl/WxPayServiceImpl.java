@@ -203,7 +203,7 @@ public class WxPayServiceImpl {
         map.put("appid",appid);
         map.put("partnerId",mchid);
         map.put("prepayId",prepay_id);
-        map.put("package","Sign=WXPay");
+        map.put("packageStr","Sign=WXPay");
         map.put("noncestr",nonceStr);
         map.put("timestamp",timestamp);
         map.put("sign",signature);
