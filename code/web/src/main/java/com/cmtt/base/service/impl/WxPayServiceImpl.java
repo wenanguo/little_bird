@@ -10,6 +10,7 @@ import com.wechat.pay.contrib.apache.httpclient.auth.WechatPay2Credentials;
 import com.wechat.pay.contrib.apache.httpclient.auth.WechatPay2Validator;
 import com.wechat.pay.contrib.apache.httpclient.util.PemUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -116,7 +117,7 @@ public class WxPayServiceImpl {
         // 请求body参数
         String reqdata = "{"
                 + "\"amount\": {"
-                + "\"total\":"+total+","
+                + "\"total\":"+total*100+","
                 + "\"currency\":\"CNY\""
                 + "},"
                 + "\"mchid\":\""+this.mchId+"\","
@@ -188,6 +189,46 @@ public class WxPayServiceImpl {
 
     }
 
+
+
+    /**
+     * 查询订单
+     * @param transaction_id
+     * @throws Exception
+     */
+    public Map WxQueryOrder(String transaction_id) throws Exception{
+
+
+        //请求URL
+
+        HttpGet httpGet = new HttpGet("https://api.mch.weixin.qq.com/v3/pay/transactions/id/"+transaction_id+"?mchid="+this.mchId);
+
+        httpGet.setHeader("Accept", "application/json");
+
+        //完成签名并执行请求
+        CloseableHttpResponse response = httpClient.execute(httpGet);
+
+        try {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == 200) { //处理成功
+
+                Map map=(Map) JSON.parse(EntityUtils.toString(response.getEntity()));
+
+                return map;
+
+            } else if (statusCode == 204) { //处理成功，无返回Body
+                System.out.println("success");
+            } else {
+                System.out.println("failed,resp code = " + statusCode+ ",return body = " + EntityUtils.toString(response.getEntity()));
+                throw new IOException("request failed");
+            }
+        } finally {
+            response.close();
+        }
+
+        return null;
+
+    }
 
 
 

@@ -1,8 +1,10 @@
 package com.cmtt.base.controllerv2;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.internal.util.StringUtils;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -10,10 +12,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
 import com.cmtt.base.controller.param.GetOneGoodsInputParam;
 import com.cmtt.base.controller.param.GetOneInputParam;
+import com.cmtt.base.controller.param.WxQueryTradeInputParam;
 import com.cmtt.base.entity.*;
 import com.cmtt.base.service.*;
 import com.cmtt.base.service.impl.WxPayServiceImpl;
 import com.cmtt.base.utils.RC;
+import com.cmtt.base.utils.WxAPIV3AesUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -23,8 +27,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.security.GeneralSecurityException;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +64,9 @@ public class WxPayController {
     @Autowired
     private WxPayServiceImpl wxPayService;
 
+    @Autowired
+    private ILbPayOrderService lbPayOrderService;
+
 
     /**
      * 主页
@@ -61,26 +74,54 @@ public class WxPayController {
     @PostMapping("notify_url")
     @ResponseBody
     @ApiOperation("微信异步通知接口")
-    public R notify_url(HttpServletRequest request){
+    public Map notify_url(HttpServletRequest request) throws IOException, GeneralSecurityException {
 
-        //获取支付宝POST过来反馈信息
-        Map<String, String> params = new HashMap<String, String>();
-        Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
+
+        String body=ReadAsChars(request);
+        JSONObject parse = (JSONObject) JSON.parse(body);
+        String event_type=parse.getString("event_type");
+
+        if((!StringUtils.isEmpty(event_type))&&event_type.equals("TRANSACTION.SUCCESS")) {
+
+
+            String nonce = parse.getJSONObject("resource").getString("nonce");
+            String associated_data = parse.getJSONObject("resource").getString("associated_data");
+            String ciphertext = parse.getJSONObject("resource").getString("ciphertext");
+
+
+            String apiV3Key = "AswsMz6ntu4fOHiiDeDcL7hnV4TVgcoh";
+
+            //解密回调信息
+            byte[] key = apiV3Key.getBytes("UTF-8");
+            WxAPIV3AesUtil aesUtil = new WxAPIV3AesUtil(key);
+            String decryptToString = aesUtil.decryptToString(associated_data.getBytes("UTF-8"), nonce.getBytes("UTF-8"), ciphertext);
+
+
+            // 解码后的json 对象
+            JSONObject decryptToJson = (JSONObject) JSON.parse(decryptToString);
+
+            // 订单同步,根据订单号查询订单
+            String out_trade_no=decryptToJson.getString("out_trade_no");
+
+
+            // 查询订单 ，修改订单状态
+
+            LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery().eq(LbOrders::getOutTradeNo, out_trade_no));
+
+            if(decryptToJson.getString("trade_state").equals("SUCCESS")){
+                // 支付成功 修改状态
+                lbOrders.setStatus(RC.PAY_YES.code());
+                lbOrders.setTradeStatus("TRADE_SUCCESS");
+                lbOrders.setTradeNo(decryptToJson.getString("transaction_id"));
+                lbOrdersService.updateById(lbOrders);
             }
-            //乱码解决，这段代码在出现乱码时使用。
-            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-            params.put(name, valueStr);
-        }
-        System.out.println("微信支付异步通知："+params);
 
-        return R.ok();
+
+        }
+
+        Map map=new HashMap();
+        map.put("code","SUCCESS");
+        return map;
     }
 
     /**
@@ -130,9 +171,9 @@ public class WxPayController {
 
         }
 
-        //String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
-        String notify_url="http://wenanguo.5gzvip.idcfengye.com/api/wx/notify_url";
-        
+        String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
+        //String notify_url="http://wenanguo.5gzvip.idcfengye.com/api/wx/notify_url";
+
 
 
 //        //实例化客户端
@@ -191,5 +232,56 @@ public class WxPayController {
     }
 
 
+
+    /**
+     * 主页
+     */
+    @PostMapping("query_trade")
+    @ResponseBody
+    @ApiOperation("微信查询订单状态")
+    public R query_trade(@RequestBody @Valid WxQueryTradeInputParam param) throws Exception {
+        Map map=wxPayService.WxQueryOrder(param.getTransaction_id());
+
+        return R.ok().setResult(map);
+    }
+
+
+    // 字符串读取
+    // 方法一
+    public static String ReadAsChars(HttpServletRequest request)
+    {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder("");
+        try
+        {
+            br = request.getReader();
+            String str;
+            while ((str = br.readLine()) != null)
+            {
+                sb.append(str);
+            }
+            br.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (null != br)
+            {
+                try
+                {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
+    }
 
 }
