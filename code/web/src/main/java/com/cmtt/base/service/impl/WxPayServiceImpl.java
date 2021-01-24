@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.*;
 import java.util.Base64;
 import java.util.HashMap;
@@ -156,7 +157,7 @@ public class WxPayServiceImpl {
 //                        + "\"payer_client_ip\":\"14.23.150.211\""
 //                        + "}"
                 + "}";
-        StringEntity entity = new StringEntity(reqdata);
+        StringEntity entity = new StringEntity(reqdata, Charset.forName("UTF-8"));
         entity.setContentType("application/json");
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
