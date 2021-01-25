@@ -171,6 +171,7 @@ public class WxPayServiceImpl {
             if (statusCode == 200) { //处理成功
 
                 Map map=(Map) JSON.parse(EntityUtils.toString(response.getEntity()));
+                map.put("outTradeNo",out_trade_no);
 
                 return this.getSign(this.appid,this.mchId,map.get("prepay_id").toString());
 
