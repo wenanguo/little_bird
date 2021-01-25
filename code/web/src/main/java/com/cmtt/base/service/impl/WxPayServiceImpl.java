@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.security.*;
 import java.util.Base64;
@@ -108,7 +109,7 @@ public class WxPayServiceImpl {
      * @param out_trade_no
      * @throws Exception
      */
-    public Map WxCreateOrder(Integer total,String description,String notify_url,String out_trade_no) throws Exception{
+    public Map WxCreateOrder(BigDecimal total, String description, String notify_url, String out_trade_no) throws Exception{
 
 
         //请求URL
@@ -117,7 +118,7 @@ public class WxPayServiceImpl {
         // 请求body参数
         String reqdata = "{"
                 + "\"amount\": {"
-                + "\"total\":"+total*100+","
+                + "\"total\":"+total.multiply(new BigDecimal(100)).intValue()+","
                 + "\"currency\":\"CNY\""
                 + "},"
                 + "\"mchid\":\""+this.mchId+"\","
@@ -171,9 +172,12 @@ public class WxPayServiceImpl {
             if (statusCode == 200) { //处理成功
 
                 Map map=(Map) JSON.parse(EntityUtils.toString(response.getEntity()));
+
+
+                map = this.getSign(this.appid,this.mchId,map.get("prepay_id").toString());
                 map.put("outTradeNo",out_trade_no);
 
-                return this.getSign(this.appid,this.mchId,map.get("prepay_id").toString());
+                return map;
 
 
             } else if (statusCode == 204) { //处理成功，无返回Body

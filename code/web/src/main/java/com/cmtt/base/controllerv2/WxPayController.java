@@ -198,7 +198,7 @@ public class WxPayController {
 //            //这里和普通的接口调用不同，使用的是sdkExecute
 //            AlipayTradeAppPayResponse response = aliPayService.getAlipayClient().sdkExecute(request);
 //            returnStr=response.getBody();//就是orderString 可以直接给客户端请求，无需再做处理。
-            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice().intValue(),lbGoods.getTitle(),notify_url,outtradeno);
+            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice(),lbGoods.getTitle(),notify_url,outtradeno);
 
 
 
