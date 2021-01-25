@@ -140,7 +140,7 @@
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle" th:if="${isPayOne} == false">
                 <div>
-                    <h1>付费后，可阅读余下内容</h1>
+                    <h1 style="text-align: center">付费后，可阅读余下内容</h1>
                     <div th:if="${PayOneCount} >0">
                         <h2>你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
                         <span class="exchangecss">兑换本文</span>
@@ -187,12 +187,12 @@
         </div>
     </div>
 </div>
-<div class="columnBox" style="padding-bottom: 100px">
-    <h1><span style="border-bottom-color: #D7A03C">[[${lbSubject.title}]]</span></h1>
-    <h2>
-        <div th:utext="${lbSubject.introduction}" th:remove="tag"></div>
-    </h2>
-</div>
+<!--<div class="columnBox" style="padding-bottom: 100px">-->
+<!--    <h1><span style="border-bottom-color: #D7A03C">[[${lbSubject.title}]]</span></h1>-->
+<!--    <h2>-->
+<!--        <div th:utext="${lbSubject.introduction}" th:remove="tag"></div>-->
+<!--    </h2>-->
+<!--</div>-->
 <div class="footerOperation">
     <div class="footerOperationContent">
         <i class="return"></i>

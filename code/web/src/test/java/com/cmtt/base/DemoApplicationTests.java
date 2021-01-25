@@ -17,7 +17,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-
+import java.security.Signature;
+import java.util.Base64;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.PrivateKey;
@@ -88,88 +89,129 @@ class DemoApplicationTests {
                 .withValidator(new WechatPay2Validator(verifier)).build();
     }
 
-    @After
-    public void after() throws IOException {
-        httpClient.close();
-    }
-
-
-    @Test
-    public void CreateOrder() throws Exception{
-
-        this.setup();
-
-        //请求URL
-        HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/v3/pay/transactions/app");
-        // 请求body参数
-        String reqdata = "{"
-                + "\"amount\": {"
-                + "\"total\":100,"
-                + "\"currency\":\"CNY\""
-                + "},"
-                + "\"mchid\":\"1605717250\","
-                + "\"description\":\"三篇试读\","
-                + "\"notify_url\":\"https://www.weixin.qq.com/wxpay/pay.php\","
-                + "\"out_trade_no\":\"12177525012014070332333680182\","
-                + "\"goods_tag\":\"WXG\","
-                + "\"appid\":\"wx952a2a49d57ce755\","
-                + "\"attach\":\"自定义数据说明\""
-//                + "\"detail\": {"
-//                    + "\"invoice_id\":\"wx123\","
-//                    + "\"goods_detail\": ["
-//                            + "{"
-//                            + "\"goods_name\":\"iPhoneX 256G\","
-//                            + "\"wechatpay_goods_id\":\"1001\","
-//                            + "\"quantity\":1,"
-//                            + "\"merchant_goods_id\":\"123\","
-//                            + "\"unit_price\":828800"
-//                            + "},"
-//                            + "{"
-//                            + "\"goods_name\":\"iPhoneX 256G\","
-//                            + "\"wechatpay_goods_id\":\"1001\","
-//                            + "\"quantity\":1,"
-//                            + "\"merchant_goods_id\":\"456\","
-//                            + "\"unit_price\":828800"
-//                            + "}"
-//                    + "],"
-//                    + "\"cost_price\":608800"
+//    @After
+//    public void after() throws IOException {
+//        httpClient.close();
+//    }
+//
+//
+//    @Test
+//    public void CreateOrder() throws Exception{
+//
+//        this.setup();
+//
+//        //请求URL
+//        HttpPost httpPost = new HttpPost("http://www.httpbin.org/anything");
+//        // 请求body参数
+//        String reqdata = "{"
+//                + "\"amount\": {"
+//                + "\"total\":100,"
+//                + "\"currency\":\"CNY\""
 //                + "},"
-//                + "\"scene_info\": {"
-//                        + "\"store_info\": {"
-//                            + "\"address\":\"广东省深圳市南山区科技中一道10000号\","
-//                            + "\"area_code\":\"440305\","
-//                            + "\"name\":\"腾讯大厦分店\","
-//                            + "\"id\":\"0001\""
-//                            + "},"
-//                        + "\"device_id\":\"013467007045764\","
-//                        + "\"payer_client_ip\":\"14.23.150.211\""
-//                        + "}"
-                + "}";
-        StringEntity entity = new StringEntity(reqdata);
-        entity.setContentType("application/json");
-        httpPost.setEntity(entity);
-        httpPost.setHeader("Accept", "application/json");
+//                + "\"mchid\":\"1605717250\","
+//                + "\"description\":\"三篇试读\","
+//                + "\"notify_url\":\"https://www.weixin.qq.com/wxpay/pay.php\","
+//                + "\"out_trade_no\":\"12177525012014070332333680182\","
+//                + "\"goods_tag\":\"WXG\","
+//                + "\"appid\":\"wx952a2a49d57ce755\","
+//                + "\"attach\":\"自定义数据说明\""
+////                + "\"detail\": {"
+////                    + "\"invoice_id\":\"wx123\","
+////                    + "\"goods_detail\": ["
+////                            + "{"
+////                            + "\"goods_name\":\"iPhoneX 256G\","
+////                            + "\"wechatpay_goods_id\":\"1001\","
+////                            + "\"quantity\":1,"
+////                            + "\"merchant_goods_id\":\"123\","
+////                            + "\"unit_price\":828800"
+////                            + "},"
+////                            + "{"
+////                            + "\"goods_name\":\"iPhoneX 256G\","
+////                            + "\"wechatpay_goods_id\":\"1001\","
+////                            + "\"quantity\":1,"
+////                            + "\"merchant_goods_id\":\"456\","
+////                            + "\"unit_price\":828800"
+////                            + "}"
+////                    + "],"
+////                    + "\"cost_price\":608800"
+////                + "},"
+////                + "\"scene_info\": {"
+////                        + "\"store_info\": {"
+////                            + "\"address\":\"广东省深圳市南山区科技中一道10000号\","
+////                            + "\"area_code\":\"440305\","
+////                            + "\"name\":\"腾讯大厦分店\","
+////                            + "\"id\":\"0001\""
+////                            + "},"
+////                        + "\"device_id\":\"013467007045764\","
+////                        + "\"payer_client_ip\":\"14.23.150.211\""
+////                        + "}"
+//                + "}";
+//        StringEntity entity = new StringEntity(reqdata);
+//        entity.setContentType("application/json");
+//        httpPost.setEntity(entity);
+//        httpPost.setHeader("Accept", "application/json");
+//
+//        //完成签名并执行请求
+//        CloseableHttpResponse response = httpClient.execute(httpPost);
+//
+//        try {
+//            int statusCode = response.getStatusLine().getStatusCode();
+//            if (statusCode == 200) { //处理成功
+//                System.out.println("success,return body = " + EntityUtils.toString(response.getEntity()));
+//            } else if (statusCode == 204) { //处理成功，无返回Body
+//                System.out.println("success");
+//            } else {
+//                System.out.println("failed,resp code = " + statusCode+ ",return body = " + EntityUtils.toString(response.getEntity()));
+//                throw new IOException("request failed");
+//            }
+//        } finally {
+//            response.close();
+//        }
+//
+//
+//        this.after();
+//    }
 
-        //完成签名并执行请求
-        CloseableHttpResponse response = httpClient.execute(httpPost);
 
-        try {
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == 200) { //处理成功
-                System.out.println("success,return body = " + EntityUtils.toString(response.getEntity()));
-            } else if (statusCode == 204) { //处理成功，无返回Body
-                System.out.println("success");
-            } else {
-                System.out.println("failed,resp code = " + statusCode+ ",return body = " + EntityUtils.toString(response.getEntity()));
-                throw new IOException("request failed");
-            }
-        } finally {
-            response.close();
-        }
-
-
-        this.after();
-    }
-
+//
+//    // Authorization: <schema> <token>
+//// GET - getToken("GET", httpurl, "")
+//// POST - getToken("POST", httpurl, json)
+//    String schema = "WECHATPAY2-SHA256-RSA2048";
+//    HttpUrl httpurl = HttpUrl.parse(url);
+//
+//    String getToken(String method, HttpUrl url, String body) {
+//        String nonceStr = "your nonce string";
+//        long timestamp = System.currentTimeMillis() / 1000;
+//        String message = buildMessage(method, url, timestamp, nonceStr, body);
+//        String signature = sign(message.getBytes("utf-8"));
+//
+//        return "mchid=\"" + yourMerchantId + "\","
+//                + "nonce_str=\"" + nonceStr + "\","
+//                + "timestamp=\"" + timestamp + "\","
+//                + "serial_no=\"" + yourCertificateSerialNo + "\","
+//                + "signature=\"" + signature + "\"";
+//    }
+//
+//    String sign(byte[] message) {
+//        Signature sign = Signature.getInstance("SHA256withRSA");
+//        sign.initSign(yourPrivateKey);
+//        sign.update(message);
+//
+//        return Base64.getEncoder().encodeToString(sign.sign());
+//    }
+//
+//    String buildMessage(String method, HttpUrl url, long timestamp, String nonceStr, String body) {
+//        String canonicalUrl = url.encodedPath();
+//        if (url.encodedQuery() != null) {
+//            canonicalUrl += "?" + url.encodedQuery();
+//        }
+//
+//        return method + "\n"
+//                + canonicalUrl + "\n"
+//                + timestamp + "\n"
+//                + nonceStr + "\n"
+//                + body + "\n";
+//    }
 
 }

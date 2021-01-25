@@ -63,6 +63,7 @@ public class LbPostServiceImpl extends ServiceImpl<LbPostMapper, LbPost> impleme
                     .in(LbPost::getIsFree, new Integer[]{1, 2})
                     .lt(LbPost::getPublishedAt, LocalDateTime.now())
                     .eq(LbPost::getRecommend, 1)
+                    .eq(LbPost::getIsPreview, 1)
                     .eq(LbPost::getStatus, RC.B_NORMAL.code())
                     .orderByDesc(LbPost::getPublishedAt);
         }
