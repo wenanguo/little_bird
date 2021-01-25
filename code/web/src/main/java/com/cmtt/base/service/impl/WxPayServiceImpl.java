@@ -15,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -45,6 +46,9 @@ public class WxPayServiceImpl {
     private CloseableHttpClient httpClient;
 
     private PrivateKey merchantPrivateKey;
+
+    @Value("${spring.pay.wx.notify:https://app.aves.art/api/wx/notify_url}")
+    private String WX_NOTIFYURL;
 
     private String appid="wx952a2a49d57ce755";
 
@@ -105,11 +109,10 @@ public class WxPayServiceImpl {
      * 统一支付订单
      * @param total
      * @param description
-     * @param notify_url
      * @param out_trade_no
      * @throws Exception
      */
-    public Map WxCreateOrder(BigDecimal total, String description, String notify_url, String out_trade_no) throws Exception{
+    public Map WxCreateOrder(BigDecimal total, String description, String out_trade_no) throws Exception{
 
 
         //请求URL
@@ -123,7 +126,7 @@ public class WxPayServiceImpl {
                 + "},"
                 + "\"mchid\":\""+this.mchId+"\","
                 + "\"description\":\""+description+"\","
-                + "\"notify_url\":\""+notify_url+"\","
+                + "\"notify_url\":\""+this.WX_NOTIFYURL+"\","
                 + "\"out_trade_no\":\""+out_trade_no+"\","
                 + "\"goods_tag\":\"WXG\","
                 + "\"appid\":\""+this.appid+"\","

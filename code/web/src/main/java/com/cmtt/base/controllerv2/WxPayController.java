@@ -171,15 +171,15 @@ public class WxPayController {
 
         }
 
-        String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
-
+//        String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
+//
 
 
 
 
         try {
             // 请求微信服务器端
-            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice(),lbGoods.getTitle(),notify_url,outtradeno);
+            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice(),lbGoods.getTitle(),outtradeno);
 
 
             // 入库商户订单
@@ -189,7 +189,7 @@ public class WxPayController {
             lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());
             lbOrders.setPhone(sysUser.getPhone());
-            lbOrders.setTradeNo(returnMap.get("prepay_id").toString());
+            lbOrders.setTradeNo(returnMap.get("prepayId").toString());
             lbOrders.setOutTradeNo(outtradeno);
             lbOrders.setTotalAmount(lbGoods.getPrice());
             lbOrders.setBuyerPayAmount(lbGoods.getPrice());
