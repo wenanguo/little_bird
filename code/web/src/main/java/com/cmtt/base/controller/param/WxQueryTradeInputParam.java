@@ -17,7 +17,7 @@ public class WxQueryTradeInputParam {
 
 	@ApiModelProperty(value ="订单编号",example = "1")
 	@NotNull(message = "订单编号不能为空")
-	private String transaction_id;
+	private String outTradeNo;
 
 
 }

@@ -194,15 +194,15 @@ public class WxPayServiceImpl {
 
     /**
      * 查询订单
-     * @param transaction_id
+     * @param out_trade_no
      * @throws Exception
      */
-    public Map WxQueryOrder(String transaction_id) throws Exception{
+    public Map WxQueryOrder(String out_trade_no) throws Exception{
 
 
         //请求URL
 
-        HttpGet httpGet = new HttpGet("https://api.mch.weixin.qq.com/v3/pay/transactions/id/"+transaction_id+"?mchid="+this.mchId);
+        HttpGet httpGet = new HttpGet("https://api.mch.weixin.qq.com/v3/pay/transactions/out-trade-no/"+out_trade_no+"?mchid="+this.mchId);
 
         httpGet.setHeader("Accept", "application/json");
 

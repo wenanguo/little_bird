@@ -240,7 +240,7 @@ public class WxPayController {
     @ResponseBody
     @ApiOperation("微信查询订单状态")
     public R query_trade(@RequestBody @Valid WxQueryTradeInputParam param) throws Exception {
-        Map map=wxPayService.WxQueryOrder(param.getTransaction_id());
+        Map map=wxPayService.WxQueryOrder(param.getOutTradeNo());
 
         return R.ok().setResult(map);
     }
