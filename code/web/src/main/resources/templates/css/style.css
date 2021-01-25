@@ -738,13 +738,18 @@ pre.ql-syntax{
     font-weight: 600;
     max-height: 51px;
     overflow: hidden;
+    display: inline-block;
 }
 .shareColumnListBox .shareColumnList .columnArticleInfo h1 span{
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    padding: 5px 0;
-    line-height: 20px;
-    display: inline-block;
+    line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .shareColumnListBox .shareColumnList .columnTitleInfo h2{
     color: #3F3E4C;
