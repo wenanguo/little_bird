@@ -6,7 +6,7 @@
     :maskClosable="false"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
-    @cancel="() => { $emit('cancel') }"
+    @cancel="formCancel"
     centered
   >
     <a-spin :spinning="loading">
@@ -454,6 +454,12 @@
       })
     },
     methods: {
+      formCancel () {
+        // 解决打开引用bug
+        this.content = ''
+        this.feeContent = ''
+        this.$emit('cancel')
+      },
       gchange (props, values) {
         for (var p in values) {
           if (p === 'title') {
