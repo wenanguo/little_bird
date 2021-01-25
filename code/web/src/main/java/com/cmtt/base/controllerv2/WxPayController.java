@@ -158,7 +158,7 @@ public class WxPayController {
 //            returnStr=response.getBody();//就是orderString 可以直接给客户端请求，无需再做处理。
             returnStr=wxPayService.WxCreateOrder(lbGoods.getPrice().intValue(),lbGoods.getTitle(),notify_url,outtradeno);
 
-
+            Map returnMap = (Map)JSON.parse(returnStr);
 
             // 入库商户订单
             LbOrders lbOrders= new LbOrders();
@@ -166,7 +166,7 @@ public class WxPayController {
             lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());
             lbOrders.setPhone(sysUser.getPhone());
-            lbOrders.setTradeNo("");
+            lbOrders.setTradeNo(returnMap.get("prepay_id").toString());
             lbOrders.setOutTradeNo(outtradeno);
             lbOrders.setTotalAmount(lbGoods.getPrice());
             lbOrders.setBuyerPayAmount(lbGoods.getPrice());
