@@ -53,9 +53,9 @@ spring:
 
   pay:
     wx_pay:
-      notify: http://www.teamyy.cn:18087/api/wx/notify_url
+      notify: https://app.aves.art/api/wx/notify_url
     ali_pay:
-      notify: http://www.teamyy.cn:18087/api/zfb/callback
+      notify: https://app.aves.art/api/zfb/callback
 
   servlet:
     multipart:

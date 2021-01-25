@@ -197,7 +197,11 @@ public class WxPayController {
             lbOrders.setGmtPayment(LocalDateTime.now());
             lbOrders.setStatus(RC.PAY_NO.code());
 
-//            lbOrders.setServerReq(JSON.toJSONString(request));
+            lbOrders.setServerReq(returnMap.get("serverReq").toString());
+            // 删除请求信息
+            returnMap.remove("serverReq");
+
+            
             lbOrders.setServerResp(returnMap.toString());
 
 

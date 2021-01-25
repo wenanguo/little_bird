@@ -179,6 +179,7 @@ public class WxPayServiceImpl {
 
                 map = this.getSign(this.appid,this.mchId,map.get("prepay_id").toString());
                 map.put("outTradeNo",out_trade_no);
+                map.put("serverReq",reqdata);
 
                 return map;
 
