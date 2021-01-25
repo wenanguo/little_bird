@@ -47,7 +47,7 @@ public class WxPayServiceImpl {
 
     private PrivateKey merchantPrivateKey;
 
-    @Value("${spring.pay.wx.notify:https://app.aves.art/api/wx/notify_url}")
+    @Value("${spring.pay.wx_pay.notify:https://app.aves.art/api/wx/notify_url}")
     private String WX_NOTIFYURL;
 
     private String appid="wx952a2a49d57ce755";
