@@ -95,6 +95,10 @@ public class LbOrders extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "交易结束时间")
     private LocalDateTime gmtClose;
 
+    @ApiModelProperty(value = "支付渠道，wxPay，aliPay,applePay")
+    private String channel;
+
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 

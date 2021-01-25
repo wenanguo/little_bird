@@ -167,7 +167,7 @@ public class ApplePayController {
 
 
             lbOrders = new LbOrders();
-
+            lbOrders.setChannel("applePay"); // 支付渠道
             lbOrders.setGoodsId(lbGoods.getId());
             lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());
