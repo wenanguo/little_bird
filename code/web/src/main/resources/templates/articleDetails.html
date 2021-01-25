@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>[[${lbPost.title}]]</title>
-    <link rel="stylesheet" type="text/css" th:href="${domainPath}+'common/css/style.css?v=1'">
+    <link rel="stylesheet" type="text/css" href="${domainPath}+'common/css/style.css?v=1'">
     <script th:src="${domainPath}+'common/js/jquery-1.11.3.min.js'"></script>
     <script>
 
@@ -140,7 +140,7 @@
             <div class="subscribeBorderTop"></div>
             <div class="subscribeTitle" th:if="${isPayOne} == false">
                 <div>
-                    <h1>付费后，可阅读余下内容</h1>
+                    <h1 style="text-align: center">付费后，可阅读余下内容</h1>
                     <div th:if="${PayOneCount} >0">
                         <h2>你目前剩余 [[${PayOneCount}]] 篇文章的兑换资格</h2>
                         <span class="exchangecss">兑换本文</span>
