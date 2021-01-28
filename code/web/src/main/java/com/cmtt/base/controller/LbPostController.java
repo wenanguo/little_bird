@@ -275,8 +275,22 @@ public class LbPostController {
             lbPost.setFeeContent("");
         }
 
-        // 获取作者列表
-        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
+        // 获取排序的作者列表
+        List<Integer> lbAuthorIdsList = lbPost.getLbAuthorIdsList();
+        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbAuthorIdsList));
+
+        List<LbAuthor> lbAuthorSortList= new ArrayList<>();
+
+        // 排序输入
+        for(int i =0;i<lbAuthorIdsList.size() ; i++){
+
+            for (int i1 = 0; i1 < lbAuthorList.size(); i1++) {
+                if(lbAuthorIdsList.get(i).equals(lbAuthorList.get(i1).getId())){
+                    lbAuthorSortList.add(lbAuthorList.get(i1));
+                }
+            }
+
+        }
 
         // 获取所属栏目
         LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery()
@@ -294,7 +308,7 @@ public class LbPostController {
         context.setVariable("SocialDate", DateTimeUtils.getSocialDateDisplay(lbPost.getPublishedAt()));
 
         context.setVariable("PayOneCount",PayOneCount);
-        context.setVariable("lbAuthorList",lbAuthorList);
+        context.setVariable("lbAuthorList",lbAuthorSortList);
         context.setVariable("lbSubject",lbSubject);
         String result=templateEngine.process("articleDetails",context);
         //System.out.println(result);
@@ -331,9 +345,28 @@ public class LbPostController {
         boolean isCollect = true;
         Integer PayOneCount=3;
 
-        // 获取作者列表
-        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbPost.getLbAuthorIdsList()));
-// 获取所属栏目
+        // 获取排序的作者列表
+        List<Integer> lbAuthorIdsList = lbPost.getLbAuthorIdsList();
+        List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", lbAuthorIdsList));
+
+        List<LbAuthor> lbAuthorSortList= new ArrayList<>();
+
+        // 排序输入
+        for(int i =0;i<lbAuthorIdsList.size() ; i++){
+
+            for (int i1 = 0; i1 < lbAuthorList.size(); i1++) {
+                if(lbAuthorIdsList.get(i).equals(lbAuthorList.get(i1).getId())){
+                    lbAuthorSortList.add(lbAuthorList.get(i1));
+                }
+            }
+
+        }
+
+
+
+
+
+        // 获取所属栏目
         LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery()
                 .eq(LbSubject::getStatus, RC.B_NORMAL.code())
                 .eq(LbSubject::getId, lbPost.getPostSubjectId())
@@ -361,7 +394,7 @@ public class LbPostController {
         mv.addObject("SocialDate", DateTimeUtils.getSocialDateDisplay(lbPost.getPublishedAt()));
 
 
-        mv.addObject("lbAuthorList",lbAuthorList);
+        mv.addObject("lbAuthorList",lbAuthorSortList);
         mv.addObject("lbSubject",lbSubject);
         mv.setViewName("articleDetails");
         return mv;
@@ -459,13 +492,23 @@ public class LbPostController {
             lbPost.setPeriodicalTitle(lbPeriodical.getTitle());
 
 
+            List<Integer> lbAuthorIdsList = params.getLbAuthorIdsList();
             //条件构造器in上手使用
-//            QueryWrapper<LbAuthor> qw = new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList());
-//            qw.in("id", params.getLbAuthorIdsList());
             List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList()));
 
             List<LbAuthorVo> lbAuthorVoList= new ArrayList<>();
-            lbAuthorList.forEach(s -> lbAuthorVoList.add(new LbAuthorVo().setId(s.getId()).setName(s.getName())));
+
+            // 排序输入
+            for(int i =0;i<lbAuthorIdsList.size() ; i++){
+
+                for (int i1 = 0; i1 < lbAuthorList.size(); i1++) {
+                    if(lbAuthorIdsList.get(i).equals(lbAuthorList.get(i1).getId())){
+                        lbAuthorVoList.add(new LbAuthorVo().setId(lbAuthorList.get(i1).getId()).setName(lbAuthorList.get(i1).getName()));
+                    }
+                }
+
+            }
+
 
 
             lbPost.setAuthor(JSON.toJSONString(lbAuthorVoList));
@@ -510,11 +553,22 @@ public class LbPostController {
 
 
             // 修改作者
+            List<Integer> lbAuthorIdsList = params.getLbAuthorIdsList();
+            //条件构造器in上手使用
             List<LbAuthor> lbAuthorList = lbAuthorService.list(new QueryWrapper<LbAuthor>().in("id", params.getLbAuthorIdsList()));
 
             List<LbAuthorVo> lbAuthorVoList= new ArrayList<>();
-            lbAuthorList.forEach(s -> lbAuthorVoList.add(new LbAuthorVo().setId(s.getId()).setName(s.getName())));
 
+            // 排序输入
+            for(int i =0;i<lbAuthorIdsList.size() ; i++){
+
+                for (int i1 = 0; i1 < lbAuthorList.size(); i1++) {
+                    if(lbAuthorIdsList.get(i).equals(lbAuthorList.get(i1).getId())){
+                        lbAuthorVoList.add(new LbAuthorVo().setId(lbAuthorList.get(i1).getId()).setName(lbAuthorList.get(i1).getName()));
+                    }
+                }
+
+            }
             lbPost.setAuthor(JSON.toJSONString(lbAuthorVoList));
 
             lbPostService.updateById(lbPost);
