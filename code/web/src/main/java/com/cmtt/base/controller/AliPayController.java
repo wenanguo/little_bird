@@ -261,6 +261,7 @@ public class AliPayController {
 
             // 入库商户订单
             LbOrders lbOrders= new LbOrders();
+            lbOrders.setChannel("aliPay"); // 支付渠道
             lbOrders.setGoodsId(lbGoods.getId());
             lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());

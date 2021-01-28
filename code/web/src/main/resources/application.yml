@@ -51,6 +51,12 @@ spring:
   sms:
     special_country: +64,+81,+886
 
+  pay:
+    wx_pay:
+      notify: https://app.aves.art/api/wx/notify_url
+    ali_pay:
+      notify: https://app.aves.art/api/zfb/callback
+
   servlet:
     multipart:
       # 上传文件总的最大值

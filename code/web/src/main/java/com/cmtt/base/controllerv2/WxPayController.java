@@ -171,44 +171,25 @@ public class WxPayController {
 
         }
 
-        String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
-        //String notify_url="http://wenanguo.5gzvip.idcfengye.com/api/wx/notify_url";
-
-
-
-//        //实例化客户端
-//        //AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
+//        String notify_url="http://www.teamyy.cn:18087/api/wx/notify_url";
 //
-//        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
-//        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
-//        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
-//        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-//        model.setBody(lbGoods.getBody());
-//        model.setSubject(lbGoods.getTitle());
-//        model.setOutTradeNo(outtradeno);
-//        model.setTimeoutExpress("30m");
-//        model.setTotalAmount(String.valueOf(lbGoods.getPrice()));
-//        model.setProductCode("QUICK_MSECURITY_PAY");
-//        request.setBizModel(model);
-//        request.setNotifyUrl(aliPayService.getNotifyUrl());
+
+
 
 
         try {
-
-//            //这里和普通的接口调用不同，使用的是sdkExecute
-//            AlipayTradeAppPayResponse response = aliPayService.getAlipayClient().sdkExecute(request);
-//            returnStr=response.getBody();//就是orderString 可以直接给客户端请求，无需再做处理。
-            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice(),lbGoods.getTitle(),notify_url,outtradeno);
-
+            // 请求微信服务器端
+            returnMap=wxPayService.WxCreateOrder(lbGoods.getPrice(),lbGoods.getTitle(),outtradeno);
 
 
             // 入库商户订单
             LbOrders lbOrders= new LbOrders();
+            lbOrders.setChannel("wxPay"); // 支付渠道
             lbOrders.setGoodsId(lbGoods.getId());
             lbOrders.setDevType(devType);
             lbOrders.setTtype(lbGoods.getTtype());
             lbOrders.setPhone(sysUser.getPhone());
-            lbOrders.setTradeNo("");
+            lbOrders.setTradeNo(returnMap.get("prepayId").toString());
             lbOrders.setOutTradeNo(outtradeno);
             lbOrders.setTotalAmount(lbGoods.getPrice());
             lbOrders.setBuyerPayAmount(lbGoods.getPrice());
@@ -216,7 +197,11 @@ public class WxPayController {
             lbOrders.setGmtPayment(LocalDateTime.now());
             lbOrders.setStatus(RC.PAY_NO.code());
 
-//            lbOrders.setServerReq(JSON.toJSONString(request));
+            lbOrders.setServerReq(returnMap.get("serverReq").toString());
+            // 删除请求信息
+            returnMap.remove("serverReq");
+
+            
             lbOrders.setServerResp(returnMap.toString());
 
 

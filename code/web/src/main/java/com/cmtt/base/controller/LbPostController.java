@@ -380,8 +380,15 @@ public class LbPostController {
         try {
 
             // 执行查询
-            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getIsFree, 3)
+            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
                     .select(LbPost.class,info->!info.getColumn().equals("content")&&!info.getColumn().equals("fee_content"))
+                    .and(
+                            wrapper -> wrapper
+                                    .eq(LbPost::getIsFree, 3)
+                                    .or()
+                                    .eq(LbPost::getIsPreview, 2)
+
+                    )
                     .orderByDesc(LbPost::getPostOrder));
 
             // 设置返回数据

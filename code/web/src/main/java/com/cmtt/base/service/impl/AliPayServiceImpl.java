@@ -5,6 +5,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,7 +32,8 @@ public class AliPayServiceImpl {
     // 支付宝公钥
     private String ALIPAY_PUBLIC_KEY="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj9cFIxlM0p5Gxldf0/mhCE9fnm+71SxA0SvCvWBx6IzRb+UTILmgYi4yQBKqtTLQX99vkJpGgPJPIdvtTsFCeoiR4EbZ2+a2ZT+/DQDYbrLIWale3UaQwssqti9c68iNV20r4BkFxwqG4KPxFLiXylFpbUsbhjqBiLWmIj7p2E8xPQlKxXKyl/VNG+K9L2MOnXunAce1IFL+zDj9kWZEpahSofxJBMvCVjC62g1C47PUM8Z3x33FHUDOnE2WHv2Rf6nqDJQcvVRUKupQRHyqCOdCBE/YAUKxYDN20Tm90axitIPklpfX/Y6vDQG/66J1kXoH2sy/5r81XgXA/abGrQIDAQAB";
 
-    private String NOTIFYURL="https://app.aves.art/api/zfb/callback";
+    @Value("${spring.pay.ali_pay.notify:https://app.aves.art/api/zfb/callback}")
+    private String NOTIFYURL;
 
     private String SING_TYPE="RSA2";
     // 阿里支付客户端
