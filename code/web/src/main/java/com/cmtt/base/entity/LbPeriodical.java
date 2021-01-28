@@ -60,6 +60,9 @@ public class LbPeriodical extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "pdf下载")
     private String tpdf;
 
+    @ApiModelProperty(value = "是否预览 1正常 2预览")
+    private Integer isPreview;
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 

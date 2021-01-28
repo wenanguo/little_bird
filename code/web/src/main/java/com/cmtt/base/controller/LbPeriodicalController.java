@@ -135,7 +135,9 @@ public class LbPeriodicalController {
 //        QueryWrapper<LbPeriodical> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
-        lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
+        lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery()
+                .eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
+                .eq(LbPeriodical::getIsPreview, 1)
                 .inSql(LbPeriodical::getId, "select periodical_id from lb_post where status=100")
                 .orderBy(true,false,LbPeriodical::getTorder));
 
@@ -199,7 +201,10 @@ public class LbPeriodicalController {
     public R bookrack(Principal principal){
 
 
-        LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getTyear);
+        LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery()
+                .eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
+                .eq(LbPeriodical::getIsPreview, 1)
+                .orderByDesc(LbPeriodical::getTyear);
 
         if(principal!=null){
             // 未登录

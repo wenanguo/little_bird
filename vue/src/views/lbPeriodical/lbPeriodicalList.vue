@@ -126,8 +126,13 @@
             sorter: true,
             scopedSlots: { customRender: 'pdfslot' },
             dataIndex: 'tpdf'
-        },
-        {
+        }, {
+            title: '是否预览',
+            sorter: true,
+            width: '100px',
+            customRender: (value) => isPreviewMap[value].text,
+            dataIndex: 'isPreview'
+        }, {
             title: '所属年份',
             sorter: true,
             width: '150px',
@@ -162,6 +167,16 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+    const isPreviewMap = {
+    1: {
+        status: 'default',
+        text: '正常'
+    },
+    2: {
+        status: 'processing',
+        text: '预览'
+    }
+  }
 
     export default {
         name: 'TableList',

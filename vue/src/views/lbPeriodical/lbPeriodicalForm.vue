@@ -31,6 +31,18 @@
         <a-form-item label="排序">
           <a-input-number style="width: 100%" v-decorator="['torder', {rules: [{required: true, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
+
+        <a-form-item label="是否预览">
+          <a-radio-group name="radioGroup" v-decorator="['isPreview', {initialValue: 1,rules: [{required: true}]}]">
+            <a-radio :value="1">
+              正常
+            </a-radio>
+            <a-radio :value="2">
+              预览
+            </a-radio>
+          </a-radio-group>
+        </a-form-item>
+
         <a-form-item label="期刊封面" help="图片大小：1125*1500">
           <a-upload
             name="file"
@@ -83,6 +95,7 @@
         'imgUrl',
         'tinfo',
         'tpdf',
+        'isPreview',
         'recommend',
         'tyear',
         'torder',
