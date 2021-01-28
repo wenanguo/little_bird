@@ -113,7 +113,7 @@
                   </a-col>
                   <a-col :span="12">
                     <a-form-item label="作者">
-                      <a-select mode="multiple" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+                      <a-select mode="multiple" :allowClear="true" :filterOption="filterOption" v-decorator="['lbAuthorIdsList', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
                         <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
                           {{ lbAuthor.name }}
                         </a-select-option>
@@ -547,6 +547,11 @@
           quill.insertEmbed(length, 'image', info.file.response.result.url)
           quill.setSelection(length + 1)
         }
+      },
+      filterOption (input, option) {
+        return (
+          option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        )
       }
     }
   }

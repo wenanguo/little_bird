@@ -6,10 +6,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.ReportInputParam;
-import com.cmtt.base.entity.Article;
 import com.cmtt.base.entity.LbReport;
 import com.cmtt.base.entity.R;
-import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.ILbReportService;
@@ -23,7 +21,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * <p>
