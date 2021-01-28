@@ -115,7 +115,7 @@ public class LbUserCollectController {
             IPage<LbPost> lbPostPage = new Page<>(params.getPageNo(), params.getPageSize());
 
             // 构造查询及排序方式
-            QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+            QueryWrapper<LbPost> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
 

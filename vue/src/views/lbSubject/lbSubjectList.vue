@@ -92,6 +92,7 @@
     import { getLbSubjectList, saveLbSubject, delLbSubject, batchDelLbSubject } from '@/api/lbSubject'
     import { getLbCatalogListAll } from '@/api/lbCatalog'
     import EditForm from './lbSubjectForm'
+    var lbCatalogListData = []
 
     const columns = [
         // {
@@ -109,11 +110,13 @@
             sorter: true,
             dataIndex: 'introduction'
         },
-        // {
-        //     title: '所属分类ID',
-        //     sorter: true,
-        //     dataIndex: 'catalogId'
-        // },
+        {
+            title: '所属分类',
+            sorter: true,
+            width: '150px',
+            dataIndex: 'catalogId',
+            customRender: function (value) { return listGetVal(lbCatalogListData, value, 'id', 'title') }
+        },
         {
             title: '状态',
             sorter: true,
@@ -200,9 +203,14 @@
             getLbCatalogListAll()
                         .then(res => {
                             this.lbCatalogList = res.result
+                            lbCatalogListData = res.result
                         })
         },
         methods: {
+            catalogIdFilter (type) {
+                // return statusMap[type].status
+                return listGetVal(this.lbCatalogList, type, 'id', 'title')
+            },
             handleAdd () {
                 this.mdl = null
                 this.title = '新增'
@@ -297,9 +305,6 @@
                 }
                 // 刷新表格
                 this.$refs.table.refresh()
-            },
-            catalogIdFilter (type) {
-                return listGetVal(this.lbCatalogList)
             }
         }
     }

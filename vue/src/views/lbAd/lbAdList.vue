@@ -51,6 +51,7 @@
         :columns="columns"
         :data="loadData"
         :alert="false"
+        :pagination="pagination"
         showPagination="auto"
       >
         <span slot="serial" slot-scope="text, record, index">
@@ -100,7 +101,7 @@
 <script>
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
-    import { statusMap, adLocationMap, adTypeMap } from '@/api/RC'
+    import { statusMap, adLocationMap, adTypeMap, pagination } from '@/api/RC'
     import { getLbAdList, saveLbAd, delLbAd, batchDelLbAd } from '@/api/lbAd'
     import { getLbPeriodicalListAll } from '@/api/lbPeriodical'
     import { getLbSubjectListAll } from '@/api/lbSubject'
@@ -190,6 +191,7 @@
             this.columns = columns
             return {
                 // create model
+                pagination,
                 visible: false,
                 title: '新增',
                 confirmLoading: false,
