@@ -1,9 +1,8 @@
 package com.cmtt.base.controller.param;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 
@@ -19,12 +18,10 @@ public class OrderStatisticsInputParam {
 
 
 	@ApiModelProperty(value = "开始时间")
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime startTime;
+	private String startTime;
 
 	@ApiModelProperty(value = "结束时间")
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime endTime;
+	private String endTime;
 
 
 

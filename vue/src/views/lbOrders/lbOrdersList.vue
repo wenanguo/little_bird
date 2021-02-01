@@ -51,6 +51,7 @@
         :columns="columns"
         :data="loadData"
         :alert="false"
+        :pagination="pagination"
         showPagination="auto"
       >
         <span slot="serial" slot-scope="text, record, index">
@@ -86,7 +87,7 @@
 <script>
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
-    import { statusMap } from '@/api/RC'
+    import { statusMap, pagination } from '@/api/RC'
     import { numberFormat } from '@/utils/util'
     import { getLbOrdersList, saveLbOrders, delLbOrders, batchDelLbOrders } from '@/api/lbOrders'
     import EditForm from './lbOrdersForm'
@@ -98,35 +99,20 @@
             width: '100px',
             dataIndex: 'id'
         }, {
-            title: '商品编号',
+            title: '渠道',
             sorter: true,
             width: '150px',
-            customRender: (text) => {
-                if (text === 1) {
-                    return '支付宝-3篇试读'
-                } else if (text === 2) {
-                    return '支付宝-1年VIP'
-                } else if (text === 3) {
-                    return '苹果内购-3篇试读'
-                } else if (text === 4) {
-                    return '苹果内购-1年VIP'
-                } else {
-                    return ''
-                }
-            },
-            dataIndex: 'goodsId'
+            customRender: (value) => channelMap[value].text,
+            dataIndex: 'channel'
+        }, {
+            title: '商品类型',
+            sorter: true,
+            customRender: (value) => ttypeMap[value].text,
+            dataIndex: 'devType'
         }, {
             title: '设备类型',
             sorter: true,
-            customRender: (text) => {
-                if (text === 1) {
-                    return 'Android'
-                } else if (text === 2) {
-                    return 'IOS'
-                } else {
-                    return ''
-                }
-            },
+            customRender: (value) => devTypeMap[value].text,
             dataIndex: 'devType'
         }, {
             title: '手机号',
@@ -168,6 +154,40 @@
             scopedSlots: { customRender: 'action' }
         }
     ]
+    const channelMap = {
+      'aliPay': {
+          status: 'default',
+          text: '支付宝'
+      },
+      'applePay': {
+          status: 'processing',
+          text: '苹果内购'
+      },
+      'wxPay': {
+          status: 'processing',
+          text: '微信支付'
+      }
+    }
+    const ttypeMap = {
+      1: {
+          status: 'default',
+          text: '包年'
+      },
+      2: {
+          status: 'processing',
+          text: '单点'
+      }
+    }
+    const devTypeMap = {
+      1: {
+          status: 'default',
+          text: 'Android'
+      },
+      2: {
+          status: 'processing',
+          text: 'IOS'
+      }
+    }
 
     export default {
         name: 'TableList',
@@ -180,6 +200,7 @@
             this.columns = columns
             return {
                 // create model
+                pagination,
                 visible: false,
                 title: '新增',
                 confirmLoading: false,
