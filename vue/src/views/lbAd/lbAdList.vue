@@ -69,7 +69,7 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a v-action:edit @click="handleEdit(record)">修改</a>
+            <a @click="handleEdit(record)">修改</a>
             <a-divider type="vertical" />
             <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
               <a style="color: red">删除</a>

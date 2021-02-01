@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -344,6 +345,9 @@ public class LbPeriodicalController {
     public R add(@RequestBody @Validated({GroupAdd.class})LbPeriodical lbPeriodical) {
 
         try {
+            // 根据tpdf是否有值，确定是否可下载
+            if(!StringUtils.isEmpty(lbPeriodical.getTpdf()))lbPeriodical.setIsDownload(2);
+
             lbPeriodicalService.save(lbPeriodical);
 
             return R.ok().setMessage("新增成功");
@@ -367,6 +371,9 @@ public class LbPeriodicalController {
 
 
         try {
+
+            // 根据tpdf是否有值，确定是否可下载
+            if(!StringUtils.isEmpty(lbPeriodical.getTpdf()))lbPeriodical.setIsDownload(2);
 
             lbPeriodicalService.updateById(lbPeriodical);
 

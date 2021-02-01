@@ -185,8 +185,8 @@
         methods: {
           createChange (dates, dateStrings) {
             this.createValue = dates
-            this.queryParam.startTime = moment(dateStrings[0] + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss')
-            this.queryParam.endTime = moment(dateStrings[1] + ' 23:59:59').format('YYYY-MM-DD HH:mm:ss')
+            this.queryParam.startTime = dateStrings[0] // moment(dateStrings[0] + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss').toString()
+            this.queryParam.endTime = dateStrings[1] // moment(dateStrings[1] + ' 23:59:59').format('YYYY-MM-DD HH:mm:ss').toString()
           },
             handleAdd () {
                 this.mdl = null
