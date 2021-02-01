@@ -2,9 +2,11 @@ package com.cmtt.base.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.entity.LbAppVersion;
+import com.cmtt.base.entity.LbProtocol;
 import com.cmtt.base.entity.R;
 import com.cmtt.base.entity.SysUserSession;
 import com.cmtt.base.service.ILbAppVersionService;
+import com.cmtt.base.service.ILbProtocolService;
 import com.cmtt.base.service.ISysUserSessionService;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
@@ -41,24 +43,9 @@ public class LbPageController {
     @Autowired
     private ISysUserSessionService sysUserSessionService;
 
-//    /**
-//     * 健康检查
-//     */
-//    @GetMapping("health_check")
-//    @ResponseBody
-//    @ApiOperation("健康检查")
-//    public R health_check()  {
-//
-//        Map<String,Object> map=new HashMap<>();
-//
-//        int count = sysUserSessionService.count(Wrappers.<SysUserSession>lambdaQuery().eq(SysUserSession::getStatus, RC.B_NORMAL.code()));
-//
-//        map.put("userOnline",count);
-//        map.put("mysql","ok");
-//
-//        return R.ok();
-//
-//    }
+    @Autowired
+    private ILbProtocolService lbProtocolService;
+
 
 
     // 静态页面跳转
@@ -70,6 +57,13 @@ public class LbPageController {
     @ApiOperation("用户协议")
     public ModelAndView userAgreement()  {
         ModelAndView mv = new ModelAndView();
+        LbProtocol lbProtocol = lbProtocolService.getOne(Wrappers.<LbProtocol>lambdaQuery()
+                .eq(LbProtocol::getId, 2)
+                .eq(LbProtocol::getStatus,RC.B_NORMAL.code())
+                .orderByDesc(LbProtocol::getId)
+        );
+
+        mv.addObject("lbProtocol", lbProtocol);
 
         mv.setViewName("userAgreement");
         return mv;
@@ -84,6 +78,13 @@ public class LbPageController {
     public ModelAndView privacyAgreement()  {
         ModelAndView mv = new ModelAndView();
 
+        LbProtocol lbProtocol = lbProtocolService.getOne(Wrappers.<LbProtocol>lambdaQuery()
+                .eq(LbProtocol::getId, 1)
+                .eq(LbProtocol::getStatus,RC.B_NORMAL.code())
+                .orderByDesc(LbProtocol::getId)
+        );
+
+        mv.addObject("lbProtocol", lbProtocol);
         mv.setViewName("privacyAgreement");
         return mv;
 
@@ -97,6 +98,13 @@ public class LbPageController {
     @ApiOperation("关于小鸟")
     public ModelAndView about()  {
         ModelAndView mv = new ModelAndView();
+        LbProtocol lbProtocol = lbProtocolService.getOne(Wrappers.<LbProtocol>lambdaQuery()
+                .eq(LbProtocol::getId, 3)
+                .eq(LbProtocol::getStatus,RC.B_NORMAL.code())
+                .orderByDesc(LbProtocol::getId)
+        );
+
+        mv.addObject("lbProtocol", lbProtocol);
 
         mv.setViewName("about");
         return mv;

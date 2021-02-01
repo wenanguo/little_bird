@@ -63,6 +63,7 @@ const constantRouterComponents = {
   'LbPostList': () => import('@/views/lbPost/lbPostList'),
   'LbReportList': () => import('@/views/lbReport/lbReportList'),
   'LbUserCollectList': () => import('@/views/lbUserCollect/lbUserCollectList'),
+  'LbProtocolList': () => import('@/views/lbProtocol/lbProtocolList'),
   // 系统管理
   'SysUserList': () => import('@/views/sysUser/sysUserList'),
   'SysSmsList': () => import('@/views/sysSms/sysSmsList'),

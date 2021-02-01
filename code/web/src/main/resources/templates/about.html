@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -52,13 +52,7 @@
 <body>
 <div class="sectionBox">
     <img src="https://littlebird-1251508131.cos.ap-shanghai.myqcloud.com/common/img/about-logo.png" style="width: 40%; display:block; margin:10% auto;">
-    <h2>《小鸟 Aves》是线上文学杂志。取名之义，基本上是“当所有选项都被拿走的时候，你依然有无限自由的可能”。</h2>
-    <h2>在一个莫可名状的世界，我们希望实现一个朴实的想法：把更好的读者介绍给更好的写作者，以及，把更好的写作者介绍给更好的读者。</h2>
-    <h2>我们做这件事基于一个信念：文学的价值，是在一个崩坏的语言环境里保持对文字的敬意，同时相信，文学可能是最后的力量所在。</h2>
-    <h2>《小⻦ Aves》遵循线上原则，随时更新。我们邀请最好的作者，撰写虚构与非虚构作品。</h2>
-    <h2>其中包括首发小说、故事群岛、诗歌等文学作品；也包括长报道、旅行文学、档案、专栏等非虚构内容。</h2>
-    <h2>全年更新总文章量在 300 篇左右。 读者可以通过下载 App，付费阅读。</h2>
-    <h2>小鸟的主编是杨樱，此前她是《好奇心日报》的创始人和总编辑。编辑委员会有彭伦、李静睿、顾天鹂、伊险峰等人组成。</h2>
+    <div th:utext="${lbProtocol.content}" th:remove="tag"></div>
 </div>
 <div class="footerOperation">
     <div class="footerOperationContent">
