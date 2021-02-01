@@ -158,6 +158,7 @@ public class LbPostController {
 
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbPost.getPeriodicalId()),false);
         LbAppVersion lbAppVersion = lbAppVersionService.getOne(Wrappers.<LbAppVersion>lambdaQuery().orderByDesc(LbAppVersion::getId),false);
+        LbSubject lbSubject = lbSubjectService.getOne(Wrappers.<LbSubject>lambdaQuery().eq(LbSubject::getId, lbPost.getPostSubjectId()),false);
 
 
 
@@ -165,6 +166,7 @@ public class LbPostController {
         mv.addObject("domainPath",this.domainPath);
         mv.addObject("android",lbAppVersion.getLinkUrl());
         mv.addObject("lbPost", lbPost);
+        mv.addObject("lbSubject", lbSubject);
         mv.addObject("lbPeriodical", lbPeriodical);
         mv.addObject("lbAuthorList",lbAuthorList);
         mv.addObject("SocialDate", DateTimeUtils.getSocialDateDisplay(lbPost.getPublishedAt()));

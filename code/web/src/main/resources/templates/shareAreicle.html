@@ -78,9 +78,9 @@
     </div>
 </div>
 <div class="columnBox">
-    <h1><span style="border-bottom-color: #D7A03C">媒体往事</span></h1>
+    <h1><span th:style="'border-bottom-color: '+${lbPost.tcolor}">[[${lbSubject.title}]]</span></h1>
     <h2>
-        栏目介绍时间当然不会像节奏很快的媒体那样重要，但是在读者看到一个哪怕是一年之前的事件的记录，对于读者来说，也是一种获得新信息的感觉。栏目介绍时间当然不会像节奏很快的媒体那样重要，但是在读者看到一个哪怕是一年之前的事件的记录，对于读者来说，也是一种获得新信息的感觉。
+        <div th:utext="${lbSubject.introduction}" th:remove="tag"></div>
     </h2>
 </div>
 <div class="periodicalBox">
@@ -89,7 +89,9 @@
     </div>
     <div class="periodicalContent">
         <h1>本期作品</h1>
-        <h2 th:utext="${lbPeriodical.tinfo}"></h2>
+        <h2>
+            <div th:utext="${lbPeriodical.tinfo}" th:remove="tag"></div>
+        </h2>
     </div>
 </div>
 </body>
