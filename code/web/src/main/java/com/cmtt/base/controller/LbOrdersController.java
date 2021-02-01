@@ -1,9 +1,12 @@
 package com.cmtt.base.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cmtt.base.controller.param.GetOneInputParam;
+import com.cmtt.base.controller.param.OrderStatisticsInputParam;
 import com.cmtt.base.entity.R;
 import com.cmtt.base.entity.SysUserOrders;
 import com.cmtt.base.entity.validated.GroupAdd;
@@ -14,10 +17,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.cmtt.base.entity.LbOrders;
 import com.cmtt.base.service.ILbOrdersService;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -100,6 +109,58 @@ public class LbOrdersController {
 
             // 设置返回数据
             return R.ok().setPageResult(lbOrdersPage);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+
+
+
+    /**
+     * 获取订单统计数据
+     */
+    @GetMapping("/order_statistics")
+    @ResponseBody
+    public R order_statistics(OrderStatisticsInputParam params) {
+
+        try {
+
+
+
+            // 构造查询及排序方式
+            LambdaQueryWrapper<LbOrders> queryWrapper = Wrappers.<LbOrders>lambdaQuery();
+            queryWrapper.eq(LbOrders::getTradeStatus,"TRADE_SUCCESS");
+
+            if(params.getStartTime()!=null){
+                queryWrapper.gt(LbOrders::getGmtCreate,params.getStartTime());
+            }
+            if(params.getEndTime()!=null){
+                queryWrapper.lt(LbOrders::getGmtCreate,params.getEndTime());
+            }
+
+
+
+
+
+            // 执行查询
+            List<Map<String, Object>> mapList = lbOrdersService.getLbOrdersStatistics(queryWrapper);
+
+
+            Map<String, Object> map = new HashMap();
+            map.put("pageNo", 1);
+            map.put("pageSize", 10);
+            map.put("totalCount", 6);
+            map.put("totalPage", 1);
+            map.put("data", mapList);
+
+            // 设置返回数据
+            return R.ok().setResult(map);
 
 
         } catch (Exception e) {

@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -39,6 +40,15 @@ public class LbOrdersServiceImpl extends ServiceImpl<LbOrdersMapper, LbOrders> i
 //    public SysUserOrders getOneSysUserOrders(String phone){
 //        return this.baseMapper.getOneSysUserOrders(phone);
 //    }
+
+
+    /**
+     * 获取用户及订单统计数据
+     * @return
+     */
+    public List<Map<String,Object>> getLbOrdersStatistics(@Param(Constants.WRAPPER) Wrapper<LbOrders> queryWrapper){
+        return this.baseMapper.getLbOrdersStatistics(queryWrapper);
+    }
 
 
     /**

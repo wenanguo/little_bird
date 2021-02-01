@@ -5,17 +5,8 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="名称">
-                <a-input v-model="queryParam.title" placeholder=""/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="使用状态">
-                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
-                  <a-select-option :value="0">全部</a-select-option>
-                  <a-select-option :value="100">正常</a-select-option>
-                  <a-select-option :value="101">禁用</a-select-option>
-                </a-select>
+              <a-form-item label="时间">
+                <a-range-picker @change="createChange" :style="{width: '256px'}" />
               </a-form-item>
             </a-col>
             <template v-if="advanced">
@@ -31,8 +22,8 @@
       </div>
 
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
-        <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+        <a-button type="primary" v-action:add icon="plus" @click="handleAdd">新建</a-button>
+        <a-dropdown v-action:delete v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">
             <a-menu-item key="1" @click="handleconfirmDel"><a-icon type="delete" />删除</a-menu-item>
             <!-- lock | unlock -->
@@ -61,25 +52,15 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">修改</a>
+            <a v-action:edit @click="handleEdit(record)">修改</a>
             <a-divider type="vertical" />
             <a-popconfirm title="是否要删除当前数据？" @confirm="handleDel(record)">
-              <a style="color: red">删除</a>
+              <a v-action:delete style="color: red">删除</a>
             </a-popconfirm>
           </template>
         </span>
       </s-table>
 
-      <edit-form
-        ref="editForm"
-        :title="title"
-        :visible="visible"
-        :loading="confirmLoading"
-        :model="mdl"
-        :lbCatalogList="lbCatalogList"
-        @cancel="handleCancel"
-        @ok="handleOk"
-      />
     </a-card>
   </page-header-wrapper>
 </template>
@@ -88,81 +69,82 @@
     import moment from 'moment'
     import { STable, Ellipsis } from '@/components'
     import { statusMap } from '@/api/RC'
-    import { listGetVal } from '@/utils/util'
-    import { getLbSubjectList, saveLbSubject, delLbSubject, batchDelLbSubject } from '@/api/lbSubject'
-    import { getLbCatalogListAll } from '@/api/lbCatalog'
-    import EditForm from './lbSubjectForm'
-    var lbCatalogListData = []
+    import { getLbOrdersStatisticsList, saveLbOrdersStatistics, delLbOrdersStatistics, batchDelLbOrdersStatistics } from '@/api/lbOrdersStatistics'
 
     const columns = [
-        // {
-        //     title: 'id',
-        //     sorter: true,
-        //     width: '80px',
-        //     dataIndex: 'id'
-        // },
         {
-            title: '标题',
+            title: '支付渠道',
             sorter: true,
-            width: '150px',
-            dataIndex: 'title'
+            customRender: (value) => channelMap[value].text,
+            dataIndex: 'channel'
         }, {
-            title: '介绍',
+            title: '商品类型',
             sorter: true,
-            dataIndex: 'introduction'
-        },
-        {
-            title: '所属分类',
-            sorter: true,
-            width: '150px',
-            dataIndex: 'catalogId',
-            customRender: function (value) { return listGetVal(lbCatalogListData, value, 'id', 'title') }
-        },
-        {
-            title: '状态',
-            sorter: true,
-            width: '100px',
-            scopedSlots: { customRender: 'status' },
-            dataIndex: 'status'
+            customRender: (value) => ttypeMap[value].text,
+            dataIndex: 'ttype'
         }, {
-            title: '修改时间',
+            title: '设备类型',
             sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
-            dataIndex: 'updateTime'
+            customRender: (value) => devTypeMap[value].text,
+            dataIndex: 'dev_type'
         }, {
-            title: '创建时间',
+            title: '数量',
             sorter: true,
-            width: '150px',
-            customRender: (text) => text ? moment(text).format('YYYY-MM-DD HH:mm') : '',
-            dataIndex: 'createTime'
-        },
-        {
-            title: '操作',
-            dataIndex: 'action',
-            width: '150px',
-            scopedSlots: { customRender: 'action' }
+            dataIndex: 'tcount'
         }
     ]
+    const channelMap = {
+      'aliPay': {
+          status: 'default',
+          text: '支付宝'
+      },
+      'applePay': {
+          status: 'processing',
+          text: '苹果内购'
+      },
+      'wxPay': {
+          status: 'processing',
+          text: '微信支付'
+      }
+    }
+    const ttypeMap = {
+      1: {
+          status: 'default',
+          text: '包年'
+      },
+      2: {
+          status: 'processing',
+          text: '单点'
+      }
+    }
+    const devTypeMap = {
+      1: {
+          status: 'default',
+          text: '安卓'
+      },
+      2: {
+          status: 'processing',
+          text: '苹果'
+      }
+    }
 
     export default {
         name: 'TableList',
         components: {
             STable,
-            Ellipsis,
-            EditForm
+            Ellipsis
         },
         data () {
             this.columns = columns
             return {
                 // create model
                 visible: false,
+                createValue: [],
                 title: '新增',
                 confirmLoading: false,
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
-                lbCatalogList: [],
                 // 查询参数
                 queryParam: {},
                 // 加载数据方法 必须为 Promise 对象
@@ -174,7 +156,8 @@
                     })
                     // 设置获取全部状态
                     if (requestParameters['status'] && requestParameters['status'] === 0) delete requestParameters['status']
-                    return getLbSubjectList(requestParameters)
+                    console.log('loadData request parameters:', requestParameters)
+                    return getLbOrdersStatisticsList(requestParameters)
                         .then(res => {
                             return res.result
                         })
@@ -199,19 +182,12 @@
                 }
             }
         },
-        created () {
-            // 初始化数据
-            getLbCatalogListAll()
-                        .then(res => {
-                            this.lbCatalogList = res.result
-                            lbCatalogListData = res.result
-                        })
-        },
         methods: {
-            catalogIdFilter (type) {
-                // return statusMap[type].status
-                return listGetVal(this.lbCatalogList, type, 'id', 'title')
-            },
+          createChange (dates, dateStrings) {
+            this.createValue = dates
+            this.queryParam.startTime = moment(dateStrings[0] + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss')
+            this.queryParam.endTime = moment(dateStrings[1] + ' 23:59:59').format('YYYY-MM-DD HH:mm:ss')
+          },
             handleAdd () {
                 this.mdl = null
                 this.title = '新增'
@@ -227,10 +203,14 @@
                 this.confirmLoading = true
                 form.validateFields((errors, values) => {
                     if (!errors) {
+                         // 日期格式化
+                            values.updateTime = moment(values.updateTime).format('YYYY-MM-DD HH:mm:ss')
+                            values.createTime = moment(values.createTime).format('YYYY-MM-DD HH:mm:ss')
+
                         if (values.id > 0) {
                             // 修改 e.g.
 
-                            saveLbSubject(values).then(res => {
+                            saveLbOrdersStatistics(values).then(res => {
                                 this.visible = false
                                 this.confirmLoading = false
                                 // 重置表单数据
@@ -242,7 +222,7 @@
                             })
                         } else {
                             // 新增
-                            saveLbSubject(values).then(res => {
+                            saveLbOrdersStatistics(values).then(res => {
                                 this.visible = false
                                 this.confirmLoading = false
                                 // 重置表单数据
@@ -266,7 +246,7 @@
                 })
             },
             handleBatchDel () {
-                batchDelLbSubject(this.selectedRowKeys).then(res => {
+                batchDelLbOrdersStatistics(this.selectedRowKeys).then(res => {
                     this.confirmLoading = false
                     // 刷新表格
                     this.$refs.table.refresh()
@@ -277,7 +257,7 @@
             handleDel (record) {
                 if (record.id > 0) {
                     // 修改 e.g.
-                    delLbSubject(record).then(res => {
+                    delLbOrdersStatistics(record).then(res => {
                         this.confirmLoading = false
                         // 刷新表格
                         this.$refs.table.refresh()

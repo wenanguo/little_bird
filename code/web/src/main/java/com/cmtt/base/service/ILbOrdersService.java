@@ -10,6 +10,7 @@ import com.cmtt.base.entity.SysUserOrders;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,6 +33,12 @@ public interface ILbOrdersService extends IService<LbOrders> {
 //     * @return
 //     */
 //    SysUserOrders getOneSysUserOrders(String phone);
+
+    /**
+     * 获取用户及订单统计数据
+     * @return
+     */
+    List<Map<String,Object>> getLbOrdersStatistics(@Param(Constants.WRAPPER) Wrapper<LbOrders> queryWrapper);
 
 
     /**
