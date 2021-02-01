@@ -67,6 +67,7 @@ public class LbPeriodicalController {
     @ApiOperation("当期封面信息")
     public R current(){
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery()
+                .select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"))
                 .eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getId),false);
 
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
@@ -136,6 +137,7 @@ public class LbPeriodicalController {
 //        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         lbPeriodicalPage  = lbPeriodicalService.page(lbPeriodicalPage,Wrappers.<LbPeriodical>lambdaQuery()
+                .select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"))
                 .eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
                 .eq(LbPeriodical::getIsPreview, 1)
                 .inSql(LbPeriodical::getId, "select periodical_id from lb_post where status=100")
