@@ -55,7 +55,10 @@ public class LbCatalogController {
 
         // 执行查询
         //List<LbCatalog> lbCatalogPostList= lbCatalogService.getLbCatalogPostList();
-        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery().eq(LbCatalog::getStatus, RC.B_NORMAL.code()).eq(LbCatalog::getRecommend,1).orderByDesc(LbCatalog::getTorder));
+        List<LbCatalog> lbCatalogPostList= lbCatalogService.list(Wrappers.<LbCatalog>lambdaQuery()
+                .eq(LbCatalog::getStatus, RC.B_NORMAL.code())
+                .eq(LbCatalog::getRecommend,1)
+                .orderByDesc(LbCatalog::getTorder));
 
         return R.ok().setResult(lbCatalogPostList);
     }
@@ -68,6 +71,7 @@ public class LbCatalogController {
         // 获取统一的文章查询条件
         LambdaQueryWrapper<LbPost> queryWrapper = lbPostService.getCommonPostWrappers()
                 .eq(LbPost::getPostCatalogId,params.getCatalogId())
+                .orderByDesc(LbPost::getPostOrder)
                 .last("limit 0,5");
 
         // 执行查询

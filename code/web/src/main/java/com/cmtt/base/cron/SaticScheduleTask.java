@@ -31,13 +31,13 @@ public class SaticScheduleTask {
     //@Scheduled(fixedRate=5000)
     private void configureTasks() {
 
-        logger.info("执行静态定时任务时间: " + LocalDateTime.now());
-        lbPostService.update(Wrappers.<LbPost>lambdaUpdate()
-                .eq(LbPost::getIsPreview, 2)
-                .eq(LbPost::getStatus, RC.B_NORMAL.code())
-                .lt(LbPost::getPublishedAt,LocalDateTime.now())
-                .set(LbPost::getIsPreview,1)
-        );
+//        logger.info("执行静态定时任务时间: " + LocalDateTime.now());
+//        lbPostService.update(Wrappers.<LbPost>lambdaUpdate()
+//                .eq(LbPost::getIsPreview, 2)
+//                .eq(LbPost::getStatus, RC.B_NORMAL.code())
+//                .lt(LbPost::getPublishedAt,LocalDateTime.now())
+//                .set(LbPost::getIsPreview,1)
+//        );
 
     }
 }

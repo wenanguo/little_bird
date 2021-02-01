@@ -514,6 +514,7 @@ public class LbPostController {
             lbPost.setAuthor(JSON.toJSONString(lbAuthorVoList));
 
 
+
             lbPostService.save(lbPost);
 
             return R.ok().setMessage("新增成功");
@@ -570,6 +571,8 @@ public class LbPostController {
 
             }
             lbPost.setAuthor(JSON.toJSONString(lbAuthorVoList));
+
+
 
             lbPostService.updateById(lbPost);
 

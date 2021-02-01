@@ -71,6 +71,11 @@ public class V2LbPostController {
 
             List<LbPost> lbPosts = lbPostService.list(queryWrapper);
 
+            // 兼容老版本特殊处理
+            lbPosts.forEach(lbPost -> {
+                if(lbPost.getIsPreview()==2)lbPost.setIsFree(4);
+            });
+
             lbSubject.setLbPostList(lbPosts);
         }
 
@@ -96,6 +101,12 @@ public class V2LbPostController {
                     .like(LbPost::getAuthor, lbAuthor.getName());
 
             List<LbPost> list = lbPostService.list(queryWrapper);
+
+            // 兼容老版本特殊处理
+            list.forEach(lbPost -> {
+                if(lbPost.getIsPreview()==2)lbPost.setIsFree(4);
+            });
+
             lbAuthor.setLbPostList(list);
             return R.ok().setResult(lbAuthor);
         }else{
@@ -121,6 +132,16 @@ public class V2LbPostController {
 //            lbPeriodical.setLbPostList(list);
 
             List<LbCatalog> lbCatalogList = lbCatalogService.getV2LbCatalogPostListByPeriodicalId(lbPeriodical.getId());
+
+            // 兼容老版本特殊处理
+            lbCatalogList.forEach(lbCatalog -> {
+                  lbCatalog.getLbPostList().forEach(lbPost -> {
+                    if(lbPost.getIsPreview()==2)lbPost.setIsFree(4);
+                });
+
+            });
+
+
 
             Map<String, Object> map = new HashMap();
             map.put("id", lbPeriodical.getId());

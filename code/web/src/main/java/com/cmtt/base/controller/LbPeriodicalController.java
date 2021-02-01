@@ -204,7 +204,8 @@ public class LbPeriodicalController {
         LambdaQueryWrapper<LbPeriodical> queryWrapper = Wrappers.<LbPeriodical>lambdaQuery()
                 .eq(LbPeriodical::getStatus, RC.B_NORMAL.code())
                 .eq(LbPeriodical::getIsPreview, 1)
-                .orderByDesc(LbPeriodical::getTyear);
+                .orderByDesc(LbPeriodical::getTyear)
+                .orderByDesc(LbPeriodical::getTorder);
 
         if(principal!=null){
             // 未登录
