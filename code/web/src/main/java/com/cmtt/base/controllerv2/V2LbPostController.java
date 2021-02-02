@@ -156,6 +156,7 @@ public class V2LbPostController {
             map.put("recommend", lbPeriodical.getRecommend());
             map.put("tyear", lbPeriodical.getTyear());
             map.put("lbCatalogList", lbCatalogList);
+            map.put("isDownload", lbPeriodical.getIsDownload());
 
             if(principal!=null){
                 // 已登录

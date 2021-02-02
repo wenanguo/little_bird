@@ -108,7 +108,7 @@ public class LbPeriodicalController {
             map.put("recommend", lbPeriodical.getRecommend());
             map.put("tyear", lbPeriodical.getTyear());
             map.put("lbCatalogList", lbCatalogList);
-            map.put("isDownload", lbPeriodical.getIsDownload());
+
 
             return R.ok().setResult(map);
         }else{
