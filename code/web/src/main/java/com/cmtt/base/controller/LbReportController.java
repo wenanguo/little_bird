@@ -75,7 +75,7 @@ public class LbReportController {
 
         try {
 
-// 构建分页类
+            // 构建分页类
             IPage<LbReport> lbReportPage = new Page<>(lbReport.getPageNo(), lbReport.getPageSize());
 
             // 构造查询及排序方式
@@ -83,7 +83,7 @@ public class LbReportController {
             queryWrapper.orderBy(true, lbReport.getIsAsc(), lbReport.getIsSortField());
 
             // 执行查询
-            lbReportPage = lbReportService.getBaseMapper().selectPage(lbReportPage, queryWrapper);
+            lbReportPage = lbReportService.page(lbReportPage, queryWrapper);
 
             // 设置返回数据
             return R.ok().setPageResult(lbReportPage);
@@ -97,27 +97,6 @@ public class LbReportController {
         }
     }
 
-
-//    /**
-//     * 新增
-//     */
-//    @PostMapping("/add")
-//    @ResponseBody
-//    public R add(@RequestBody @Validated({GroupAdd.class})LbReport lbReport) {
-//
-//        try {
-//            lbReportService.save(lbReport);
-//
-//            return R.ok().setMessage("新增成功");
-//
-//        } catch (Exception e) {
-//            logger.warn(e.getMessage());
-//
-//            return R.err().setMessage("新增失败");
-//        }
-//
-//
-//    }
 
 
     /**

@@ -90,7 +90,7 @@ public class LbPeriodicalController {
     @PostMapping("get_one")
     @ResponseBody
     @ApiOperation("单期期刊数据(目录页)")
-    public R getOne(@RequestBody @Valid GetOneInputParam params){
+    public R getOne(@RequestBody @Valid GetOneInputParam params,Principal principal){
 
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, params.getId()));
 
@@ -108,6 +108,23 @@ public class LbPeriodicalController {
             map.put("recommend", lbPeriodical.getRecommend());
             map.put("tyear", lbPeriodical.getTyear());
             map.put("lbCatalogList", lbCatalogList);
+            map.put("isDownload", lbPeriodical.getIsDownload());
+
+
+            if(principal!=null){
+                // 已登录
+                SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+                boolean isPayYear=lbOrdersService.isPayYear(sysUser.getPhone());
+                if(isPayYear==true){
+                    // 包年
+                    map.put("tpdf", lbPeriodical.getTpdf());
+                }else{
+                    map.put("tpdf", "");
+                }
+            }else {
+                map.put("tpdf", "");
+            }
+
 
             return R.ok().setResult(map);
         }else{
