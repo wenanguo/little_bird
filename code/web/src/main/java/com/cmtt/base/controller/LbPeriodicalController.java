@@ -110,22 +110,6 @@ public class LbPeriodicalController {
             map.put("lbCatalogList", lbCatalogList);
             map.put("isDownload", lbPeriodical.getIsDownload());
 
-
-            if(principal!=null){
-                // 已登录
-                SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
-                boolean isPayYear=lbOrdersService.isPayYear(sysUser.getPhone());
-                if(isPayYear==true){
-                    // 包年
-                    map.put("tpdf", lbPeriodical.getTpdf());
-                }else{
-                    map.put("tpdf", "");
-                }
-            }else {
-                map.put("tpdf", "");
-            }
-
-
             return R.ok().setResult(map);
         }else{
 

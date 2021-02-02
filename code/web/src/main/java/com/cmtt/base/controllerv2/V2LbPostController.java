@@ -2,6 +2,7 @@ package com.cmtt.base.controllerv2;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cmtt.base.config.ss.configuration.JwtAuthenticationToken;
 import com.cmtt.base.controller.param.GetAuthorPostInputParam;
 import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.entity.*;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,9 @@ public class V2LbPostController {
 
     @Autowired
     private ILbPeriodicalService lbPeriodicalService;
+
+    @Autowired
+    private ILbOrdersService lbOrdersService;
 
     /**
      * 主页
@@ -123,7 +128,7 @@ public class V2LbPostController {
     @PostMapping("lb_periodical/get_one")
     @ResponseBody
     @ApiOperation("单期期刊数据(目录页)")
-    public R getOne(@RequestBody @Valid GetOneInputParam params){
+    public R getOne(@RequestBody @Valid GetOneInputParam params, Principal principal){
 
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, params.getId()));
 
@@ -151,6 +156,20 @@ public class V2LbPostController {
             map.put("recommend", lbPeriodical.getRecommend());
             map.put("tyear", lbPeriodical.getTyear());
             map.put("lbCatalogList", lbCatalogList);
+
+            if(principal!=null){
+                // 已登录
+                SysUser sysUser =(SysUser)((JwtAuthenticationToken)principal).getPrincipal();
+                boolean isPayYear=lbOrdersService.isPayYear(sysUser.getPhone());
+                if(isPayYear==true){
+                    // 包年
+                    map.put("tpdf", lbPeriodical.getTpdf());
+                }else{
+                    map.put("tpdf", "");
+                }
+            }else {
+                map.put("tpdf", "");
+            }
 
             return R.ok().setResult(map);
         }else{
