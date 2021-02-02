@@ -64,7 +64,7 @@ const constantRouterComponents = {
   'LbReportList': () => import('@/views/lbReport/lbReportList'),
   'LbUserCollectList': () => import('@/views/lbUserCollect/lbUserCollectList'),
   'LbProtocolList': () => import('@/views/lbProtocol/lbProtocolList'),
-  'LbOrdersStatisticsList': () => import('@/views/lbOrdersStatistics/lbOrdersStatisticsList'),
+  'LbExchangeGiveList': () => import('@/views/lbExchangeGive/lbExchangeGiveList'),
   // 系统管理
   'SysUserList': () => import('@/views/sysUser/sysUserList'),
   'SysSmsList': () => import('@/views/sysSms/sysSmsList'),
@@ -72,6 +72,7 @@ const constantRouterComponents = {
   'SysPermissionList': () => import('@/views/sysRole/sysPermissionList'),
   // 支付
   'LbGoodsList': () => import('@/views/lbGoods/lbGoodsList'),
+  'LbOrdersStatisticsList': () => import('@/views/lbOrdersStatistics/lbOrdersStatisticsList'),
   'LbOrdersList': () => import('@/views/lbOrders/lbOrdersList')
 }
 
