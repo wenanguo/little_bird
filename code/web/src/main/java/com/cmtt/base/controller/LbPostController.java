@@ -470,6 +470,32 @@ public class LbPostController {
         }
     }
 
+    /**
+     * 获取所有列表
+     */
+    @GetMapping("/list_all")
+    @ResponseBody
+    public R listAll() {
+
+        try {
+
+            // 执行查询
+            List<LbPost> list = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
+                    .eq(LbPost::getStatus, RC.B_NORMAL.code())
+            );
+
+            // 设置返回数据
+            return R.ok().setResult(list);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
 
     /**
      * 新增
