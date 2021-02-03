@@ -111,7 +111,7 @@ public class SysUserCustController {
                     .eq(LbOrders::getPhone, sysUser.getPhone())
                     .eq(LbOrders::getStatus, 203)
                     .eq(LbOrders::getTtype,2)
-                    .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS")
+                    .eq(LbOrders::getTradeStatus, "TRADE_SUCCESS"),false
             );
 
             if(lbOrders!=null){
