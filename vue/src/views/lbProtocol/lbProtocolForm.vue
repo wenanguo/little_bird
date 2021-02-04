@@ -111,7 +111,7 @@
         }
     }
 </script>
-<style scoped>
+<style>
 .editBox .ql-editor{
     height:420px;
   }
