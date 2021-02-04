@@ -38,6 +38,7 @@
             <a-radio :value="2">作者推荐</a-radio>
             <a-radio :value="3">栏目推荐</a-radio>
             <a-radio :value="4">期刊(目录)推荐</a-radio>
+            <a-radio :value="5">文章推荐</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="链接地址" v-if="AdTypeValue == 1">

@@ -63,6 +63,12 @@ public class LbAd extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "所属栏目名称")
     private String lbSubjectTitle;
 
+    @ApiModelProperty(value = "所属文章id")
+    private Integer lbPostId;
+
+    @ApiModelProperty(value = "所属文章名称")
+    private String lbPostTitle;
+
     @ApiModelProperty(value = "所属作者id")
     private Integer lbAuthorId;
 
