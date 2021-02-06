@@ -13,7 +13,13 @@
         <a-form-item v-show="model && model.id > 0" label="编号">
           <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
         </a-form-item>
-        <a-form-item label="文章编号">
+        <a-form-item style="margin-top:20px" label="赠阅类型">
+          <a-radio-group v-decorator="['ttype', { initialValue: 1 }]" @change="handleTTypeChange">
+            <a-radio :value="1">单点</a-radio>
+            <a-radio :value="2">包年</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item label="文章编号" v-if="tTypeValue == 1">
           <a-select v-decorator="['postId', {rules: [{required: true, message: '请选择文章！'}]}]">
             <a-select-option v-for="lbPost in this.lbPostList" :key="lbPost.id" :value="lbPost.id">
               {{ lbPost.title }}
@@ -88,7 +94,8 @@
                 }
             }
             return {
-                form: this.$form.createForm(this)
+                form: this.$form.createForm(this),
+                tTypeValue: 1
             }
         },
         created () {
@@ -101,6 +108,12 @@
             this.$watch('model', () => {
                 this.model && this.form.setFieldsValue(pick(this.model, fields))
             })
+        },
+        methods: {
+          handleTTypeChange (e) {
+               console.log('radio checked', e.target.value)
+               this.tTypeValue = e.target.value
+          }
         }
     }
 </script>

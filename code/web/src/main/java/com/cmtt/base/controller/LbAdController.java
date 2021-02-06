@@ -11,10 +11,7 @@ import com.cmtt.base.entity.*;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
-import com.cmtt.base.service.ILbAdService;
-import com.cmtt.base.service.ILbAuthorService;
-import com.cmtt.base.service.ILbPeriodicalService;
-import com.cmtt.base.service.ILbSubjectService;
+import com.cmtt.base.service.*;
 import com.cmtt.base.utils.RC;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,6 +48,9 @@ public class LbAdController {
 
     @Autowired
     private ILbAuthorService lbAuthorService;
+
+    @Autowired
+    private ILbPostService lbPostService;
 
     private final Logger logger = LoggerFactory.getLogger(LbAdController.class);
 
@@ -164,6 +164,13 @@ public class LbAdController {
                 lbAd.setLbAuthorName(lbAuthor.getName());
             }
 
+            if(lbAd.getLbPostId()!=null) {
+                // 设置文章
+                LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, lbAd.getLbPostId()));
+                lbAd.setLbPostId(lbPost.getId());
+                lbAd.setLbPostTitle(lbPost.getTitle());
+            }
+
 
             lbAdService.save(lbAd);
 
@@ -208,6 +215,13 @@ public class LbAdController {
                 LbAuthor lbAuthor = lbAuthorService.getOne(Wrappers.<LbAuthor>lambdaQuery().eq(LbAuthor::getId, lbAd.getLbAuthorId()));
                 lbAd.setLbAuthorId(lbAuthor.getId());
                 lbAd.setLbAuthorName(lbAuthor.getName());
+            }
+
+            if(lbAd.getLbPostId()!=null) {
+                // 设置文章
+                LbPost lbPost = lbPostService.getOne(Wrappers.<LbPost>lambdaQuery().eq(LbPost::getId, lbAd.getLbPostId()));
+                lbAd.setLbPostId(lbPost.getId());
+                lbAd.setLbPostTitle(lbPost.getTitle());
             }
 
             lbAdService.updateById(lbAd);

@@ -78,6 +78,10 @@ const adTypeMap = {
     4: {
         status: 'default',
         text: '期刊目录推荐'
+    },
+    5: {
+        status: 'default',
+        text: '文章推荐'
     }
   }
 

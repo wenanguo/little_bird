@@ -5,13 +5,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cmtt.base.entity.LbOrders;
+import com.cmtt.base.entity.LbPost;
 import com.cmtt.base.entity.SysUser;
 import com.cmtt.base.entity.SysUserOrders;
 import com.cmtt.base.mapper.LbOrdersMapper;
+import com.cmtt.base.mapper.SysUserMapper;
 import com.cmtt.base.service.ILbOrdersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cmtt.base.service.ISysUserService;
 import com.cmtt.base.utils.RC;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +31,9 @@ import java.util.Map;
  */
 @Service
 public class LbOrdersServiceImpl extends ServiceImpl<LbOrdersMapper, LbOrders> implements ILbOrdersService {
+
+    @Autowired
+    ISysUserService sysUserService;
 
     public IPage<SysUserOrders> getSysUserOrdersList(IPage<SysUserOrders> page, @Param(Constants.WRAPPER) Wrapper<SysUserOrders> queryWrapper){
         return this.baseMapper.getSysUserOrdersList(page,queryWrapper);
@@ -57,6 +64,19 @@ public class LbOrdersServiceImpl extends ServiceImpl<LbOrdersMapper, LbOrders> i
      * @return
      */
     public boolean isPayYear(String phone){
+        // 是否管理员或者赠送会员
+        SysUser sysUser = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery()
+                .eq(SysUser::getPhone, phone)
+                .eq(SysUser::getStatus, RC.B_NORMAL.code())
+                .in(SysUser::getTtype, 4, 5), false
+        );
+
+        if(sysUser!=null){
+            // 如果是管理员或者赠送会员，返回包年标识
+            return true;
+        }
+
+
         // 查找包年付费订单
         LbOrders lbOrders = this.getOne(Wrappers.<LbOrders>lambdaQuery()
                 .eq(LbOrders::getPhone, phone)

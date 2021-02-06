@@ -92,6 +92,12 @@
             sorter: true,
             dataIndex: 'tcount'
         }
+        // , {
+        //     title: '金额',
+        //     sorter: true,
+        //     customRender: (value) => '￥' + parseInt(value),
+        //     dataIndex: 'ttotal_amount'
+        // }
     ]
     const channelMap = {
       'aliPay': {
@@ -110,11 +116,11 @@
     const ttypeMap = {
       1: {
           status: 'default',
-          text: '包年'
+          text: '点播'
       },
       2: {
           status: 'processing',
-          text: '单点'
+          text: '包年'
       }
     }
     const devTypeMap = {

@@ -82,12 +82,26 @@
     import { getLbExchangeGiveList, saveLbExchangeGive, delLbExchangeGive, batchDelLbExchangeGive } from '@/api/lbExchangeGive'
     import { getLbPostListAll } from '@/api/lbPost'
     import EditForm from './lbExchangeGiveForm'
-
+    const ttypeMap = {
+      1: {
+          status: 'default',
+          text: '点播'
+      },
+      2: {
+          status: 'processing',
+          text: '包年'
+      }
+    }
     const columns = [
         {
             title: '商户订单号',
             sorter: true,
             dataIndex: 'outTradeNo'
+        }, {
+            title: '赠阅类型',
+            sorter: true,
+            customRender: (value) => ttypeMap[value].text,
+            dataIndex: 'ttype'
         }, {
             title: '文章标题',
             sorter: true,

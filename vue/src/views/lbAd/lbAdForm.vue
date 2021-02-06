@@ -65,6 +65,13 @@
             </a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item label="所属文章" v-if="AdTypeValue == 5">
+          <a-select v-decorator="['lbPostId', {rules: [{required: true, message: '请选择所属文章！'}]}]">
+            <a-select-option v-for="lbPost in this.lbPostList" :key="lbPost.id">
+              {{ lbPost.title }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="期刊位置" >
           <a-input-number v-decorator="['lbPeriodicalIndex', {initialValue: 1,rules: [{required: false}]}]" />
         </a-form-item>
@@ -96,6 +103,7 @@
         'imgUrl',
         'lbPeriodicalId',
         'lbSubjectId',
+        'lbPostId',
         'adLocation',
         'lbAuthorId',
         'lbPeriodicalIndex',
@@ -129,6 +137,10 @@
               default: () => null
             },
             lbSubjectList: {
+              type: Array,
+              default: () => null
+            },
+            lbPostList: {
               type: Array,
               default: () => null
             },

@@ -46,6 +46,9 @@ public class LbExchangeGive extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "文章标题")
     private String postTitle;
 
+    @ApiModelProperty(value = "赠送类型1点播2包年")
+    private Integer ttype;
+
     @ApiModelProperty(value = "用户编号")
     private Integer userId;
 

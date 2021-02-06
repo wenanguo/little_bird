@@ -108,30 +108,57 @@ public class LbExchangeGiveController {
                 SysUser giveUser = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().like(SysUser::getPhone, lbExchangeGive.getPhone()));
 
                 if(giveUser!=null){
-                    String out_trade_no = SmsUtils.genCode(1,20);
-                    lbExchangeGive.setOutTradeNo(out_trade_no);
-                    lbExchangeGive.setUserId(giveUser.getId());
-                    lbExchangeGive.setUserName(giveUser.getNickname());
-                    lbExchangeGive.setPhone(giveUser.getPhone());
-                    lbExchangeGive.setPostTitle(lbPost.getTitle());
-                    lbExchangeGive.setBindUserId(sysUser.getId());
-                    lbExchangeGive.setBindUserName(sysUser.getNickname());
-                    lbExchangeGive.setUpdateTime(LocalDateTime.now());
 
-                    lbExchangeGiveService.save(lbExchangeGive);
+                    // 判断是赠送包年还是单点
+                    if(lbExchangeGive.getTtype().equals(1)){
+                        // 单点
+                        String out_trade_no = SmsUtils.genCode(1,20);
+                        lbExchangeGive.setOutTradeNo(out_trade_no);
+                        lbExchangeGive.setUserId(giveUser.getId());
+                        lbExchangeGive.setUserName(giveUser.getNickname());
+                        lbExchangeGive.setPhone(giveUser.getPhone());
+                        lbExchangeGive.setPostTitle(lbPost.getTitle());
+                        lbExchangeGive.setBindUserId(sysUser.getId());
+                        lbExchangeGive.setBindUserName(sysUser.getNickname());
+                        lbExchangeGive.setUpdateTime(LocalDateTime.now());
 
-
-
-                    // 赠送试读
-                    LbExchangeOrders lbExchangeOrders =new LbExchangeOrders();
-                    lbExchangeOrders.setOutTradeNo(out_trade_no);
-                    lbExchangeOrders.setUserId(giveUser.getId());
-                    lbExchangeOrders.setPhone(giveUser.getPhone());
-                    lbExchangeOrders.setPostId(lbPost.getId());
-                    lbExchangeOrders.setPostTitle(lbPost.getTitle());
+                        lbExchangeGiveService.save(lbExchangeGive);
 
 
-                    lbExchangeOrdersService.save(lbExchangeOrders);
+
+                        // 赠送试读
+                        LbExchangeOrders lbExchangeOrders =new LbExchangeOrders();
+                        lbExchangeOrders.setOutTradeNo(out_trade_no);
+                        lbExchangeOrders.setUserId(giveUser.getId());
+                        lbExchangeOrders.setPhone(giveUser.getPhone());
+                        lbExchangeOrders.setPostId(lbPost.getId());
+                        lbExchangeOrders.setPostTitle(lbPost.getTitle());
+
+
+                        lbExchangeOrdersService.save(lbExchangeOrders);
+
+                    }else if(lbExchangeGive.getTtype().equals(2)){
+                        // 包年
+                        String out_trade_no = SmsUtils.genCode(1,20);
+                        lbExchangeGive.setOutTradeNo(out_trade_no);
+                        lbExchangeGive.setUserId(giveUser.getId());
+                        lbExchangeGive.setUserName(giveUser.getNickname());
+                        lbExchangeGive.setPhone(giveUser.getPhone());
+                        //lbExchangeGive.setPostTitle(lbPost.getTitle());
+                        lbExchangeGive.setBindUserId(sysUser.getId());
+                        lbExchangeGive.setBindUserName(sysUser.getNickname());
+                        lbExchangeGive.setUpdateTime(LocalDateTime.now());
+
+                        lbExchangeGiveService.save(lbExchangeGive);
+
+                        giveUser.setTtype(5);
+                        sysUserService.updateById(giveUser);
+
+
+                    }
+
+
+
 
                 }else{
                     return R.err().setMessage("赠送人手机号码输入错误");

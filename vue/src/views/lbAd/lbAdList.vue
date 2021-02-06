@@ -91,6 +91,7 @@
         :lbAuthorList="lbAuthorList"
         :lbSubjectList="lbSubjectList"
         :lbPeriodicalList="lbPeriodicalList"
+        :lbPostList="lbPostList"
         @cancel="handleCancel"
         @ok="handleOk"
       />
@@ -106,6 +107,7 @@
     import { getLbPeriodicalListAll } from '@/api/lbPeriodical'
     import { getLbSubjectListAll } from '@/api/lbSubject'
     import { getLbAuthorListAll } from '@/api/lbAuthor'
+    import { getLbPostListAll } from '@/api/lbPost'
     import EditForm from './lbAdForm'
 
     const columns = [
@@ -200,6 +202,7 @@
                 lbAuthorList: [],
                 lbSubjectList: [],
                 lbPeriodicalList: [],
+                lbPostList: [],
                 mdl: null,
                 // 高级搜索 展开/关闭
                 advanced: false,
@@ -252,6 +255,10 @@
             getLbAuthorListAll()
                         .then(res => {
                             this.lbAuthorList = res.result
+                        })
+            getLbPostListAll()
+                        .then(res => {
+                            this.lbPostList = res.result
                         })
         },
         methods: {

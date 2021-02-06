@@ -40,7 +40,7 @@ public interface LbOrdersMapper extends BaseMapper<LbOrders> {
      * 获取用户及订单统计数据
      * @return
      */
-    @Select("select channel,dev_type,ttype,count(id) as tcount from lb_orders ${ew.customSqlSegment} group by channel,dev_type,ttype order by channel,dev_type,ttype")
+    @Select("select channel,dev_type,ttype,count(id) as tcount,sum(total_amount) as ttotal_amount from lb_orders ${ew.customSqlSegment} group by channel,dev_type,ttype order by channel,dev_type,ttype")
     List<Map<String,Object>> getLbOrdersStatistics(@Param(Constants.WRAPPER) Wrapper<LbOrders> queryWrapper);
 
 
