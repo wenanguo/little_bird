@@ -44,35 +44,35 @@
         <a-form-item label="链接地址" v-if="AdTypeValue == 1">
           <a-input v-decorator="['linkUrl', {rules: [{required: true, min: 1, message: '请输入链接地址！'}]}]" />
         </a-form-item>
-        <a-form-item label="作者" v-if="AdTypeValue == 2">
-          <a-select @change="handleAuthorChange" v-decorator="['lbAuthorId', {rules: [{required: true, message: '请选择作者！'}]}]" placeholder="请选择作者">
+        <a-form-item label="推荐作者" v-if="AdTypeValue == 2">
+          <a-select @change="handleAuthorChange" v-decorator="['lbAuthorId', {rules: [{required: true, message: '请选择推荐作者！'}]}]" placeholder="请选择作者">
             <a-select-option v-for="lbAuthor in this.lbAuthorList" :key="lbAuthor.id" :value="lbAuthor.id">
               {{ lbAuthor.name }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="栏目" v-if="AdTypeValue == 3">
-          <a-select v-decorator="['lbSubjectId', {rules: [{required: true, message: '请选择所属栏目！'}]}]">
+        <a-form-item label="推荐栏目" v-if="AdTypeValue == 3">
+          <a-select v-decorator="['lbSubjectId', {rules: [{required: true, message: '请选择推荐栏目！'}]}]">
             <a-select-option v-for="lbSubject in this.lbSubjectList" :key="lbSubject.id" :value="lbSubject.id">
               {{ lbSubject.title }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="所属期刊" v-if="AdTypeValue == 4">
-          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择所属期刊！'}]}]">
+        <a-form-item label="推荐期刊" v-if="AdTypeValue == 4">
+          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择推荐期刊！'}]}]">
             <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
               {{ lbPeriodical.title }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="所属文章" v-if="AdTypeValue == 5">
-          <a-select v-decorator="['lbPostId', {rules: [{required: true, message: '请选择所属文章！'}]}]">
+        <a-form-item label="推荐文章" v-if="AdTypeValue == 5">
+          <a-select v-decorator="['lbPostId', {rules: [{required: true, message: '请选择推荐文章！'}]}]">
             <a-select-option v-for="lbPost in this.lbPostList" :key="lbPost.id">
               {{ lbPost.title }}
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="期刊位置" >
+        <a-form-item label="首页位置" >
           <a-input-number v-decorator="['lbPeriodicalIndex', {initialValue: 1,rules: [{required: false}]}]" />
         </a-form-item>
         <a-form-item label="广告位置">
