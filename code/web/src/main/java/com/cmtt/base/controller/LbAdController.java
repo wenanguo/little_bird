@@ -151,10 +151,17 @@ public class LbAdController {
             }
 
             if(lbAd.getLbPeriodicalId()!=null) {
-                // 设置期刊
+                // 设置所属期刊
                 LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()), false);
                 lbAd.setLbPeriodicalId(lbPeriodical.getId());
                 lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+            }
+
+            if(lbAd.getLbRdPeriodicalId()!=null) {
+                // 设置推荐期刊
+                LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbRdPeriodicalId()), false);
+                lbAd.setLbRdPeriodicalId(lbPeriodical.getId());
+                lbAd.setLbRdPeriodicalTitle(lbPeriodical.getTitle());
             }
 
             if(lbAd.getLbAuthorId()!=null) {
@@ -204,10 +211,17 @@ public class LbAdController {
             }
 
             if(lbAd.getLbPeriodicalId()!=null) {
-                // 设置期刊
+                // 设置首页显示期刊
                 LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbPeriodicalId()), false);
                 lbAd.setLbPeriodicalId(lbPeriodical.getId());
                 lbAd.setLbPeriodicalTitle(lbPeriodical.getTitle());
+            }
+
+            if(lbAd.getLbRdPeriodicalId()!=null) {
+                // 设置推荐期刊
+                LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery().eq(LbPeriodical::getId, lbAd.getLbRdPeriodicalId()), false);
+                lbAd.setLbRdPeriodicalId(lbPeriodical.getId());
+                lbAd.setLbRdPeriodicalTitle(lbPeriodical.getTitle());
             }
 
             if(lbAd.getLbAuthorId()!=null) {
