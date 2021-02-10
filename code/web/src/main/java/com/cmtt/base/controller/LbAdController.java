@@ -62,7 +62,10 @@ public class LbAdController {
     @ApiOperation("获取启动广告")
     public R getStartAd(){
 
-        LbAd lbAd = lbAdService.getOne(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,2),false);
+        LbAd lbAd = lbAdService.getOne(Wrappers.<LbAd>lambdaQuery()
+                .eq(LbAd::getAdLocation,2)
+                .eq(LbAd::getStatus,RC.B_NORMAL.code())
+                ,false);
 
         return R.ok().setResult(lbAd);
 
@@ -86,7 +89,10 @@ public class LbAdController {
 //        queryWrapper.orderBy(true, params.getIsAsc(), params.getIsSortField());
 
         // 执行查询
-        lbAdPage = lbAdService.page(lbAdPage, Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdLocation,1).orderByAsc(LbAd::getLbPeriodicalIndex));
+        lbAdPage = lbAdService.page(lbAdPage, Wrappers.<LbAd>lambdaQuery()
+                .eq(LbAd::getAdLocation,1)
+                .eq(LbAd::getStatus,RC.B_NORMAL.code())
+                .orderByAsc(LbAd::getLbPeriodicalIndex));
 
 //        List<LbAd> lbAdList = iLbAdService.list(Wrappers.<LbAd>lambdaQuery().eq(LbAd::getAdType,params.getAd_type()));
 
