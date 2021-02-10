@@ -133,11 +133,11 @@
             scopedSlots: { customRender: 'imgslot' },
             dataIndex: 'imgUrl'
         }, {
-            title: '所属期刊',
+            title: '首页显示期刊',
             sorter: true,
             dataIndex: 'lbPeriodicalTitle'
         }, {
-            title: '期刊位置',
+            title: '首页显示期刊下位置',
             sorter: true,
             dataIndex: 'lbPeriodicalIndex'
         }, {

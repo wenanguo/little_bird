@@ -188,26 +188,26 @@ public class LbExchangeGiveController {
     }
 
 
-    /**
-     * 修改
-     */
-    @PutMapping("/edit")
-    @ResponseBody
-    public R edit(@RequestBody @Validated({GroupEdit.class}) LbExchangeGive lbExchangeGive) {
-
-
-        try {
-
-            lbExchangeGiveService.updateById(lbExchangeGive);
-
-            return R.ok().setMessage("修改成功");
-
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("修改失败");
-        }
-    }
+//    /**
+//     * 修改
+//     */
+//    @PutMapping("/edit")
+//    @ResponseBody
+//    public R edit(@RequestBody @Validated({GroupEdit.class}) LbExchangeGive lbExchangeGive) {
+//
+//
+//        try {
+//
+//            lbExchangeGiveService.updateById(lbExchangeGive);
+//
+//            return R.ok().setMessage("修改成功");
+//
+//        } catch (Exception e) {
+//            logger.warn(e.getMessage());
+//
+//            return R.err().setMessage("修改失败");
+//        }
+//    }
 
 
     /**
@@ -219,6 +219,19 @@ public class LbExchangeGiveController {
 
         try {
 
+            lbExchangeGive = lbExchangeGiveService.getOne(Wrappers.<LbExchangeGive>lambdaQuery().eq(LbExchangeGive::getId, lbExchangeGive.getId()), false);
+
+            if(lbExchangeGive.getTtype().equals(1)){
+
+                // 删除点播
+                lbExchangeOrdersService.remove(Wrappers.<LbExchangeOrders>lambdaQuery().eq(LbExchangeOrders::getOutTradeNo,lbExchangeGive.getOutTradeNo()));
+
+            }else if(lbExchangeGive.getTtype().equals(2)){
+                // 删除包年
+                sysUserService.update(Wrappers.<SysUser>lambdaUpdate().set(SysUser::getTtype,1).like(SysUser::getPhone, lbExchangeGive.getPhone()));
+            }
+
+            // 删除赠阅记录
             lbExchangeGiveService.removeById(lbExchangeGive.getId());
 
             return R.ok().setMessage("删除成功");
@@ -229,24 +242,24 @@ public class LbExchangeGiveController {
         }
     }
 
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/batchDelete")
-    @ResponseBody
-    public R batchDelete(@RequestBody List<Integer> ids) {
-        try {
-
-            lbExchangeGiveService.removeByIds(ids);
-
-            return R.ok().setMessage("批量删除成功");
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
-
-            return R.err().setMessage("批量删除失败");
-        }
-    }
+//
+//    /**
+//     * 删除
+//     */
+//    @DeleteMapping("/batchDelete")
+//    @ResponseBody
+//    public R batchDelete(@RequestBody List<Integer> ids) {
+//        try {
+//
+//            lbExchangeGiveService.removeByIds(ids);
+//
+//            return R.ok().setMessage("批量删除成功");
+//        } catch (Exception e) {
+//            logger.warn(e.getMessage());
+//
+//            return R.err().setMessage("批量删除失败");
+//        }
+//    }
 
 
 }

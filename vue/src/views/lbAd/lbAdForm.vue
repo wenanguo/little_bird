@@ -59,7 +59,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="推荐期刊" v-if="AdTypeValue == 4">
-          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择推荐期刊！'}]}]">
+          <a-select v-decorator="['lbRdPeriodicalId', {rules: [{required: true, message: '请选择推荐期刊！'}]}]">
             <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
               {{ lbPeriodical.title }}
             </a-select-option>
@@ -72,14 +72,21 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="首页位置" >
-          <a-input-number v-decorator="['lbPeriodicalIndex', {initialValue: 1,rules: [{required: false}]}]" />
-        </a-form-item>
         <a-form-item label="广告位置">
-          <a-radio-group v-decorator="['adLocation', { initialValue: 2 }]">
+          <a-radio-group v-decorator="['adLocation', { initialValue: 1 }]"  @change="handleAdLocationChange">
             <a-radio :value="1">首页广告</a-radio>
             <a-radio :value="2">启动广告</a-radio>
           </a-radio-group>
+        </a-form-item>
+        <a-form-item label="首页显示期刊" v-if="AdLocationValue == 1">
+          <a-select v-decorator="['lbPeriodicalId', {rules: [{required: true, message: '请选择所属期刊！'}]}]">
+            <a-select-option v-for="lbPeriodical in this.lbPeriodicalList" :key="lbPeriodical.id">
+              {{ lbPeriodical.title }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="首页显示期刊下位置" v-if="AdLocationValue == 1">
+          <a-input-number v-decorator="['lbPeriodicalIndex', {initialValue: 1,rules: [{required: true}]}]" />
         </a-form-item>
         <a-form-item label="状态">
           <a-radio-group v-decorator="['status', { initialValue: 100 }]">
@@ -102,6 +109,7 @@
         'introduction',
         'imgUrl',
         'lbPeriodicalId',
+        'lbRdPeriodicalId',
         'lbSubjectId',
         'lbPostId',
         'adLocation',
@@ -163,6 +171,7 @@
             return {
                 form: this.$form.createForm(this),
                 AdTypeValue: 2,
+                AdLocationValue: 1,
                 dateFormat: 'YYYY-MM-DD HH:mm:ss',
                 fileList: []
             }
@@ -186,16 +195,20 @@
                                     url: this.model.imgUrl
                                   }]
                   this.AdTypeValue = this.model.adType
+                  this.AdLocationValue = this.model.adLocation
                 } else {
                   this.fileList = []
                   this.AdTypeValue = 2
+                  this.AdLocationValue = 1
                 }
             })
         },
         methods: {
           handleAdTypeChange (e) {
-               console.log('radio checked', e.target.value)
                this.AdTypeValue = e.target.value
+          },
+          handleAdLocationChange (e) {
+               this.AdLocationValue = e.target.value
           },
           handleAuthorChange (info) {
           },
