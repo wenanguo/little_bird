@@ -66,7 +66,7 @@ public class LbAdController {
                 .eq(LbAd::getAdLocation,2)
                 .eq(LbAd::getStatus,RC.B_NORMAL.code())
                 ,false);
-        
+
 
         return R.ok().setResult(lbAd);
 
