@@ -68,6 +68,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0;
 }
 .music__list__item h2{
     line-height: 20px;
@@ -76,6 +77,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0;
 }
 .day_mode .music__list__item h1{
     color: #3F3E4C;
