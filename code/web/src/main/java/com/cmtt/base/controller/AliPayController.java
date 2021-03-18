@@ -4,6 +4,7 @@ package com.cmtt.base.controller;
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.internal.util.StringUtils;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
@@ -300,12 +301,62 @@ public class AliPayController {
     @ResponseBody
     @ApiOperation("查询支付宝订单")
     public R alipay_trade_query(@RequestBody @Valid AlipayTradeAppQueryInputParam params, HttpServletRequest httpRequest){
+        Map map =new HashMap();
 
 
-        LbPayOrder lbPayOrder = lbPayOrderService.getOne(Wrappers.<LbPayOrder>lambdaQuery().eq(LbPayOrder::getOutTradeNo, params.getOut_trade_no()));
+        //实例化客户端
+
+        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+        AlipayTradeQueryModel model = new AlipayTradeQueryModel();
+        model.setOutTradeNo(params.getOut_trade_no());
+        model.setTradeNo(params.getTrade_no());
 
 
-        return R.ok().setResult(lbPayOrder);
+        request.setBizModel(model);
+
+        try {
+
+            //这里和普通的接口调用不同，使用的是sdkExecute
+            // AlipayTradeQueryResponse response = aliPayService.getAlipayClient().sdkExecute(request);
+
+            AlipayTradeQueryResponse response = aliPayService.getAlipayClient().execute(request);
+            if(response.isSuccess()){
+
+
+                map.put("code",response.getCode());
+                map.put("msg",response.getMsg());
+                map.put("tradeStatus",response.getTradeStatus());
+                map.put("totalAmount",response.getTotalAmount());
+                map.put("tradeNo",response.getTradeNo());
+                map.put("outTradeNo",response.getOutTradeNo());
+//                System.out.println(response.getBody());
+//                System.out.println(response.getCode());
+//                System.out.println(response.getMsg());
+//                System.out.println(response.getTradeStatus());
+//                System.out.println(response.getTotalAmount());
+//                System.out.println(response.getTradeNo());
+//                System.out.println(response.getOutTradeNo());
+
+                return R.ok().setResult(map);
+            } else {
+                System.out.println("调用失败");
+
+                map.put("code",response.getCode());
+
+                return R.err().setResult(map);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return R.err().setMessage("订单查询请求失败");
+
+        //LbPayOrder lbPayOrder = lbPayOrderService.getOne(Wrappers.<LbPayOrder>lambdaQuery().eq(LbPayOrder::getOutTradeNo, params.getOut_trade_no()));
+
+
+        //return R.ok().setResult(response.getBody());
 
 //        String outtradeno=String.valueOf(System.currentTimeMillis());
 //        System.out.println(outtradeno);

@@ -14,13 +14,13 @@ import javax.validation.constraints.NotNull;
 public class AlipayTradeAppQueryInputParam {
 
 
-	@ApiModelProperty(value ="订单金额(测试期间默认为1分)",example = "0.01")
-	@NotNull(message = "订单金额不能为空")
-	private String total_amount;
+//	@ApiModelProperty(value ="订单金额(测试期间默认为1分)",example = "0.01")
+//	@NotNull(message = "订单金额不能为空")
+//	private String total_amount;
 
 
 	@ApiModelProperty(value ="支付宝订单号",example = "12345678")
-	@NotNull(message = "支付宝订单号不能为空")
+	// @NotNull(message = "支付宝订单号不能为空")
 	private String trade_no;
 
     @ApiModelProperty(value ="商户订单号",example = "123456789")
@@ -28,9 +28,9 @@ public class AlipayTradeAppQueryInputParam {
     private String out_trade_no;
 
 
-	@ApiModelProperty(value ="卖方ID",example = "123456789")
-	@NotNull(message = "卖方ID不能为空")
-	private String seller_id;
+//	@ApiModelProperty(value ="卖方ID",example = "123456789")
+//	@NotNull(message = "卖方ID不能为空")
+//	private String seller_id;
 
 
 }

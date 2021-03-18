@@ -27,7 +27,7 @@
             :key="permission.permissionId"
             :label="permission.permissionName"
           >
-            <a-checkbox-group v-decorator="[`permissions.${permission.permissionName}`]" :options="permission.actionsOptions"/>
+            <a-checkbox-group v-decorator="[`permissions.${permission.permissionId}`]" :options="permission.actionsOptions"/>
           </a-form-item>
         </template>
       </a-form>
