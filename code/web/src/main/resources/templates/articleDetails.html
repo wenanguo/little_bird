@@ -8,7 +8,8 @@
     <meta name="format-detection" content="telephone=no">
     <title>[[${lbPost.title}]]</title>
     <link rel="stylesheet" type="text/css" th:href="${domainPath}+'common/css/style.css?v=1'">
-    <script th:src="${domainPath}+'common/js/jquery-1.11.3.min.js'"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/player.css" />
+    <script src="js/jquery-1.11.3.min.js"></script>
     <script>
 
         function authorClick(value){
@@ -201,5 +202,53 @@
         <i class="top"></i>
     </div>
 </div>
+<!-- 播放器 -->
+<div class="music-player">
+    <!-- audio标签 -->
+    <audio class="music-player__audio" ></audio>
+    <!-- 播放器主体 -->
+    <div class="music-player__main">
+        <!-- 控件主体 -->
+        <div class="music-player__controls">
+            <!-- 歌曲信息 -->
+            <div class="music__info">
+                <span class="music__info--title">...</span>
+                <span class="music__info--singer">...</span>
+            </div>
+            <!-- 控件... -->
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <span></span>
+                        <div class="player-control__btn player-control__btn--list"><i class="iconfont icon-next"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 歌曲播放进度 -->
+        <div class="player-progress__content">
+            <div class="player__song--progress progress"></div>
+        </div>
+    </div>
+    <!-- 歌曲列表 -->
+    <div class="music-player__list">
+        <div class="music__list_content">
+            <!-- <div class="music__list__item play">123</div>
+            <div class="music__list__item">123</div>
+            <div class="music__list__item">123</div> -->
+        </div>
+        <div class="music__list_content_name"></div>
+    </div>
+</div>
+<script src="js/audio-utill.js"></script>
+<script src="js/player.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.player-control__btn--list').click(function () {
+            $('.music-player__list').toggle()
+        });
+    })
+</script>
 </body>
 </html>
