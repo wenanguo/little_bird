@@ -1,5 +1,6 @@
 package com.cmtt.base.controller;
 
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -7,17 +8,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cmtt.base.controller.param.GetOneInputParam;
 import com.cmtt.base.controller.param.OrderStatisticsInputParam;
+import com.cmtt.base.controller.param.WxQueryTradeInputParam;
 import com.cmtt.base.entity.R;
 import com.cmtt.base.entity.SysUserOrders;
 import com.cmtt.base.entity.validated.GroupAdd;
 import com.cmtt.base.entity.validated.GroupDelete;
 import com.cmtt.base.entity.validated.GroupEdit;
+import com.cmtt.base.service.impl.AliPayServiceImpl;
+import com.cmtt.base.utils.RC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +49,9 @@ public class LbOrdersController {
 
     @Autowired
     public ILbOrdersService lbOrdersService;
+
+    @Autowired
+    private AliPayServiceImpl aliPayService;
 
 
     /**
@@ -161,6 +169,74 @@ public class LbOrdersController {
 
             // 设置返回数据
             return R.ok().setResult(map);
+
+
+        } catch (Exception e) {
+
+            logger.warn(e.getMessage());
+
+            return R.err().setMessage("系统错误");
+        }
+    }
+
+    /**
+     * 验证订单数据
+     */
+    @PostMapping("/order_verify")
+    @ResponseBody
+    public R order_verify(@RequestBody @Valid WxQueryTradeInputParam params) {
+
+        try {
+
+            // 执行查询
+            LbOrders lbOrders = lbOrdersService.getOne(Wrappers.<LbOrders>lambdaQuery()
+                    .eq(LbOrders::getOutTradeNo,params.getOutTradeNo()),false);
+
+
+            if(lbOrders!=null){
+
+                if(lbOrders.getChannel().equals("aliPay")){
+                    // 支付宝
+
+                    AlipayTradeQueryResponse response = aliPayService.alipayTradeQuery(params.getOutTradeNo(), null);
+                    if(response.isSuccess()){
+
+                        lbOrders.setTradeStatus(response.getTradeStatus());
+                        lbOrders.setTotalAmount(new BigDecimal(response.getTotalAmount()));
+                        lbOrders.setTradeNo(response.getTradeNo());
+                        lbOrders.setOutTradeNo(response.getOutTradeNo());
+                        if(response.getTradeStatus().equals("TRADE_SUCCESS")){
+                            // 支付成功 修改状态
+                            lbOrders.setStatus(RC.PAY_YES.code());
+                        }
+
+                        lbOrdersService.updateById(lbOrders);
+
+                        return R.ok().setResult(lbOrders);
+                    } else {
+
+                        return R.err().setResult(response.getBody());
+                    }
+
+                }else if (lbOrders.getChannel().equals("wxPay")){
+                    // 微信
+
+                }else if (lbOrders.getChannel().equals("wxPay")){
+                    // 苹果支付
+
+                }else{
+
+                }
+
+
+
+                return R.ok().setResult(null);
+            }else{
+                return R.err().setMessage("找不到当前订单");
+            }
+
+
+
 
 
         } catch (Exception e) {

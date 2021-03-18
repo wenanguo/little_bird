@@ -15,9 +15,12 @@ import javax.validation.constraints.NotNull;
 public class WxQueryTradeInputParam {
 
 
-	@ApiModelProperty(value ="订单编号",example = "1")
-	@NotNull(message = "订单编号不能为空")
+	@ApiModelProperty(value ="商户订单编号",example = "1")
+	@NotNull(message = "商户订单编号不能为空")
 	private String outTradeNo;
+
+	@ApiModelProperty(value ="订单编号",example = "1")
+	private String tradeNo;
 
 
 }

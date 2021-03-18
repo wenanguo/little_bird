@@ -21,11 +21,11 @@ public class AlipayTradeAppQueryInputParam {
 
 	@ApiModelProperty(value ="支付宝订单号",example = "12345678")
 	// @NotNull(message = "支付宝订单号不能为空")
-	private String trade_no;
+	private String tradeNo;
 
     @ApiModelProperty(value ="商户订单号",example = "123456789")
     @NotNull(message = "商户订单号不能为空")
-    private String out_trade_no;
+    private String outTradeNo;
 
 
 //	@ApiModelProperty(value ="卖方ID",example = "123456789")

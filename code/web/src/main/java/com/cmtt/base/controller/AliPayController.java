@@ -308,7 +308,7 @@ public class AliPayController {
 
         try {
 
-            AlipayTradeQueryResponse response = aliPayService.alipayTradeQuery(params.getOut_trade_no(), params.getTrade_no());
+            AlipayTradeQueryResponse response = aliPayService.alipayTradeQuery(params.getOutTradeNo(), params.getTradeNo());
             if(response.isSuccess()){
 
                 map.put("code",response.getCode());
