@@ -3,6 +3,12 @@ package com.cmtt.base.service.impl;
 
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeQueryModel;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +52,78 @@ public class AliPayServiceImpl {
         logger.info("阿里支付服务初始化完成");
     }
 
+
+    /**
+     * 订单状态查询
+     * @param out_trade_no
+     * @param trade_no
+     * @return
+     */
+    public AlipayTradeQueryResponse alipayTradeQuery(String out_trade_no,String trade_no){
+
+        //实例化客户端
+
+        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+        AlipayTradeQueryModel model = new AlipayTradeQueryModel();
+        model.setOutTradeNo(out_trade_no);
+        model.setTradeNo(trade_no);
+
+
+        request.setBizModel(model);
+
+        try {
+
+            AlipayTradeQueryResponse response = this.getAlipayClient().execute(request);
+
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+            return null;
+
+    }
+
+
+    /**
+     * 统一创建订单
+     * @param body
+     * @param subject
+     * @param totalAmount
+     * @param out_trade_no
+     * @return
+     */
+    public AlipayTradeAppPayResponse alipayTradeAppPay(String body,String subject,String totalAmount,String out_trade_no){
+
+        //实例化客户端
+        //AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
+
+        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+        model.setBody(body);
+        model.setSubject(subject);
+        model.setOutTradeNo(out_trade_no);
+        model.setTimeoutExpress("30m");
+        model.setTotalAmount(String.valueOf(totalAmount));
+        model.setProductCode("QUICK_MSECURITY_PAY");
+        request.setBizModel(model);
+        request.setNotifyUrl(this.getNotifyUrl());
+        try {
+
+            //这里和普通的接口调用不同，使用的是sdkExecute
+            AlipayTradeAppPayResponse response = this.getAlipayClient().sdkExecute(request);
+
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+            return null;
+
+    }
     /**
      * 获取公钥
      * @return

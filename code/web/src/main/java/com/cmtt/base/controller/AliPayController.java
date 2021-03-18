@@ -223,27 +223,29 @@ public class AliPayController {
         }
 
 
-        //实例化客户端
-        //AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
 
-        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
-        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
-        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
-        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody(lbGoods.getBody());
-        model.setSubject(lbGoods.getTitle());
-        model.setOutTradeNo(outtradeno);
-        model.setTimeoutExpress("30m");
-        model.setTotalAmount(String.valueOf(lbGoods.getPrice()));
-        model.setProductCode("QUICK_MSECURITY_PAY");
-        request.setBizModel(model);
-        request.setNotifyUrl(aliPayService.getNotifyUrl());
+//
+//
+//        //实例化客户端
+//        //AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
+//
+//        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+//        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+//        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+//        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+//        model.setBody(lbGoods.getBody());
+//        model.setSubject(lbGoods.getTitle());
+//        model.setOutTradeNo(outtradeno);
+//        model.setTimeoutExpress("30m");
+//        model.setTotalAmount(String.valueOf(lbGoods.getPrice()));
+//        model.setProductCode("QUICK_MSECURITY_PAY");
+//        request.setBizModel(model);
+//        request.setNotifyUrl(aliPayService.getNotifyUrl());
         try {
 
             //这里和普通的接口调用不同，使用的是sdkExecute
-            AlipayTradeAppPayResponse response = aliPayService.getAlipayClient().sdkExecute(request);
+            AlipayTradeAppPayResponse response = aliPayService.alipayTradeAppPay(lbGoods.getBody(),lbGoods.getTitle(),String.valueOf(lbGoods.getPrice()),outtradeno);
             returnStr=response.getBody();//就是orderString 可以直接给客户端请求，无需再做处理。
-
 
 
             // 入库支付宝订单
@@ -275,14 +277,14 @@ public class AliPayController {
             lbOrders.setGmtPayment(LocalDateTime.now());
             lbOrders.setStatus(RC.PAY_NO.code());
 
-            lbOrders.setServerReq(JSON.toJSONString(request));
+            //lbOrders.setServerReq(JSON.toJSONString(request));
             lbOrders.setServerResp(JSON.toJSONString(response));
 
 
             lbOrdersService.save(lbOrders);
 
 
-        } catch (AlipayApiException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -300,29 +302,14 @@ public class AliPayController {
     @PostMapping("alipay_trade_query")
     @ResponseBody
     @ApiOperation("查询支付宝订单")
-    public R alipay_trade_query(@RequestBody @Valid AlipayTradeAppQueryInputParam params, HttpServletRequest httpRequest){
+    public R alipay_trade_query(@RequestBody @Valid AlipayTradeAppQueryInputParam params){
         Map map =new HashMap();
 
 
-        //实例化客户端
-
-        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
-        AlipayTradeQueryModel model = new AlipayTradeQueryModel();
-        model.setOutTradeNo(params.getOut_trade_no());
-        model.setTradeNo(params.getTrade_no());
-
-
-        request.setBizModel(model);
-
         try {
 
-            //这里和普通的接口调用不同，使用的是sdkExecute
-            // AlipayTradeQueryResponse response = aliPayService.getAlipayClient().sdkExecute(request);
-
-            AlipayTradeQueryResponse response = aliPayService.getAlipayClient().execute(request);
+            AlipayTradeQueryResponse response = aliPayService.alipayTradeQuery(params.getOut_trade_no(), params.getTrade_no());
             if(response.isSuccess()){
-
 
                 map.put("code",response.getCode());
                 map.put("msg",response.getMsg());
@@ -330,17 +317,9 @@ public class AliPayController {
                 map.put("totalAmount",response.getTotalAmount());
                 map.put("tradeNo",response.getTradeNo());
                 map.put("outTradeNo",response.getOutTradeNo());
-//                System.out.println(response.getBody());
-//                System.out.println(response.getCode());
-//                System.out.println(response.getMsg());
-//                System.out.println(response.getTradeStatus());
-//                System.out.println(response.getTotalAmount());
-//                System.out.println(response.getTradeNo());
-//                System.out.println(response.getOutTradeNo());
 
                 return R.ok().setResult(map);
             } else {
-                System.out.println("调用失败");
 
                 map.put("code",response.getCode());
 
@@ -353,44 +332,7 @@ public class AliPayController {
 
         return R.err().setMessage("订单查询请求失败");
 
-        //LbPayOrder lbPayOrder = lbPayOrderService.getOne(Wrappers.<LbPayOrder>lambdaQuery().eq(LbPayOrder::getOutTradeNo, params.getOut_trade_no()));
-
-
-        //return R.ok().setResult(response.getBody());
-
-//        String outtradeno=String.valueOf(System.currentTimeMillis());
-//        System.out.println(outtradeno);
-//
-//        String returnStr="";
-//
-//        //实例化客户端
-//        //AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
-//
-//        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
-//        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-//        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
-//        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-//        model.setBody(params.getBody());
-//        model.setSubject(params.getSubject());
-//        model.setOutTradeNo(outtradeno);
-//        model.setTimeoutExpress("30m");
-//        model.setTotalAmount("0.01");
-//        model.setProductCode("QUICK_MSECURITY_PAY");
-//        request.setBizModel(model);
-//        request.setNotifyUrl(aliPayService.getNotifyUrl());
-//        try {
-//            //这里和普通的接口调用不同，使用的是sdkExecute
-//            AlipayTradeQueryResponse response = aliPayService.getAlipayClient().sdkExecute(request);
-//            returnStr=response.getBody();//就是orderString 可以直接给客户端请求，无需再做处理。
-//            System.out.println(returnStr);
-//        } catch (AlipayApiException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return R.ok().setResult(returnStr);
     }
-
-
 
 
 }
