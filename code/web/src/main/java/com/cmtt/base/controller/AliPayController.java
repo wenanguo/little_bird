@@ -108,7 +108,7 @@ public class AliPayController {
             if((!StringUtils.isEmpty(notify_type))&&notify_type.equals("trade_status_sync")){
                 // 订单同步,根据订单号查询订单
                 String out_trade_no=params.get("out_trade_no");
-                LbPayOrder lbPayOrder = lbPayOrderService.getOne(Wrappers.<LbPayOrder>lambdaQuery().eq(LbPayOrder::getOutTradeNo, out_trade_no));
+                LbPayOrder lbPayOrder = lbPayOrderService.getOne(Wrappers.<LbPayOrder>lambdaQuery().eq(LbPayOrder::getOutTradeNo, out_trade_no),false);
 
                 lbPayOrder.setTradeNo(params.get("trade_no"));
 
@@ -154,9 +154,6 @@ public class AliPayController {
 
 
             }
-
-
-
 
 
         } else {

@@ -17,7 +17,7 @@
           <a-input v-decorator="['title', {rules: [{required: true, min: 1, message: '请输入名称！'}]}]" />
         </a-form-item>
         <a-form-item label="介绍">
-          <a-input v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入介绍！'}]}]" />
+           <a-textarea v-decorator="['introduction', {rules: [{required: true, min: 1, message: '请输入介绍！'}]}]" :auto-size="{ minRows: 3, maxRows: 5 }" />
         </a-form-item>
         <a-form-item label="所属分类">
           <a-select v-decorator="['catalogId', {rules: [{required: true, message: '请选择所属分类！'}]}]">
