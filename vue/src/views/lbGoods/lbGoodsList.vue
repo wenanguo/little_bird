@@ -144,11 +144,11 @@
     const ttypeMap = {
     1: {
         status: 'default',
-        text: '包年'
+        text: '单点'
     },
     2: {
         status: 'processing',
-        text: '单点'
+        text: '包年'
     }
   }
   const devTypeMap = {

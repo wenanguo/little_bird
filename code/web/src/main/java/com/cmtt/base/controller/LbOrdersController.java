@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -223,16 +224,23 @@ public class LbOrdersController {
         }
 
 
+
         // 执行查询
         List<LbOrders> list = lbOrdersService.list(Wrappers.<LbOrders>lambdaQuery()
                 .eq(LbOrders::getPhone, sysUser.getPhone()));
 
+        // 修改的list
+        List<LbOrders> updatelist = new ArrayList<LbOrders>();
+
         for (LbOrders lbOrders:list) {
-            order_verify(lbOrders);
+
+
+            LbOrders lbOrdersTemp = order_verify(lbOrders);
+            if(lbOrdersTemp!=null)updatelist.add(lbOrdersTemp);
         }
 
 
-        return R.ok();
+        return R.ok().setResult(updatelist);
     }
 
     /**
@@ -240,7 +248,7 @@ public class LbOrdersController {
      * @param lbOrders
      * @return
      */
-    private R order_verify(LbOrders lbOrders){
+    private LbOrders order_verify(LbOrders lbOrders){
         try {
 
 
@@ -250,21 +258,30 @@ public class LbOrdersController {
                     AlipayTradeQueryResponse response = aliPayService.alipayTradeQuery(lbOrders.getOutTradeNo(), null);
                     if(response.isSuccess()){
 
-                        lbOrders.setTradeStatus(response.getTradeStatus());
-                        lbOrders.setTotalAmount(new BigDecimal(response.getTotalAmount()));
-                        lbOrders.setTradeNo(response.getTradeNo());
-                        lbOrders.setOutTradeNo(response.getOutTradeNo());
-                        if(response.getTradeStatus().equals("TRADE_SUCCESS")){
-                            // 支付成功 修改状态
-                            lbOrders.setStatus(RC.PAY_YES.code());
+
+                        // 判断原有订单状态与服务器是否一致
+                        if(!lbOrders.getTradeStatus().equals(response.getTradeStatus())){
+                            // 不一致，修改现有订单
+                            lbOrders.setTradeStatus(response.getTradeStatus());
+                            lbOrders.setTotalAmount(new BigDecimal(response.getTotalAmount()));
+                            lbOrders.setTradeNo(response.getTradeNo());
+                            lbOrders.setOutTradeNo(response.getOutTradeNo());
+                            if(response.getTradeStatus().equals("TRADE_SUCCESS")){
+                                // 支付成功 修改状态
+                                lbOrders.setStatus(RC.PAY_YES.code());
+                            }
+
+                            lbOrdersService.updateById(lbOrders);
+
+                            return lbOrders;
+                        }else{
+                            return null;
                         }
 
-                        lbOrdersService.updateById(lbOrders);
 
-                        return R.ok().setResult(lbOrders);
                     } else {
 
-                        return R.err().setResult(response.getBody());
+                        return null;
                     }
 
                 }else if (lbOrders.getChannel().equals("wxPay")){
@@ -272,28 +289,36 @@ public class LbOrdersController {
 
                     Map map=wxPayService.WxQueryOrder(lbOrders.getOutTradeNo());
 
-                    if(map!=null){
-                        return R.ok().setResult(map);
-                    }else {
-                        return R.err().setResult(map);
+                    // 判断原有订单状态与服务器是否一致
+                    if(!lbOrders.getTradeStatus().equals("TRADE_SUCCESS") && map.get("trade_state").toString().equals("SUCCESS")){
+                        // 不一致，修改现有订单
+
+
+                        lbOrders.setStatus(RC.PAY_YES.code());
+                        lbOrders.setTradeStatus("TRADE_SUCCESS");
+
+
+                        lbOrdersService.updateById(lbOrders);
+
+                        return lbOrders;
+                    }else{
+                        return null;
                     }
+
 
                 }else if (lbOrders.getChannel().equals("wxPay")){
                     // 苹果支付
 
-                }else{
-
-
                 }
 
 
-                return R.err().setResult("请求失败");
+                return null;
 
         } catch (Exception e) {
 
             logger.warn(e.getMessage());
 
-            return R.err().setMessage("系统错误");
+            return null;
         }
     }
 

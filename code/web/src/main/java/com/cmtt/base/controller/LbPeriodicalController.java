@@ -69,6 +69,7 @@ public class LbPeriodicalController {
     public R current(){
         LbPeriodical lbPeriodical = lbPeriodicalService.getOne(Wrappers.<LbPeriodical>lambdaQuery()
                 .select(LbPeriodical.class,info->!info.getColumn().equals("tpdf"))
+                .eq(LbPeriodical::getIsPreview,1)
                 .eq(LbPeriodical::getStatus, RC.B_NORMAL.code()).orderByDesc(LbPeriodical::getId),false);
 
         List<LbPost> lbPostList = lbPostService.list(Wrappers.<LbPost>lambdaQuery()
