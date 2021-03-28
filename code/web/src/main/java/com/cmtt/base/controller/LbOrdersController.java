@@ -19,6 +19,7 @@ import com.cmtt.base.entity.validated.GroupEdit;
 import com.cmtt.base.service.impl.AliPayServiceImpl;
 import com.cmtt.base.service.impl.WxPayServiceImpl;
 import com.cmtt.base.utils.RC;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/api/lb_orders")
+@Api(tags = "订单相关")
 public class LbOrdersController {
 
     private final Logger logger = LoggerFactory.getLogger(LbOrdersController.class);
